@@ -317,7 +317,7 @@
                                   Make sure your pdflatex is version 1.40 or higher.}%
       % \microtypesetup{expansion=false}
       \microtypesetup{protrusion=true,expansion=true}
-      \DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\ct@caps\MakeTextUppercase{#1}}}
+      \DeclareRobustCommand{\spacedallcaps}[1]{\textls[120]{\ct@caps\MakeTextUppercase{#1}}}
       \DeclareRobustCommand{\spacedlowsmallcaps}[1]{\textls[80]{\ct@caps\MakeTextLowercase{#1}}}
       }{\relax}
 
@@ -621,7 +621,7 @@
         \PassOptionsToPackage{draft}{prelim2e}
         \RequirePackage{prelim2e}
         \renewcommand{\PrelimWords}{\relax}
-        \renewcommand{\PrelimText}{\footnotesize[\,\today\ at \thistime\ -- \myVersion\,]}
+        \renewcommand{\PrelimText}{\footnotesize[\,\today\ a las \thistime\ -- \myVersion\,]}
 }{\renewcommand{\finalVersionString}{\emph{Final Version} as of \today\ (\myVersion).}}
 
 % ********************************************************************
