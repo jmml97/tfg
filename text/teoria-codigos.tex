@@ -1,6 +1,6 @@
 \chapter{Fundamentos de teoría de códigos}
 
-La teoría de códigos 
+La teoría de códigos tal y cual. Las definiciones aquí ... según lo descrito en \parencite[1-48]{huffman-pless-2003}.
 
 \section{Códigos lineales}
 
@@ -17,3 +17,15 @@ Es necesario añadir más estructura a los códigos para que sean de utilidad.
 \end{definition}
 
 Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
+
+\begin{definition}
+  Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\).
+\end{definition}
+
+Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante} y \(r\), la \textit{redundancia} de \(\mathcal C\).
+
+Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\). Esta matriz generadora se dice que está en \textit{forma estándar}.
+
+Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \((n - k) \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
+  \mathcal C = \left\{x \in \mathbb F_q^n : H \boldsymbol x^T = 0 \right\}.
+\end{equation}
