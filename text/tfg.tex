@@ -1,14 +1,10 @@
 \documentclass[
   a4paper,
-  12pt,
   spanish,
-  abstracton,
+  dvipsnames,
+  footinclude,
+  headinclude,
 ]{scrbook}
-
-% Párrafos
-
-\linespread{1.1}
-\setlength{\parindent}{18pt}
 
 %-------------------------------------------------------------------------------
 %	PAQUETES
@@ -16,56 +12,13 @@
 
 % Idioma
 
-\usepackage[es-noindentfirst]{babel}
+\usepackage[es-noindentfirst, es-lcroman, es-tabla]{babel}
 
 % Matemáticas
 
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{mathtools}
 \usepackage{commath}
-
-% Fuentes personalizadas para utilizar con XeLaTeX o LuaLaTeX
-
-% \usepackage[no-math]{fontspec}
-% \setmainfont[
-%   SmallCapsFont = {Equity Caps A},
-% ]{Equity Text A}
-% \setsansfont[
-%   SmallCapsFont = {Concourse C4},
-% ]{Concourse T4}
-% \setmonofont[
-%   Scale=0.85,
-% ]{Input Mono Narrow}
-
-% \usepackage[math-style=TeX]{unicode-math}
-% \setmathfont{XITS Math}
-% \setmathfont[range=bb]{TeX Gyre Termes Math}
-% %\setmathfont[range=cal]{Latin Modern Math} % cal más parecido a times
-% \setmathfont[range=\mathcal, StylisticSet=1]{XITS Math} % cal de latex
-% \setmathfont[
-% 	range=up/{latin,Latin, num},
-% ]{Equity Text A}
-% \setmathfont[
-% 	range=it/{latin,Latin},
-% ]{Equity Text A-Italic}
-% % coma, punto, dos puntos, punto y coma, pm,  
-% \setmathfont[range={"002C, "002E, "003A, "003B, "00B1, "002B, "002D}]{Equity Text A}
-% \setoperatorfont\symup
-
-\usepackage[no-math]{fontspec}
-\setmainfont{TeX Gyre Pagella}
-\setsansfont{Alegreya Sans}
-\setmonofont[Scale=0.85]{Vera Mono}
-
-\usepackage[math-style=TeX]{unicode-math}
-\setmathfont{TeX Gyre Pagella Math}
-
-
-% Configuración de microtype
-
-\defaultfontfeatures{Ligatures=TeX,Numbers=Lining}
-\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
-\SetTracking{encoding={*}, shape=sc}{0}
 
 % Enlaces y colores
 
@@ -79,10 +32,7 @@
 % Otros elementos de página
 
 \usepackage{enumitem}
-\setlist[itemize]{leftmargin=*}
-\setlist[enumerate]{leftmargin=*}
-
-\usepackage[labelfont=sc]{caption}
+\usepackage[labelfont=sf, textfont=sf]{caption}
 
 % Tikz
 
@@ -107,16 +57,22 @@
 }
 \renewcommand{\lstlistingname}{Listado}
 
+% Citas de texto en línea/bloque
+
+\usepackage{csquotes}
+
 % Bibliografía
 
-\usepackage[sorting=none]{biblatex}
+\usepackage[sorting=none, style=apa]{biblatex}
 \addbibresource{bibliografia.bib}
 
 % Lorem ipsum
 
 \usepackage{blindtext}
 
-% Entornos matemáticos
+%-------------------------------------------------------------------------------
+%	ENTORNOS MATEMÁTICOS
+%-------------------------------------------------------------------------------
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}[section]
@@ -125,27 +81,50 @@
 \newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{question}{Pregunta}
 \newtheorem{conjecture}[theorem]{Conjetura}
-\theoremstyle{definition}
+\newtheoremstyle{definition-style}  % Nombre del estilo
+{}                                  % Espacio por encima
+{}                                  % Espacio por debajo
+{}                                  % Fuente del cuerpo
+{}                                  % Identación
+{\scshape}                      % Fuente para la cabecera
+{.}                                 % Puntuación tras la cabecera
+{.5em}                              % Espacio tras la cabecera
+{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
+\theoremstyle{definition-style}
 \newtheorem{definition}[theorem]{Definición}
 \newtheorem{example}[theorem]{Ejemplo}
 \newtheorem{notation}[theorem]{Notación}
 \newtheorem{exercise}[theorem]{Ejercicio}
 
+%-------------------------------------------------------------------------------
+%	NOTSOCLASSICTHESIS & FUENTES
+%-------------------------------------------------------------------------------
+
+\usepackage[
+  drafting=true,
+  %tocaligned=true,
+  dottedtoc=true,
+  parts,
+  floatperchapter,
+  pdfspacing,
+  beramono=false,
+  palatino=false,
+]{notsoclassicthesis}
+
+\setmainfont{EBGaramond}
+\setsansfont{Source Sans Pro}
+\renewfontface\chapterNumber[Scale=7, Color=000000]{EBGaramond}
+\setmonofont[Scale=0.8]{Vera Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Garamond Math}[StylisticSet={3}]
 
 %-------------------------------------------------------------------------------
 %	TÍTULO
 %-------------------------------------------------------------------------------
 
-\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
-
-\title{	
-\normalfont \normalsize 
-\textsc{Universidad de Granada}\\ [25pt]
-\horrule{0.5pt} \\[0.4cm]
-{\sffamily\bfseries\Large Título del Trabajo} \\[6pt]
-\textsf{Doble Grado en Ingeniería Informática y Matemáticas}\\
-\horrule{2pt} \\[0.5cm]
-}
+\title{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
+\renewcommand{\myVersion}{1.0}
 
 \author{José María Martín Luque}
 
@@ -183,7 +162,7 @@
   % Para que el título esté centrado en la página.
   % Los valores numéricos deberán elegirse de acuerdo con el diseño de
   % página (sobre todo si se cambia la opción BCOR o DIV).
-  \begin{addmargin}[3.35cm]{0cm}
+  \begin{addmargin}[2.05cm]{0cm}
   \begin{flushleft}
     \Large
     \hfill\vfil
@@ -197,11 +176,14 @@
     \textsf{\huge Doble Grado en Ingeniería Informática y Matemáticas} \vfill
 
 
-    \textsc{trabajo de fin de grado}
+    %\textsc{trabajo de fin de grado}
+    \spacedlowsmallcaps{Trabajo de Fin de Grado}
 
     \begingroup
-    \Huge{Título del Trabajo} \\ \bigskip
+    \Huge{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados} \\ \bigskip
     \endgroup
+
+    [\,\today\ a las \thistime\ -- \myVersion\,]
 
     \vfill\vfill\vfill\vfill
 
@@ -211,7 +193,7 @@
     \vspace*{0.7cm}
 
     \textsf{\normalsize{Tutorizado por}}\\[6pt]
-    {\huge\textrm{Nombre del Tutor}}
+    {\huge\textrm{Gabriel Navarro Garulo}}
 
     \vfill
     \textsf{Curso académico 2019--2020}
@@ -228,21 +210,22 @@
 
 \newpage
 
-\addchap{Resumen}
+\chapter*{Resumen}
 
 \blindtext[2]
 
-\KOMAoptions{headings=openany}
-
-\addchap*{Summary}
+\chapter*{Summary}
 
 \blindtext[6]
 
-\KOMAoptions{headings=openright}
+\chapter*{Introducción}
 
-\addchap{Introducción}
+\input{introduccion.tex}
 
-\blindtext[6]
+\part{Parte de prueba}
+
+\input{teoria-codigos.tex}
+
 
 %-------------------------------------------------------------------------------
 %	BIBLIOGRAFÍA
