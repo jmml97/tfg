@@ -1,6 +1,6 @@
 \chapter{Fundamentos de teoría de códigos}
 
-La teoría de códigos tal y cual. Las definiciones aquí ... según lo descrito en \parencite[1-48]{huffman-pless-2003}.
+La teoría de códigos tal y cual. Las definiciones aquí ... según lo descrito en \parencite[1-48]{huffman-pless-2003} y \parencite{podesta-2006}.
 
 \section{Códigos lineales}
 
@@ -13,7 +13,7 @@ Vamos a comenzar nuestro estudio con los códigos lineales, pues son los más se
 Es necesario añadir más estructura a los códigos para que sean de utilidad.
 
 \begin{definition}
-  Decimos que un código \(\mathcal C\) es \([n, k]\) \textit{lineal} si es un subespacio vectorial de \(\mathbb F_q^n\) de dimensión \(k\).
+  Decimos que un código \(\mathcal C\) es un código \textit{lineal de longitud \(n\) y rango \(k\)} —abreviado como \([n, k]\) \textit{lineal}— si dicho código es un subespacio vectorial de \(\mathbb F_q^n\) de dimensión \(k\).
 \end{definition}
 
 Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
@@ -22,10 +22,34 @@ Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
   Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\).
 \end{definition}
 
-Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante} y \(r\), la \textit{redundancia} de \(\mathcal C\).
+Veamos un ejemplo de matriz generadora. Consideremos la matriz \(G = \begin{psmallmatrix}
+  1 & 1 & 0 \\ 0 & 1 & 1
+\end{psmallmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2)\). Dicha matriz genera un \([3, 2]\) código binario, pues dado \((x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
+  1 & 1 & 0 \\ 0 & 1 & 1
+\end{pmatrix} = (x_1, x_1 + x_2, x_2),\] y por tanto este código codifica de la forma \[00 \to 000, \quad 01 \to 011,\quad 10 \to 110,\quad 11 \to 101.\]
 
-Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\). Esta matriz generadora se dice que está en \textit{forma estándar}.
+\begin{definition}
+  Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
+\end{definition}
 
-Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \((n - k) \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
-  \mathcal C = \left\{x \in \mathbb F_q^n : H \boldsymbol x^T = 0 \right\}.
-\end{equation}
+Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). Esta matriz generadora se dice que está en \textit{forma estándar}.
+
+%Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \(r \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
+%  \mathcal C = \left\{x \in \mathbb F_q^n : H \boldsymbol x^T = 0 %\right\}.
+%\end{equation}
+
+Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} \(\mathcal C^{\perp}\). 
+
+\begin{definition}
+  Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de paridad} si es una matriz generadora de \(\mathcal C^{\perp}\).
+\end{definition}
+
+\begin{proposition}
+  Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \{x \in \mathbb F_q^n : xH^T = 0\} = \{x \in F_q^n : Hx^T = 0\}.\]
+\end{proposition}
+
+\begin{proof}
+  Si \(c \in \mathcal C\) entonces \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es la matriz generadora de \(\mathcal C\). Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \(\mathcal C \subset S_H = \{x \in \mathbb F_q^n : Hx^T = 0\}\), que espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), tenemos que \(L = \{x \in \mathbb F_q^n : Hx^T = 0\}\).
+\end{proof}
+
+
