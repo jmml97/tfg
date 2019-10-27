@@ -4,7 +4,7 @@ La teoría de códigos tal y cual. Las definiciones aquí ... según lo descrito
 
 \section{Códigos lineales}
 
-Vamos a comenzar nuestro estudio con los códigos lineales, pues son los más sencillos de comprender. Consideremos el espacio vectorial de todas las \(n\)-tuplas sobre el cuerpo finito \(\mathbb F_q\), al que denotaremos en lo que sigue como \(\mathbb F_q^n\). Los elementos \((a_1, \dots, a_n)\) de \(\mathbb F_q^n\) los notaremos usualmente como \(a_1\!\cdots a_n\).
+Vamos a comenzar nuestro estudio con los códigos lineales, pues son los más sencillos de comprender. Consideremos el espacio vectorial de todas las \(n\)-tuplas sobre el cuerpo finito \(\mathbb F_q\), al que denotaremos en lo que sigue como \(\mathbb F_q^n\). A los elementos \((a_1, \dots, a_n)\) de \(\mathbb F_q^n\) los notaremos usualmente como \(a_1\!\cdots a_n\).
 
 \begin{definition}
   Un \((n, M)\) \textit{código} \(\mathcal C\) sobre el cuerpo \(\mathbb F_q\) es un subconjunto de \(\mathbb F_q^n\) de tamaño \(M\). A los elementos de \(\mathcal C\) los llamaremos \textit{palabras codificadas} —o \textit{codewords} en inglés—.
@@ -45,11 +45,15 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 \end{definition}
 
 \begin{proposition}
-  Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \{x \in \mathbb F_q^n : xH^T = 0\} = \{x \in F_q^n : Hx^T = 0\}.\]
+  Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
 \end{proposition}
 
 \begin{proof}
-  Si \(c \in \mathcal C\) entonces \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es la matriz generadora de \(\mathcal C\). Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \(\mathcal C \subset S_H = \{x \in \mathbb F_q^n : Hx^T = 0\}\), que espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), tenemos que \(L = \{x \in \mathbb F_q^n : Hx^T = 0\}\).
+  Sea \(c \in \mathcal C\) una palabra codificada. Sabemos que la podemos expresar como \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es la matriz generadora de \(\mathcal C\). Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
 \end{proof}
 
+El resultado anterior nos conduce 
 
+\begin{theorem}
+  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
+\end{theorem}
