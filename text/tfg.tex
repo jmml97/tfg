@@ -75,7 +75,16 @@
 %	ENTORNOS MATEMÁTICOS
 %-------------------------------------------------------------------------------
 
-\theoremstyle{plain}
+\newtheoremstyle{theorem-style}  % Nombre del estilo
+{\topsep}                                  % Espacio por encima
+{\topsep}                                  % Espacio por debajo
+{\itshape}                                  % Fuente del cuerpo
+{0pt}                                  % Identación
+{\scshape}                      % Fuente para la cabecera
+{.}                                 % Puntuación tras la cabecera
+{5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
+{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
+\theoremstyle{theorem-style}
 \newtheorem{theorem}{Teorema}[section]
 \newtheorem{corollary}[theorem]{Corolario}
 \newtheorem{lemma}[theorem]{Lema}
@@ -83,13 +92,13 @@
 \newtheorem{question}{Pregunta}
 \newtheorem{conjecture}[theorem]{Conjetura}
 \newtheoremstyle{definition-style}  % Nombre del estilo
-{}                                  % Espacio por encima
-{}                                  % Espacio por debajo
+{\topsep}                                  % Espacio por encima
+{\topsep}                                  % Espacio por debajo
 {}                                  % Fuente del cuerpo
-{}                                  % Identación
+{0pt}                                  % Identación
 {\scshape}                      % Fuente para la cabecera
 {.}                                 % Puntuación tras la cabecera
-{.5em}                              % Espacio tras la cabecera
+{5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
 {{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
 \theoremstyle{definition-style}
 \newtheorem{definition}[theorem]{Definición}
