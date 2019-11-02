@@ -312,7 +312,7 @@
 
 %%% define spacedallcaps and spacedlowsmallcaps
 %%% engine-dependent letterspacing: microtype for pdflatex, fontspec for xelatex and luatex
-    \ifthenelse{\boolean{pdf}\OR\boolean{luatex}}{ % pdf will soon test true for both pdflatex and luatex; \AND\NOT\boolean{luatex}
+    \ifthenelse{\boolean{pdf}}{ % pdf will soon test true for both pdflatex and luatex; \AND\NOT\boolean{luatex}
       \PackageInfo{classicthesis}{Using microtype for character spacing.%
                                   Make sure your pdflatex is version 1.40 or higher.}%
       % \microtypesetup{expansion=false}
@@ -320,7 +320,15 @@
       \DeclareRobustCommand{\spacedallcaps}[1]{\textls[120]{\ct@caps\MakeTextUppercase{#1}}}
       \DeclareRobustCommand{\spacedlowsmallcaps}[1]{\textls[80]{\ct@caps\MakeTextLowercase{#1}}}
       }{\relax}
-
+    \ifthenelse{\boolean{luatex}}{
+      \newfontfamily{\spacedcaps}{EBGaramond}[
+        WordSpace={1.8}
+      ]
+      \PackageInfo{classicthesis}{Using fontspec for character spacing.}%
+      \microtypesetup{protrusion=true, expansion=true}
+      \DeclareRobustCommand{\spacedallcaps}[1]{{\spacedcaps\addfontfeature{LetterSpace=14.0}\ct@caps\MakeTextUppercase{#1}}}% WordSpace=1.8
+      \DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\spacedcaps\addfontfeatures{LetterSpace=6.0}\ct@caps\MakeTextLowercase{#1}}}% WordSpace=1.8
+    }{\relax}
     \ifthenelse{\boolean{xetex}}{ % use fontspec features; \OR\boolean{luatex} does not work well
       \PackageInfo{classicthesis}{Using fontspec for character spacing.}%
       \microtypesetup{expansion=false}
