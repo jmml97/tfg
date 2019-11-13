@@ -1,6 +1,6 @@
 \chapter{Fundamentos de teoría de códigos}
 
-La teoría de códigos tal y cual. Las definiciones aquí ... según lo descrito en \parencite[1-48]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
+La teoría de códigos (...). Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[1-48]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
 
 \section{Códigos lineales}
 
@@ -52,7 +52,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
   Sea \(c \in \mathcal C\) una palabra codificada. Sabemos que la podemos expresar como \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es la matriz generadora de \(\mathcal C\). Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
 \end{proof}
 
-El resultado anterior nos conduce 
+El resultado anterior, junto a la definición anterior, nos conducen al siguiente teorema. 
 
 \begin{theorem}
   Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).

@@ -1,3 +1,5 @@
+%&tfgheader
+
 \documentclass[
   a4paper,
   12pt,
@@ -7,73 +9,14 @@
   headinclude,
 ]{scrbook}
 
-%-------------------------------------------------------------------------------
-%	PAQUETES
-%-------------------------------------------------------------------------------
-
-% Idioma
-
-\usepackage[es-noindentfirst, es-lcroman, es-tabla]{babel}
-
-% Matemáticas
-
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{mathtools}
-\usepackage{commath}
-
-% Enlaces y colores
-
-\usepackage{hyperref}
-\usepackage{xcolor}
-\hypersetup{
-  colorlinks=true,
-  citecolor=,
-}
-
-% Otros elementos de página
-
-\usepackage{enumitem}
-\usepackage[labelfont=sf, textfont=sf]{caption}
-
-% Tikz
-
-\usepackage{tikz}
-\usetikzlibrary{babel}
-\usepackage{float}
-
-% Código
-
-\usepackage{listings}
-\lstset{
-	basicstyle=\footnotesize\ttfamily,%
-	breaklines=true,%
-	captionpos=b,                    % sets the caption-position to bottom
-  tabsize=2,	                   % sets default tabsize to 2 spaces
-  frame=lines,
-  numbers=left,
-  xleftmargin=18pt,
-  stepnumber=1,
-  aboveskip=12pt,
-  showstringspaces=false,
-}
-\renewcommand{\lstlistingname}{Listado}
-
-% Citas de texto en línea/bloque
-
-\usepackage[autostyle]{csquotes}
-
-% Bibliografía
-
-\usepackage[sorting=none, style=apa, isbn=true]{biblatex}
-\addbibresource{bibliografia.bib}
-
-% Lorem ipsum
-
-\usepackage{blindtext}
+\usepackage{expl3}
+\usepackage{xparse}
 
 %-------------------------------------------------------------------------------
 %	ENTORNOS MATEMÁTICOS
 %-------------------------------------------------------------------------------
+
+\usepackage{amsmath, amsthm, amssymb}
 
 \newtheoremstyle{theorem-style}  % Nombre del estilo
 {\topsep}                                  % Espacio por encima
@@ -105,6 +48,71 @@
 \newtheorem{example}[theorem]{Ejemplo}
 \newtheorem{notation}[theorem]{Notación}
 \newtheorem{exercise}[theorem]{Ejercicio}
+
+% Matemáticas
+
+\usepackage{mathtools}
+\usepackage{commath}
+
+% Enlaces y colores
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks=true,
+  citecolor=,
+}
+
+% Otros elementos de página
+
+\usepackage{enumitem}
+\usepackage[labelfont=sf, textfont=sf]{caption}
+
+% Código
+
+\usepackage{listings}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,%
+	breaklines=true,%
+	captionpos=b,                    % sets the caption-position to bottom
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  frame=lines,
+  numbers=left,
+  xleftmargin=18pt,
+  stepnumber=1,
+  aboveskip=12pt,
+  showstringspaces=false,
+}
+\renewcommand{\lstlistingname}{Listado}
+
+\endofdump
+
+%-------------------------------------------------------------------------------
+%	PAQUETES
+%-------------------------------------------------------------------------------
+
+% Idioma
+
+\usepackage[es-noindentfirst, es-lcroman, es-tabla]{babel}
+
+% Citas de texto en línea/bloque
+
+\usepackage[autostyle]{csquotes}
+
+% Tikz
+
+\usepackage{tikz}
+\usetikzlibrary{babel}
+\usepackage{float}
+
+% Bibliografía
+
+\usepackage[sorting=none, style=apa, isbn=true]{biblatex}
+\addbibresource{bibliografia.bib}
+
+% Lorem ipsum
+
+\usepackage{blindtext}
 
 %-------------------------------------------------------------------------------
 %	NOTSOCLASSICTHESIS & FUENTES
@@ -159,6 +167,8 @@
 %-------------------------------------------------------------------------------
 %	CONTENIDO
 %-------------------------------------------------------------------------------
+
+%\includeonly{teoria-codigos}
 
 \begin{document}
 
@@ -220,22 +230,13 @@
 
 \newpage
 
-\chapter*{Resumen}
-
-\blindtext[2]
-
-\chapter*{Summary}
-
-\blindtext[6]
-
-\chapter*{Introducción}
-
-\input{introduccion.tex}
+\include{abstract}
+\include{introduccion}
 
 \part{Parte de prueba}
 
-\input{preliminares.tex}
-\input{teoria-codigos.tex}
+\include{preliminares}
+\include{teoria-codigos}
 
 
 %-------------------------------------------------------------------------------
