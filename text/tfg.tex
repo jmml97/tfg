@@ -129,13 +129,20 @@
   palatino=false,
 ]{notsoclassicthesis}
 
-\setmainfont[WordSpace=1.3]{EBGaramond}
-\setsansfont{Source Sans Pro}
-\renewfontface\chapterNumber[Scale=7, Color=000000]{EBGaramond}
+\setmainfont[
+%  WordSpace=1.1
+]{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\renewfontface\chapterNumber[Scale=7, Color=000000]{Libertinus Serif}
 \setmonofont[Scale=0.8]{Vera Mono}
 
 \usepackage[math-style=TeX]{unicode-math}
-\setmathfont{Garamond Math}[StylisticSet={3}]
+\setmathfont{Libertinus Math}[
+%  StylisticSet={3}
+]
+\setmathfont{TeX Gyre DejaVu Math}[Scale=MatchLowercase,range={cal}]
+
+\linespread{1.05}
 
 %-------------------------------------------------------------------------------
 %	TÍTULO
