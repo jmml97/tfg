@@ -38,7 +38,11 @@ Si las primeras \(k\) coordenadas forman un conjunto de información el código 
 %  \mathcal C = \left\{x \in \mathbb F_q^n : H \boldsymbol x^T = 0 %\right\}.
 %\end{equation}
 
-Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} \(\mathcal C^{\perp}\). 
+Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} \(\mathcal C^{\perp}\).
+
+\begin{definition}
+  El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \forall c \in \mathcal C\right\}.\]
+\end{definition}
 
 \begin{definition}
   Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de paridad} si es una matriz generadora de \(\mathcal C^{\perp}\).
@@ -57,3 +61,87 @@ El resultado anterior, junto a la definición anterior, nos conducen al siguient
 \begin{theorem}
   Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
 \end{theorem}
+
+Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
+
+\subsection{Distancias y pesos}
+
+\begin{definition}
+  La \textit{distancia de Hamming} \(\operatorname{d}(\symbf{x}, \symbf{y})\) entre dos vectores \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\) se define como el número de coordenadas en las que difieren \(\symbf{x}\) e \(\symbf{y}\).
+\end{definition}
+
+\begin{theorem}
+  La función de distancia \(\operatorname{d}(\symbf{x}, \symbf{y})\) verifica las siguientes propiedades.
+  \begin{enumerate}
+    \item No negatividad: \(\operatorname{d}(\symbf{x}, \symbf{y}) \geq 0\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
+    \item \(\operatorname{d}(\symbf{x}, \symbf{y}) = 0\) si y solo si \(\symbf{x} = \symbf{y}\).
+    \item Simetría: \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{d}(\symbf{y}, \symbf{x})\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
+    \item Desigualdad triangular: \(\operatorname{d}(\symbf{x}, \symbf{z}) \leq \operatorname{d}(\symbf{x}, \symbf{y}) + \operatorname{d}(\symbf{y}, \symbf{z})\) para todo elemento \(\symbf{x}, \symbf{y}, \symbf{z}\in \mathbb F_q^n\).
+  \end{enumerate}
+\end{theorem}
+
+La \textit{distancia (mínima)} de un código \(\mathcal C\) es la menor distancia posible entre dos palabras codificadas distintas. 
+Es importante a la hora de determinar la capacidad de corrección de errores del código \(\mathcal C\), pues como veremos más tarde, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
+
+\begin{definition}
+  El \textit{peso de Hamming} \(\operatorname{wt}(\symbf{x})\) de un vector \(\symbf{x}\) es el número de coordenadas distintas de cero de \(\symbf{x}\).
+\end{definition}
+
+\begin{theorem}
+  Si \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{wt}(\symbf{x} - \symbf{y})\).
+  Si \(\mathcal C\) es un código lineal, la distancia mímina es igual al peso mínimo de las palabras codificadas de \(\mathcal C\) distintas de cero.
+\end{theorem}
+
+Como consecuencia de este teorema —para códigos lineales— la distancia mínima también se llama \textit{peso mínimo} del código.
+Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a él como un \([n,k,d]\) código.
+
+\begin{definition}
+  Sea \(A_i(\mathcal C)\) —que abreviaremos \(A_i\)— el número de palabras codificadas de peso \(i\) en \(\mathcal C\).
+  Para cada \(0 \leq i \leq n\), la lista \(A_i\) se denomina \textit{distribución de peso} o \textit{espectro de peso} de \(\mathcal C\).
+\end{definition}
+
+\begin{example}
+  Sea \(\mathcal C\) el código binario con matriz generadora
+  \[
+    G = \begin{pmatrix}
+      1 & 1 & 0 & 0 & 0 & 0\\
+      0 & 0 & 1 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 1 & 1
+    \end{pmatrix}.
+  \]
+  Dado \((x_1, x_2, x_3)\), se tiene que \[(x_1, x_2, x_3) \begin{pmatrix}
+    1 & 1 & 0 & 0 & 0 & 0\\
+      0 & 0 & 1 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 1 & 1
+  \end{pmatrix} = (x_1, x_1, x_2, x_2, x_3, x_3),\] y por tanto este código codifica de la forma 
+  \[
+    000 \to 000000, \quad 
+    001 \to 000011,\quad 
+    010 \to 001100,\quad 
+    011 \to 001111,
+  \]
+  \[
+    100 \to 110000, \quad 
+    101 \to 110011,\quad 
+    110 \to 111100,\quad 
+    111 \to 111111.
+  \]
+  Luego la distribución de peso de \(\mathcal C\) es \(A_0 = A_6 = 1\) y \(A_2 = A_4 = 3\).
+  Usualmente solo se listan los \(A_i\) que son distintos de cero.
+\end{example}
+
+\begin{theorem}
+  Sea \(\mathcal C\) un \([n,k,d]\) código sobre \(\mathbb F_q\).
+  Entonces, \begin{enumerate}
+    \item \(A_0(\mathcal C) + A_1(\mathcal C) + \cdots + A_n(\mathcal C) = q^k\).
+    \item \(A_0(\mathcal C) = 1\) y \(A_1(\mathcal C) = A_2(\mathcal C) = \cdots = A_{d-1}(\mathcal C) = 0\).
+  \end{enumerate}
+\end{theorem}
+
+% TODO: teoremas sobre códigos que cumplen ciertas condiciones, no sé si merece Huffman 9-11
+
+
+
+\section{Códigos cíclicos}
+
+\section{Algoritmo de Peterson-Gorenstein-Zierler}
