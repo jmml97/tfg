@@ -138,9 +138,42 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
   \end{enumerate}
 \end{theorem}
 
+% Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
+
+\begin{theorem}
+  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
+  Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra codificada en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
+\end{theorem}
+
+\begin{corollary}
+  \label{cor:peso-minimo-columnas-dependientes}
+  Un código lineal tiene peso mínimo \(d\) si y solo si su matriz de paridad tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes.
+\end{corollary}
+
 % TODO: teoremas sobre códigos que cumplen ciertas condiciones, no sé si merece Huffman 9-11
 
+\section{Ejemplos de códigos}
 
+\subsection{Códigos de Hamming}
+
+Consideremos una matriz \(r \times (2^r - 1)\) cuyas columnas son los números \(1, 2, 3, \dots, 2^{r-1}\) escritos en binario. 
+Dicha matriz es la matriz de paridad de un \([n=2^{r-1}, k=n-r]\) código binario.
+A los códigos de esta forma los llamaremos códigos de Hamming de longitud \(n = 2^{r-1}\) y los denotamos por \(\mathcal H_r\) o \(\mathcal H_{2,r}\).
+
+Como las columnas son distintas y no dula, la distancia es al menos \(3\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}.
+Además, como las columnas correspondientes a los números \(1, 2, 3\) son linealmente independientes, la distancia mínima es 3 por el mismo corolario.
+Podemos decir por tanto que los códigos de Hamming \(\mathcal H_r\) son \([2^{r-1}, 2^{r-1-r}, 3]\) códigos binarios.
+
+Podemos generalizar esta definición y definir los códigos de Hamming \(\mathcal H_{q,r}\) sobre un cuerpo finito arbitrario \(\mathbb F_q\). 
+Para \(r \geq 2\) un código \(\mathcal H_{q,r}\) tiene matriz de paridad \(H_{q,r}\), cuyas columnas están compuestas por un vector no nulo por cada uno de los subespacios de dimensión \(1\) de \(\mathbb F_q^r\).
+Hay \((q^r-1)/(q-1)\) subespacios de dimensión \(1\), por lo que \(\mathcal H_{q,r}\) tiene longitud \(n = (q^r-1)/(q-1)\), dimensión \(n-r\) y redundancia \(r\).
+Como todas las columnas son independientes unas de otras, \(\mathcal H_{q,r}\) tiene peso mínimo al menos 3.
+Si sumamos dos vectores no nulos de dos subespacios unidimensionales distintos obtenemos un vector no nulo de un tercer subespacio unidimensional, por lo que \(\mathcal H_{q,r}\) tiene peso mínimo 3. 
+Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
+
+% TODO
+% - por qué los códigos de Hamming son importantes
+% - en qué se utilizan los códigos de Hamming
 
 \section{Códigos cíclicos}
 
