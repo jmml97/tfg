@@ -2,7 +2,125 @@
 
 En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos. Según \parencite{cohn_algebra_1982} y \parencite{cohn_algebra_1989} y el libro de Jacobson.
 
-\section{Álgebra Lineal}
+\section{Anillos}
+
+\begin{definition}
+  Un \textit{anillo} es un conjunto junto a dos operaciones: la suma \((+)\) y la multiplicación \((\cdot)\), que verifican las siguientes propiedades.
+  \begin{itemize}[itemsep=0pt]
+    \item Propiedad asociativa:
+    \[(x+y)+z = x + (y+z), \qquad (xy)z = x(yz).\]
+    \item Propiedad conmutativa para la suma:
+    \[x + y = y + x.\]
+    \item Existencia de elemento neutro:
+    \[x + 0 = x, \qquad x1 = x.\]
+    \item Existencia de elemento inverso para la suma:
+    \[x + (-x) = 0.\]
+    \item Propiedad distributiva para la multiplicación sobre la suma:
+    \[x(y+z) = xy + xz.\]
+  \end{itemize}
+
+  Si un anillo verifica la propiedad conmutativa para la multiplicación, es decir, \(xy = yx\), se dice que es un \textit{anillo conmutativo}.
+\end{definition}
+
+Dos anillos son \textit{isomorfos} si hay un \textit{isomorfismo} entre ellos, es decir, existe una biyección que preserva todas las operaciones.
+Decimos que los anillos isomorfos son idénticos, pues intrínsecamente son iguales.
+
+En  cualquier anillo \(R\) se verifica que \(0x = x0 = 0\) para todo \(x \in R\), ya que \(x0 = x(0+0) = x0 + x0\), de donde concluimos que \(x0 = 0\) e igualmente, \(0x = 0\).
+
+El \textit{anillo trivial} es aquel que solo tiene un elemento. 
+Necesariamente entonces \(1 = 0\), pero este es el único caso en el que ocurre. 
+Supongamos que \(1 = 0\). 
+Entonces, para cada elemento \(x\) del anillo se tiene que \(x = x1 = x0 = 0\), luego tiene un único elemento.
+
+% MAYBE: abreviar na = a + a + a (Cohn 137 [147])
+
+Un elemento \(a\) de un anillo se dice que es \textit{invertible} si existe un elemento \(a'\) en el anillo tal que \(aa' = a'a = 1\).
+A este elemento, que es único lo llamamos \textit{elemento inverso} de \(a\) y lo denotamos por \(a^{-1}\).
+% TODO: por qué es único (anillo está formado por monoide multiplicativo de R)
+El elemento \(0\) no puede tener inverso porque ya hemos visto que siempre que se multiplique por él se obtiene el \(0\).
+Los anillos en los que todo elemento distinto de 0 es invertible se llaman \textit{anillos de división}.
+
+% Dados dos anillos \(R\) y \(S\), decimos que \(S\) es un \textit{subanillo} de \(R\) si \(S\) está contenido en \(R\) y forma un anillo con las mismas operaciones que \(R\) (y con los mismos elemento neutro e identidad).
+
+% CITEME: definciiones de Niederreiter (13)
+
+\begin{definition}[Subanillo]
+  Un subconjunto \(S\) de un anillo \(R\) se denomina \textit{subanillo} si \(S\) es cerrado bajo las operaciones de suma y producto de \(R\) y forma un anillo con estas operaciones.
+\end{definition}
+
+\begin{definition}[Ideal]
+  Un subconjunto \(J\) de un anillo \(R\) se denomina \textit{ideal} si \(J\) es un subanillo de \(R\) y para todo \(a \in J\) y \(r \in R\) se verifica que \(ar \in J\) y \(ra \in J\).
+\end{definition}
+
+\begin{example}\hfill
+  \begin{itemize}
+    \item Sea \(R\) el cuerpo \(\mathbb Q\) de números racionales. Entonces, el conjunto \(\mathbb Z\) de los enteros es un subanillo de \(\mathbb Q\) pero no es un ideal porque, por ejemplo, \(1 \in \mathbb Z, 1/2 \in \mathbb Q\), pero \(1/2 \cdot 1 = 1/2 \notin \mathbb Z\). 
+    \item Sea \(R\) un anillo conmutativo, \(a \in R\) y sea \(J = \{ra : r \in R\}\). Entonces, \(J\) es un ideal.
+    % TODO: algún ejemplillo más?
+  \end{itemize}
+\end{example}
+
+\begin{definition}
+  Sea \(R\) un anillo conmutativo. Un ideal \(J\) de \(R\) se dice que es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = (a) = \{ra : r \in R\}\).
+\end{definition}
+
+% MAYBE: si el anillo no es conmutativo, ideales por la izquierda y por la derecha.
+
+Dado un elemento del anillo distinto de cero, podemos clasificarlo en dos tipos. 
+Sea \(a \neq 0\). 
+Si existe \(b \neq 0\) tal que \(ab\) o \(ba\) es cero, entonces \(a\) es un elemento \textit{divisor de cero}, y en caso contrario, un elemento \textit{regular}.
+
+Un anillo no trivial sin divisores de cero se dice que es \textit{entero}, un anillo entero conmutativo se denomina \textit{dominio de integridad}.
+
+Una propiedad importante de los elementos regulares es la ley de cancelación.
+\begin{proposition}
+  Si \(c\) es un elemento regular de un anillo \(R\) entonces para cada \(a, b \in R\), tales que \(ca = cb\) o bien \(ac = bc\), se tiene que \(a = b\).
+\end{proposition}
+
+\begin{definition}
+  Sea \(R\) un anillo. La \textit{característica} del anillo es el menor natural \(n\) tal que \(n1 = 0\).
+  Si no existe tal número, la característica del anillo es \(0\).  
+\end{definition}
+
+\section{Cuerpos finitos}
+
+\begin{definition}
+  Un \textit{cuerpo} es un anillo de división conmutativo.
+  Se dice que un cuerpo es \textit{finito} si tiene un número finito de elementos, al que llamamos \textit{orden} del cuerpo.
+\end{definition}
+
+% MAYBE: todo dominio de integridad finito es un cuerpo (Niederreiter, 12 [21])
+
+Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerpo bajo las operaciones de \(F\) se denomina \textit{subcuerpo} de \(F\).
+También podemos decir que \(F\) es una extensión de \(K\).
+
+De hecho todas las nociones que hemos definido para anillos (característica, ...) son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
+
+\begin{theorem}
+  % Cohn Vol 2, 63 [74]
+  \label{th:cuerpo-subcuerpo-primo-caracteristica}
+  Todo cuerpo \(F\) tiene al menos un subcuerpo \(P\), el subcuerpo primo de \(F\) que está contenido en cada subcuerpo de \(F\).
+  O bien \(F\) tiene característica 0 y \(P \cong \mathbb Q\) o bien \(F\) tiene característica \(p\), un número primo, y entonces \(P \cong \mathbb F_p\).
+\end{theorem}
+
+
+% CITEME ? Cohn Algebra Vol 2
+
+Mención especial merecen los cuerpos finitos.
+
+Un cuerpo con un número finito de elementos se denomina \textit{cuerpo finito} o \textit{cuerpo de Galois}, por su descubridor.
+
+Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\), el cuerpo de \(p\) elementos.
+Si \(u_1, \dots, u_n\) es una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
+Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
+
+\begin{lemma}
+  Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\) tiene \(p^n\) elementos.
+\end{lemma}
+
+Todo cuerpo finito \(F\) tiene claramente característica \(p\) en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} y su subcuerpo primo es \(\mathbb F_p\).
+
+\section{Anillos de polinomios}
 
 % \section{Monoides}
 
@@ -20,7 +138,3 @@ En este capítulo se detallan algunos conceptos básicos de Álgebra que son nec
 % \begin{definition}
 %   Un \textit{anillo}.
 % \end{definition}
-
-\section{Polinomios}
-
-\section{Cuerpos finitos}
