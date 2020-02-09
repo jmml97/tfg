@@ -177,4 +177,30 @@ Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
 
 \section{Códigos cíclicos}
 
+Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\boldsymbol c = c_0\dotsc_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) --obtenido a partir de \(\boldsymbol c\) haciendo desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)-- también está en \(\mathcal C\).
+Pensamos en la posición de las coordenadas de forma cíclica, al llegar a \(n -1\) comienzas de nuevo en \(0\).
+Al hablar de coordenadas consecutivas siempre tendremos en cuenta esta ciclicidad.
+
+% FIXME: revisar uso palabra "ciclicidad"
+
+Cuando trabajemos con códigos cíclicos representaremos las palabras codificadas como polinomios.
+Hay una biyección entre el vector \(\boldsymbol c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
+Obsérvese que dado \(c(x)\) descrito como antes, \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\), que equivaldría a representar la palabra codificada \(\boldsymbol c\) desplazada una posición a la derecha si \(x^n\) fuese igual a \(1\).
+
+Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también lo está \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
+Esto nos sugiere que el contexto para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
+
+Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclcos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
+En consecuencias, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
+
+\subsection{Factorización de \(x^n -1\)}
+
+Existen dos posibilidades: o bien \(x^n -1\) tiene factores irreducibles repetidos, o no.
+
+Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) es útil considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
+\(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema... 
+% TODO: referenciar teorema (Th 3.3.3, ECC)
+
+
+
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
