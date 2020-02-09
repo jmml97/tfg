@@ -122,6 +122,49 @@ Todo cuerpo finito \(F\) tiene claramente característica \(p\) en virtud del te
 
 \section{Anillos de polinomios}
 
+Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(x\).
+
+Trabajaremos con anillos de polinomios en cuerpos finitos.
+
+Denotamos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
+Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios.
+De hecho, es un dominio de integridad.
+
+Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
+
+El grado de un polinomio es el mayor grado de cualquier término con coeficiente distinto de cero.
+
+\begin{proposition}
+  Grado de sumas y productos
+  % TODO: (Cohn, 149 [159])
+\end{proposition}
+
+El coeficiente del término de mayor grado se denomina \textit{coeficiente líder}.
+
+Un polinomio es \textit{mónico} si su coeficiente líder es 1.
+Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
+Decimos que \(f(x)\) \textit{divide a} \(g(x)\), denotado por \(f(x) | g(x)\), si existe un polinomio \(h(x) \in \mathbb F_q[x]\) tal que \(g(x) = f(x)h(x)\).
+El polinomio \(f(x)\) se llama \textit{divisor} o \textit{factor} de \(g(x)\).
+El \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_q[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
+Lo denotamos por \(\operatorname{mcd}(f(x), g(x))\).
+Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
+
+% TODO: polinomios irreducibles
+
+% TODO: 
+
+\begin{theorem}
+  Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
+  \begin{enumerate}
+    \item Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_q[x]\) tales que \[
+      f(x) = g(x)h(x) + r(x), \quad \text{donde } \operatorname{gr} r(x) < \operatorname{gr} g(x) \text{ o } r(x) = 0. 
+    \]
+    \item Si \(f(x) = g(x)h(x) + r(x)\), entonces \[\operatorname{mcd}(f(x), g(x)) = \operatorname{mcd}(g(x), r(x)).\]
+  \end{enumerate}
+\end{theorem}
+
+\section{Automorfismos}
+
 % \section{Monoides}
 
 % \begin{definition}
