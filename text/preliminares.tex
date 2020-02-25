@@ -163,6 +163,75 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
   \end{enumerate}
 \end{theorem}
 
+% 3.4 Constructing finite fields
+
+Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
+
+\begin{theorem}
+  Sea \(f(x)\) un polinomio no constante. Entonces, 
+  \[
+    f(x) = p_1(x)^{a_1}p_2(x)^{a_2}\dots p_k(x)^{a_k},
+  \]
+  donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo producto por escalares y los elementos \(a_i\) son únicos.
+\end{theorem}
+
+Esto nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
+Pero es además un dominio de ideales principales.
+
+\begin{proof}
+  % TODO: demostración de que F_q[x] es un dominio de ideales principales.
+  % Ejercicio 153 (p. 102 [121]), F_q[x] es un anillo conmutativo con unidad y un dominio de integridad
+  % Ejercicio 166 (p. 106 [125]), cada ideal de F_q[x] es un ideal principal
+\end{proof}
+
+Para construir un cuerpo de característica \(p\) comenzamos con un polinomio \(f(x) \in \mathbb F_q[x]\) que es irreducible sobre \(\mathbb F_q\) y que tiene grado \(m\).
+Usando el algoritmo de euclides podemos demostrar que el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\) es un cuerpo, y de hecho, un cuerpo finito con \(q = p^m\) elementos.
+
+\begin{proof}
+  % TODO: demostración de que F_p[x]/(f(x)) es un cuerpo de q = p^m elementos
+  % Ejercicio 167 (p. 107 [126])
+\end{proof}
+
+Cada elemento de dicho anillo cociente es una clase lateral de la forma \(g(x) + (f(x))\), donde \(g(x)\) es único y tiene grado ocmo mucho \(m-1\).
+
+Escribiremos cada clase lateral como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
+\[
+  g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \iff g_{m-1}g_{m-2}\dots g_1g_0.
+\]
+
+Esta notación de vectorial nos permite realizar la suma en el cuerpo utilizando la suma habitual de los vectores.
+Multiplicar es una tarea a priori más complicada.
+Para multiplicar \(g_1(x) + (f(x))\) por \(g_2(x) + (f(x))\) primero utilizamos al algoritmo de división para escribir
+\[
+  g_1(x)g_2(x) = f(x)h(x) + r(x),
+\]
+donde como sabemos o bien \(\operatorname{gr} r(x) \leq m -1\) o bien \(r(x) = 0\).
+Puesto que estamos en el anillo cociente \(\mathbb F_p[x]/(f(x))\) nos queda
+\[
+  (g_1(x) + (f(x)))(g_2(x) + (f(x))) = r(x) + (f(x)).
+\]
+Esta notación es engorrosa, por lo que habitualmente operaremos en \(\alpha\) en vez de en \(x\) suponiendo que \(f(\alpha) = 0\).
+Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\).
+% TODO: correspondencia vectorial de los polinomios en alpha (3.4)
+En consecuencia, multiplicamos los polinomios en \(\alpha\) de la forma habitual y utilizamos la ecuación \(f(\alpha) = 0\) para reducir las potencias de \(\alpha\) de grado mayor a \(m-1\) a polinomios en \(\alpha\) de grado menor que \(m\).
+
+El conjunto \(\{0\alpha^{m-1} + 0\alpha^{m-2} + \dots + 0\alpha + a_0 \mid a_0 \in \mathbb F_p\} = \{a_0 \mid a_0 \in \mathbb F_p\}\) es el subcuerpo primo de \(\mathbb F_q\).
+
+Decimos que obtenemos \(\mathbb F_q\) a partir de \(\mathbb F_p\) yuxtaponiendo una raíz \(\alpha\) de \(f(x)\) a \(\mathbb F_p\).
+Esta raíz viene dada formalmente por \(\alpha = x + (f(x))\) en el anillo cociente \(\mathbb F_p[x]/(f(x))\).
+Por tanto, ya hemos visto antes que \(g(x) + (f(x)) = g(\alpha)\) y \(f(\alpha) = f(x + (f(x))) = f(x) + (f(x)) = 0 + (f(x))\).
+
+Un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\) es \textit{primitivo} si tiene una raíz que es un elemento primitivo de \(\mathbb F_q = \mathbb F_{p^m}\).
+Puede probarse que existen polinomios irreducibles de cualquier grado.
+% TODO: probar? referencia prueba? mejorar afirmación?
+
+\begin{theorem}
+  Para cualquier primo \(p\) y cualquier entero positivo \(m\), existe un cuerpo finito, único salvo isomorfismos, con \(q = p^m\) elementos.
+\end{theorem}
+
+% 3.7 Cyclotomic cosets and minimal polynomials
+
+
 \section{Automorfismos}
 
 % \section{Monoides}
