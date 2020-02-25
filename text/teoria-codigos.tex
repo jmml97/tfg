@@ -35,7 +35,7 @@ Veamos un ejemplo de matriz generadora. Consideremos la matriz \(G = \begin{psma
 Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). Esta matriz generadora se dice que está en \textit{forma estándar}.
 
 %Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \(r \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
-%  \mathcal C = \left\{x \in \mathbb F_q^n : H \boldsymbol x^T = 0 %\right\}.
+%  \mathcal C = \left\{x \in \mathbb F_q^n : H \mathbf x^T = 0 %\right\}.
 %\end{equation}
 
 Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} \(\mathcal C^{\perp}\).
@@ -177,21 +177,21 @@ Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
 
 \section{Códigos cíclicos}
 
-Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\boldsymbol c = c_0\dotsc_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) --obtenido a partir de \(\boldsymbol c\) haciendo desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)-- también está en \(\mathcal C\).
-Pensamos en la posición de las coordenadas de forma cíclica, al llegar a \(n -1\) comienzas de nuevo en \(0\).
-Al hablar de coordenadas consecutivas siempre tendremos en cuenta esta ciclicidad.
+Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) --obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)-- también está en \(\mathcal C\).
+Pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
+Al hablar de <<coordenadas consecutivas>> siempre tendremos en cuenta esta ciclicidad.
 
 % FIXME: revisar uso palabra "ciclicidad"
 
 Cuando trabajemos con códigos cíclicos representaremos las palabras codificadas como polinomios.
-Hay una biyección entre el vector \(\boldsymbol c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
-Obsérvese que dado \(c(x)\) descrito como antes, \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\), que equivaldría a representar la palabra codificada \(\boldsymbol c\) desplazada una posición a la derecha si \(x^n\) fuese igual a \(1\).
+Existe una biyección evidente entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
+Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra codificada \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
-Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también lo está \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
+Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también ha de estar \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
 Esto nos sugiere que el contexto para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
 
 Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclcos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
-En consecuencias, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
+En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
 
 \subsection{Factorización de \(x^n -1\)}
 
@@ -210,16 +210,16 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
   Sea \(\mathcal C\) un ideal de \(\mathcal R_n\), es decir, un código cíclico de longitud \(n\). Entonces:
   \begin{enumerate}
     \item Existe un único polinomio mónico \(g(x)\) de grado mínimo en \(\mathcal C\).\label{thi:corr-codc-div:monico-minimo}
-    \item El polinomio descrito en \ref{thi:corr-codc-div:monico-minimo} genera \(\mathcal C\), es decir, \(\mathcal C = \langle g(x)\rangle\).
-    \item El polinomio descrito en \ref{thi:corr-codc-div:monico-minimo} verifica que \(g(x) \mid x^n -1\).\label{thi:corr-codc-div:div-xn-1}
+    \item El polinomio descrito en (\ref{thi:corr-codc-div:monico-minimo}) genera \(\mathcal C\), es decir, \(\mathcal C = \langle g(x)\rangle\).
+    \item El polinomio descrito en (\ref{thi:corr-codc-div:monico-minimo}) verifica que \(g(x) \mid x^n -1\).\label{thi:corr-codc-div:div-xn-1}
   \end{enumerate}
   Sea \(k = n - \operatorname{gr} g(x)\) y sea \(g(x) = \sum_{i_0}^{n-k}g_ix^{i}\), donde \(g_{n-k} = 1\). Entonces:
   \begin{enumerate}[resume]
     %\item La dimensión de \(\mathcal C\) es \(k\) y \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\).
     %\item Cada elemento de \(\mathcal C\) se puede expresar como producto de \(g(x)\) por un polinomio \(f(x)\), donde \(f(x) = 0\) o bien \(\operatorname{gr} f(x) < k\).
-    \item Se verifica que \[
+    \item \label{thi:corr-codc-div:dim-ideal} Se verifica que \[
       \mathcal C = \langle g(x) \rangle = \{f(x)g(x) : \operatorname{gr} f(x) < k\}.
-    \]\label{thi:corr-codc-div:dim-ideal}
+    \]
     \item El conjunto \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\) y \(\mathcal C\) tiene dimensión \(k\).
     \item La matriz \(G\) dada por \begin{align*}
       G &= \begin{bmatrix}
@@ -240,14 +240,14 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
     donde cada fila es un desplazamiento cíclico de la fila previa, es una matriz generadora de \(\mathcal C\).
     \item Si \(\alpha\) es una raíz enésima primitiva de la unidad en alguna extensión de cuerpos de \(\mathbb F_q\) entonces \[
       g(x) = \prod_s M_{\alpha^s}(x),
-    \] siendo el producto sobre un subconjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
+    \] siendo dicho producto sobre un subconjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
   Veamos la demostración apartado por apartado.
   \begin{enumerate}
-    \item Supongamos que \(\mathcal C\) contiene dos polinomios mónicos distintos, \(g_1(x)\) y \(g_2(x)\), de grado mínimo \(r\). 
+    \item Supongamos que \(\mathcal C\) contiene dos polinomios mónicos distintos, \(g_1(x)\) y \(g_2(x)\), ambos de grado mínimo \(r\). 
     Entonces, \(g_1(x) - g_2(x)\) es un polinomio no nulo de grado menor que \(r\), lo que es absurdo. 
     Existe por tanto un único polinomio de grado mínimo \(r\) en \(\mathcal C\), como queríamos.
     \item Como \(g(x) \in \mathcal C\) y \(\mathcal C\) es un ideal, tenemos que \(\langle g(x)\rangle \subset \mathcal C\). 
@@ -255,20 +255,20 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
     Como podemos expresar \(r(x)\) de la forma \(r(x) = p(x) - q(x)g(x) \in \mathcal C\) y tiene grado menor que \(\operatorname{gr} g(x)\), al ser este último de grado mínimo necesariamente ha de darse que \(r(x) = 0\).
     Por tanto, \(p(x) = q(x)g(x) \in \langle g(x) \rangle\) y \(\mathcal C \subset \langle g(x) \rangle\).
     En consecuencia, \(\langle g(x) \rangle = \mathcal C\).
-    \item Por el algoritmo de división, al dividir \(x^n - 1\) por \(g(x)\) tenemos \(x^n - 1 = q(x)g(x) + r(x)\). De nuevo, o bien \(r(x) = 0\) o bien \(\operatorname{gr} r(x) < \operatorname{gr} g(x)\).
+    \item Por el algoritmo de división, al dividir \(x^n - 1\) por \(g(x)\) tenemos que \(x^n - 1 = q(x)g(x) + r(x)\). De nuevo, o bien \(r(x) = 0\) o bien \(\operatorname{gr} r(x) < \operatorname{gr} g(x)\).
     Como en \(\mathcal R_n\) se tiene que \(x^n - 1 = 0 \in \mathcal C\), necesariamente \(r(x) \in \mathcal C\).
     Esto supone una contradicción, a menos que \(r(x) = 0\).
     % FIXME: por qué supone una contradicción??? mirar 24-2-20 en el cuaderno
     En consecuencia, \(g(x) \mid x^n - 1\).
     \item El ideal generado por \(g(x)\) es \(\langle g(x) \rangle = \{f(x)g(x) : f(x) \in \mathcal R_n\}\).
     Queremos ver que podemos restringir los polinomios \(f(x)\) a aquellos que tengan grado menor que \(k\).
-    Por \ref{thi:corr-codc-div:div-xn-1} sabemos que \(x^n-1 = h(x)g(x)\) para algún polinomio \(h(x)\) de grado \(k = n - \operatorname{gr} g(x)\).
+    Por (\ref{thi:corr-codc-div:div-xn-1}) sabemos que \(x^n-1 = h(x)g(x)\) para algún polinomio \(h(x)\) que tenga grado \(k = n - \operatorname{gr} g(x)\).
     Dividimos entonces \(f(x)\) por este polinomio \(h(x)\) y por el algoritmo de división obtenemos \(f(x) = q(x)h(x) + r(x)\), donde \(\operatorname{gr} r(x) < \operatorname{gr} h(x) = k\).
     Entonces, tenemos \begin{align*}
       f(x)g(x) &= q(x)h(x)g(x) + r(x)g(x)\\
                &= q(x)(x^n - 1) + r(x)g(x),
     \end{align*}
-    luego \(f(x)g(x) = r(x)g(x)\), y como ya hemos visto que \(\operatorname{gr} r(x) < k\), tenemos lo que buscábamos.
+    luego \(f(x)g(x) = r(x)g(x)\), y puesto que antes ya hemos visto que \(\operatorname{gr} r(x) < k\), hemos obtenido lo que buscábamos.
     \item A partir de (\ref{thi:corr-codc-div:dim-ideal}) tenemos que el conjunto \[\{g(x), xg(x), \dots, x^{k-1}g(x)\}\] genera \(\mathcal C\), y como es linealmente independiente, forma una base de \(\mathcal C\).
     Esto demuestra también que la dimensión de \(\mathcal C\) es \(k\).
     \item La matriz \(G\) es matriz generadora de \(\mathcal C\) pues \[\{g(x), xg(x), \dots, x^{k-1}g(x)\}\] es una base de \(\mathcal C\).
@@ -293,15 +293,15 @@ Vamos a ver a continuación que dicho polinomio es único.
   Veamos que partiendo de (2) obtenemos (1). 
   Sea \(g_1(x)\) el polinomio mónico de menor grado en \(\mathcal C\).
   Por el teorema \ref{th:corr-cod-div}, \(g_1(x) \mid g(x)\) en \(\mathbb F_q[x]\) y \(\mathcal C = \langle g_1(x)\rangle\).
-  Como \(g_1(x) \in \mathcal C = \langle g(x) \rangle\), podemos expresar \(g_1(x) = g(x)a(x) \bmod x^n - 1\), luego tenemos que \(g_1(x) = g(x)a(x) + (x^n - 1)b(x)\) en \(\mathbb F_q[x]\).
+  Como \(g_1(x) \in \mathcal C = \langle g(x) \rangle\), podemos expresarlo como \(g_1(x) = g(x)a(x) \bmod x^n - 1\), luego tenemos que \(g_1(x) = g(x)a(x) + (x^n - 1)b(x)\) en \(\mathbb F_q[x]\).
   Por otro lado, como \(g(x) \mid (x^n - 1)\), tenemos que \(g(x) \mid g(x)a(x) + (x^n-1)b(x)\), o lo que es lo mismo, que \(g(x) \mid g_1(x)\). 
   En consecuencia, como \(g_1(x)\) y \(g(x)\) son ambos mónicos y dividen el uno al otro en \(\mathbb F_q[x]\), son necesariamente iguales.
 \end{proof}
 
 A este polinomio lo llamamos \textit{polinomio generador} del código cíclico \(\mathcal C\).
 Por el corolario anterior, este polinomio es tanto el polinomio mónico en \(\mathcal C\) de grado mínimo como el polinomio mónico que divide a \(x^n - 1\) y genera a \(\mathcal C\).
-Existe por tanto una correspondencia biunívoca entre los códigos cíclicos distintos de cero y los divisores de \(x^n - 1\) distintos de \(x^n - 1\).
-Para extender dicha correspondencia entre todos los códigos cíclicos en \(\mathcal R_n\) y todos los divisores mónicos de \(x^n - 1\) definimos como polinomio generador del código cíclico \(\{\boldsymbol 0\}\) el polinomio \(x^n - 1\). 
+Existe por tanto una correspondencia biunívoca entre los códigos cíclicos distintos de cero y los divisores de \(x^n - 1\) distintos de él mismo.
+Para extender dicha correspondencia entre todos los códigos cíclicos en \(\mathcal R_n\) y todos los divisores mónicos de \(x^n - 1\) definimos como polinomio generador del código cíclico \(\{\mathbf 0\}\) el polinomio \(x^n - 1\). 
 Esta correspondencia biyectiva nos conduce al siguiente corolario.
 
 \begin{corollary}
@@ -341,9 +341,19 @@ De igual forma, si \(m(x)\) y \(c(x)\) son los polinomios en \(\mathbb F_q[x]\) 
 
 \paragraph{Codificación sistemática}
 
-En este método, dado un mensaje 
+El polinomio \(m(x)\) asociado a un mensaje \(\mathbf m\) tendrá como mucho grado \(k -1\).
+Por tanto, el polinomio \(n^{n-k}m(x)\) tendrá como mucho grado \(n - 1\) y sus primeros \( n - k\) coeficientes son nulos.
+Por tanto, el mensaje está contenido en los coeficientes de \(x^{n-k}, x^{n-k+1}, \dots, x^{n-1}\).
+Por el algoritmo de división tenemos que
+\[x^{n-k}m(x) = g(x)a(x) + r(x), \qquad \text{donde } \operatorname{gr} r(x) < n - k \text{ o } r(x) = 0.\]
+Sea \(c(x) = x^{n-k}m(x) - r(x)\).
+Como \(c(x)\) es múltiplo de \(g(x)\), \(c(x) \in \mathcal C\).
+El polinomio \(c(x)\) difiere de \(x^{n-k}m(x)\) en los coeficientes de \(1, x, \dots, x^{n-k-1}\) ya que \(\operatorname{gr} r(x) < n-k\).
+Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los términos de grado al menos \(n - k\).
 
 \paragraph{Codificación sistemática usando el código dual}
+
+Aquí vamos
 
 \begin{example}
   Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Vamos a ver su codificación con los tres métodos descritos.
