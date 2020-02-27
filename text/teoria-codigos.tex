@@ -280,6 +280,7 @@ Este teorema nos muestra que existe un polinomio mónico \(g(x)\) que divide a \
 Vamos a ver a continuación que dicho polinomio es único.
 
 \begin{corollary}
+  \label{cor:pol-gen-unico}
   Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\) distinto de cero.
   Son equivalentes:
   \begin{enumerate}
@@ -358,5 +359,102 @@ Aquí vamos
 \begin{example}
   Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Vamos a ver su codificación con los tres métodos descritos.
 \end{example}
+
+\subsection{Idempotentes y multiplicadores}
+
+% TODO: something something sobre que R_n es semisimple y Wedderburn Structure Theorems
+
+Cada código cíclico en \(\mathcal R_n\) contiene un único idempotente que genera el ideal.
+Este elemento se denomina \textit{idempotente generador} del código cíclico.
+En el siguiente teorema probaremos este hecho y mostraremos además un método para determinar el idempotente generador de un código cíclico.
+
+\begin{theorem}
+  Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\). Entonces:
+  \begin{enumerate}
+    \item Existe un único idempotente \(e(x) \in \mathcal C\) tal que \(\mathcal C = \langle e(x)\rangle\).
+    \item Si \(e(x)\) es un idempotente no nulo en \(\mathcal C\), entonces \(\mathcal C = \langle e(x)\rangle\) si y solo si \(e(x)\) es la unidad de \(\mathcal C\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Si \(\mathcal C\) es el código cero, entonces el idempotente es el cero, con lo que (1) está claro y (2) no se aplica a este caso. 
+  Veamos entonces la demostración por apartados suponiendo que \(\mathcal C\) es distinto de cero.
+  \begin{enumerate}
+    \item Supongamos primero que \(e(x)\) es una unidad en \(\mathcal C\). 
+    Entonces, \(\langle e(x)\rangle \subset \mathcal C\), ya que \(\mathcal C\) es un ideal.
+    Si \(c(x) \in \mathcal C\), entonces \(c(x)e(x) = c(x)\) en \(\mathcal C\).
+    En consecuencia, \(\langle e(x)\rangle = \mathcal C\).
+    Por otro lado, supongamos que \(e(x)\) es un idempotente distinto de cero y tal que \(\mathcal C = \langle e(x)\rangle\).
+    Entonces, cada elemento \(c(x)\) lo podemos escribir como \(c(x) = f(x)e(x)\).
+    Pero se tiene que \(c(x)e(x) = f(x)(e(x))^2 = f(x)e(x) = c(x)\), luego \(e(x)\) es la unidad de \(\mathcal C\).
+    \item Tenemos que probar la existencia y la unicidad.
+    Comenzamos con la existencia.
+    Sea \(g(x)\) el polinomio generador dde \(\mathcal C\).
+    Entonces, sabemos que \(g(x) \mid (x^n - 1)\) por el teorema \ref{th:corr-cod-div}.
+    Tomemos \(h(x) = (x^n - 1)/g(x)\).
+    Sabemos que \(\operatorname{mcd}(g(x), h(x)) = 1\) en \(\mathbb F_q[x]\), ya que \(x^n - 1\) tiene todas sus raíces distintas.
+    En consecuencia, el algoritmo de Euclides %TODO: está explicado?
+    nos proporciona los polinomios \(a(x),b(x) \in \mathbb F_q[x]\) tales que \(a(x)g(x) + b(x)h(x) = 1\).
+    Llamemos \(e(x) \equiv a(x)g(x) \bmod x^n - 1\), que será el representante de dicha clase de equivalencia en \(\mathcal R_n\).
+    Entonces, en \(\mathcal R_n\),
+    \begin{align*}
+      e(x)^2 &\equiv (a(x)g(x))(1 - b(x)h(x)) \bmod x^n - 1\\
+        &\equiv a(x)g(x) - a(x)g(x)b(x)h(x) \bmod x^n - 1\\
+        &\equiv a(x)g(x) - a(x)b(x)(x^n - 1) \bmod x^n - 1\\
+        &\equiv a(x)g(x) \bmod x^n - 1\\
+        &\equiv e(x) \bmod x^n - 1.
+    \end{align*}
+    Por tanto, este elemento \(e(x)\) es idempotente.
+    Veamos ahora que si \(c(x) \in \mathcal C\), entonces \(c(x) = f(x)g(x)\), luego
+    \begin{align*}
+      c(x)e(x) &= f(x)g(x)(1 - b(x)h(x))\\
+        &\equiv f(x)g(x) \bmod x^n - 1\\
+        &\equiv c(x) \bmod x^n - 1,
+    \end{align*}
+    por lo que \(e(x)\) es la unidad en \(\mathcal C\).
+    En consecuencia, podemos deducir la existencia a partir de (2).
+    Veamos ahora la unicidad. Por (2), si tenemos dos elementos idempotentes \(e_1(x)\) y \(e_2(x)\) que generan \(\mathcal C\), ambos han de ser unidades, y en consecuencia se tiene que \(e_1(x) = e_1(x)e_2(x) = e_2(x)\), con lo que podemos deducir la unicidad.
+  \end{enumerate}
+\end{proof}
+
+Deducimos por tanto que un método para encontrar el idempotente generador \(e(x)\) de un código cíclico \(\mathcal C\) a partir del polinomio generador \(g(x)\) es resolver la ecuación \[1 = a(x)g(x) + b(x)h(x)\] para \(a(x)\) utilizando el algoritmo de Euclides, donde \(h(x) = (x^n - 1)/g(x)\).
+Entonces, reduciendo \(a(x)g(x)\) módulo \(x^n - 1\) obtenemos el idempotente \(e(x)\) que buscamos.
+De hecho, el siguiente teorema nos muestra además que podemos obtener \(g(x)\) a partir de \(e(x)\). 
+
+\begin{theorem}
+  Sea \(\mathcal C\) un código cíclico sobre \(\mathbb F_q\) con idempotente generador \(e(x)\).
+  Entonces, el polinomio generador de \(\mathcal C\) es \(g(x) = \operatorname{mcd}(e(x), x^n - 1)\), calculado en \(\mathbb F_q[x]\). 
+\end{theorem}
+
+\begin{proof}
+  Sea \(d(x) = \operatorname{mcd}(e(x), x^n - 1)\) en \(\mathbb F_q[x]\) y sea \(g(x)\) el polinomio generador de \(\mathcal C\).
+  Como \(d(x) \mid e(x)\), podemos expresarlo como \(e(x) = d(x)k(x)\) para algún \(k(x) \in \mathbb F_q[x]\).
+  Por tanto cada elemento de \(\mathcal C = \langle e(x) \rangle\) es también múltiplo de \(d(x)\), por lo que \(\mathcal C \subset \langle d(x) \rangle\).
+  Por el teorema \ref{th:corr-cod-div} tenemos que en \(\mathbb F_q[x]\), \(g(x) \mid (x^n -1)\) y que \(g(x) \mid e(x)\), ya que \(e(x) \in \mathcal C\).
+  Luego, por la proposición (TODO: proposición, ejercicio 158) tenemos que \(g(x) \mid d(x)\) y en consecuencia \(d(x) \in \mathcal C\).
+  Por tanto, \(\langle d(x) \rangle \subseteq \mathcal C\) y deducimos entonces que \(\mathcal C = \langle d(x) \rangle\).
+  Como \(d(x)\) es divisor mónico de \(x^n - 1\) y genera a \(\mathcal C\), necesariamente \(d(x) = g(x)\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}. 
+\end{proof}
+
+% MAYBE: ejemplos de códigos cíclicos 4.3.4, 4.3.5??
+
+El siguiente teorema nos muestra --igual que para el polinomio generador-- que el idempotente generador y sus primeros \(k - 1\) desplazamientos cíclicos forman una base de un código cíclico.
+
+\begin{theorem}
+  Sea \(\mathcal C\) un \([n, k]\) código cíclico con idempotente generador \(e(x) = \sum_{i=0}^{n-1}e_ix^i\).
+  Entonces, la matriz \(k \times n\)
+  \[
+    \begin{pmatrix*}
+      e_0 & e_1 & e_2 & \dots & e_{n-2} & e_{n-1} \\
+      e_{n-1} & e_0 & e_1 & \dots & e_{n-3} & e_{n-2} \\
+       & & & \vdots & & \\
+      e_{n-k+1} & e_{n-k+2} & e_{n-k+3} & \dots & e_{n-k-1} & e_{n-k}
+    \end{pmatrix*}
+  \] es una matriz generadora de \(\mathcal C\).
+\end{theorem}
+
+\begin{proof}
+  % TODO: demostración de este teorema
+\end{proof}
 
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
