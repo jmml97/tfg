@@ -195,11 +195,67 @@ En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es eq
 
 \subsection{Factorización de \(x^n -1\)}
 
+\label{sec:factorizacion-xn-1}
+
 Existen dos posibilidades: o bien \(x^n -1\) tiene factores irreducibles repetidos, o no.
+Por la proposición * sabemos que \(x^n - 1\) no tiene factores repetidos si y solo si \(q\) y \(n\) son primos relativos, algo que supondremos cierto en lo que sigue.
+% TODO: referenciar ejercicio 201, que aparecerá como proposición
 
 Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) es útil considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
-\(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema... 
+\(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema *.
 % TODO: referenciar teorema (Th 3.3.3, ECC)
+Definimos el \textit{orden} \(\operatorname{ord}_n(q)\) de \(q\) módulo \(n\) como el menor entero positivo \(a\) tal que \(q^{a} \equiv 1 \bmod n\).
+Si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\) pero no hay una extensión de cuerpos más pequeña de \(\mathbb F_q\) que la contenga.
+Como todos los \(\alpha^{i}\) son distintos dos a dos para \(0 \leq i < n\) y \((\alpha^{i})^n = 1\), entonces \(\mathbb F_{q^t}\) contiene todas las raíces de \(x^n - 1\).
+Por tanto, \(\mathbb F_{q^t}\) es lo que se conoce como \textit{cuerpo de descomposición} de \(x^n - 1\) sobre \(\mathbb F_q\).
+
+Los factores irreducibles de \(x^n - 1\) sobre \(\mathbb F_q\) deben ser el producto de los distintos polinomios minimales de las enésimas raíces de la unidad en \(\mathbb F_{q^t}\).
+Supongamos que \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\).
+Entonces \(\alpha = \gamma^d\) es una enésima raíz primitiva de la unidad, donde \(d = (q^t - 1)/n\).
+Las raíces del polinomio \(M_{a^s}(x)\) son \(\{\gamma^{ds}, \gamma^{dsq}, \gamma^{dsq^2}, \dots, \gamma^{dsq^{r-1}}\} = \{\alpha^s, \alpha^{sq}, \alpha^{sq^2}, \dots, \alpha^{sq^{r-1}}\}\), donde \(r\) es el menor entero positivo tal que \(dsq^r \equiv ds \bmod q^t - 1\) por el teorema *.
+% TODO: referenciar Theorem 3.7.6
+Pero \(dsq^r \equiv ds \bmod q^t - 1\) si y solo si \(sq^r \equiv s \bmod n\).
+
+Todo esto nos lleva a extender la definición de clases \(q\)-ciclotómicas que hemos introducido en la sección *.
+Sea \(s\) un entero tal que \(0 \leq s < n\).
+La \textit{clase \(q\)-ciclotómica de \(s\) módulo \(n\)} es el conjunto
+\[
+  C_s = \{s, sq, \dots, sq^{r-1}\} \bmod n, 
+\]
+donde \(r\) es el menor entero positivo tal que \(sq^r \equiv s \bmod n\).
+Se deduce entonces que \(C_s\) es la órbita de la permutación \(i \mapsto iq \bmod n\) que contiene a \(s\).
+Las distintas clases \(q\)-ciclotómicas módulo \(n\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, n - 1\}\).
+En la sección * estudiamos el caso particular en el que \(n = q^t - 1\).
+Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclotómica \(C_1\) módulo \(n\).
+
+\begin{theorem}
+  Sea \(n\) un entero positivo primo relativo con \(q\).
+  Sea \(t = \operatorname{ord}_n(q)\).
+  Sea \(\alpha\) una raíz enésima primitiva de la unidad en \(\mathbb F_{q^t}\).
+  Se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item Para cada entero \(s\) tal que \(0 \leq s < n\) el polinomio minimal de \(\alpha^s\) sobre \(\mathbb F_q\) es
+    \[
+      M_{\alpha^s}(x) = \prod_{i \in C_s}(x - \alpha^i),
+    \]
+    donde \(C_s\) es la clase \(q\)-ciclotómica de \(s\) módulo \(n\).
+    \item Los conjugados de \(\alpha^s\) son los elementos \(\alpha^i\) con \(i \in C_s\).
+    \item Se tiene que
+    \[
+      x^n - 1 = \prod_s M_{\alpha^s}(x)
+    \]
+    es la factorización de \(x^n - 1\) en factores irreducibles sobre \(\mathbb F_q\), donde \(s\) varía en un conjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO (en el libro no viene)
+\end{proof}
+
+\begin{theorem}
+  El tamaño de cada clase \(q\)-ciclotómica es un divisor de \(\operatorname{ord}_n(q)\).
+  Además, el tamaño de \(C_1\) es \(\operatorname{ord}_n(q)\).
+\end{theorem}
 
 \subsection{.}
 
@@ -238,7 +294,7 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
       %   \end{bmatrix}
     \end{align*}
     donde cada fila es un desplazamiento cíclico de la fila previa, es una matriz generadora de \(\mathcal C\).
-    \item Si \(\alpha\) es una raíz enésima primitiva de la unidad en alguna extensión de cuerpos de \(\mathbb F_q\) entonces \[
+    \item \label{thi:pol-generador-prod-minimal} Si \(\alpha\) es una enésima raíz primitiva de la unidad en alguna extensión de cuerpos de \(\mathbb F_q\) entonces \[
       g(x) = \prod_s M_{\alpha^s}(x),
     \] siendo dicho producto sobre un subconjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
   \end{enumerate}
@@ -360,7 +416,7 @@ Aquí vamos
   Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Vamos a ver su codificación con los tres métodos descritos.
 \end{example}
 
-\subsection{Idempotentes y multiplicadores}
+\section{Idempotentes, multiplicadores y ceros de un código cíclico}
 
 % TODO: something something sobre que R_n es semisimple y Wedderburn Structure Theorems
 
@@ -369,6 +425,7 @@ Este elemento se denomina \textit{idempotente generador} del código cíclico.
 En el siguiente teorema probaremos este hecho y mostraremos además un método para determinar el idempotente generador de un código cíclico.
 
 \begin{theorem}
+  \label{th:idempotente-unico-unidad}
   Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\). Entonces:
   \begin{enumerate}
     \item Existe un único idempotente \(e(x) \in \mathcal C\) tal que \(\mathcal C = \langle e(x)\rangle\).
@@ -454,7 +511,156 @@ El siguiente teorema nos muestra --igual que para el polinomio generador-- que e
 \end{theorem}
 
 \begin{proof}
-  % TODO: demostración de este teorema
+  Probar este resultado equivale a probar que el conjunto \(\{e(x), xe(x), \dots, x^{k-1}e(x)\}\) es una base de \(\mathcal C\).
+  Entonces, solo hay que probar que si \(a(x) \in \mathbb F_q[x]\) tiene grado menor que \(k\), tal que \(a(x)e(x) = 0\), se tiene que \(a(x) = 0\).
+  Sea \(g(x)\) el polinomio generador de \(\mathcal C\).
+  Si \(a(x)e(x) = 0\), entonces \(0 = a(x)e(x)g(x) = a(x)g(x)\), tal que \(e(x)\) es la unidad de \(\mathcal C\) según el teorema \ref{th:idempotente-unico-unidad}, y por tanto, si \(a(x)\) no es cero estaríamos contradiciendo el teorema \ref{th:corr-cod-div}.
 \end{proof}
 
+% MAYBE: sumas e intersecciones de códigos cíclicos
+
+Estamos ya en disposición de describir un conjunto especial de idempotentes, denominados \textit{idempotentes primitivos}.
+Estos elementos, una vez conocidos, nos permitirán obtener todos los idempotentes en \(\mathcal R_n\), y en consecuencia, todos los códigos cíclicos.
+
+Sea \(x^n - 1 = f_1(x)\cdots f_s(x)\), donde cada polinomio \(f_i(x)\) es irreducible sobre \(\mathbb F_q\) para \(1 \leq i \leq s\).
+Todos los \(f_i(x)\) son distintos, pues \(x^n - 1\) tiene raíces distintas.
+Sea \(\widehat{f_i}(x) = (x^n - 1)/f_i(x)\).
+En el teorema * veremos que los ideales \(\langle \widehat{f_i}(x)\rangle\) de \(\mathcal R_n\) son los ideales minimales de \(\mathcal R_n\).
+% FIXME: ideales minimales, definir
+Al idempotente generador de \(\langle \widehat{f_i}(x)\rangle\) lo denotaremos por \(\widehat{e_i}(x)\).
+Los elementos idempotentes \(\widehat{e_1}(x), \dots, \widehat{e_s}(x)\) se denominan \textit{primitivos idempotentes} de \(\mathcal R_n\).
+
+\begin{theorem}
+  En \(\mathcal R_n\) se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item Los ideales \(\langle \widehat{f_i}(x)\rangle\) para cada \(1 \leq i \leq s\) son todos los ideales minimales de \(\mathcal R_n\).
+    \item \(\mathcal R_n\) es el espacio vectorial suma directa de todos los \(\langle \widehat{f_i}(x)\rangle\) para \(1 \leq i \leq s\).
+    \item Si \(i \neq j\) entonces \(\widehat{e_i}(x)\widehat{e_j}(x) = 0\) en \(\mathcal R_n\).
+    \item La suma \(\sum_{i=1}^s \widehat{e_i}(x) = 1\) en \(\mathcal R_n\).
+    \item Los únicos idempotentes en \(\langle \widehat{f_i}(x)\rangle\) son \(0\) y \(\widehat{e_i}(x)\).
+    \item Si \(e(x)\) es un idempotente no nulo en \(\mathcal R_n\), entonces existe un subconjunto \(T\) de \(\{1, 2, \dots, s\}\) tal que \(e(x) = \sum_{i \in T}\widehat{e_i}(x)\) y \(\langle e(x) \rangle = \sum_{i \in T}\langle \widehat{f_i}(x)\rangle\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+El teorema * nos muestra que los ideales minimales del teorema * son extensiones de cuerpos de \(\mathbb F_q\).
+
+\begin{theorem}
+  Sea \(\mathcal M\) un ideal minimal de \(\mathcal R_n\).
+  Entonces \(\mathcal M\) es una extensión de cuerpos de \(\mathbb F_q\).
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+A continuación vamos a describir una permutación que lleva idempotentes de \(\mathcal R_n\) en idempotentes de \(\mathcal R_n\).
+Sra \(a\) un entero tal que \(\operatorname{mcd}(a, n) = 1\).
+La función \(\mu_a\) definida sobre \(\{0, 1, \dots, n -1\}\) por \(i\mu_a \equiv ia \bmod n\) es una permutación de las posiciones de coordenadas \(\{0, 1, \dots, n - 1\}\) de un código cíclico de longitud \(n\) y se denomina \textit{multiplicador}.
+Dado que los códigos cíclicos de longitud \(n\) se representan como ideales de \(\mathcal R_n\), para \(a > 0\) es conveniente interpretar que \(\mu_a\) actúa sobre \(\mathcal R_n\) como
+\begin{equation}
+  \label{eq:multiplier-rn}
+  f(x)\mu_a \equiv f(x^a) \bmod x^n - 1.
+\end{equation}
+
+Esta ecuación es consistente con la definición original de \(\mu_a\) pues \(x^i\mu_a = x^{ia} = x^{ia + jn}\) en \(\mathcal R_n\) para un entero \(j\) tal que \(0 \leq ia + jn\), pues \(x^n = 1\) en \(\mathcal R_n\).
+En otras palabras, \(x^i\mu_a = x^{ia \bmod n}\).
+Si \(a < 0\) podemos dar significado a \(f(x^a)\) en \(\mathcal R_n\) definiendo \(x^{i}\mu_a = x^{ia \bmod n}\), donde \(0 \leq ia \bmod n < n\).
+Con esta interpretación la ecuación \ref{eq:multiplier-rn} es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
+
+% TODO: Más sobre multiplicadores (4.3)
+
+% TODO: Ceros de un código cíclico (4.4)
+
+Como vimos en la sección \ref{sec:factorizacion-xn-1}, si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) es un cuerpo de descomposición de \(x^n - 1\).
+Por tanto, \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\), y \(x^n - 1 = \prod_{i=0}^{n-1}(x - \alpha^{i})\) es la factorización de \(x^n - 1\) sobre \(\mathbb F_{q^t}\).
+De hecho, \(x^n - 1 = \prod_s M_{\alpha^s}(x)\) es la factorización de \(x^n - 1\) en factores irreducibles sobre \(\mathbb F_q\), donde \(s\) varía en un conjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
+
+Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\) con polinomio generador \(g(x)\).
+Por los teoremas * y \ref{th:corr-cod-div}(\ref{thi:pol-generador-prod-minimal}), \(g(x) = \prod_{s}M_{\alpha^s}(x) = \prod_s\prod_{i \in C_s}(x - \alpha^{i})\), donde \(s\) de nuevo varía en un conjunto \(C_s\) de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
+Sea \(T = \cup_s C_s\) la unión de estas clases \(q\)-ciclotómicas.
+Las raíces de la unidad \(\mathcal Z = \{\alpha^{i} \mid i \in T\}\) se denominan los \textit{ceros} del código cíclico \(\mathcal C\) y los elementos \(\{\alpha^{i} \mid i \notin T\}\), los \textit{elementos no nulos} de \(\mathcal C\).
+El conjunto \(T\) se denomina \textit{conjunto característico} de \(\mathcal C\).
+Se deduce del teorema \ref{th:corr-cod-div} que \(c(x)\) pertenece a \(\mathcal C\) si y solo si \(c(\alpha^{i}) = 0\) para cada \(i \in T\).
+Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
+Del teorema \ref{th:corr-cod-div} concluimos que la dimensión de \(\mathcal C\) es \(n - |T|\), pues \(|T|\) es el grado de \(g(x)\).
+
+% MAYBE: ejemplo de esto??? Ejemplo 4.4.1
+
+\section{Códigos BCH}
+
+% 4.5 Mininum distance of cyclic codes (intro cota BCH)
+
+Para cualquier tipo de código es importante determinar la distancia mínima con el fin de determinar su capacidad de corrección de errores.
+Para ello es útil tener cotas en la distancia mínima, especialmente cotas inferiores.
+Existen varias cotas conocidas para la distancia mínima de un código cíclico, pero nos vamos a centrar en la cota de Bose-Ray-Chaudhuri-Hocquenghem, usualmente llamada la cota BCH para abreviar.
+Esta cota es esencial para comprender la definición de los códigos BCH que estudiaremos en breve.
+La cota BCH depende en los ceros del código y especialmente en la habilidad de encontrar cadenas de ceros <<consecutivos>>.
+
+Asumiremos que \(\mathcal C\) es un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) y que \(\alpha\) es una enésima raíz primitiva de la unidad en \(\mathbb F_{q^t}\), donde \(t = \operatorname{ord}_n(q)\).
+Recordemos que \(T\) es un conjunto característico de \(\mathcal C\) siempre y cuando los ceros de \(\mathcal C\) sean \(\{\alpha^{i} \mid i \in T\}\).
+Por tanto \(T\) ha de ser una unión de clases \(q\)-ciclotómicas módulo \(n\).
+Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} si existe un conjunto \(\{b, b + 1, \dots, b + s - 1\}\) de \(s\) enteros consecutivos tal que
+\[
+  \{b, b + 1, \dots, b + s - 1\} \bmod n = S \subseteq T.
+\]
+
+Antes de proceder con la cota BCH vamos a enunciar un lema --que será utilizado en la demostración de dicha cota-- sobre el determinante de una matriz de Vandermonde.
+Sean \(\alpha_1, \dots, \alpha_s\) elementos de un cuerpo \(\mathbb F\).
+La matriz \(s \times s\) \(V = (v_{i, j})\), onde \(v_{i,j} = \alpha_{j}^{i-1}\) se denomina \textit{matriz de Vandermonde}.
+La transpueste de esta matriz también es una matriz de Vandermonde.
+
+\begin{lemma}
+  El determinante de una matriz Vandermonde \(V\) viene dado por \(\operatorname{det}V = \prod_{1 \leq i < j \leq s}(\alpha_j - \alpha_i)\).
+  En particular, \(V\) es no singular si los elementos \(\alpha_1, \dots, \alpha_s\) son todos diferentes dos a dos.
+\end{lemma}
+
+Estamos ya en condiciones de presentar y demostrar el teorema de la cota BCH.
+
+\begin{theorem}[Cota BCH]
+  Sea \(\mathcal C\) un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) con conjunto característico \(T\).
+  Supongamos que \(\mathcal C\) tiene peso mínimo \(d\).
+  Asumamos que \(T\) contiene \(\delta - 1\) elementos consecutivos para algún entero \(\delta\).
+  Entonces, \(d \geq \delta\).
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+Los códigos BCH son códigos cíclicos diseñados para aprovechar la cota BCH.
+Nos gustaría poder construir un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) que tenga a la vez un peso mínimo grande y una dimensión grande.
+Tener un peso mínimo grande, basándonos en la cota BCH, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
+
+Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema *, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
+Por tanto, si quisiesemos que \(\mathcal C\) tenga distancia mínima de al menos \(\delta\), podemos escoger un conjunto característico tan pequeño como sea posible que sea una unión de clases \(q\)-ciclotómicas con \(\delta - 1\) elementos consecutivos.
+
+Sea \(\delta\) un entero tal que \(2 \leq \delta \leq n\). Un \textit{código BCH} \(\mathcal C\) sobre \(\mathbb F_q\) de longitud \(n\) y \textit{distancia mínima prevista} \(\delta\) es un código cíclico con conjunto característico
+\begin{equation}
+  \label{eq:bch-conjunto-caracteristico}
+  T = C_b \cup C_{b+1} \cup \dots \cup C_{b + \delta - 2},
+\end{equation}
+donde \(C_i\) es la clase \(q\)-ciclotómica módulo \(n\) que contiene a \(i\).
+Por la cota BCH este código tiene distancia mínima prevista al menos \(\delta\).
+
+\begin{theorem}
+  Un código BCH de distancia mínima prevista \(\delta\) tiene peso mínimo de al menos \(\delta\).
+\end{theorem}
+
+\begin{proof}
+  El conjunto característico \ref{eq:bch-conjunto-caracteristico} tiene al menos \(\delta - 1\) elementos.
+  El resultado se deduce de la cota BCH.
+\end{proof}
+
+Al variar el valor de \(b\) obtenemos distintos códigos con distancias mínimas y dimensiones diferentes.
+Cuando \(b = 1\) el código \(\mathcal C\) se dice que es un código BCH \textit{en sentido estricto}.
+Como con cualquier código cíclico, si \(n = q^t - 1\) entonces \(\mathcal C\) es un código BCH \textit{primitivo}.
+
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
+
+Fue desarrollado originalmente en 1960 por Peterson (cita) para decodificar códigos BCH binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios (cita).
+
+Es un procedimiento de cuatro pasos, de los cuales el segundo es el más complicado y tedioso.
