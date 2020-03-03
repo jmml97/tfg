@@ -2,7 +2,28 @@
 
 En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos. Según \parencite{cohn_algebra_1982} y \parencite{cohn_algebra_1989} y el libro de Jacobson.
 
-% TODO: definición básica de grupo
+\section{Monoides y grupos}
+
+\begin{definition}
+  Un \textit{monoide} es un conjunto \(S\) con un elemento \(e\) y una aplicación \(\mu: S^2 \to S\) tal que si \(\mu(x, y)\) es el resultado de aplicar \(\mu\) a la pareja de elementos \(x, y \in S\), se verifican: \begin{enumerate}
+    \item \(\mu(x, \mu(y, z)) = \mu(\mu(x, y), z)\) para todo \(x, y, z \in S\).
+    \item \(\mu(e, x) = \mu(x, e) = x\) para todo \(x \in S\).
+  \end{enumerate}
+\end{definition}
+
+Obsérvese que, por definición, un monoide siempre tiene al menos un elemento. A la aplicación \(\mu\) que actúa sobre parejas de elementos se le llama \textit{operación binaria} y al elemento \(e\), elemento neutro de \(\mu\).
+
+Un \textit{grupo} es un monoide en el que todo elemento tiene inverso.
+Un grupo que además verifica la propiedad conmutativa es un \textit{grupo abeliano}.
+
+\begin{definition}
+  Un \textit{grupo} \(G\) es un conjunto junto a una operación binaria \(xy\) definida sobre él que verifica las siguientes propiedades.
+  \begin{enumerate}
+    \item Propiedad asociativa: \((xy)z = x(yz)\) para todo \(x, y, z \in G\).
+    \item Existencia de elemento neutro \(1\): \(1x = x1 = x\) para todo \(x \in G\).
+    \item Existencia de elemento inverso: cada elemento \(x\) tiene un inverso \(x^{-1}\) tal que \(xx^{-1} = x^{-1}x = 1\). 
+  \end{enumerate}
+\end{definition}
 
 \section{Anillos}
 
@@ -170,26 +191,63 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 
 % Algoritmo de división
 
-\begin{theorem}
+\begin{theorem}[Algoritmo de división]
+  \label{th:algoritmo-division}
   Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
   \begin{enumerate}
-    \item Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_q[x]\) tales que \[
+    \item \label{thi:algoritmo-division-division} Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_q[x]\) tales que \[
       f(x) = g(x)h(x) + r(x), \quad \text{donde } \operatorname{gr} r(x) < \operatorname{gr} g(x) \text{ o } r(x) = 0. 
     \]
-    \item Si \(f(x) = g(x)h(x) + r(x)\), entonces \[\operatorname{mcd}(f(x), g(x)) = \operatorname{mcd}(g(x), r(x)).\]
+    \item \label{thi:algoritmo-division-mcd} Si \(f(x) = g(x)h(x) + r(x)\), entonces \[\operatorname{mcd}(f(x), g(x)) = \operatorname{mcd}(g(x), r(x)).\]
   \end{enumerate}
 \end{theorem}
 
 % TODO: algoritmo de euclides
-% TODO: proposicion ejercicio 158
+
+Podemos utilizar el algoritmo de división del apartado \ref{thi:algoritmo-division-division} del teorema \ref{th:algoritmo-division} junto al apartado \ref{thi:algoritmo-division-mcd} de ese mismo teorema para hallar el máximo común divisor de dos polinomios.
+Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy parecido a su homólogo para números enteros.
+
+\begin{theorem}[Algoritmo de Euclides]
+  Sean \(f(x)\) y \(g(x)\) dos polinomios en \(\mathbb F_q[x]\) con \(g(x)\) distinto de cero.
+  \begin{enumerate}
+    \item Realiza los siguientes pasos hasta que \(r_n(x) = 0\) para algún \(n\):
+    \begin{align*}
+      f(x) &= g(x)h_1(x) + r_1(x), \qquad \text{donde } \operatorname{gr} r_1(x) < \operatorname{gr} g(x),\\
+      g(x) &= r_1(x)h_2(x) + r_2(x), \qquad \text{donde } \operatorname{gr} r_2(x) < \operatorname{gr} r_1(x),\\
+      r_1(x) &= r_2(x)h_3(x) + r_3(x), \qquad \text{donde } \operatorname{gr} r_2(x) < \operatorname{gr} r_3(x),\\
+        &\,\vdots \\
+      r_{n-3}(x) &= r_{n-2}(x)h_{n-1}(x) + r_{n-1}(x), \ \text{donde } \operatorname{gr} r_{n-1}(x) < \operatorname{gr} r_{n-2}(x),\\
+      r_{n-2}(x) &= r_{n-1}(x)h_n(x) + r_n(x), \qquad \text{donde } r_n(x) = 0.
+    \end{align*} 
+    Entonces, \(\operatorname{mcd}(f(x), g(x)) = cr_{n-1}(x)\), donde \(c \in \mathbb F_q\) se escoge para que \(cr_{n-1}(x)\) sea mónico.
+    \item Existen polinomios \(a(x), b(x) \in \mathbb F_q[x]\) tales que 
+    \[
+      a(x)f(x) + b(x)g(x) = \operatorname{mcd}(f(x), g(x)).
+    \]
+  \end{enumerate}
+\end{theorem}
+
+La secuencia de pasos descrita termina porque en cada paso el grado del resto se reduce al menos en 1.
+
+A continuación vamos a comentar un resultado que nos será útil en el futuro.
+
+\begin{proposition}
+  Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
+  \begin{enumerate}
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor de \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\) entonces \(k(x)\) es divisor de \(\operatorname{mcd}(f(x), g(x))\).
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  % TODO
+\end{proof}
 
 % 3.3 Primitive elements
 
 \subsection{Elementos primitivos}
 
 El conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_q\) distintos de cero-- es un grupo.
-
-% TODO: explicar qué es un grupo
 
 \begin{theorem}
   \label{th:Fq-ast-cilcico}
@@ -400,20 +458,3 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
 \end{proof}
 
 \section{Automorfismos}
-
-% \section{Monoides}
-
-% \begin{definition}
-%   Un \textit{monoide} es un conjunto \(S\) con un elemento \(e\) y una aplicación \(\mu: S^2 \to S\) tal que si \(\mu(x, y)\) es el resultado de aplicar \(\mu\) a la pareja de elementos \(x, y \in S\), se verifican: \begin{enumerate}
-%     \item \(\mu(x, \mu(y, z)) = \mu(\mu(x, y), z)\) para todo \(x, y, z \in S\).
-%     \item \(\mu(e, x) = \mu(x, e) = x\) para todo \(x \in S\).
-%   \end{enumerate}
-% \end{definition}
-
-% Obsérvese que, por definición, un monoide siempre tiene al menos un elemento. A la aplicación \(\mu\) que actúa sobre parejas de elementos se le llama \textit{operación binaria} y al elemento \(e\), elemento neutro de \(\mu\).
-
-% \section{Anillos}
-
-% \begin{definition}
-%   Un \textit{anillo}.
-% \end{definition}
