@@ -45,11 +45,11 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 \end{definition}
 
 \begin{definition}
-  Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de paridad} si es una matriz generadora de \(\mathcal C^{\perp}\).
+  Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de control} si es una matriz generadora de \(\mathcal C^{\perp}\).
 \end{definition}
 
 \begin{proposition}
-  Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
+  Sea \(H\) la matriz de control de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
 \end{proposition}
 
 \begin{proof}
@@ -59,7 +59,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 El resultado anterior, junto a la definición anterior, nos conducen al siguiente teorema. 
 
 \begin{theorem}
-  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
+  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de control para \(\mathcal C\).
 \end{theorem}
 
 Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
@@ -80,6 +80,10 @@ Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal
   \end{enumerate}
 \end{theorem}
 
+\begin{proof}
+  
+\end{proof}
+
 La \textit{distancia (mínima)} de un código \(\mathcal C\) es la menor distancia posible entre dos palabras codificadas distintas. 
 Es importante a la hora de determinar la capacidad de corrección de errores del código \(\mathcal C\), pues como veremos más tarde, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
 
@@ -91,6 +95,10 @@ Es importante a la hora de determinar la capacidad de corrección de errores del
   Si \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{wt}(\symbf{x} - \symbf{y})\).
   Si \(\mathcal C\) es un código lineal, la distancia mímina es igual al peso mínimo de las palabras codificadas de \(\mathcal C\) distintas de cero.
 \end{theorem}
+
+\begin{proof}
+  
+\end{proof}
 
 Como consecuencia de este teorema —para códigos lineales— la distancia mínima también se llama \textit{peso mínimo} del código.
 Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a él como un \([n,k,d]\) código.
@@ -138,17 +146,29 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
   \end{enumerate}
 \end{theorem}
 
+\begin{proof}
+  
+\end{proof}
+
 % Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
 
 \begin{theorem}
-  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
+  Sea \(\mathcal C\) un código lineal con matriz de control \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
   Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra codificada en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
 \end{theorem}
 
+\begin{proof}
+  
+\end{proof}
+
 \begin{corollary}
   \label{cor:peso-minimo-columnas-dependientes}
-  Un código lineal tiene peso mínimo \(d\) si y solo si su matriz de paridad tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes.
+  Un código lineal tiene peso mínimo \(d\) si y solo si su matriz de control tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes.
 \end{corollary}
+
+\begin{proof}
+  
+\end{proof}
 
 % TODO: teoremas sobre códigos que cumplen ciertas condiciones, no sé si merece Huffman 9-11
 
@@ -157,7 +177,7 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
 \subsection{Códigos de Hamming}
 
 Consideremos una matriz \(r \times (2^r - 1)\) cuyas columnas son los números \(1, 2, 3, \dots, 2^{r-1}\) escritos en binario. 
-Dicha matriz es la matriz de paridad de un \([n=2^{r-1}, k=n-r]\) código binario.
+Dicha matriz es la matriz de control de un \([n=2^{r-1}, k=n-r]\) código binario.
 A los códigos de esta forma los llamaremos códigos de Hamming de longitud \(n = 2^{r-1}\) y los denotamos por \(\mathcal H_r\) o \(\mathcal H_{2,r}\).
 
 Como las columnas son distintas y no dula, la distancia es al menos \(3\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}.
@@ -165,7 +185,7 @@ Además, como las columnas correspondientes a los números \(1, 2, 3\) son linea
 Podemos decir por tanto que los códigos de Hamming \(\mathcal H_r\) son \([2^{r-1}, 2^{r-1-r}, 3]\) códigos binarios.
 
 Podemos generalizar esta definición y definir los códigos de Hamming \(\mathcal H_{q,r}\) sobre un cuerpo finito arbitrario \(\mathbb F_q\). 
-Para \(r \geq 2\) un código \(\mathcal H_{q,r}\) tiene matriz de paridad \(H_{q,r}\), cuyas columnas están compuestas por un vector no nulo por cada uno de los subespacios de dimensión \(1\) de \(\mathbb F_q^r\).
+Para \(r \geq 2\) un código \(\mathcal H_{q,r}\) tiene matriz de control \(H_{q,r}\), cuyas columnas están compuestas por un vector no nulo por cada uno de los subespacios de dimensión \(1\) de \(\mathbb F_q^r\).
 Hay \((q^r-1)/(q-1)\) subespacios de dimensión \(1\), por lo que \(\mathcal H_{q,r}\) tiene longitud \(n = (q^r-1)/(q-1)\), dimensión \(n-r\) y redundancia \(r\).
 Como todas las columnas son independientes unas de otras, \(\mathcal H_{q,r}\) tiene peso mínimo al menos 3.
 Si sumamos dos vectores no nulos de dos subespacios unidimensionales distintos obtenemos un vector no nulo de un tercer subespacio unidimensional, por lo que \(\mathcal H_{q,r}\) tiene peso mínimo 3. 
@@ -188,7 +208,7 @@ Existe una biyección evidente entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}
 Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra codificada \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
 Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también ha de estar \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
-Esto nos sugiere que el contexto para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
+Esto nos sugiere que el contexto adecuado para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
 
 Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclcos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
 En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
@@ -572,8 +592,6 @@ Si \(a < 0\) podemos dar significado a \(f(x^a)\) en \(\mathcal R_n\) definiendo
 Con esta interpretación la ecuación \ref{eq:multiplier-rn} es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
 
 % TODO: Más sobre multiplicadores (4.3)
-
-% TODO: Ceros de un código cíclico (4.4)
 
 Como vimos en la sección \ref{sec:factorizacion-xn-1}, si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) es un cuerpo de descomposición de \(x^n - 1\).
 Por tanto, \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\), y \(x^n - 1 = \prod_{i=0}^{n-1}(x - \alpha^{i})\) es la factorización de \(x^n - 1\) sobre \(\mathbb F_{q^t}\).
