@@ -2,6 +2,8 @@
 
 En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos. Según \parencite{cohn_algebra_1982} y \parencite{cohn_algebra_1989} y el libro de Jacobson.
 
+% TODO: definición básica de grupo
+
 \section{Anillos}
 
 \begin{definition}
@@ -66,6 +68,8 @@ Los anillos en los que todo elemento distinto de 0 es invertible se llaman \text
 
 % MAYBE: si el anillo no es conmutativo, ideales por la izquierda y por la derecha.
 
+Decimos que un ideal \(J\) es \textit{minimal} si no existe ningún otro ideal entre \(\{0\}\) y \(J\).
+
 Dado un elemento del anillo distinto de cero, podemos clasificarlo en dos tipos. 
 Sea \(a \neq 0\). 
 Si existe \(b \neq 0\) tal que \(ab\) o \(ba\) es cero, entonces \(a\) es un elemento \textit{divisor de cero}, y en caso contrario, un elemento \textit{regular}.
@@ -96,7 +100,11 @@ Una propiedad importante de los elementos regulares es la ley de cancelación.
 % MAYBE: todo dominio de integridad finito es un cuerpo (Niederreiter, 12 [21])
 
 Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerpo bajo las operaciones de \(F\) se denomina \textit{subcuerpo} de \(F\).
-También podemos decir que \(F\) es una extensión de \(K\).
+También podemos decir que \(F\) es una \textit{extensión} de \(K\).
+
+Las extensiones de cuerpos se suelen notar de la forma \(F/K\).
+Podemos decir que \(F\) es implícitamente un espacio vectorial sobre \(K\).
+Esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(E\).
 
 De hecho todas las nociones que hemos definido para anillos (característica, ...) son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
 
@@ -124,9 +132,9 @@ Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un to
 
 Todo cuerpo finito \(F\) tiene claramente característica \(p\) en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} y su subcuerpo primo es \(\mathbb F_p\).
 
-\section{Anillos de polinomios}
+\subsection{Anillos de polinomios sobre cuerpos finitos}
 
-Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(x\).
+Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\).
 
 Trabajaremos con anillos de polinomios en cuerpos finitos.
 
@@ -140,7 +148,12 @@ El grado de un polinomio es el mayor grado de cualquier término con coeficiente
 
 \begin{proposition}
   Grado de sumas y productos
-  % TODO: (Cohn, 149 [159])
+  % TODO: (Cohn, 149 [159]) (Ejercicio 158 de ECC)
+\end{proposition}
+
+\begin{proposition}
+  \label{prop:raices-factores-pol-Fq}
+  % TODO: Ejercicio 159 de ECC
 \end{proposition}
 
 El coeficiente del término de mayor grado se denomina \textit{coeficiente líder}.
@@ -155,7 +168,7 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 
 % TODO: polinomios irreducibles
 
-% TODO: 
+% Algoritmo de división
 
 \begin{theorem}
   Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
@@ -170,7 +183,53 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 % TODO: algoritmo de euclides
 % TODO: proposicion ejercicio 158
 
+% 3.3 Primitive elements
+
+\subsection{Elementos primitivos}
+
+El conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_q\) distintos de cero-- es un grupo.
+
+% TODO: explicar qué es un grupo
+
+\begin{theorem}
+  \label{th:Fq-ast-cilcico}
+  Se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item El grupo \(\mathbb F_q^*\) es cíclico de orden \(q - 1\) con la multiplicación de \(\mathbb F_q\).
+    \item Si \(\gamma\) es un generador de este grupo cíclico entonces
+    \[
+      \mathbb F_q = \{0, 1 = \gamma^0, \gamma, \gamma^2, \dots, \gamma^{q-2}\},
+    \] y \(\gamma^i = 1\) si y solo si \((q-1) \mid i\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO
+\end{proof}
+
+Cada generador \(\gamma\) de \(\mathbb F_q^*\) se llama \textit{elemento primitivo} de \(\mathbb F_q\).
+Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\) e \(i + j \equiv s \bmod q - 1\).
+
+\begin{theorem}
+  \label{th:el-Fq-raices-pol}
+  Los elementos de \(\mathbb F_q\) son las raíces del polinomio \(x^q - x\).
+\end{theorem}
+
+\begin{proof}
+  Sea \(\gamma\) un elemento primitivo de \(\mathbb F_q\).
+  Entonces, \(\gamma^{q-1} = 1\) por definición.
+  Por tanto, \((\gamma^i)^{q-1} = 1\) para todo \(i\) tal que \(0 \leq i \leq q - 2\).
+  En consecuencia, los elementos de \(\mathbb F_q^*\) son las raíces de \(x^{q-1}-1 \in \mathbb F_p[x]\) y en consecuencia, de \(x^q - x\).
+  Como \(0\) es raíz de \(x^q - x\), por la proposición \ref{prop:raices-factores-pol-Fq} sabemos que los elementos de \(\mathbb F_q\) son las raíces de \(x^q - x\), como queríamos.
+\end{proof}
+
+Un elemento \(\xi \in \mathbb F_q\) es una raíz enésima de la unidad si \(\xi^n = 1\), y es una raíz enésima primitiva de la unidad si además \(\xi^s \neq 1\) para todo s tal que \(0 < s < n\).
+Un elemento primitivo \(\gamma\) de \(\mathbb F_q\) es por tanto una raíz \((q-1)\)-ésima de la unidad.
+Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) contiene una raíz enésima primitiva de la unidad si y solo si \(n \mid (q - 1)\), en cuyo caso \(\gamma^{(q-1)/n}\) es dicha raíz.
+
 % 3.4 Constructing finite fields
+
+\subsection{Construcción de cuerpos finitos}
 
 Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
 
@@ -238,6 +297,107 @@ Puede probarse que existen polinomios irreducibles de cualquier grado.
 
 % 3.7 Cyclotomic cosets and minimal polynomials
 
+\subsection{Clases ciclotómicas y polinomios minimales}
+
+Sea \(\mathbb F_{q^t}/\mathbb F\) una extensión de cuerpos.
+Por el teorema \ref{th:el-Fq-raices-pol} cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(x^{q^t} - x\).
+Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
+Este polinomio se conoce como \textit{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
+En el siguiente teorema vamos a estudiar algunas propiedades de los polinomios minimales.
+
+\begin{theorem}
+  Sea \(\mathbb F_{q^t}/\mathbb F\) una extensión de cuerpos y sea \(\alpha\) un elemento de \(\mathbb F_{q^t}\) cuyo polinomio minimal es \(M_{\alpha} \in \mathbb F_q[x]\).
+  Se verifica:
+  \begin{enumerate}
+    \item El polinomio \(M_{\alpha}(x)\) es irreducible sobre \(\mathbb F_q\).
+    \item Si \(g(x)\) es cualqueir polinomio en \(\mathbb F_q[x]\) tal que \(g(\alpha) = 0\) entonces \(M_{\alpha}(x) \mid g(x)\).
+    \item El polinomio \(M_{\alpha}(x)\) es único.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO
+\end{proof}
+
+Si partimos de \(f(x)\), un polinomio irreducible sobre \(\mathbb F_q\) de grado \(r\), podemos considerar la extensión generada por una de las raíces de \(f(x)\) y obtendremos el cuerpo \(\mathbb F_{q^r}\).
+De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x)\) estarán en \(\mathbb F_{q^r}\).
+
+\begin{theorem}
+  Sea \(f(x)\) un polinomio irreducible mónico sobre \(\mathbb F_q\) de grado \(r\).
+  Entonces:
+  \begin{enumerate}
+    \item Todas las raíces de \(f(x)\) están en \(\mathbb F_{q^r}\) y en cualquier extensión de cuerpos de \(\mathbb F_q\) generada por una de sus raíces.
+    \item Podemos expresar \(f(x)\) como \(f(x) = \prod_{i=1}^r (x - \alpha_i)\), donde \(\alpha_i \in \mathbb F_{q^r}\) para \(1 \leq i \leq r\).
+    \item El polinomio \(f(x)\) divide a \(x^{q^r} - x\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO (ECC 113 [132] theorem 3.7.2)
+\end{proof}
+
+En particular este teorema se verifica para los polinomios minimales \(M_{\alpha}(x)\) sobre \(\mathbb F_q\), pues son mónicos irreducibles.
+
+\begin{theorem}
+  \label{th:prop-pol-minimal}
+  Sea \(\mathbb F_{q^t}/\mathbb F_q\) una extensión de cuerpos y sea \(\alpha\) un elemento de \(\mathbb F_{q^t}\) con polinomio minimal \(M_{\alpha}\) en \(\mathbb F_q[x]\).
+  Se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item El polinomio \(M_{\alpha}(x)\) divide a \(x^{q^t} - x\).
+    \item El polinomio \(M_{\alpha}(x)\) tiene raíces distintas dos a dos, todas en \(\mathbb F_{q^t}\).
+    \item El grado de \(M_{\alpha}(x)\) divide a \(t\).
+    \item Podemos expresar \(x^{q^t}- x = \prod_{\alpha}M_{\alpha}(x)\), donde \(\alpha\) varía entre los elementos de un subconjunto de \(\mathbb F_{q^t}\) que enumera los polinomios minimales de todos los elementos de \(\mathbb F_{q^t}\) una sola vez.
+    \item Podemos expresar \(x^{q^t}- x = \prod_{f}f(x)\), donde \(f\) varía entre todos los mónicos irreducibles sobre \(\mathbb F_q\) cuyo grado divide a \(t\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO (ECC teorema 3.7.3, p 113 [132])
+\end{proof}
+
+Dos elementos de \(\mathbb F_{q^t}\) que tienen el mismo polinomio minimal en \(\mathbb F_q[x]\) se llaman \textit{conjugados sobre} \(\mathbb F_q\).
+Es importante encontrar todos los conjugados de \(\alpha \in \mathbb F_q\), es decir, todas las raíces de \(M_{\alpha}(x)\).
+Sabemos por el teorema \ref{th:prop-pol-minimal} que las raíces de \(M_{\alpha}(x)\) son todas distintas dos a dos y que se encuentran en el cuerpo \(\mathbb F_{q^t}\).
+Podemos encontrar estas raíces con ayuda del siguiente teorema.
+
+\begin{theorem}
+  Sea \(f(x)\) un polinomio en \(\mathbb F_q[x]\) y sea \(\alpha\) una raíz de \(f(x)\) en una extensión \(\mathbb F_{q^t}/\mathbb F_q\).
+  Entonces se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item Evaluando el polinomio obtenemos que \(f(x^q) = f(x)^q\).
+    \item El elemento \(\alpha^q\) es también una raíz de \(f(x)\) en \(\mathbb F_q\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  % TODO (ECC teorema 3.7.4, p114 [133])
+\end{proof}
+
+Si aplicamos este teorema de forma consecutiva podremos obtener todas las raíces de \(M_{\alpha}(x)\), que serán de la forma \(\alpha, \alpha^q, \alpha^{q^2},\)\,etc.; secuencia que terminará tras \(r\) términos, cuando \(\alpha^{q^r} = \alpha\).
+
+Supongamos ahora que \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\).
+Entonces sabemos que \(\alpha = \gamma^s\) para algún \(s\).
+Por tanto, \(\alpha^{q^r} = \alpha\) si y solo si \(\gamma^{sq^r - s} = 1\).
+Por el teorema \ref{th:Fq-ast-cilcico} se tiene que \(sq^r \equiv s \bmod q^t - 1\).
+Basándonos en esta idea podemos definir la \textit{clase q-ciclotómica de s módulo} \(q^t - 1\) como el conjunto
+\[
+  C_s = \{s, sq, \dots, sq^{r-1}\} \bmod q^t - 1, 
+\]
+donde \(r\) es el menor entero positivo tal que \(sq^r \equiv s \bmod q^t - 1\).
+Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2\}\) en conjuntos disjuntos.
+
+% TODO: justificación de este teorema
+
+\begin{theorem}
+  Si \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\) entonces el polinomio minimal de \(\gamma^s\) sobre \(\mathbb F_q\) es
+  \[
+    M_{\gamma^s}(x) = \prod_{i \in C_s}(x - \gamma^i).
+  \]
+\end{theorem}
+
+\begin{proof}
+  % TODO ECC theorem 3.7.6 p.115 [133]
+\end{proof}
 
 \section{Automorfismos}
 
