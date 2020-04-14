@@ -1,31 +1,47 @@
 \chapter{Preliminares}
 
-En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos. Según \parencite{cohn_algebra_1982} y \parencite{cohn_algebra_1989} y el libro de Jacobson.
+En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos.
+Las fuentes principales de este capítulo son \parencite[cap. 3 y 6]{cohn_algebra_1982}, \parencite[cap. 3]{cohn_algebra_1989} y \parencite[cap. 2]{lidl_introduction_1986}.
 
-\section{Monoides y grupos}
+% \section{Monoides y grupos}
 
-\begin{definition}
-  Un \textit{monoide} es un conjunto \(S\) con un elemento \(e\) y una aplicación \(\mu: S^2 \to S\) tal que si \(\mu(x, y)\) es el resultado de aplicar \(\mu\) a la pareja de elementos \(x, y \in S\), se verifican: \begin{enumerate}
-    \item \(\mu(x, \mu(y, z)) = \mu(\mu(x, y), z)\) para todo \(x, y, z \in S\).
-    \item \(\mu(e, x) = \mu(x, e) = x\) para todo \(x \in S\).
-  \end{enumerate}
-\end{definition}
+% \begin{definition}
+%   Un \textit{monoide} es un conjunto \(S\) con un elemento \(e\) y una aplicación \(\mu: S^2 \to S\) tal que si \(\mu(x, y)\) es el resultado de aplicar \(\mu\) a la pareja de elementos \(x, y \in S\), se verifican: \begin{enumerate}
+%     \item \(\mu(x, \mu(y, z)) = \mu(\mu(x, y), z)\) para todo \(x, y, z \in S\).
+%     \item \(\mu(e, x) = \mu(x, e) = x\) para todo \(x \in S\).
+%   \end{enumerate}
+% \end{definition}
 
-Obsérvese que, por definición, un monoide siempre tiene al menos un elemento. A la aplicación \(\mu\) que actúa sobre parejas de elementos se le llama \textit{operación binaria} y al elemento \(e\), elemento neutro de \(\mu\).
+% Obsérvese que, por definición, un monoide siempre tiene al menos un elemento. A la aplicación \(\mu\) que actúa sobre parejas de elementos se le llama \textit{operación binaria} y al elemento \(e\), elemento neutro de \(\mu\).
 
-Un \textit{grupo} es un monoide en el que todo elemento tiene inverso.
-Un grupo que además verifica la propiedad conmutativa es un \textit{grupo abeliano}.
+% Un \textit{grupo} es un monoide en el que todo elemento tiene inverso.
+% Un grupo que además verifica la propiedad conmutativa es un \textit{grupo abeliano}.
 
-\begin{definition}
-  Un \textit{grupo} \(G\) es un conjunto junto a una operación binaria \(xy\) definida sobre él que verifica las siguientes propiedades.
-  \begin{enumerate}
-    \item Propiedad asociativa: \((xy)z = x(yz)\) para todo \(x, y, z \in G\).
-    \item Existencia de elemento neutro \(1\): \(1x = x1 = x\) para todo \(x \in G\).
-    \item Existencia de elemento inverso: cada elemento \(x\) tiene un inverso \(x^{-1}\) tal que \(xx^{-1} = x^{-1}x = 1\). 
-  \end{enumerate}
-\end{definition}
+% \begin{definition}
+%   Un \textit{grupo} \(G\) es un conjunto junto a una operación binaria \(xy\) definida sobre él que verifica las siguientes propiedades.
+%   \begin{enumerate}
+%     \item Propiedad asociativa: \((xy)z = x(yz)\) para todo \(x, y, z \in G\).
+%     \item Existencia de elemento neutro \(1\): \(1x = x1 = x\) para todo \(x \in G\).
+%     \item Existencia de elemento inverso: cada elemento \(x\) tiene un inverso \(x^{-1}\) tal que \(xx^{-1} = x^{-1}x = 1\). 
+%   \end{enumerate}
+% \end{definition}
 
 \section{Anillos}
+
+Por anillo entendemos un conjunto \(R\) junto a dos operaciones binarias: \(x + y\), llamada \textit{suma}, y \(xy\), llamada \textit{producto}, tales que:
+
+\begin{enumerate}
+  \item \(R\) es un grupo abeliano con la suma.
+  \item \(R\) es un monoide con el producto.
+  \item La suma y el producto están relacionadas mediante la propiedad distributiva:
+  \[
+    (x+y)z = xz + yz, \qquad x(y+z) = xy + xz.
+  \]
+\end{enumerate}
+
+El elemento neutro para la suma se llama \textit{cero} y se escribe \(0\), mientras que el elemento neutro para el producto se llama \textit{uno} o \textit{la unidad} y se escribe \(1\).
+El inverso de la suma para \(x\) se denota \(-x\).
+A continuación vamos a dar una definición completa de anillo, sin depender de remisiones a las definiciones de grupo y monoide.
 
 \begin{definition}
   Un \textit{anillo} es un conjunto junto a dos operaciones: la suma \((+)\) y la multiplicación \((\cdot)\), que verifican las siguientes propiedades.
@@ -46,7 +62,6 @@ Un grupo que además verifica la propiedad conmutativa es un \textit{grupo abeli
 \end{definition}
 
 Dos anillos son \textit{isomorfos} si hay un \textit{isomorfismo} entre ellos, es decir, existe una biyección que preserva todas las operaciones.
-Decimos que los anillos isomorfos son idénticos, pues intrínsecamente son iguales.
 
 En  cualquier anillo \(R\) se verifica que \(0x = x0 = 0\) para todo \(x \in R\), ya que \(x0 = x(0+0) = x0 + x0\), de donde concluimos que \(x0 = 0\) e igualmente, \(0x = 0\).
 
@@ -58,7 +73,7 @@ Entonces, para cada elemento \(x\) del anillo se tiene que \(x = x1 = x0 = 0\), 
 % MAYBE: abreviar na = a + a + a (Cohn 137 [147])
 
 Un elemento \(a\) de un anillo se dice que es \textit{invertible} si existe un elemento \(a'\) en el anillo tal que \(aa' = a'a = 1\).
-A este elemento, que es único lo llamamos \textit{elemento inverso} de \(a\) y lo denotamos por \(a^{-1}\).
+A este elemento, que es único, lo llamamos \textit{elemento inverso} de \(a\) y lo denotamos por \(a^{-1}\).
 % TODO: por qué es único (anillo está formado por monoide multiplicativo de R)
 El elemento \(0\) no puede tener inverso porque ya hemos visto que siempre que se multiplique por él se obtiene el \(0\).
 Los anillos en los que todo elemento distinto de 0 es invertible se llaman \textit{anillos de división}.
@@ -68,12 +83,14 @@ Los anillos en los que todo elemento distinto de 0 es invertible se llaman \text
 % CITEME: definciiones de Niederreiter (13)
 
 \begin{definition}[Subanillo]
-  Un subconjunto \(S\) de un anillo \(R\) se denomina \textit{subanillo} si \(S\) es cerrado bajo las operaciones de suma y producto de \(R\) y forma un anillo con estas operaciones.
+  Un subconjunto \(S\) de un anillo \(R\) se denomina \textit{subanillo} si \(S\) contiene a los elementos neutros de la suma y el producto de \(R\), es cerrado bajo dichas operaciones y forma un anillo con ellas.
 \end{definition}
 
 \begin{definition}[Ideal]
-  Un subconjunto \(J\) de un anillo \(R\) se denomina \textit{ideal} si \(J\) es un subanillo de \(R\) y para todo \(a \in J\) y \(r \in R\) se verifica que \(ar \in J\) y \(ra \in J\).
+  Un subconjunto \(J\) de un anillo \(R\) se denomina \textit{ideal} si para todo \(a \in J\) y \(r \in R\) se verifica que \(ar \in J\) y \(ra \in J\).
 \end{definition}
+
+% TODO: Ideales a izquierda y derecha
 
 \begin{example}\hfill
   \begin{itemize}
@@ -95,7 +112,7 @@ Dado un elemento del anillo distinto de cero, podemos clasificarlo en dos tipos.
 Sea \(a \neq 0\). 
 Si existe \(b \neq 0\) tal que \(ab\) o \(ba\) es cero, entonces \(a\) es un elemento \textit{divisor de cero}, y en caso contrario, un elemento \textit{regular}.
 
-Un anillo no trivial sin divisores de cero se dice que es \textit{entero}, un anillo entero conmutativo se denomina \textit{dominio de integridad}.
+Un anillo no trivial sin divisores de cero se dice que es \textit{entero}, mientras que un anillo entero conmutativo se denomina \textit{dominio de integridad}.
 
 Una propiedad importante de los elementos regulares es la ley de cancelación.
 \begin{proposition}
@@ -113,6 +130,8 @@ Una propiedad importante de los elementos regulares es la ley de cancelación.
 
 \section{Cuerpos finitos}
 
+A continuación vamos a introducir el concepto de cuerpo así como otras definiciones y propiedades relevantes.
+
 \begin{definition}
   Un \textit{cuerpo} es un anillo de división conmutativo.
   Se dice que un cuerpo es \textit{finito} si tiene un número finito de elementos, al que llamamos \textit{orden} del cuerpo.
@@ -124,26 +143,24 @@ Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerp
 También podemos decir que \(F\) es una \textit{extensión} de \(K\).
 
 Las extensiones de cuerpos se suelen notar de la forma \(F/K\).
-Podemos decir que \(F\) es implícitamente un espacio vectorial sobre \(K\).
-Esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(E\).
+\(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
 
-De hecho todas las nociones que hemos definido para anillos (característica, ...) son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
+Todas las nociones que hemos definido para anillos, como puede ser la característica, son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
 
 \begin{theorem}
   % Cohn Vol 2, 63 [74]
   \label{th:cuerpo-subcuerpo-primo-caracteristica}
   Todo cuerpo \(F\) tiene al menos un subcuerpo \(P\), el subcuerpo primo de \(F\) que está contenido en cada subcuerpo de \(F\).
-  O bien \(F\) tiene característica 0 y \(P \cong \mathbb Q\) o bien \(F\) tiene característica \(p\), un número primo, y entonces \(P \cong \mathbb F_p\).
+  O bien \(F\) tiene característica \(0\) y \(P \cong \mathbb Q\), o bien \(F\) tiene característica \(p\), un número primo, y entonces \(P \cong \mathbb F_p\).
 \end{theorem}
 
 
 % CITEME ? Cohn Algebra Vol 2
 
-Mención especial merecen los cuerpos finitos.
+Un cuerpo con un número finito de elementos se denomina \textit{cuerpo finito} o \textit{cuerpo de Galois}, en honor a Évariste Galois, uno de los primeros matemáticos en trabajar con ellos. Los notaremos por \(\mathbb F_p\), donde \(p\) es el número de elementos del cuerpo.
+Vamos a centrar el estudio de los cuerpos en los cuerpos finitos pues los vamos a utilizar de forma prominente cuando trabajemos con códigos.
 
-Un cuerpo con un número finito de elementos se denomina \textit{cuerpo finito} o \textit{cuerpo de Galois}, por su descubridor.
-
-Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\), el cuerpo de \(p\) elementos.
+Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\).
 Si \(u_1, \dots, u_n\) es una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
 Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
 
@@ -151,34 +168,32 @@ Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un to
   Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\) tiene \(p^n\) elementos.
 \end{lemma}
 
-Todo cuerpo finito \(F\) tiene claramente característica \(p\) en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} y su subcuerpo primo es \(\mathbb F_p\).
+Todo cuerpo finito \(F\) tiene característica \(p\) —un primo— en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} y su subcuerpo primo será \(\mathbb F_p\).
+
+% TODO: añadir que todos los cuerpos finitos tienen cardinal p^r, donde p es la característica
 
 \subsection{Anillos de polinomios sobre cuerpos finitos}
 
-Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\).
-
-Trabajaremos con anillos de polinomios en cuerpos finitos.
+Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\). En particular, vamos a trabajar con con anillos de polinomios en cuerpos finitos, pues como ya hemos comentado anteriormente, son los que necesitaremos para la teoría de códigos.
 
 Denotamos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
 Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios.
 De hecho, es un dominio de integridad.
 
 Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
+El \textit{grado} de un polinomio es el mayor grado de cualquier término con coeficiente distinto de cero.
 
-El grado de un polinomio es el mayor grado de cualquier término con coeficiente distinto de cero.
-
-\begin{proposition}
-  Grado de sumas y productos
-  % TODO: (Cohn, 149 [159]) (Ejercicio 158 de ECC)
-\end{proposition}
+% \begin{proposition}
+%   Grado de sumas y productos
+%   % MAYBE: (Cohn, 149 [159])
+% \end{proposition}
 
 \begin{proposition}
   \label{prop:raices-factores-pol-Fq}
-  % TODO: Ejercicio 159 de ECC
+  % MAYBE: Ejercicio 159 de ECC
 \end{proposition}
 
 El coeficiente del término de mayor grado se denomina \textit{coeficiente líder}.
-
 Un polinomio es \textit{mónico} si su coeficiente líder es 1.
 Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
 Decimos que \(f(x)\) \textit{divide a} \(g(x)\), denotado por \(f(x) | g(x)\), si existe un polinomio \(h(x) \in \mathbb F_q[x]\) tal que \(g(x) = f(x)h(x)\).
@@ -189,9 +204,9 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 
 % TODO: polinomios irreducibles
 
-% Algoritmo de división
+% Algoritmo de división (cambiado nombre del teorema para quitar algoritmo de división por sugerencia de Gabriel)
 
-\begin{theorem}[Algoritmo de división]
+\begin{theorem}
   \label{th:algoritmo-division}
   Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
   \begin{enumerate}
@@ -202,9 +217,7 @@ Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
   \end{enumerate}
 \end{theorem}
 
-% TODO: algoritmo de euclides
-
-Podemos utilizar el algoritmo de división del apartado \ref{thi:algoritmo-division-division} del teorema \ref{th:algoritmo-division} junto al apartado \ref{thi:algoritmo-division-mcd} de ese mismo teorema para hallar el máximo común divisor de dos polinomios.
+Podemos utilizar este resultado para hallar el máximo común divisor de dos polinomios.
 Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy parecido a su homólogo para números enteros.
 
 \begin{theorem}[Algoritmo de Euclides]
@@ -228,7 +241,6 @@ Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy pareci
 \end{theorem}
 
 La secuencia de pasos descrita termina porque en cada paso el grado del resto se reduce al menos en 1.
-
 A continuación vamos a comentar un resultado que nos será útil en el futuro.
 
 \begin{proposition}
@@ -239,15 +251,11 @@ A continuación vamos a comentar un resultado que nos será útil en el futuro.
   \end{enumerate}
 \end{proposition}
 
-\begin{proof}
-  % TODO
-\end{proof}
-
 % 3.3 Primitive elements
 
 \subsection{Elementos primitivos}
 
-El conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_q\) distintos de cero-- es un grupo.
+Vamos a ver que el conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_q\) distintos de cero-- es un grupo.
 
 \begin{theorem}
   \label{th:Fq-ast-cilcico}
@@ -296,27 +304,29 @@ Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sob
   \[
     f(x) = p_1(x)^{a_1}p_2(x)^{a_2}\dots p_k(x)^{a_k},
   \]
-  donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo producto por escalares y los elementos \(a_i\) son únicos.
+  donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
 \end{theorem}
 
 Esto nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
 Pero es además un dominio de ideales principales.
 
-\begin{proof}
-  % TODO: demostración de que F_q[x] es un dominio de ideales principales.
+%\begin{proof}
+  % Me ha dicho Gabriel que no es necesario
+  % NOPE: demostración de que F_q[x] es un dominio de ideales principales.
   % Ejercicio 153 (p. 102 [121]), F_q[x] es un anillo conmutativo con unidad y un dominio de integridad
   % Ejercicio 166 (p. 106 [125]), cada ideal de F_q[x] es un ideal principal
-\end{proof}
+%\end{proof}
 
 Para construir un cuerpo de característica \(p\) comenzamos con un polinomio \(f(x) \in \mathbb F_q[x]\) que es irreducible sobre \(\mathbb F_q\) y que tiene grado \(m\).
 Usando el algoritmo de euclides podemos demostrar que el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\) es un cuerpo, y de hecho, un cuerpo finito con \(q = p^m\) elementos.
 
 \begin{proof}
-  % TODO: demostración de que F_p[x]/(f(x)) es un cuerpo de q = p^m elementos
+  % Me ha dicho Gabriel que no es necesario
+  % NOPE: demostración de que F_p[x]/(f(x)) es un cuerpo de q = p^m elementos
   % Ejercicio 167 (p. 107 [126])
 \end{proof}
 
-Cada elemento de dicho anillo cociente es una clase lateral de la forma \(g(x) + (f(x))\), donde \(g(x)\) es único y tiene grado ocmo mucho \(m-1\).
+Cada elemento de dicho anillo cociente es una clase lateral de la forma \(g(x) + (f(x))\), donde \(g(x)\) es único y tiene grado como mucho \(m-1\).
 
 Escribiremos cada clase lateral como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
 \[
@@ -357,7 +367,7 @@ Puede probarse que existen polinomios irreducibles de cualquier grado.
 
 \subsection{Clases ciclotómicas y polinomios minimales}
 
-Sea \(\mathbb F_{q^t}/\mathbb F\) una extensión de cuerpos.
+Sea \(\mathbb F_{q^t}/\mathbb F_q\) una extensión de cuerpos.
 Por el teorema \ref{th:el-Fq-raices-pol} cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(x^{q^t} - x\).
 Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
 Este polinomio se conoce como \textit{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
