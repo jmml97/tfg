@@ -1,21 +1,37 @@
 \chapter{Fundamentos de teoría de códigos}
 
-La teoría de códigos (...). Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[1-48]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
+La teoría de códigos (...). Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[cap. 1, 3-5]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
 
 \section{Códigos lineales}
 
-Vamos a comenzar nuestro estudio con los códigos lineales, pues son los más sencillos de comprender. Consideremos el espacio vectorial de todas las \(n\)-tuplas sobre el cuerpo finito \(\mathbb F_q\), al que denotaremos en lo que sigue como \(\mathbb F_q^n\). A los elementos \((a_1, \dots, a_n)\) de \(\mathbb F_q^n\) los notaremos usualmente como \(a_1\!\cdots a_n\).
+Vamos a comenzar nuestro estudio con los códigos lineales, pues son los más sencillos de comprender. 
+Consideremos el espacio vectorial de todas las \(n\)-tuplas sobre el cuerpo finito \(\mathbb F_q\), al que denotaremos en lo que sigue como \(\mathbb F_q^n\). 
+A los elementos \((a_1, \dots, a_n)\) de \(\mathbb F_q^n\) los notaremos usualmente como \(a_1\!\cdots a_n\).
 
 \begin{definition}
-  Un \((n, M)\) \textit{código} \(\mathcal C\) sobre el cuerpo \(\mathbb F_q\) es un subconjunto de \(\mathbb F_q^n\) de tamaño \(M\). A los elementos de \(\mathcal C\) los llamaremos \textit{palabras codificadas} —o \textit{codewords} en inglés—.
+  Un \((n, M)\) \textit{código} \(\mathcal C\) sobre el cuerpo \(\mathbb F_q\) es un subconjunto de \(\mathbb F_q^n\) de tamaño \(M\). 
+  Si no hay riesgo de confusión lo denotaremos simplemente por \(\mathcal C\). 
+  A los elementos de \(\mathcal C\) los llamaremos \textit{palabras codificadas}, \textit{palabras código} o \textit{codewords} en inglés.
+  A \(n\) se le llama \(longitud\) del código.
 \end{definition}
 
-Es necesario añadir más estructura a los códigos para que sean de utilidad.
+Por ejemplo, un \((5,4)\) código sobre \(\mathbb F_2\) puede ser el formado por los siguientes elementos: \[
+  10101,\qquad
+  10010,\qquad
+  01110,\qquad
+  11111.
+\]
+Como se puede ver realmente un código es un objeto muy sencillo.
+Concluimos que necesario añadir más estructura a los códigos para que puedan ser de utilidad.
+
+% TODO: Ejemplo de un código que no es lineal
+% Quizás que ilustre por qué es necesario añadirles más estructura
 
 \begin{definition}
-  Decimos que un código \(\mathcal C\) es un código \textit{lineal de longitud \(n\) y rango \(k\)} —abreviado como \([n, k]\) \textit{lineal}— si dicho código es un subespacio vectorial de \(\mathbb F_q^n\) de dimensión \(k\).
+  Decimos que un código \(\mathcal C\) es un código \textit{lineal de longitud \(n\) y dimensión \(k\)} —abreviado como \([n, k]\)-\textit{lineal}, o como \([n, k]_q\)~-\textit{lineal} en caso de querer informar del cuerpo base— si dicho código es un subespacio vectorial de \(\mathbb F_q^n\) de dimensión \(k\).
 \end{definition}
 
+% TODO: Gabriel me comenta que ponga punto y seguido, aunque no sé si se refiere
 Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
 
 \begin{definition}
@@ -24,42 +40,52 @@ Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
 
 Veamos un ejemplo de matriz generadora. Consideremos la matriz \(G = \begin{psmallmatrix}
   1 & 1 & 0 \\ 0 & 1 & 1
-\end{psmallmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2)\). Dicha matriz genera un \([3, 2]\) código binario, pues dado \((x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
+\end{psmallmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2)\). 
+Dicha matriz genera un \([3, 2]\) código binario, pues dado \((x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
   1 & 1 & 0 \\ 0 & 1 & 1
 \end{pmatrix} = (x_1, x_1 + x_2, x_2),\] y por tanto este código codifica de la forma \[00 \to 000, \quad 01 \to 011,\quad 10 \to 110,\quad 11 \to 101.\]
+Observamos que la matriz \(G\) define una aplicación lineal de \(\mathbb F_2^k\) en \(\mathbb F_2^n\), de forma que el código obtenido es la imagen de dicha aplicación.
 
 \begin{definition}
-  Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
+  Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). 
+  Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
 \end{definition}
 
-Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). Esta matriz generadora se dice que está en \textit{forma estándar}.
+Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
+Esta matriz generadora se dice que está en \textit{forma estándar}.
+A partir de cualquier matriz generadora siempre es posible obtener una matriz en forma estándar realizando una permutación adecuada de las coordenadas.
+Esta matriz resultante no será una matriz generadora del código inicial, pero sí de un código equivalente.
 
 %Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \(r \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
 %  \mathcal C = \left\{x \in \mathbb F_q^n : H \mathbf x^T = 0 %\right\}.
 %\end{equation}
 
-Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} \(\mathcal C^{\perp}\).
+Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} (\textit{euclídeo}, si usamos el producto escalar usual) y que denotaremos por \(\mathcal C^{\perp}\).
 
 \begin{definition}
-  El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \forall c \in \mathcal C\right\}.\]
+  El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \forall c \in \mathcal C\right\},\]
+  donde \(\cdot\) representa el producto escalar usual.
 \end{definition}
 
 \begin{definition}
-  Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de control} si es una matriz generadora de \(\mathcal C^{\perp}\).
+  Sea \(\mathcal C\) un \([n, k]\) código lineal. Una matriz \(H\) se dice que es \textit{matriz de paridad} si es una matriz generadora de \(\mathcal C^{\perp}\).
 \end{definition}
 
 \begin{proposition}
-  Sea \(H\) la matriz de control de un \([n, k]\) código lineal \(\mathcal C\). Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
+  Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). 
+  Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
 \end{proposition}
 
 \begin{proof}
-  Sea \(c \in \mathcal C\) una palabra codificada. Sabemos que la podemos expresar como \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es la matriz generadora de \(\mathcal C\). Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
+  Sea \(c \in \mathcal C\) una palabra codificada. 
+  Sabemos que la podemos expresar como \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es una matriz generadora de \(\mathcal C\). 
+  Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
 \end{proof}
 
 El resultado anterior, junto a la definición anterior, nos conducen al siguiente teorema. 
 
 \begin{theorem}
-  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de control para \(\mathcal C\).
+  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
 \end{theorem}
 
 Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
@@ -84,6 +110,7 @@ Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal
   
 \end{proof}
 
+% TODO: ¿quizás poner esto aquí directamente? Sugerencia de Gabriel
 La \textit{distancia (mínima)} de un código \(\mathcal C\) es la menor distancia posible entre dos palabras codificadas distintas. 
 Es importante a la hora de determinar la capacidad de corrección de errores del código \(\mathcal C\), pues como veremos más tarde, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
 
@@ -153,7 +180,7 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
 % Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
 
 \begin{theorem}
-  Sea \(\mathcal C\) un código lineal con matriz de control \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
+  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
   Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra codificada en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
 \end{theorem}
 
@@ -163,7 +190,7 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
 
 \begin{corollary}
   \label{cor:peso-minimo-columnas-dependientes}
-  Un código lineal tiene peso mínimo \(d\) si y solo si su matriz de control tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes.
+  Un código lineal tiene peso mínimo \(d\) si y solo si su matriz de paridad tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes.
 \end{corollary}
 
 \begin{proof}
@@ -177,7 +204,7 @@ Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a 
 \subsection{Códigos de Hamming}
 
 Consideremos una matriz \(r \times (2^r - 1)\) cuyas columnas son los números \(1, 2, 3, \dots, 2^{r-1}\) escritos en binario. 
-Dicha matriz es la matriz de control de un \([n=2^{r-1}, k=n-r]\) código binario.
+Dicha matriz es la matriz de paridad de un \([n=2^{r-1}, k=n-r]\) código binario.
 A los códigos de esta forma los llamaremos códigos de Hamming de longitud \(n = 2^{r-1}\) y los denotamos por \(\mathcal H_r\) o \(\mathcal H_{2,r}\).
 
 Como las columnas son distintas y no dula, la distancia es al menos \(3\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}.
@@ -185,7 +212,7 @@ Además, como las columnas correspondientes a los números \(1, 2, 3\) son linea
 Podemos decir por tanto que los códigos de Hamming \(\mathcal H_r\) son \([2^{r-1}, 2^{r-1-r}, 3]\) códigos binarios.
 
 Podemos generalizar esta definición y definir los códigos de Hamming \(\mathcal H_{q,r}\) sobre un cuerpo finito arbitrario \(\mathbb F_q\). 
-Para \(r \geq 2\) un código \(\mathcal H_{q,r}\) tiene matriz de control \(H_{q,r}\), cuyas columnas están compuestas por un vector no nulo por cada uno de los subespacios de dimensión \(1\) de \(\mathbb F_q^r\).
+Para \(r \geq 2\) un código \(\mathcal H_{q,r}\) tiene matriz de paridad \(H_{q,r}\), cuyas columnas están compuestas por un vector no nulo por cada uno de los subespacios de dimensión \(1\) de \(\mathbb F_q^r\).
 Hay \((q^r-1)/(q-1)\) subespacios de dimensión \(1\), por lo que \(\mathcal H_{q,r}\) tiene longitud \(n = (q^r-1)/(q-1)\), dimensión \(n-r\) y redundancia \(r\).
 Como todas las columnas son independientes unas de otras, \(\mathcal H_{q,r}\) tiene peso mínimo al menos 3.
 Si sumamos dos vectores no nulos de dos subespacios unidimensionales distintos obtenemos un vector no nulo de un tercer subespacio unidimensional, por lo que \(\mathcal H_{q,r}\) tiene peso mínimo 3. 
@@ -204,7 +231,8 @@ Al hablar de <<coordenadas consecutivas>> siempre tendremos en cuenta esta cicli
 % FIXME: revisar uso palabra "ciclicidad"
 
 Cuando trabajemos con códigos cíclicos representaremos las palabras codificadas como polinomios.
-Existe una biyección evidente entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
+Podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\). 
+Obtenemos así un isomorfismo entre \(\mathbb F_q\)-espacios vectoriales.
 Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra codificada \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
 Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también ha de estar \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
@@ -214,6 +242,8 @@ Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes,
 En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
 
 \subsection{Factorización de \(x^n -1\)}
+
+% TODO: contextualizar, explicar el por qué de esta sección
 
 \label{sec:factorizacion-xn-1}
 
