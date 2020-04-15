@@ -1,6 +1,11 @@
 \chapter{Fundamentos de teoría de códigos}
 
-La teoría de códigos (...). Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[cap. 1, 3-5]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
+En la introducción ya hemos visto cuáles son los objetivos de la teoría de códigos, así como el medio principal del que se sirve: el álgebra.
+Esta sección vamos a comentar algunos de los conceptos y resultados fundamentales de la teoría de códigos.
+Daremos la definición más sencilla de código para posteriormente estudiar otras estructuras más complejas, los códigos lineales y los códigos cíclicos, así como resultados básicos asociados a ellos.
+Finalmente, estudiaremos la versión original del algoritmo de Peterson-Gorenstein-Zierler, diseñado para un tipo de códigos, los BCH.
+
+Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[cap. 1, 3-5]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
 
 \section{Códigos lineales}
 
@@ -22,7 +27,8 @@ Por ejemplo, un \((5,4)\) código sobre \(\mathbb F_2\) puede ser el formado por
   11111.
 \]
 Como se puede ver realmente un código es un objeto muy sencillo.
-Concluimos que necesario añadir más estructura a los códigos para que puedan ser de utilidad.
+Concluimos que es necesario añadir más estructura a los códigos para que puedan ser de utilidad.
+Esto motiva la siguiente definición.
 
 % TODO: Ejemplo de un código que no es lineal
 % Quizás que ilustre por qué es necesario añadirles más estructura
@@ -32,7 +38,13 @@ Concluimos que necesario añadir más estructura a los códigos para que puedan 
 \end{definition}
 
 % TODO: Gabriel me comenta que ponga punto y seguido, aunque no sé si se refiere
-Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
+
+\begin{remark}
+  Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
+\end{remark}
+
+Así, hemos pasado de trabajar con un objeto que no tiene estructura alguna a trabajar con espacios vectoriales, cuyas propiedades son conocidas y disponemos de numerosas herramientas para tratarlos.
+Un primer ejemplo es la siguiente definición.
 
 \begin{definition}
   Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\).
@@ -82,13 +94,13 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
   Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
 \end{proof}
 
-El resultado anterior, junto a la definición anterior, nos conducen al siguiente teorema. 
+Este último resultado, junto a la definición previa, nos conducen al siguiente teorema. 
 
 \begin{theorem}
   Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
 \end{theorem}
 
-Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
+Como nota final sobre nomenclatura de códigos duales, apuntamos que un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
 
 \subsection{Distancias y pesos}
 
@@ -110,9 +122,20 @@ Un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal
   
 \end{proof}
 
-% TODO: ¿quizás poner esto aquí directamente? Sugerencia de Gabriel
 La \textit{distancia (mínima)} de un código \(\mathcal C\) es la menor distancia posible entre dos palabras codificadas distintas. 
-Es importante a la hora de determinar la capacidad de corrección de errores del código \(\mathcal C\), pues como veremos más tarde, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
+Si la distancia mínima \(d\) de un \([n,k]\) código es conocida, nos referiremos a él como un \([n,k,d]\) código.
+Este valor es importante pues nos ayuda a determinar la capacidad de corrección de errores del código \(\mathcal C\), como ilustra el siguiente teorema.
+
+\begin{theorem}
+  Sea \(\mathcal C\) un \([n, k, d]\) código. Entonces \(\mathcal C\) tiene capacidad de corrección de errores \[
+    t = \left\lfloor \frac{d - 1}{2} \right\rfloor.
+  \]
+\end{theorem}
+
+% MAYBE: hablar también de la capacidad de detección de errores? l = d - 1
+
+Efectivamente, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
+Otra medida interesante es el \textit{peso de Hamming}.
 
 \begin{definition}
   El \textit{peso de Hamming} \(\operatorname{wt}(\symbf{x})\) de un vector \(\symbf{x}\) es el número de coordenadas distintas de cero de \(\symbf{x}\).
@@ -128,7 +151,6 @@ Es importante a la hora de determinar la capacidad de corrección de errores del
 \end{proof}
 
 Como consecuencia de este teorema —para códigos lineales— la distancia mínima también se llama \textit{peso mínimo} del código.
-Si el peso mínimo \(d\) de un \([n,k]\) código es conocida, nos referiremos a él como un \([n,k,d]\) código.
 
 \begin{definition}
   Sea \(A_i(\mathcal C)\) —que abreviaremos \(A_i\)— el número de palabras codificadas de peso \(i\) en \(\mathcal C\).
@@ -207,7 +229,7 @@ Consideremos una matriz \(r \times (2^r - 1)\) cuyas columnas son los números \
 Dicha matriz es la matriz de paridad de un \([n=2^{r-1}, k=n-r]\) código binario.
 A los códigos de esta forma los llamaremos códigos de Hamming de longitud \(n = 2^{r-1}\) y los denotamos por \(\mathcal H_r\) o \(\mathcal H_{2,r}\).
 
-Como las columnas son distintas y no dula, la distancia es al menos \(3\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}.
+Como las columnas son distintas y no nulas, la distancia es al menos \(3\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}.
 Además, como las columnas correspondientes a los números \(1, 2, 3\) son linealmente independientes, la distancia mínima es 3 por el mismo corolario.
 Podemos decir por tanto que los códigos de Hamming \(\mathcal H_r\) son \([2^{r-1}, 2^{r-1-r}, 3]\) códigos binarios.
 
@@ -242,8 +264,6 @@ Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes,
 En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
 
 \subsection{Factorización de \(x^n -1\)}
-
-% TODO: contextualizar, explicar el por qué de esta sección
 
 \label{sec:factorizacion-xn-1}
 
