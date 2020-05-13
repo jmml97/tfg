@@ -104,6 +104,12 @@ Como nota final sobre nomenclatura de códigos duales, apuntamos que un código 
 
 \subsection{Distancias y pesos}
 
+% FIXME: revisar introducción
+
+Códigos distintos poseen distintas propiedades, lo que implica que sus capacidades de corrección difieran.
+En este apartado vamos a estudiar dos propiedades de los códigos 
+muy relacionadas con esta idea.
+
 \begin{definition}
   La \textit{distancia de Hamming} \(\operatorname{d}(\symbf{x}, \symbf{y})\) entre dos vectores \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\) se define como el número de coordenadas en las que difieren \(\symbf{x}\) e \(\symbf{y}\).
 \end{definition}
@@ -223,6 +229,16 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 
 \section{Ejemplos de códigos}
 
+En esta sección vamos a ver algunas familias de códigos.
+
+\subsection{Códigos de repetición}
+
+Los códigos de repetición son una de las familias de códigos más sencillas.
+Dada una tupla de elementos de \(\mathbb F_q^n\) lo que hacemos al codificarla es repetir cada elemento de la tupla \(n\) veces.
+A la hora de decodificar un mensaje cada bloque de \(n\) elementos se fija al valor del elemento que más se repita. 
+Los más utilizados son los códigos de repetición binarios, es decir, sobre \(\mathbb F_2\).
+No son códigos lineales.
+
 \subsection{Códigos de Hamming}
 
 Consideremos una matriz \(r \times (2^r - 1)\) cuyas columnas son los números \(1, 2, 3, \dots, 2^{r-1}\) escritos en binario. 
@@ -246,7 +262,7 @@ Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
 
 \section{Códigos cíclicos}
 
-Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) --obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)-- también está en \(\mathcal C\).
+Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) —obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)— también está en \(\mathcal C\).
 Pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
 Al hablar de <<coordenadas consecutivas>> siempre tendremos en cuenta esta ciclicidad.
 
@@ -263,12 +279,14 @@ Esto nos sugiere que el contexto adecuado para estudiar códigos cíclicos es el
 Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclcos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
 En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
 
-\subsection{Factorización de \(x^n -1\)}
+\subsection{Factorización de \texorpdfstring{\(x^n -1\)}{xn - 1}}
 
 \label{sec:factorizacion-xn-1}
 
-Existen dos posibilidades: o bien \(x^n -1\) tiene factores irreducibles repetidos, o no.
-Por la proposición * sabemos que \(x^n - 1\) no tiene factores repetidos si y solo si \(q\) y \(n\) son primos relativos, algo que supondremos cierto en lo que sigue.
+A la hora de factorizar \(x^n -1\) existen dos posibilidades, pues puede tener factores irreducibles repetidos o no.
+Por la proposición * sabemos que \(x^n - 1\) no tiene factores repetidos si y solo si \(q\) y \(n\) son primos relativos, pues en este caso el anillo cociente es semisimple.
+En lo que sigue supondremos que nos encontramos en este caso, pues en general el caso contrario no aporta nada.
+Los ideales generados por un polinomio con factores repetidos no aumentan la distancia, pues es la misma que la del subcódigo sin factores repetidos. 
 % TODO: referenciar ejercicio 201, que aparecerá como proposición
 
 Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) es útil considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
@@ -327,7 +345,7 @@ Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclo
   Además, el tamaño de \(C_1\) es \(\operatorname{ord}_n(q)\).
 \end{theorem}
 
-\subsection{.}
+\subsection{Construcción de códigos cíclicos}
 
 Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos en \(\mathcal R_n\) y los polinomios mónicos divisores de \(x^n-1\).
 
@@ -565,7 +583,7 @@ De hecho, el siguiente teorema nos muestra además que podemos obtener \(g(x)\) 
 
 % MAYBE: ejemplos de códigos cíclicos 4.3.4, 4.3.5??
 
-El siguiente teorema nos muestra --igual que para el polinomio generador-- que el idempotente generador y sus primeros \(k - 1\) desplazamientos cíclicos forman una base de un código cíclico.
+El siguiente teorema nos muestra —igual que para el polinomio generador— que el idempotente generador y sus primeros \(k - 1\) desplazamientos cíclicos forman una base de un código cíclico.
 
 \begin{theorem}
   Sea \(\mathcal C\) un \([n, k]\) código cíclico con idempotente generador \(e(x) = \sum_{i=0}^{n-1}e_ix^i\).
@@ -676,7 +694,7 @@ Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} 
   \{b, b + 1, \dots, b + s - 1\} \bmod n = S \subseteq T.
 \]
 
-Antes de proceder con la cota BCH vamos a enunciar un lema --que será utilizado en la demostración de dicha cota-- sobre el determinante de una matriz de Vandermonde.
+Antes de proceder con la cota BCH vamos a enunciar un lema —que será utilizado en la demostración de dicha cota— sobre el determinante de una matriz de Vandermonde.
 Sean \(\alpha_1, \dots, \alpha_s\) elementos de un cuerpo \(\mathbb F\).
 La matriz \(s \times s\) \(V = (v_{i, j})\), onde \(v_{i,j} = \alpha_{j}^{i-1}\) se denomina \textit{matriz de Vandermonde}.
 La transpueste de esta matriz también es una matriz de Vandermonde.

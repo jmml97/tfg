@@ -1,6 +1,8 @@
 \chapter{Preliminares}
 
-En este capítulo se detallan algunos conceptos básicos de Álgebra que son necesarios para la comprensión más adelante de la teoría de códigos.
+La teoría de códigos que vamos a desarrollar en este trabajo se sustenta fundamentalmente en la teoría de cuerpos finitos, de anillos y de polinomios.
+En este capítulo se detallan algunos conceptos básicos de Álgebra que
+necesitaremos para poder desarrollar posteriormente la teoría de códigos.
 Las fuentes principales de este capítulo son \parencite[cap. 3 y 6]{cohn_algebra_1982}, \parencite[cap. 3]{cohn_algebra_1989} y \parencite[cap. 2]{lidl_introduction_1986}.
 
 % \section{Monoides y grupos}
@@ -29,7 +31,6 @@ Las fuentes principales de este capítulo son \parencite[cap. 3 y 6]{cohn_algebr
 \section{Anillos}
 
 Por anillo entendemos un conjunto \(R\) junto a dos operaciones binarias: \(x + y\), llamada \textit{suma}, y \(xy\), llamada \textit{producto}, tales que:
-
 \begin{enumerate}
   \item \(R\) es un grupo abeliano con la suma.
   \item \(R\) es un monoide con el producto.
@@ -38,9 +39,9 @@ Por anillo entendemos un conjunto \(R\) junto a dos operaciones binarias: \(x + 
     (x+y)z = xz + yz, \qquad x(y+z) = xy + xz.
   \]
 \end{enumerate}
-
 El elemento neutro para la suma se llama \textit{cero} y se escribe \(0\), mientras que el elemento neutro para el producto se llama \textit{uno} o \textit{la unidad} y se escribe \(1\).
 El inverso de la suma para \(x\) se denota \(-x\).
+
 A continuación vamos a dar una definición completa de anillo, sin depender de remisiones a las definiciones de grupo y monoide.
 
 \begin{definition}
@@ -61,14 +62,14 @@ A continuación vamos a dar una definición completa de anillo, sin depender de 
   Si un anillo verifica la propiedad conmutativa para la multiplicación, es decir, \(xy = yx\), se dice que es un \textit{anillo conmutativo}.
 \end{definition}
 
+Comprobamos que en  cualquier anillo \(R\) se verifica que \(0x = x0 = 0\) para todo \(x \in R\), ya que \(x0 = x(0+0) = x0 + x0\), de donde concluimos que \(x0 = 0\) e igualmente, \(0x = 0\).
+Cuando un anillo \(R\) tiene solo un elemento es necesario que \(1 = 0\).
+Un anillo de este tipo se denomina \textit{anillo trivial}.
+Podemos ver que este es el único caso en el que se da la igualdad \(1 = 0\).
+Supongamos que en cualquier otro anillo se da que \(1 = 0\). 
+Entonces para cada elemento \(x\) del anillo se tiene que \(x = x1 = x0 = 0\), luego tiene un único elemento.
+
 Dos anillos son \textit{isomorfos} si hay un \textit{isomorfismo} entre ellos, es decir, existe una biyección que preserva todas las operaciones.
-
-En  cualquier anillo \(R\) se verifica que \(0x = x0 = 0\) para todo \(x \in R\), ya que \(x0 = x(0+0) = x0 + x0\), de donde concluimos que \(x0 = 0\) e igualmente, \(0x = 0\).
-
-El \textit{anillo trivial} es aquel que solo tiene un elemento. 
-Necesariamente entonces \(1 = 0\), pero este es el único caso en el que ocurre. 
-Supongamos que \(1 = 0\). 
-Entonces, para cada elemento \(x\) del anillo se tiene que \(x = x1 = x0 = 0\), luego tiene un único elemento.
 
 % MAYBE: abreviar na = a + a + a (Cohn 137 [147])
 
@@ -82,11 +83,11 @@ Los anillos en los que todo elemento distinto de 0 es invertible se llaman \text
 
 % CITEME: definciiones de Niederreiter (13)
 
-\begin{definition}[Subanillo]
+\begin{definition}
   Un subconjunto \(S\) de un anillo \(R\) se denomina \textit{subanillo} si \(S\) contiene a los elementos neutros de la suma y el producto de \(R\), es cerrado bajo dichas operaciones y forma un anillo con ellas.
 \end{definition}
 
-\begin{definition}[Ideal]
+\begin{definition}
   Un subconjunto \(J\) de un anillo \(R\) se denomina \textit{ideal} si para todo \(a \in J\) y \(r \in R\) se verifica que \(ar \in J\) y \(ra \in J\).
 \end{definition}
 
@@ -106,18 +107,19 @@ Los anillos en los que todo elemento distinto de 0 es invertible se llaman \text
 
 % MAYBE: si el anillo no es conmutativo, ideales por la izquierda y por la derecha.
 
+A continuación vamos a definir algunos otros conceptos relativos a anillos.
 Decimos que un ideal \(J\) es \textit{minimal} si no existe ningún otro ideal entre \(\{0\}\) y \(J\).
-
-Dado un elemento del anillo distinto de cero, podemos clasificarlo en dos tipos. 
-Sea \(a \neq 0\). 
+Podemos clasificar los elementos de un anillo distintos de cero en dos tipos: \textit{divisores de cero} y \textit{regulares}.
+Tomemos un elemento \(a \neq 0\).
 Si existe \(b \neq 0\) tal que \(ab\) o \(ba\) es cero, entonces \(a\) es un elemento \textit{divisor de cero}, y en caso contrario, un elemento \textit{regular}.
+A partir de esta clasificación podemos hablar de anillos \textit{enteros} —aquellos que no son triviales y no tienen divisores de cero— y de \textit{dominios de integridad} —anillos enteros conmutativos—.
 
-Un anillo no trivial sin divisores de cero se dice que es \textit{entero}, mientras que un anillo entero conmutativo se denomina \textit{dominio de integridad}.
-
-Una propiedad importante de los elementos regulares es la ley de cancelación.
+Una propiedad importante de los elementos regulares —y que es tan natural que estamos plenamente acostumbrados a ella— es la llamada ley de cancelación.
 \begin{proposition}
-  Si \(c\) es un elemento regular de un anillo \(R\) entonces para cada \(a, b \in R\), tales que \(ca = cb\) o bien \(ac = bc\), se tiene que \(a = b\).
+  Si \(c\) es un elemento regular de un anillo \(R\) entonces para cada \(a, b \in R\), tales que, o bien \(ca = cb\), o bien \(ac = bc\), se tiene que \(a = b\).
 \end{proposition}
+
+Para cerrar esta sección vamos a introducir dos definiciones: una será una propiedad de los anillos, mientras que la otra será una propiedad que verificarán algunos elementos de los anillos.
 
 \begin{definition}
   Sea \(R\) un anillo. La \textit{característica} del anillo es el menor natural \(n\) tal que \(n1 = 0\).
@@ -137,15 +139,18 @@ A continuación vamos a introducir el concepto de cuerpo así como otras definic
   Se dice que un cuerpo es \textit{finito} si tiene un número finito de elementos, al que llamamos \textit{orden} del cuerpo.
 \end{definition}
 
+Los cuerpos finitos también se suelen conocer como \textit{cuerpos de Galois}, en honor a Évariste Galois, uno de los primeros matemáticos en trabajar con ellos. 
+Los notaremos por \(\mathbb F_p\), donde \(p\) es el orden del cuerpo.
+Vamos a centrar el estudio de los cuerpos en los cuerpos finitos pues los vamos a utilizar de forma prominente cuando trabajemos con códigos.
+
 % MAYBE: todo dominio de integridad finito es un cuerpo (Niederreiter, 12 [21])
 
 Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerpo bajo las operaciones de \(F\) se denomina \textit{subcuerpo} de \(F\).
 También podemos decir que \(F\) es una \textit{extensión} de \(K\).
-
 Las extensiones de cuerpos se suelen notar de la forma \(F/K\).
-\(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
+Observamos que \(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
 
-Todas las nociones que hemos definido para anillos, como puede ser la característica, son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
+Todas las nociones que hemos definido para anillos —como la característica— son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
 
 \begin{theorem}
   % Cohn Vol 2, 63 [74]
@@ -157,28 +162,28 @@ Todas las nociones que hemos definido para anillos, como puede ser la caracterí
 
 % CITEME ? Cohn Algebra Vol 2
 
-Un cuerpo con un número finito de elementos se denomina \textit{cuerpo finito} o \textit{cuerpo de Galois}, en honor a Évariste Galois, uno de los primeros matemáticos en trabajar con ellos. Los notaremos por \(\mathbb F_p\), donde \(p\) es el número de elementos del cuerpo.
-Vamos a centrar el estudio de los cuerpos en los cuerpos finitos pues los vamos a utilizar de forma prominente cuando trabajemos con códigos.
-
-Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\).
-Si \(u_1, \dots, u_n\) es una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
-Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
 
 \begin{lemma}
   Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\) tiene \(p^n\) elementos.
 \end{lemma}
 
-Todo cuerpo finito \(F\) tiene característica \(p\) —un primo— en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica}, y su subcuerpo primo será \(\mathbb F_p\).
+\begin{proof}
+  Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\).
+  Si \(u_1, \dots, u_n\) es una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
+  Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
+\end{proof}
+
+Concluimos destacando que en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} todo cuerpo finito \(F\) tiene característica \(p\) (un primo) y su subcuerpo primo es \(\mathbb F_p\).
 
 % TODO: añadir que todos los cuerpos finitos tienen cardinal p^r, donde p es la característica
 
 \subsection{Anillos de polinomios sobre cuerpos finitos}
 
-Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\). En particular, vamos a trabajar con con anillos de polinomios en cuerpos finitos, pues como ya hemos comentado anteriormente, son los que necesitaremos para la teoría de códigos.
+Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\). En particular, vamos a trabajar con con anillos de polinomios en cuerpos finitos pues, como ya hemos comentado anteriormente, son los que necesitaremos para la teoría de códigos.
 
 Denotamos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
 Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios.
-De hecho, es un dominio de integridad.
+Es, de hecho, un dominio de integridad.
 
 Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
 El \textit{grado} de un polinomio es el mayor grado de cualquier término con coeficiente distinto de cero.
@@ -187,11 +192,6 @@ El \textit{grado} de un polinomio es el mayor grado de cualquier término con co
 %   Grado de sumas y productos
 %   % MAYBE: (Cohn, 149 [159])
 % \end{proposition}
-
-\begin{proposition}
-  \label{prop:raices-factores-pol-Fq}
-  % MAYBE: Ejercicio 159 de ECC
-\end{proposition}
 
 El coeficiente del término de mayor grado se denomina \textit{coeficiente líder}.
 Un polinomio es \textit{mónico} si su coeficiente líder es 1.
@@ -241,7 +241,7 @@ Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy pareci
 \end{theorem}
 
 La secuencia de pasos descrita termina porque en cada paso el grado del resto se reduce al menos en 1.
-A continuación vamos a comentar un resultado que nos será útil en el futuro.
+A continuación vamos a comentar un par de resultados que nos serán útiles en el futuro.
 
 \begin{proposition}
   Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
@@ -251,11 +251,21 @@ A continuación vamos a comentar un resultado que nos será útil en el futuro.
   \end{enumerate}
 \end{proposition}
 
+\begin{proposition}
+  \label{prop:raices-factores-pol-Fq}
+  Sea \(f(x)\) un polinomio en \(\mathbb F_q[x]\) de grado \(n\). 
+  Entonces: 
+  \begin{enumerate}
+    \item Si \(\alpha \in \mathbb F_q\) es una raíz de \(f(x)\) entonces \(x - \alpha\) es un factor de \(f(x)\).
+    \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_q\).
+  \end{enumerate}
+\end{proposition}
+
 % 3.3 Primitive elements
 
 \subsection{Elementos primitivos}
 
-Vamos a ver que el conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_q\) distintos de cero-- es un grupo.
+Vamos a ver que el conjunto \(\mathbb F_q^*\) —de los elementos de \(\mathbb F_q\) distintos de cero— es un grupo.
 
 \begin{theorem}
   \label{th:Fq-ast-cilcico}
@@ -268,10 +278,6 @@ Vamos a ver que el conjunto \(\mathbb F_q^*\) --de los elementos de \(\mathbb F_
     \] y \(\gamma^i = 1\) si y solo si \((q-1) \mid i\).
   \end{enumerate}
 \end{theorem}
-
-\begin{proof}
-  % TODO
-\end{proof}
 
 Cada generador \(\gamma\) de \(\mathbb F_q^*\) se llama \textit{elemento primitivo} de \(\mathbb F_q\).
 Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\) e \(i + j \equiv s \bmod q - 1\).
@@ -297,8 +303,9 @@ Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) cont
 
 \subsection{Construcción de cuerpos finitos}
 
+En esta subsección vamos a construir cuerpos finitos a partir del cociente de anillos de polinomios.
+Cuando realizamos el cociente por un tipo de polinomios concreto, llamados irreducibles, vamos a comprobar que el anillo cociente que obtenemos tiene estructura de cuerpo.
 Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
-
 \begin{theorem}
   Sea \(f(x)\) un polinomio no constante. Entonces, 
   \[
@@ -306,9 +313,8 @@ Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sob
   \]
   donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
 \end{theorem}
-
-Esto nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
-Pero es además un dominio de ideales principales.
+Este resultado nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
+Se puede comprobar que es, además, un dominio de ideales principales.
 
 %\begin{proof}
   % Me ha dicho Gabriel que no es necesario
@@ -316,24 +322,17 @@ Pero es además un dominio de ideales principales.
   % Ejercicio 153 (p. 102 [121]), F_q[x] es un anillo conmutativo con unidad y un dominio de integridad
   % Ejercicio 166 (p. 106 [125]), cada ideal de F_q[x] es un ideal principal
 %\end{proof}
+Tomamos por tanto un polinomio \(f(x) \in \mathbb F_p[x]\) que sea irreducible sobre \(\mathbb F_p\) y de grado \(m\).
+Consideramos el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\).
+Utilizando el algoritmo de Euclides podemos comprobar que es un cuerpo de característica \(p\), y de hecho, es un cuerpo finito con \(q = p^m\) elementos.
+Al tratarse de un cociente todo elemento es una clase lateral y será de la forma \(g(x) + (f(x))\), donde el polinomio \(g(x)\) es único y con grado como mucho \(m-1\).
 
-Para construir un cuerpo de característica \(p\) comenzamos con un polinomio \(f(x) \in \mathbb F_q[x]\) que es irreducible sobre \(\mathbb F_q\) y que tiene grado \(m\).
-Usando el algoritmo de euclides podemos demostrar que el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\) es un cuerpo, y de hecho, un cuerpo finito con \(q = p^m\) elementos.
-
-\begin{proof}
-  % Me ha dicho Gabriel que no es necesario
-  % NOPE: demostración de que F_p[x]/(f(x)) es un cuerpo de q = p^m elementos
-  % Ejercicio 167 (p. 107 [126])
-\end{proof}
-
-Cada elemento de dicho anillo cociente es una clase lateral de la forma \(g(x) + (f(x))\), donde \(g(x)\) es único y tiene grado como mucho \(m-1\).
 
 Escribiremos cada clase lateral como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
 \[
   g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \iff g_{m-1}g_{m-2}\dots g_1g_0.
 \]
-
-Esta notación de vectorial nos permite realizar la suma en el cuerpo utilizando la suma habitual de los vectores.
+Esta notación vectorial nos permite realizar la suma en el cuerpo utilizando la suma habitual de los vectores.
 Multiplicar es una tarea a priori más complicada.
 Para multiplicar \(g_1(x) + (f(x))\) por \(g_2(x) + (f(x))\) primero utilizamos al algoritmo de división para escribir
 \[
@@ -344,6 +343,7 @@ Puesto que estamos en el anillo cociente \(\mathbb F_p[x]/(f(x))\) nos queda
 \[
   (g_1(x) + (f(x)))(g_2(x) + (f(x))) = r(x) + (f(x)).
 \]
+% TODO: qué es alpha????
 Esta notación es engorrosa, por lo que habitualmente operaremos en \(\alpha\) en vez de en \(x\) suponiendo que \(f(\alpha) = 0\).
 Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\).
 % TODO: correspondencia vectorial de los polinomios en alpha (3.4)
@@ -368,7 +368,7 @@ Puede probarse que existen polinomios irreducibles de cualquier grado.
 \subsection{Clases ciclotómicas y polinomios minimales}
 
 Sea \(\mathbb F_{q^t}/\mathbb F_q\) una extensión de cuerpos.
-Por el teorema \ref{th:el-Fq-raices-pol} cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(x^{q^t} - x\).
+Por el teorema \ref{th:el-Fq-raices-pol} cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(\cramped{x^{q^t}} - x\).
 Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
 Este polinomio se conoce como \textit{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
 En el siguiente teorema vamos a estudiar algunas propiedades de los polinomios minimales.
@@ -378,14 +378,10 @@ En el siguiente teorema vamos a estudiar algunas propiedades de los polinomios m
   Se verifica:
   \begin{enumerate}
     \item El polinomio \(M_{\alpha}(x)\) es irreducible sobre \(\mathbb F_q\).
-    \item Si \(g(x)\) es cualqueir polinomio en \(\mathbb F_q[x]\) tal que \(g(\alpha) = 0\) entonces \(M_{\alpha}(x) \mid g(x)\).
+    \item Si \(g(x)\) es cualquier polinomio en \(\mathbb F_q[x]\) tal que \(g(\alpha) = 0\) entonces \(M_{\alpha}(x) \mid g(x)\).
     \item El polinomio \(M_{\alpha}(x)\) es único.
   \end{enumerate}
 \end{theorem}
-
-\begin{proof}
-  % TODO
-\end{proof}
 
 Si partimos de \(f(x)\), un polinomio irreducible sobre \(\mathbb F_q\) de grado \(r\), podemos considerar la extensión generada por una de las raíces de \(f(x)\) y obtendremos el cuerpo \(\mathbb F_{q^r}\).
 De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x)\) estarán en \(\mathbb F_{q^r}\).
@@ -462,9 +458,5 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
     M_{\gamma^s}(x) = \prod_{i \in C_s}(x - \gamma^i).
   \]
 \end{theorem}
-
-\begin{proof}
-  % TODO ECC theorem 3.7.6 p.115 [133]
-\end{proof}
 
 \section{Automorfismos}
