@@ -1,0 +1,55 @@
+\documentclass[crop]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\usepackage{fontspec}
+\setmainfont[WordSpace=1.3]{EBGaramond}
+\setsansfont{PT Sans}
+\setmonofont[Scale=0.8]{Vera Mono}
+
+\usepackage[math-style=TeX, bold-style=ISO]{unicode-math}
+\setmathfont{Garamond Math}[StylisticSet={3}]
+
+\begin{document}
+
+\sffamily
+
+\tikzstyle{block} = [draw, rectangle, 
+    minimum height=6em, minimum width=6em, text width=6em, align=center]
+
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % We start by placing the blocks
+    
+    %\node [input, name=input] {};
+    %\node [sum, right of=input] (sum) {};
+    \node [block] (fuente) {Fuente de la información};
+    \node [block, right of=fuente, node distance=9em] (transmisor) {Transmisor};
+    \node [block, right of=transmisor, node distance=12em] (canal) {Canal};
+    \node [block, right of=canal, node distance=12em] (receptor) {Receptor};
+    \node [block, right of=receptor, node distance=9em] (destino) {Destino};
+    \node [block, below of=canal, node distance=9em] (ruido) {Fuente de ruido};
+
+    %\node [block, right of=controller, pin={[pinstyle]above:Disturbances}, node distance=3cm] (system) {System};
+
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [->] (fuente) -- node[below, yshift=-4em, name=mensaje] {Mensaje} (transmisor);
+    \draw [->] (transmisor) -- node[below, name=señal] {Señal} (canal);
+    \draw [->] (canal) -- node[below, name=señalr, text width=4em, align=center] {Señal recibida} (receptor);
+    \draw [->] (receptor) -- node[below, yshift=-4em, name=mensajer] {Mensaje} (destino);
+    \draw [->] (ruido) -- (canal);
+    
+    %\node [output, right of=system] (output) {};
+    %\node [block, below of=u] (measurements) {Measurements};
+
+    % Once the nodes are placed, connecting them is easy. 
+    %\draw [draw,->] (input) -- node {$r$} (sum);
+    %\draw [->] (sum) -- node {$e$} (controller);
+    %\draw [->] (system) -- node [name=y] {$y$}(output);
+    %\draw [->] (y) |- (measurements);
+    %\draw [->] (measurements) -| node[pos=0.99] {$-$} node [near end] {$y_m$} (sum);
+\end{tikzpicture}
+
+\end{document}
