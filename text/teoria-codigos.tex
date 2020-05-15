@@ -50,14 +50,6 @@ Un primer ejemplo es la siguiente definición.
   Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\).
 \end{definition}
 
-Veamos un ejemplo de matriz generadora. Consideremos la matriz \(G = \begin{psmallmatrix}
-  1 & 1 & 0 \\ 0 & 1 & 1
-\end{psmallmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2)\). 
-Dicha matriz genera un \([3, 2]\) código binario, pues dado \((x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
-  1 & 1 & 0 \\ 0 & 1 & 1
-\end{pmatrix} = (x_1, x_1 + x_2, x_2),\] y por tanto este código codifica de la forma \[00 \to 000, \quad 01 \to 011,\quad 10 \to 110,\quad 11 \to 101.\]
-Observamos que la matriz \(G\) define una aplicación lineal de \(\mathbb F_2^k\) en \(\mathbb F_2^n\), de forma que el código obtenido es la imagen de dicha aplicación.
-
 \begin{definition}
   Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). 
   Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
@@ -66,7 +58,7 @@ Observamos que la matriz \(G\) define una aplicación lineal de \(\mathbb F_2^k\
 Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
 Esta matriz generadora se dice que está en \textit{forma estándar}.
 A partir de cualquier matriz generadora siempre es posible obtener una matriz en forma estándar realizando una permutación adecuada de las coordenadas.
-Esta matriz resultante no será una matriz generadora del código inicial, pero sí de un código equivalente.
+%Esta matriz resultante no será una matriz generadora del código inicial, pero sí de un código equivalente.
 
 %Como un código lineal es el subespacio de un espacio vectorial, es el núcleo de una transformación lineal. En particular, existe una matriz \(H\) de dimensiones \(r \times n\), llamada \textit{matriz de comprobación de paridad} para un \([n, k]\) código \(\mathcal C\) definida por \begin{equation}
 %  \mathcal C = \left\{x \in \mathbb F_q^n : H \mathbf x^T = 0 %\right\}.
@@ -101,6 +93,62 @@ Este último resultado, junto a la definición previa, nos conducen al siguiente
 \end{theorem}
 
 Como nota final sobre nomenclatura de códigos duales, apuntamos que un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
+
+\subsection{Codificación y decodificación}
+
+La forma estándar de codificar mensajes con códigos lineales es utilizando una matriz generadora.
+Dado un mensaje \(\mathbf{m} \in \mathbb F_q^k\) podemos obtener la palabra codificada \(\mathbf{c}\) en \(\mathcal C\) realizando la operación \(\mathbf{c}= \mathbf{m}G\).
+Vamos a verlo mejor con un ejemplo.
+
+\begin{example}
+  Sea \(\mathcal C\) \([3, 2]\) un código binario lineal y \(G\) la matriz generadora dada por 
+  \[
+    G = \begin{pmatrix}
+      1 & 1 & 0 \\ 0 & 1 & 1
+    \end{pmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2).
+  \]
+  Dado un mensaje \(\mathbf{m} = (x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
+    1 & 1 & 0 \\ 0 & 1 & 1
+  \end{pmatrix} = (x_1, x_1 + x_2, x_2),\] y por tanto esta matriz codifica de la forma \[00 \to 000, \quad 01 \to 011,\quad 10 \to 110,\quad 11 \to 101.\]
+\end{example}
+
+Observamos que una matriz generador \(G\) define una aplicación lineal de \(\mathbb F_q^k\) en \(\mathbb F_q^n\), de forma que el código obtenido es la imagen de dicha aplicación.
+Podemos comprobar también que es posible codificar en los mismos códigos lineales utilizando distintas matrices generadores, lo que resultará en distintas palabras código para el mismo mensaje.
+Veamos un ejemplo con el mismo código binario lineal que en el ejemplo anterior pero con distinta matriz generadora.
+
+\begin{example}
+  Sea \(\mathcal C\) \([3, 2]\) un código binario lineal y \(G\) la matriz generadora dada por 
+  \[
+    G = \begin{pmatrix}
+      1 & 0 & 1 \\ 0 & 1 & 1
+    \end{pmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2).
+  \]
+  Dado un mensaje \(\mathbf{m} = (x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
+    1 & 0 & 1 \\ 0 & 1 & 1
+  \end{pmatrix} = (x_1, x_2, x_1 + x_2),\] y por tanto esta matriz codifica de la forma \[00 \to 000, \quad 01 \to 011,\quad 10 \to 101,\quad 11 \to 110.\]
+\end{example}
+
+Observamos en este ejemplo que las primeras \(2\) coordenadas de cada palabra código son iguales a las del mensaje que las genera.
+Pero en el código anterior también podemos encontrar el mensaje, lo que hay que fijarse en la primera y última coordenada.
+Cuando un mensaje se encuentra incrustado íntegramente en la palabra código —aunque puede que desordenado— se dice que la codificación seguida es \textit{sistemática}.
+En caso contario, se dice que es \textit{no-sistemática}.
+Veamos un ejemplo de codificación no-sistemática con el mismo código binario lineal de antes.
+
+\begin{example}
+  Sea \(\mathcal C\) \([3, 2]\) un código binario lineal y \(G\) la matriz generadora dada por 
+  \[
+    G = \begin{pmatrix}
+      1 & 0 & 1 \\ 1 & 1 & 1
+    \end{pmatrix} \in \mathcal M_{2 \times 3}(\mathbb F_2).
+  \]
+  Dado un mensaje \(\mathbf{m} = (x_1, x_2)\), se tiene que \[(x_1, x_2) \begin{pmatrix}
+    1 & 0 & 1 \\ 1 & 1 & 1
+  \end{pmatrix} = (x_1 + x_2, x_2, x_1 + x_2),\] y por tanto esta matriz codifica de la forma \[00 \to 000, \quad 01 \to 111,\quad 10 \to 101,\quad 11 \to 010.\]
+  Comprobamos que los mensajes \(01\) y \(11\) no están contenidos en las palabras código correspondientes, \(111\) y \(010\), respectivamente, luego la codificación es no-sistemática.
+\end{example}
+
+El proceso de decodificación de los mensajes es mucho más complicado, pues como se ha comentado hay que tener en cuenta las posibles interferencias que se hayan podido producir en la comunicación.
+Los métodos de decodificación de códigos lineales en general se escapan del alcance de este trabajo, pues su objetivo principal es la descripción de un algoritmo de decodificación para un tipo concreto de códigos que veremos más adelante.
 
 \subsection{Distancias y pesos}
 
@@ -176,7 +224,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
     1 & 1 & 0 & 0 & 0 & 0\\
       0 & 0 & 1 & 1 & 0 & 0 \\
       0 & 0 & 0 & 0 & 1 & 1
-  \end{pmatrix} = (x_1, x_1, x_2, x_2, x_3, x_3),\] y por tanto este código codifica de la forma 
+  \end{pmatrix} = (x_1, x_1, x_2, x_2, x_3, x_3),\] y por tanto podemos obtener las palabras código de la forma 
   \[
     000 \to 000000, \quad 
     001 \to 000011,\quad 
@@ -493,12 +541,10 @@ Como \(c(x)\) es múltiplo de \(g(x)\), \(c(x) \in \mathcal C\).
 El polinomio \(c(x)\) difiere de \(x^{n-k}m(x)\) en los coeficientes de \(1, x, \dots, x^{n-k-1}\) ya que \(\operatorname{gr} r(x) < n-k\).
 Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los términos de grado al menos \(n - k\).
 
-\paragraph{Codificación sistemática usando el código dual}
-
-Aquí vamos
+%\paragraph{Codificación sistemática usando el código dual}
 
 \begin{example}
-  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Supongamos que queremos codificar el mensaje \(m(x) = 1 + x^2 + x^5\). Vamos a ver su codificación con los tres métodos descritos. Como la longitud de \(\mathcal C\) es \(15\) y el grado de su polinomio generador es \(8\), la dimensión del código es \(15 - 8 = 7\). Escribimos el mensaje \(m(x)\) en forma de vector: \(\mathbf{m}= (1, 0, 1, 0, 0, 1, 0)\). La matriz generadora del código \(\mathcal C\) es: 
+  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Supongamos que queremos codificar el mensaje \(m(x) = 1 + x^2 + x^5\). Vamos a ver su codificación con los dos métodos descritos. Como la longitud de \(\mathcal C\) es \(15\) y el grado de su polinomio generador es \(8\), la dimensión del código es \(15 - 8 = 7\). Escribimos el mensaje \(m(x)\) en forma de vector: \(\mathbf{m}= (1, 0, 1, 0, 0, 1, 0)\). La matriz generadora del código \(\mathcal C\) es: 
   \[
     G = \left(\begin{array}{rrrrrrrrrrrrrrr}
       1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -511,11 +557,11 @@ Aquí vamos
       \end{array}\right).
   \]
   \begin{enumerate}
-    \item Codificación no-sistemática. Simplemente multiplicamos \(\mathbf{m}\) por \(G\):
+    \item Codificación no-sistemática. Simplemente multiplicamos \(\mathbf{m}\) por \(G\), obteniendo:
     \[
       \mathbf{c} = \mathbf{m}G = \left(1,\,0,\,1,\,0,\,1,\,1,\,0,\,1,\,0,\,0,\,1,\,1,\,1,\,1,\,0\right).
     \]
-    \item Codificación sistemática. Calculamos el cociente de \(x^{n-k}m(x)\) por \(g(x)\) y obtenemos el resto \(r(x) = x^{6} + x + 1\). Entonces, \(c(x) = x^{n-k}m(x) - r(x) = x^{13} + x^{10} + x^{8} + x^{6} + x + 1\), que en forma de vector resulta \(\mathbf{c} = \left(1,\,1,\,0,\,0,\,0,\,0,\,1,\,0,\,1,\,0,\,1,\,0,\,0,\,1,\,0\right)\). Observamos que nuestro mensaje \(m\) está contenido en las últimas \(k\) coordenadas.
+    \item Codificación sistemática. Calculamos el cociente de \(x^{n-k}m(x)\) por \(g(x)\) para obtener el resto \(r(x) = x^{6} + x + 1\). Entonces, la palabra código viene dada por \(c(x) = x^{n-k}m(x) - r(x) = x^{13} + x^{10} + x^{8} + x^{6} + x + 1\), que en forma de vector resulta \(\mathbf{c} = \left(1,\,1,\,0,\,0,\,0,\,0,\,1,\,0,\,1,\,0,\,1,\,0,\,0,\,1,\,0\right)\). Observamos que la codificación es efectivamente sistemática: nuestro mensaje \(m\) está contenido íntegramente en las últimas \(7\) coordenadas.
   \end{enumerate}
 \end{example}
 
