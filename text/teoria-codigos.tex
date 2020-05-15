@@ -674,6 +674,18 @@ Se deduce del teorema \ref{th:corr-cod-div} que \(c(x)\) pertenece a \(\mathcal 
 Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
 Del teorema \ref{th:corr-cod-div} concluimos que la dimensión de \(\mathcal C\) es \(n - |T|\), pues \(|T|\) es el grado de \(g(x)\).
 
+% FIXME: este teorema resume lo que está encima, así que habría que retocar la redacción de toda esta parte; nos interesa que esté como teorema porque así nos podemos referir a él
+
+\begin{theorem}
+  \label{th:cicl-cto-caracteristico}
+  Sea \(\alpha\) una raíz primitiva de la unidad en una extensión de cuerpos de \(\mathbb F_q\) y sea \(\mathcal C\) un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) con conjunto característico \(T\) y polinomio generador \(g(x)\).
+  Se verifica que: \begin{enumerate}
+    \item El polinomio generador se puede expresar como \(g(x) = \prod_{i \in T}(x - \alpha^i)\).
+    \item Una palabra codificada \(c(x) \in \mathcal R_n\) está en \(\mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\).
+    \item La dimensión de \(\mathcal C\) es \(n - |T|\).
+  \end{enumerate}
+\end{theorem}
+
 % MAYBE: ejemplo de esto??? Ejemplo 4.4.1
 
 \section{Códigos BCH}
@@ -721,7 +733,7 @@ Los códigos BCH son códigos cíclicos diseñados para aprovechar la cota BCH.
 Nos gustaría poder construir un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) que tenga a la vez un peso mínimo grande y una dimensión grande.
 Tener un peso mínimo grande, basándonos en la cota BCH, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
 
-Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema *, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
+Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema \ref{th:cicl-cto-caracteristico}, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
 Por tanto, si quisiesemos que \(\mathcal C\) tenga distancia mínima de al menos \(\delta\), podemos escoger un conjunto característico tan pequeño como sea posible que sea una unión de clases \(q\)-ciclotómicas con \(\delta - 1\) elementos consecutivos.
 
 Sea \(\delta\) un entero tal que \(2 \leq \delta \leq n\). Un \textit{código BCH} \(\mathcal C\) sobre \(\mathbb F_q\) de longitud \(n\) y \textit{distancia mínima prevista} \(\delta\) es un código cíclico con conjunto característico
@@ -749,4 +761,172 @@ Como con cualquier código cíclico, si \(n = q^t - 1\) entonces \(\mathcal C\) 
 
 Fue desarrollado originalmente en 1960 por Peterson (cita) para decodificar códigos BCH binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios (cita).
 
-Es un procedimiento de cuatro pasos, de los cuales el segundo es el más complicado y tedioso.
+El objetivo es obtener el mensaje original \(c(x)\) a partir de un mensaje recibido \(y(x)\), para lo que hay que hallar primero los errores \(e(x)\) que se han producido en la transmisión, de forma que \(c(x) = y(x) - e(x)\).
+El vector de errores ha de tener peso \(v \leq t\).
+Los errores se han producido en coordenadas desconocidas \(k_1, k_2, \dots, k_v\), de forma que 
+\[
+  e(x) = e_{k_1}x^{k_1} + e_{k_2}x^{k_2} + \dots + e_{k_v}x^{k_v}.
+\]
+Como nuestro objetivo es determinar \(e(x)\) tenemos que hallar: \begin{itemize}
+  \item las posiciones o coordenadas de error \(k_j\),
+  \item las magnitudes de error \(e_{k_j}\).
+\end{itemize}
+
+Primero veamos el desarrollo teórico del algoritmo justificando cada paso, más tarde daremos el pseudocódigo.
+Comenzamos observando que por el teorema \ref{th:cicl-cto-caracteristico} \(c(x) \in \mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\), pero en nuestro caso particular \(t = \lfloor (\delta - 1)/2 \rfloor\) y \(T\) contiene a \(\{1, 2, \dots, \delta - 1\}\).
+Así,
+\[
+  y(\alpha^i) = c(\alpha^i) + e(\alpha^i) = e(\alpha^i)
+\]
+para todo \(1 \leq i \leq 2t\).
+Estas ecuaciones van a ser fundamentales para encontrar el error \(e(x)\).
+Vamos a llamar \textit{síndrome} \(s_i\) de \(y(x)\) al elemento \(s_i = y(\alpha^i) \in \mathbb F_{q}^m\).
+El primer paso del algoritmo es encontrar los síndromes para todo \(1 \leq i \leq 2t\).
+Estos síndromes nos conducen a un sistema de ecuaciones en el que se encuentran las coordenadas de error \(k_j\) y las magnitudes de error \(e_{k_j}\).
+Desarrollando lo anterior:
+\begin{equation}
+  \label{eq:sindromes}
+  s_i = y(\alpha^i) = \sum_{j = 1}^v e_{k_j}(\alpha^i)^{k_j}
+   = \sum_{j = 1}^v e_{k_j}(\alpha^{k_j})^i
+\end{equation}
+para todo \(1 \leq i \leq 2t\).
+Para simplificar la notación, para \(1 \leq j \leq v\) definimos \(E_j = e_{k_j}\), la \textit{magnitud de error en la coordenada} \(k_j\), y \(X_j = \alpha^{k_j}\), el \textit{número de coordenada de error correspondiente a la coordenada de error} \(k_j\).
+Observamos que al conocer \(X_j\) conocemos de forma unívoca la coordenada de error \(k_j\), ya que si \(\alpha^i = \alpha^k\) para \(i\) y \(k\) entre \(0\) y \(n-1\) entonces \(i = k\).
+Con la notación que hemos descito la igualdad \ref{eq:sindromes} la podemos escribir como \begin{equation}
+  \label{eq:sindromes-alt}
+  S_i = \sum_{j = 1}^v E_jX_{j}^i, \quad\text{para } 1 \leq i \leq 2t,
+\end{equation}
+lo que nos conduce al sistema de ecuaciones: \begin{align*}
+  S_1 = E_1X_1 + E_2X_2 + &\dots + E_vX_v,\\
+  S_2 = E_1X_1^2 + E_2X_2^2 + &\dots + E_vX_v^2,\\
+  S_3 = E_1X_1^3 + E_2X_2^3 + &\dots + E_vX_v^3,\\
+  &\,\vdots\\
+  S_1 = E_1X_1^{2t} + E_2X_2^{2t} + &\dots + E_vX_v^{2t}.
+\end{align*}
+De este sistema desconocemos tanto los \(X_j\) como los \(E_j\), pero además es no lineal para los \(X_j\).
+Como no podemos resolverlo directamente vamos a tratar de encontrar otra forma con la que calcular los valores \(X_j\) y utilizarlos para resolver el sistema lineal que forman los \(E_j\).
+Para ello vamos a buscar un sistema lineal que dependa de otras variables \(\sigma_1, \dots, \sigma_v\) que nos conduzca a los valores \(X_j\).
+Definimos el \textit{polinomio localizador de errores} \(\sigma(x)\) como
+\[
+  \sigma(x) = (1 - xX_1)(1 - xX_2) \dots (1 - xX_v) = 1 + \sum_{i=1}^v \sigma_ix^i.
+\]
+Como vemos por su definición, las raíces de \(\sigma(x)\) son los inversos de los números de coordenadas de error.
+Por tanto,
+\[
+  \sigma(X_j^{-1}) = 1 + \sigma_1X_j^{-1} + \sigma_2X_j^{-2} + \dots + \sigma_vX_j^{-v} = 0
+\]
+para \(1 \leq j \leq v\).
+Si multiplicamos por \(E_jX_j^{i+v}\) obtenemos
+\[
+  E_jX_j^{i+v} + \sigma_1E_jX_j^{i+v-1} + \dots + \sigma_vE_jX_j^{i} = 0
+\]
+para todo \(i\).
+Si sumamos para todo \(j\) en \(1 \leq j \leq v\) tenemos
+\[
+  \sum_{j=1}^v E_jX_j^{i+v} + \sigma_1\sum_{j=1}^v E_jX_j^{i+v-1} + \dots + \sigma_v \sum_{j=1}^v E_jX_j^i = 0.
+\]
+Lo que hemos obtenido en estas sumas son los síndromes descritos en (\ref{eq:sindromes-alt}), ya que \(1 \leq i \) y \(i+v \leq 2t\).
+Como \(v \leq t\) la expresión anterior se convierte en
+\[
+  S_{i+v} + \sigma_1S_{i+v-1} + \sigma_2S_{i+v-2} + \dots + \sigma_vS_i = 0,
+\]
+que equivale a
+  \[
+    \sigma_1S_{i+v-1} + \sigma_2S_{i+v-2} + \dots + \sigma_vS_i = -S_{i+v},
+  \]
+para todo \(1 \leq i \leq v\).
+Por tanto podemos encontrar los \(\sigma_k\) si resolvemos el sistema de ecuaciones dado por:
+\[
+  \begin{pmatrix}
+    S_1 & S_2 & S_3 & \dots & S_{v-1} & S_v \\
+    S_1 & S_2 & S_3 & \dots & S_{v-1} & S_v \\
+    S_1 & S_2 & S_3 & \dots & S_{v-1} & S_v \\
+     & & & \vdots & & \\
+    S_1 & S_2 & S_3 & \dots & S_{v-1} & S_v \\
+  \end{pmatrix} \begin{pmatrix}
+    \sigma_v \\
+    \sigma_{v-1} \\
+    \sigma_{v-2} \\
+    \vdots\\
+    \sigma_1
+  \end{pmatrix} = \begin{pmatrix}
+    -S_{v+1}\\
+    -S_{v+2}\\
+    -S_{v+3}\\
+    \vdots\\
+    -S_{2v}
+  \end{pmatrix}.
+\]
+La dificultad de este paso es que desconocemos el valor de \(v\) (el número de errores), por lo que vamos a realizar un procedimiento iterativo.
+Suponemos que nuestro número de errores es \(\mu = t\), que es el máximo que podemos corregir.
+Tenemos que quedarnos con el menor valor de \(v\) que sea posible.
+Para ello tenemos en cuenta que la matriz
+\[
+  M_{\mu} = \begin{pmatrix}
+    S_1 & S_2 & \dots & S_{\mu} \\
+    S_2 & S_3 & \dots S_{\mu + 1}\\
+     & & \vdots & \\
+    S_{\mu} & S_{\mu+1} & \dots & S_{2\mu - 1}
+  \end{pmatrix}
+\] será no singular si \(\mu = v\) y singular si \(\mu > v\).
+% MAYBE: copiar demostración de esto????
+Así, si \(M_{\mu}\) es singular reducimos el valor de \(\mu\) en 1, \(\mu = \mu - 1\) y probamos de nuevo si \(M_{\mu}\) es singular.
+Repetimos hasta encontrar una matriz que no sea singular.
+Ese valor \(\mu\) será el número de errores \(v\).
+Conocido el tamaño podemos resolver el sistema y obtener los valores \(\sigma_k\).
+Una vez conocidos los \(\sigma_k\) podemos determinar \(\sigma(x)\) y con él, sus raíces.
+Inviertiéndolas encontramos los valores de \(X_j\).
+Con ellos ya podemos encontrar los de \(E_j\).
+Y con estos valores ya podemos obtener el vector de error \(e(x)\).
+
+En resumen, el algoritmo consiste en: \begin{enumerate}
+  \item Determinar los síndromes del mensaje recibido.
+  \item Encontrar el polinomio localizador.
+  \item Hallar las raíces del polinomio localizador e invertirlas para obtener las coordenadas de error \(k_j\).
+  \item Utilizar estos inversos para resolver el sistema de ecuaciones formado por los síndromes, obteniendo así las magnitudes de error \(e_{k_j}\).
+  \item Hallar el vector de error \(e(x)\) y restárselo al mensaje \(y(x)\).
+\end{enumerate}
+
+Puede encontrarse en el algoritmo \ref{alg:pgz-cc} una descripción del mismo.
+
+\begin{algorithm}[b]
+  \DontPrintSemicolon
+  \KwIn{el código \(\mathcal C\), el mensaje recibido \(y(x)\)}
+  \KwOut{el mensaje decodificado \(c(x)\)}
+  %\KwResult{mensaje decodificado}
+  \(\delta \longleftarrow\) \(\mathcal C\).distancia\_designada\;
+  \(t \longleftarrow \lfloor(\delta - 1)/2\rfloor\)\;
+  \(g \longleftarrow\) \(\mathcal C\).polinomio\_generador\;
+  \(\alpha \longleftarrow\) \(\mathcal C\).raíz\_primitiva\;
+  \tcp{Paso 1: calcular síndromes}
+  \For{\(1 \leq i \leq 2t\)}{
+      $S_i \longleftarrow y(\alpha^i)$\;
+  }
+  \tcp{Paso 2: hallar polinomio localizador}
+  \(\mu \longleftarrow t\)\;
+  \(M_{\mu} \longleftarrow (S_{i + j - 1})_{i, j}\footnotemark\,, 1 \leq i, j \leq \mu \)\;
+  \While{\(M_{\mu}\) es no singular}{
+  \(\mu \longleftarrow \mu - 1\)\;
+  \(M_{\mu} \longleftarrow (S_{i + j - 1})_{i, j}\,, 1 \leq i, j \leq \mu \)\;
+  }
+  \(v \longleftarrow \mu\)\;
+  \(\sigma \longleftarrow (\sigma_{v - i + 1})_i, 1 \leq i \leq v\)\;
+  \(b_{\mu} \longleftarrow (-S_{v + i})_i, 1 \leq i \leq v\)\;
+  \(\sigma_k \longleftarrow\) soluciones del sistema \(M_{\mu}\sigma = b_{\mu}\)\;
+  \(\sigma(x) \longleftarrow 1 + \sum_{i=1}^{v} \sigma_i x^i\)\;
+  \tcp{Paso 3: obtener las coordenadas de error}
+  \(r_k \longleftarrow\) raíces de \(\sigma(x)\)\;
+  \(X_j \longleftarrow r_j^{-1}\) \;
+  \(k_j \longleftarrow \log_{\alpha}(X_j)\) \;
+  \tcp{Paso 4: obtener las magnitudes de error}
+  \(M_{S} \longleftarrow (X_{j}^{i})_{i, j}\,, 1 \leq i, j \leq v \)\;
+  \(E \longleftarrow (E_i)_i, 1 \leq i \leq v\)\;
+  \(b_{S} \longleftarrow (S_{i})_i, 1 \leq i \leq v\)\;
+  \(E_k \longleftarrow\) soluciones del sistema \(M_{S}E = b_{S}\)\;
+  \tcp{Paso 5: calcular el mensaje original}
+  \(e(x) \longleftarrow \sum_{j=1}^v E_ix^{k_i}\)\;
+  \(c(x) = y(x) - e(x)\)\;
+  \caption{Peterson-Gorenstein-Zierler para códigos cíclicos.}
+  \label{alg:pgz-cc}
+ \end{algorithm}
+ \footnotetext{Aquí estamos describiendo una matriz por sus entradas, las filas varían en \(i\), y las columnas, en \(j\).}

@@ -7,6 +7,7 @@
   dvipsnames,
   footinclude,
   headinclude,
+  %oneside,
 ]{scrbook}
 
 \usepackage{expl3}
@@ -28,12 +29,13 @@
 {5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
 {{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
 \theoremstyle{theorem-style}
-\newtheorem{theorem}{Teorema}[section]
+\newtheorem{theorem}{teorema}[section]
 \newtheorem{corollary}[theorem]{Corolario}
 \newtheorem{lemma}[theorem]{Lema}
-\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{proposition}[theorem]{proposición}
 \newtheorem{question}{Pregunta}
 \newtheorem{conjecture}[theorem]{Conjetura}
+\newtheorem{remark}[theorem]{Nota}
 \newtheoremstyle{definition-style}  % Nombre del estilo
 {\topsep}                                  % Espacio por encima
 {\topsep}                                  % Espacio por debajo
@@ -44,8 +46,8 @@
 {5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
 {{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
 \theoremstyle{definition-style}
-\newtheorem{definition}[theorem]{Definición}
-\newtheorem{example}[theorem]{Ejemplo}
+\newtheorem{definition}[theorem]{definición}
+\newtheorem{example}[theorem]{ejemplo}
 \newtheorem{notation}[theorem]{Notación}
 \newtheorem{exercise}[theorem]{Ejercicio}
 
@@ -66,26 +68,30 @@
 % Otros elementos de página
 
 \usepackage{enumitem}
-\usepackage[labelfont=sf, textfont=sf]{caption}
+
+
 
 % Código
 
 \usepackage{listings}
 \lstset{
-	basicstyle=\footnotesize\ttfamily,%
+	basicstyle=\ttfamily,%
 	breaklines=true,%
 	captionpos=b,                    % sets the caption-position to bottom
   tabsize=2,	                   % sets default tabsize to 2 spaces
-  frame=lines,
+  frame=none,
   numbers=left,
   xleftmargin=18pt,
   stepnumber=1,
   aboveskip=12pt,
   showstringspaces=false,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  numberstyle=\scriptsize\bfseries
 }
 \renewcommand{\lstlistingname}{Listado}
 
-\endofdump
+%\endofdump
 
 %-------------------------------------------------------------------------------
 %	PAQUETES
@@ -114,6 +120,19 @@
 
 \usepackage{blindtext}
 
+% Algoritmos
+
+\usepackage[linesnumbered, onelanguage]{algorithm2e}
+\SetAlCapFnt{\sffamily}
+\SetAlCapNameFnt{\sffamily}
+\newcommand\mycommentfont[1]{\sffamily\textcolor{darkgray}{#1}}
+\SetCommentSty{mycommentfont}
+%\SetAlFnt{\sffamily}
+%\SetKwSty{sffamily}
+\SetAlCapSkip{.5em}
+\SetAlgoCaptionLayout{raggedright}
+\SetAlgorithmName{Algoritmo}{Algoritmo}{Lista de algoritmos}
+
 %-------------------------------------------------------------------------------
 %	NOTSOCLASSICTHESIS & FUENTES
 %-------------------------------------------------------------------------------
@@ -129,27 +148,29 @@
   palatino=false,
 ]{notsoclassicthesis}
 
-\setmainfont[
-%  WordSpace=1.1
-]{Libertinus Serif}
-\setsansfont{Source Sans Pro}
-\renewfontface\chapterNumber[Scale=7, Color=000000]{Libertinus Serif}
-\setmonofont[Scale=0.8]{Vera Mono}
+\setmainfont[%
+Contextuals=Alternate,
+SmallCapsFeatures={LetterSpace=1}]%
+{Adobe Garamond Pro}
+\setsansfont[Scale=0.8]{PT Sans}
+\renewfontface\chapterNumber[Scale=7, Color=000000]{EBGaramond}
+\setmonofont[Scale=0.8]{Hack}
 
-\usepackage[math-style=TeX]{unicode-math}
-\setmathfont{Libertinus Math}[
-%  StylisticSet={3}
-]
-\setmathfont{TeX Gyre DejaVu Math}[Scale=MatchLowercase,range={cal}]
+\usepackage[math-style=TeX, bold-style=ISO]{unicode-math}
+\setmathfont{Garamond Math}[StylisticSet={3}]
+
+\usepackage{caption}
+\captionsetup{font=sf, labelfont=bf, justification=raggedright,singlelinecheck=false}
 
 \linespread{1.1}
+\setlength{\parindent}{1.5em}
 
 %-------------------------------------------------------------------------------
 %	TÍTULO
 %-------------------------------------------------------------------------------
 
 \title{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
-\renewcommand{\myVersion}{1.0}
+\renewcommand{\myVersion}{0.4} 
 
 \author{José María Martín Luque}
 
@@ -200,7 +221,7 @@
     \textsf{E.T.S. de Ingenierías Informática y de Telecomunicación} \\
     \vfill\vfill
 
-    \textsf{\huge Doble Grado en Ingeniería Informática y Matemáticas} \vfill
+    \textsf{\Large Doble Grado en Ingeniería Informática y Matemáticas} \vfill
 
 
     %\textsc{trabajo de fin de grado}
@@ -240,10 +261,12 @@
 \include{abstract}
 \include{introduccion}
 
-\part{Parte de prueba}
-
 \include{preliminares}
 \include{teoria-codigos}
+\include{ore}
+
+\appendix
+\include{sage-pgz}
 
 
 %-------------------------------------------------------------------------------
