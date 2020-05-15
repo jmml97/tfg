@@ -3,7 +3,7 @@
 En la introducción ya hemos visto cuáles son los objetivos de la teoría de códigos, así como el medio principal del que se sirve: el álgebra.
 Esta sección vamos a comentar algunos de los conceptos y resultados fundamentales de la teoría de códigos.
 Daremos la definición más sencilla de código para posteriormente estudiar otras estructuras más complejas, los códigos lineales y los códigos cíclicos, así como resultados básicos asociados a ellos.
-Finalmente, estudiaremos la versión original del algoritmo de Peterson-Gorenstein-Zierler, diseñado para un tipo de códigos, los BCH.
+Finalmente, estudiaremos la versión original del algoritmo de Peterson-Gorenstein-Zierler, diseñado para un tipo de códigos, los \textacr{BCH}.
 
 Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[cap. 1, 3-5]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
 
@@ -149,7 +149,7 @@ Otra medida interesante es el \textit{peso de Hamming}.
 
 \begin{theorem}
   Si \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{wt}(\symbf{x} - \symbf{y})\).
-  Si \(\mathcal C\) es un código lineal, la distancia mímina es igual al peso mínimo de las palabras codificadas de \(\mathcal C\) distintas de cero.
+  Si \(\mathcal C\) es un código lineal, la distancia mínima es igual al peso mínimo de las palabras codificadas de \(\mathcal C\) distintas de cero.
 \end{theorem}
 
 \begin{proof}
@@ -262,6 +262,7 @@ Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
 
 \section{Códigos cíclicos}
 
+En esta sección vamos a estudiar los aspectos fundamentales de la familia de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
 Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) —obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)— también está en \(\mathcal C\).
 Pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
 Al hablar de <<coordenadas consecutivas>> siempre tendremos en cuenta esta ciclicidad.
@@ -276,22 +277,18 @@ Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc
 Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también ha de estar \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
 Esto nos sugiere que el contexto adecuado para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
 
-Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclcos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
-En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que depende de la factorización de \(x^n-1\).
+Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclicos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
+En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que va a depender de la factorización de \(x^n-1\).
 
 \subsection{Factorización de \texorpdfstring{\(x^n -1\)}{xn - 1}}
 
 \label{sec:factorizacion-xn-1}
 
 A la hora de factorizar \(x^n -1\) existen dos posibilidades, pues puede tener factores irreducibles repetidos o no.
-Por la proposición * sabemos que \(x^n - 1\) no tiene factores repetidos si y solo si \(q\) y \(n\) son primos relativos, pues en este caso el anillo cociente es semisimple.
-En lo que sigue supondremos que nos encontramos en este caso, pues en general el caso contrario no aporta nada.
-Los ideales generados por un polinomio con factores repetidos no aumentan la distancia, pues es la misma que la del subcódigo sin factores repetidos. 
-% TODO: referenciar ejercicio 201, que aparecerá como proposición
+Vamos a asumir que \(q\) y \(n\) son primos relativos y por tanto \(x^n - 1\) no tiene factores repetidos; en caso contrario el anillo cociente sería semisimple, lo que no nos aporta nada: los ideales generados por los polinomios con factores repetidos no aumentan la distancia, siendo la misma que la del subcódigo sin factores repetidos.
 
-Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) es útil considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
-\(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema *.
-% TODO: referenciar teorema (Th 3.3.3, ECC)
+Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) necesitamos considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
+El cuerpo \(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema \ref{th:Fq-ast-cilcico}.
 Definimos el \textit{orden} \(\operatorname{ord}_n(q)\) de \(q\) módulo \(n\) como el menor entero positivo \(a\) tal que \(q^{a} \equiv 1 \bmod n\).
 Si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\) pero no hay una extensión de cuerpos más pequeña de \(\mathbb F_q\) que la contenga.
 Como todos los \(\alpha^{i}\) son distintos dos a dos para \(0 \leq i < n\) y \((\alpha^{i})^n = 1\), entonces \(\mathbb F_{q^t}\) contiene todas las raíces de \(x^n - 1\).
@@ -501,7 +498,25 @@ Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los
 Aquí vamos
 
 \begin{example}
-  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Vamos a ver su codificación con los tres métodos descritos.
+  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Supongamos que queremos codificar el mensaje \(m(x) = 1 + x^2 + x^5\). Vamos a ver su codificación con los tres métodos descritos. Como la longitud de \(\mathcal C\) es \(15\) y el grado de su polinomio generador es \(8\), la dimensión del código es \(15 - 8 = 7\). Escribimos el mensaje \(m(x)\) en forma de vector: \(\mathbf{m}= (1, 0, 1, 0, 0, 1, 0)\). La matriz generadora del código \(\mathcal C\) es: 
+  \[
+    G = \left(\begin{array}{rrrrrrrrrrrrrrr}
+      1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1
+      \end{array}\right).
+  \]
+  \begin{enumerate}
+    \item Codificación no-sistemática. Simplemente multiplicamos \(\mathbf{m}\) por \(G\):
+    \[
+      \mathbf{c} = \mathbf{m}G = \left(1,\,0,\,1,\,0,\,1,\,1,\,0,\,1,\,0,\,0,\,1,\,1,\,1,\,1,\,0\right).
+    \]
+    \item Codificación sistemática. Calculamos el cociente de \(x^{n-k}m(x)\) por \(g(x)\) y obtenemos el resto \(r(x) = x^{6} + x + 1\). Entonces, \(c(x) = x^{n-k}m(x) - r(x) = x^{13} + x^{10} + x^{8} + x^{6} + x + 1\), que en forma de vector resulta \(\mathbf{c} = \left(1,\,1,\,0,\,0,\,0,\,0,\,1,\,0,\,1,\,0,\,1,\,0,\,0,\,1,\,0\right)\). Observamos que nuestro mensaje \(m\) está contenido en las últimas \(k\) coordenadas.
+  \end{enumerate}
 \end{example}
 
 \section{Idempotentes, multiplicadores y ceros de un código cíclico}
@@ -657,7 +672,7 @@ Dado que los códigos cíclicos de longitud \(n\) se representan como ideales de
 Esta ecuación es consistente con la definición original de \(\mu_a\) pues \(x^i\mu_a = x^{ia} = x^{ia + jn}\) en \(\mathcal R_n\) para un entero \(j\) tal que \(0 \leq ia + jn\), pues \(x^n = 1\) en \(\mathcal R_n\).
 En otras palabras, \(x^i\mu_a = x^{ia \bmod n}\).
 Si \(a < 0\) podemos dar significado a \(f(x^a)\) en \(\mathcal R_n\) definiendo \(x^{i}\mu_a = x^{ia \bmod n}\), donde \(0 \leq ia \bmod n < n\).
-Con esta interpretación la ecuación \ref{eq:multiplier-rn} es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
+Con esta interpretación la ecuación (\ref{eq:multiplier-rn}) es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
 
 % TODO: Más sobre multiplicadores (4.3)
 
@@ -692,13 +707,14 @@ Del teorema \ref{th:corr-cod-div} concluimos que la dimensión de \(\mathcal C\)
 
 % 4.5 Mininum distance of cyclic codes (intro cota BCH)
 
-Para cualquier tipo de código es importante determinar la distancia mínima con el fin de determinar su capacidad de corrección de errores.
-Para ello es útil tener cotas en la distancia mínima, especialmente cotas inferiores.
-Existen varias cotas conocidas para la distancia mínima de un código cíclico, pero nos vamos a centrar en la cota de Bose-Ray-Chaudhuri-Hocquenghem, usualmente llamada la cota BCH para abreviar.
-Esta cota es esencial para comprender la definición de los códigos BCH que estudiaremos en breve.
-La cota BCH depende en los ceros del código y especialmente en la habilidad de encontrar cadenas de ceros <<consecutivos>>.
+En esta sección vamos a estudiar los códigos \textacr{BCH}, un tipo de códigos cíclicos que permiten ser diseñados con una capacidad de corrección concreta.
+Como ya sabemos, para cualquier tipo de código es importante determinar la distancia mínima si queremos determinar su capacidad de corrección de errores.
+A este respecto es útil disponer de cotas en la distancia mínima, especialmente cotas inferiores, pues son las que maximizan la capacidad de corrección.
+Existen varias cotas conocidas para la distancia mínima de un código cíclico, pero nos vamos a centrar en la llamada \textit{cota de Bose-Ray-Chaudhuri-Hocquenghem}, usualmente abreviada como \textit{cota \textacr{BCH}}.
+Esta cota es esencial para comprender la definición de los códigos \textacr{BCH} que estudiamos en esta sección.
+La cota \textacr{BCH} va a depender de los ceros del código, concretamente en la posibilidad de encontrar cadenas de ceros «consecutivos».
 
-Asumiremos que \(\mathcal C\) es un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) y que \(\alpha\) es una enésima raíz primitiva de la unidad en \(\mathbb F_{q^t}\), donde \(t = \operatorname{ord}_n(q)\).
+En lo que sigue vamos a consdierar un código cíclico \(\mathcal C\)  de longitud \(n\) sobre \(\mathbb F_q\) y \(\alpha\) una enésima raíz primitiva de la unidad en \(\mathbb F_{q^t}\), donde \(t = \operatorname{ord}_n(q)\).
 Recordemos que \(T\) es un conjunto característico de \(\mathcal C\) siempre y cuando los ceros de \(\mathcal C\) sean \(\{\alpha^{i} \mid i \in T\}\).
 Por tanto \(T\) ha de ser una unión de clases \(q\)-ciclotómicas módulo \(n\).
 Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} si existe un conjunto \(\{b, b + 1, \dots, b + s - 1\}\) de \(s\) enteros consecutivos tal que
@@ -706,19 +722,19 @@ Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} 
   \{b, b + 1, \dots, b + s - 1\} \bmod n = S \subseteq T.
 \]
 
-Antes de proceder con la cota BCH vamos a enunciar un lema —que será utilizado en la demostración de dicha cota— sobre el determinante de una matriz de Vandermonde.
+Antes de proceder con la cota \textacr{BCH} vamos a enunciar un lema —que será utilizado en la demostración de dicha cota— sobre el determinante de una matriz de Vandermonde.
 Sean \(\alpha_1, \dots, \alpha_s\) elementos de un cuerpo \(\mathbb F\).
 La matriz \(s \times s\) \(V = (v_{i, j})\), onde \(v_{i,j} = \alpha_{j}^{i-1}\) se denomina \textit{matriz de Vandermonde}.
-La transpueste de esta matriz también es una matriz de Vandermonde.
+Observamos que la transpuesta de una matriz de Vandermonde es otra matriz de Vandermonde.
 
 \begin{lemma}
   El determinante de una matriz Vandermonde \(V\) viene dado por \(\operatorname{det}V = \prod_{1 \leq i < j \leq s}(\alpha_j - \alpha_i)\).
   En particular, \(V\) es no singular si los elementos \(\alpha_1, \dots, \alpha_s\) son todos diferentes dos a dos.
 \end{lemma}
 
-Estamos ya en condiciones de presentar y demostrar el teorema de la cota BCH.
+Estamos ya en condiciones de presentar y demostrar el teorema de la cota \textacr{BCH}.
 
-\begin{theorem}[Cota BCH]
+\begin{theorem}[cota bch]
   Sea \(\mathcal C\) un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) con conjunto característico \(T\).
   Supongamos que \(\mathcal C\) tiene peso mínimo \(d\).
   Asumamos que \(T\) contiene \(\delta - 1\) elementos consecutivos para algún entero \(\delta\).
@@ -729,94 +745,101 @@ Estamos ya en condiciones de presentar y demostrar el teorema de la cota BCH.
   
 \end{proof}
 
-Los códigos BCH son códigos cíclicos diseñados para aprovechar la cota BCH.
+Los códigos \textacr{BCH} son códigos cíclicos diseñados para aprovechar la cota \textacr{BCH}.
 Nos gustaría poder construir un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) que tenga a la vez un peso mínimo grande y una dimensión grande.
-Tener un peso mínimo grande, basándonos en la cota BCH, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
+Tener un peso mínimo grande, basándonos en la cota \textacr{BCH}, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
 
 Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema \ref{th:cicl-cto-caracteristico}, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
 Por tanto, si quisiesemos que \(\mathcal C\) tenga distancia mínima de al menos \(\delta\), podemos escoger un conjunto característico tan pequeño como sea posible que sea una unión de clases \(q\)-ciclotómicas con \(\delta - 1\) elementos consecutivos.
 
-Sea \(\delta\) un entero tal que \(2 \leq \delta \leq n\). Un \textit{código BCH} \(\mathcal C\) sobre \(\mathbb F_q\) de longitud \(n\) y \textit{distancia mínima prevista} \(\delta\) es un código cíclico con conjunto característico
+Sea \(\delta\) un entero tal que \(2 \leq \delta \leq n\). Un \textit{código \textacr{BCH}} \(\mathcal C\) sobre \(\mathbb F_q\) de longitud \(n\) y \textit{distancia mínima prevista} \(\delta\) es un código cíclico con conjunto característico
 \begin{equation}
   \label{eq:bch-conjunto-caracteristico}
   T = C_b \cup C_{b+1} \cup \dots \cup C_{b + \delta - 2},
 \end{equation}
 donde \(C_i\) es la clase \(q\)-ciclotómica módulo \(n\) que contiene a \(i\).
-Por la cota BCH este código tiene distancia mínima prevista al menos \(\delta\).
+Por la cota \textacr{BCH} este código tiene distancia mínima prevista al menos \(\delta\).
 
 \begin{theorem}
-  Un código BCH de distancia mínima prevista \(\delta\) tiene peso mínimo de al menos \(\delta\).
+  Un código \textacr{BCH} de distancia mínima prevista \(\delta\) tiene peso mínimo de al menos \(\delta\).
 \end{theorem}
 
 \begin{proof}
   El conjunto característico \ref{eq:bch-conjunto-caracteristico} tiene al menos \(\delta - 1\) elementos.
-  El resultado se deduce de la cota BCH.
+  El resultado se deduce de la cota \textacr{BCH}.
 \end{proof}
 
 Al variar el valor de \(b\) obtenemos distintos códigos con distancias mínimas y dimensiones diferentes.
-Cuando \(b = 1\) el código \(\mathcal C\) se dice que es un código BCH \textit{en sentido estricto}.
-Como con cualquier código cíclico, si \(n = q^t - 1\) entonces \(\mathcal C\) es un código BCH \textit{primitivo}.
+Cuando \(b = 1\) el código \(\mathcal C\) se dice que es un código \textacr{BCH} \textit{en sentido estricto}.
+Como con cualquier código cíclico, si \(n = q^t - 1\) entonces \(\mathcal C\) es un código \textacr{BCH} \textit{primitivo}.
+En la sección siguiente vamos a estudiar un algoritmo de decodificación que permite aprovechar las ventajas de los códigos \textacr{BCH}.
 
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
 
-Fue desarrollado originalmente en 1960 por Peterson (cita) para decodificar códigos BCH binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios (cita).
+El algoritmo de Peterson-Gorenstein-Zierler —de ahora en adelante, algoritmo \textacr{PGZ}— es un algoritmo de decodificación de códigos \textacr{BCH} que permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
+Fue desarrollado originalmente en 1960 por Peterson \parencite{peterson_encoding_1960} para decodificar códigos \textacr{BCH} binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios \parencite{gorenstein_class_1961}.
 
 El objetivo es obtener el mensaje original \(c(x)\) a partir de un mensaje recibido \(y(x)\), para lo que hay que hallar primero los errores \(e(x)\) que se han producido en la transmisión, de forma que \(c(x) = y(x) - e(x)\).
-El vector de errores ha de tener peso \(v \leq t\).
-Los errores se han producido en coordenadas desconocidas \(k_1, k_2, \dots, k_v\), de forma que 
+El vector de errores ha de tener peso \(v \leq t\), ya que no podemos corregir más errores de los que el código permite.
+Vamos a considerar que los errores se han producido en coordenadas desconocidas \(k_1, k_2, \dots, k_v\), de forma que el vector de errores lo podemos expresar como
 \[
   e(x) = e_{k_1}x^{k_1} + e_{k_2}x^{k_2} + \dots + e_{k_v}x^{k_v}.
 \]
 Como nuestro objetivo es determinar \(e(x)\) tenemos que hallar: \begin{itemize}
-  \item las posiciones o coordenadas de error \(k_j\),
-  \item las magnitudes de error \(e_{k_j}\).
+  \item las \textit{coordenadas de error} \(k_j\);
+  \item las \textit{magnitudes de error} \(e_{k_j}\).
 \end{itemize}
 
-Primero veamos el desarrollo teórico del algoritmo justificando cada paso, más tarde daremos el pseudocódigo.
-Comenzamos observando que por el teorema \ref{th:cicl-cto-caracteristico} \(c(x) \in \mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\), pero en nuestro caso particular \(t = \lfloor (\delta - 1)/2 \rfloor\) y \(T\) contiene a \(\{1, 2, \dots, \delta - 1\}\).
-Así,
+Vamos a estudiar a continuación el desarrollo teórico y la justificación del funcionamiento del algoritmo para después dar una versión del mismo esquematizada en pseudocódigo.
+Comenzamos observando que por el teorema \ref{th:cicl-cto-caracteristico} un elemento \(c(x) \in \mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\), y en nuestro caso particular, dado que \(t = \lfloor (\delta - 1)/2 \rfloor\) y \(T\) contiene a \(\{1, 2, \dots, \delta - 1\}\), se tiene que
 \[
   y(\alpha^i) = c(\alpha^i) + e(\alpha^i) = e(\alpha^i)
 \]
 para todo \(1 \leq i \leq 2t\).
 Estas ecuaciones van a ser fundamentales para encontrar el error \(e(x)\).
-Vamos a llamar \textit{síndrome} \(s_i\) de \(y(x)\) al elemento \(s_i = y(\alpha^i) \in \mathbb F_{q}^m\).
+Vamos a llamar \textit{síndrome} \(s_i\) de \(y(x)\) al elemento de \(\mathbb F_{q}^m\) dado por \(s_i = y(\alpha^i)\).
 El primer paso del algoritmo es encontrar los síndromes para todo \(1 \leq i \leq 2t\).
 Estos síndromes nos conducen a un sistema de ecuaciones en el que se encuentran las coordenadas de error \(k_j\) y las magnitudes de error \(e_{k_j}\).
-Desarrollando lo anterior:
+Desarrollando lo anterior podemos expresar los síndromes como
 \begin{equation}
   \label{eq:sindromes}
   s_i = y(\alpha^i) = \sum_{j = 1}^v e_{k_j}(\alpha^i)^{k_j}
    = \sum_{j = 1}^v e_{k_j}(\alpha^{k_j})^i
 \end{equation}
 para todo \(1 \leq i \leq 2t\).
-Para simplificar la notación, para \(1 \leq j \leq v\) definimos \(E_j = e_{k_j}\), la \textit{magnitud de error en la coordenada} \(k_j\), y \(X_j = \alpha^{k_j}\), el \textit{número de coordenada de error correspondiente a la coordenada de error} \(k_j\).
-Observamos que al conocer \(X_j\) conocemos de forma unívoca la coordenada de error \(k_j\), ya que si \(\alpha^i = \alpha^k\) para \(i\) y \(k\) entre \(0\) y \(n-1\) entonces \(i = k\).
-Con la notación que hemos descito la igualdad \ref{eq:sindromes} la podemos escribir como \begin{equation}
+A fin de simplificar la notación, para \(1 \leq j \leq v\) definimos: \begin{itemize}[label={—}, noitemsep, leftmargin=*]
+  \item \(E_j = e_{k_j}\), que llamaremos \textit{magnitud de error en la coordenada} \(k_j\), y
+  \item \(X_j = \alpha^{k_j}\), que llamaremos \textit{número de coordenada de error correspondiente a la coordenada} \(k_j\).
+\end{itemize}
+Observamos que al conocer \(X_j\) conocemos de forma unívoca la coordenada de error \(k_j\), ya que si \(\alpha^i = \alpha^k\) para \(i\) y \(k\) entre \(0\) y \(n-1\), entonces \(i = k\).
+Con la notación que hemos descito la igualdad (\ref{eq:sindromes}) la podemos escribir como \begin{equation}
   \label{eq:sindromes-alt}
   S_i = \sum_{j = 1}^v E_jX_{j}^i, \quad\text{para } 1 \leq i \leq 2t,
 \end{equation}
-lo que nos conduce al sistema de ecuaciones: \begin{align*}
-  S_1 = E_1X_1 + E_2X_2 + &\dots + E_vX_v,\\
-  S_2 = E_1X_1^2 + E_2X_2^2 + &\dots + E_vX_v^2,\\
-  S_3 = E_1X_1^3 + E_2X_2^3 + &\dots + E_vX_v^3,\\
-  &\,\vdots\\
-  S_1 = E_1X_1^{2t} + E_2X_2^{2t} + &\dots + E_vX_v^{2t}.
-\end{align*}
-De este sistema desconocemos tanto los \(X_j\) como los \(E_j\), pero además es no lineal para los \(X_j\).
+lo que nos conduce al sistema de ecuaciones: \begin{equation}
+  \begin{cases}
+    S_1 = E_1X_1 + E_2X_2 + \dots + E_vX_v,\\
+    S_2 = E_1X_1^2 + E_2X_2^2 + \dots + E_vX_v^2,\\
+    S_3 = E_1X_1^3 + E_2X_2^3 + \dots + E_vX_v^3,\\
+    \quad\;\vdots\\
+    S_1 = E_1X_1^{2t} + E_2X_2^{2t} + \dots + E_vX_v^{2t}.
+  \end{cases}
+  \label{eq:sindromes-alt-sistema}
+\end{equation}
+De este sistema desconocemos tanto los valores de los \(X_j\) como los de los \(E_j\), pero es que además no es lineal para los \(X_j\).
 Como no podemos resolverlo directamente vamos a tratar de encontrar otra forma con la que calcular los valores \(X_j\) y utilizarlos para resolver el sistema lineal que forman los \(E_j\).
 Para ello vamos a buscar un sistema lineal que dependa de otras variables \(\sigma_1, \dots, \sigma_v\) que nos conduzca a los valores \(X_j\).
 Definimos el \textit{polinomio localizador de errores} \(\sigma(x)\) como
 \[
   \sigma(x) = (1 - xX_1)(1 - xX_2) \dots (1 - xX_v) = 1 + \sum_{i=1}^v \sigma_ix^i.
 \]
-Como vemos por su definición, las raíces de \(\sigma(x)\) son los inversos de los números de coordenadas de error.
+Como vemos inmediatamente por su definición, las raíces de \(\sigma(x)\) son los inversos de los números de coordenadas de error.
 Por tanto,
 \[
   \sigma(X_j^{-1}) = 1 + \sigma_1X_j^{-1} + \sigma_2X_j^{-2} + \dots + \sigma_vX_j^{-v} = 0
 \]
 para \(1 \leq j \leq v\).
-Si multiplicamos por \(E_jX_j^{i+v}\) obtenemos
+Si multiplicamos a ambos lados de la expresión por \(E_jX_j^{i+v}\) obtenemos
 \[
   E_jX_j^{i+v} + \sigma_1E_jX_j^{i+v-1} + \dots + \sigma_vE_jX_j^{i} = 0
 \]
@@ -864,20 +887,21 @@ Para ello tenemos en cuenta que la matriz
 \[
   M_{\mu} = \begin{pmatrix}
     S_1 & S_2 & \dots & S_{\mu} \\
-    S_2 & S_3 & \dots S_{\mu + 1}\\
+    S_2 & S_3 & \dots & S_{\mu + 1}\\
      & & \vdots & \\
     S_{\mu} & S_{\mu+1} & \dots & S_{2\mu - 1}
   \end{pmatrix}
 \] será no singular si \(\mu = v\) y singular si \(\mu > v\).
-% MAYBE: copiar demostración de esto????
+% TODO: copiar demostración de esto????
 Así, si \(M_{\mu}\) es singular reducimos el valor de \(\mu\) en 1, \(\mu = \mu - 1\) y probamos de nuevo si \(M_{\mu}\) es singular.
 Repetimos hasta encontrar una matriz que no sea singular.
 Ese valor \(\mu\) será el número de errores \(v\).
 Conocido el tamaño podemos resolver el sistema y obtener los valores \(\sigma_k\).
-Una vez conocidos los \(\sigma_k\) podemos determinar \(\sigma(x)\) y con él, sus raíces.
-Inviertiéndolas encontramos los valores de \(X_j\).
-Con ellos ya podemos encontrar los de \(E_j\).
-Y con estos valores ya podemos obtener el vector de error \(e(x)\).
+Ahora solo tenemos que deshacer el camino que hemos recorrido hasta ahora.
+Conocidos los \(\sigma_k\) podemos determinar \(\sigma(x)\) y con él, sus raíces, utilizando el procedimiento que queramos, usualmente, calculando reiteradamente \(\sigma(\alpha^i)\) para \(0 \leq i < n\) hasta encontrarlas.
+Como ya dijimos, si las invertimos hallaremos los valores de \(X_j\), y con ellos ya podemos resolver el sistema (\ref{eq:sindromes-alt-sistema}), obteniendo así los valores de los \(E_j\).
+Conocidos todos los valores de \(X_j\) y \(E_j\) podemos obtener los de \(k_j\) y \(e_{k_j}\), con los que podemos determinar el vector de error \(e(x)\).
+Ya solo queda restar \(y(x) - e(x)\) para obtener el mensaje original.
 
 En resumen, el algoritmo consiste en: \begin{enumerate}
   \item Determinar los síndromes del mensaje recibido.
@@ -887,17 +911,17 @@ En resumen, el algoritmo consiste en: \begin{enumerate}
   \item Hallar el vector de error \(e(x)\) y restárselo al mensaje \(y(x)\).
 \end{enumerate}
 
-Puede encontrarse en el algoritmo \ref{alg:pgz-cc} una descripción del mismo.
+Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo PGZ en pseudocódigo siguiendo este esquema.
+A partir de él se ha realizado una implementación en el sistema Sage que puede consultarse en el anexo \ref{annex:pgz-sage}.
 
-\begin{algorithm}[b]
+\begin{algorithm}[h]
   \DontPrintSemicolon
   \KwIn{el código \(\mathcal C\), el mensaje recibido \(y(x)\)}
   \KwOut{el mensaje decodificado \(c(x)\)}
-  %\KwResult{mensaje decodificado}
-  \(\delta \longleftarrow\) \(\mathcal C\).distancia\_designada\;
+  \(\delta \longleftarrow\) distancia designada de \(\mathcal C\)\;
   \(t \longleftarrow \lfloor(\delta - 1)/2\rfloor\)\;
-  \(g \longleftarrow\) \(\mathcal C\).polinomio\_generador\;
-  \(\alpha \longleftarrow\) \(\mathcal C\).raíz\_primitiva\;
+  \(g \longleftarrow\) polinomio generador de \(\mathcal C\)\;
+  \(\alpha \longleftarrow\) raíz primitiva del cuerpo de descomposición usado para generar el conjunto característico de \(\mathcal C\)\;
   \tcp{Paso 1: calcular síndromes}
   \For{\(1 \leq i \leq 2t\)}{
       $S_i \longleftarrow y(\alpha^i)$\;
