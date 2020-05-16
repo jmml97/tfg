@@ -76,6 +76,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 \end{definition}
 
 \begin{proposition}
+  \label{prop:cod-por-matriz-paridad}
   Sea \(H\) la matriz de paridad de un \([n, k]\) código lineal \(\mathcal C\). 
   Entonces, \[\mathcal C = \left\{x \in \mathbb F_q^n : xH^T = 0\right\} = \left\{x \in F_q^n : Hx^T = 0\right\}.\]
 \end{proposition}
@@ -277,15 +278,33 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 
 \section{Ejemplos de códigos}
 
-En esta sección vamos a ver algunas familias de códigos.
+En esta sección vamos a describir someramente algunas familias de códigos relevantes: los códigos de repetición, los códigos de control de paridad y los códigos de Hamming.
 
 \subsection{Códigos de repetición}
 
 Los códigos de repetición son una de las familias de códigos más sencillas.
-Dada una tupla de elementos de \(\mathbb F_q^n\) lo que hacemos al codificarla es repetir cada elemento de la tupla \(n\) veces.
-A la hora de decodificar un mensaje cada bloque de \(n\) elementos se fija al valor del elemento que más se repita. 
-Los más utilizados son los códigos de repetición binarios, es decir, sobre \(\mathbb F_2\).
+Dado un mensaje \(\mathbf{m} = (m_1, m_2, \dots, m_n) \in \mathbb F_q^n\) lo que hacemos para codificarlo es repetir cada elemento \(m_i\) de la tupla \(k\) veces: 
+\[
+  \mathbf{c} = (m_{11}, m_{12}, \dots, m_{1k}, m_{21}, m_{22}, \dots, m_{2k}, \dots, m_{n1}, m_{n2}, \dots, m_{nk}).
+\]
+A la hora de decodificar un mensaje cada bloque de \(k\) elementos se fija al valor del elemento que más se repita. 
+Los más utilizados son los códigos de repetición binarios, es decir, los que se definen sobre \(\mathbb F_2\).
 No son códigos lineales.
+
+\subsection{Códigos de control de paridad}
+
+Los \([n, n -1]\)-códigos lineales que tienen matriz de paridad \[
+  H = \begin{pmatrix}
+    1 & 1 & \dots & 1
+  \end{pmatrix}
+\] se llaman \textit{códigos de control de paridad} o \textit{códigos de peso par}.
+Por la proposición \ref{prop:cod-por-matriz-paridad} las palabras código \(\mathbf{c}\) de este tipo de códigos han de cumplir que
+\[
+  \mathbf{c}H^T = c_1 + c_2 + \dots + c_n = 0,
+\]
+es decir, el número de \(1\) en la palabra código ha de ser par —de ahí el nombre—.
+La codificación de mensajes se realiza entonces añadiendo un \textit{bit} de paridad al final del mensaje cuyo valor se fija para que el número de \(1\) en el mismo sea par.
+Estos códigos tienen distancia \(2\) y pueden corregir un solo error.
 
 \subsection{Códigos de Hamming}
 
@@ -410,7 +429,7 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
       \mathcal C = \langle g(x) \rangle = \{f(x)g(x) : \operatorname{gr} f(x) < k\}.
     \]
     \item El conjunto \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\) y \(\mathcal C\) tiene dimensión \(k\).
-    \item La matriz \(G\) dada por \begin{align*}
+    \item \label{thi:corr-cod-div:mat-gen} La matriz \(G\) dada por \begin{align*}
       G &= \begin{bmatrix}
         g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} & 0 & 0 & \dots & 0 \\
         0 & g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} & 0 & \dots & 0 \\
@@ -503,6 +522,131 @@ Esta correspondencia biyectiva nos conduce al siguiente corolario.
   % TODO: demostrar? en el libro no viene demostrado y tampoco entiendo muy bien la segunda afirmación
 \end{proof}
 
+Ahora mismo todo este desarrollo puede parecer demasiado abstracto.
+Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polinomios generadores de los códigos cíclicos de una longitud arbitraria y cómo éstos son generados a partir de ellos.
+
+\begin{example}
+  Vamos a describir todos los códigos cíclicos binarios de longitud 7.
+  Sobre \(\mathbb F_2\) podemos descomponer \(x^7 - 1\) como \[
+    x^7 - 1 = (x + 1)(x^{3} + x + 1)(x^{3} + x^{2} + 1).
+  \]
+  Así, los 8 polinomios generadores son todos los divisores de \(x^7 - 1\), a saber: \begin{enumerate}
+    \item \(1\)
+    \item \((x + 1)\)
+    \item \((x^{3} + x + 1)\)
+    \item \((x^{3} + x^{2} + 1)\)
+    \item \((x + 1)(x^{3} + x + 1) = x^4 + x^3 + x^2 + 1\)
+    \item \((x + 1)(x^{3} + x^{2} + 1) = x^4 + x^2 + x + 1\)
+    \item \((x^{3} + x + 1)(x^{3} + x^{2} + 1) = x^6 + x^5 + x^4 + x^3 + x^2 + x + 1\)
+    \item \((x + 1)(x^{3} + x + 1)(x^{3} + x^{2} + 1) = x^7 - 1\)
+  \end{enumerate}
+  Vamos a ver qué códigos generan estos polinomios: \begin{enumerate}
+    \item La dimensión del código es \(k = 7 - 0 = 7\), luego el código generado es un \([7, 7]\)-código lineal, que es evidentemente \(\mathbb F_2^7\). La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1
+        \end{array}\right).
+    \]
+    \item La dimensión del código es \(k = 7 - 1 = 6\), luego el código generado es un \([7, 6]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 1
+        \end{array}\right).
+    \]
+    Comprobamos que la matriz de paridad es \[
+      H = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 1 & 1 & 1 & 1 & 1
+        \end{array}\right)
+    \]
+    y por tanto el código obtenido es un código de control de paridad.
+    \item La dimensión del código es \(k = 7 - 3 = 4\), luego el código generado es un \([7, 4]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 1 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 & 1 & 0 & 1
+        \end{array}\right).
+    \]
+    La matriz de paridad en este caso es \[
+      H = \left(\begin{array}{rrrrrrr}
+        1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 1 & 0 \\
+        0 & 0 & 1 & 0 & 1 & 1 & 1
+        \end{array}\right)
+    \]
+    y por tanto el código generado es un \(\mathcal H_3\) código de Hamming.
+    \item La dimensión del código es \(k = 7 - 3 = 4\), luego el código generado es un \([7, 4]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 0 & 1 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 1 & 1
+        \end{array}\right).
+    \]
+    La matriz de paridad en este caso es \[
+      H = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+        0 & 0 & 1 & 1 & 1 & 0 & 1
+        \end{array}\right)
+    \]
+    y por tanto el código generado es un \(\mathcal H_3\) código de Hamming.
+    \item La dimensión del código es \(k = 7 - 4 = 3\), luego el código generado es un \([7, 3]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 1 & 0 \\
+        0 & 0 & 1 & 0 & 1 & 1 & 1
+        \end{array}\right).
+    \]
+    La matriz de paridad en este caso es \[
+      H = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 1 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 & 1 & 0 & 1
+        \end{array}\right)
+    \]
+    y por tanto el código generado es un \(\mathcal H_4\) código de Hamming.
+    \item La dimensión del código es \(k = 7 - 4 = 3\), luego el código generado es un \([7, 3]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+        0 & 0 & 1 & 1 & 1 & 0 & 1
+        \end{array}\right).
+    \]
+    La matriz de paridad en este caso es \[
+      H = \left(\begin{array}{rrrrrrr}
+        1 & 0 & 1 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 1 & 1
+        \end{array}\right)
+    \]
+    y por tanto el código generado es un \(\mathcal H_4\) código de Hamming.
+    \item La dimensión del código es \(k = 7 - 6 = 1\), luego el código generado es un \([7, 1]\)-código lineal.
+    La matriz generadora que nos proporciona el teorema \ref{th:corr-cod-div}(\ref{thi:corr-cod-div:mat-gen}) es \[
+      G = \left(\begin{array}{rrrrrrr}
+        1 & 1 & 1 & 1 & 1 & 1 & 1
+        \end{array}\right),
+    \] por lo que concluimos que el código generado es el código de repetición de longitud \(7\).
+    \item La dimensión del código es \(k = 7 - 7 = 0\), luego el código generado es \(\{\mathbf 0\}\).
+  \end{enumerate}
+\end{example}
+
 % TODO: ejemplo? ejemplo 4.2.4 del libro
 
 El siguiente resultado nos muestra la relación entre dos polinomios generadores cuando un código es subcódigo de otro.
@@ -544,7 +688,7 @@ Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los
 %\paragraph{Codificación sistemática usando el código dual}
 
 \begin{example}
-  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Supongamos que queremos codificar el mensaje \(m(x) = 1 + x^2 + x^5\). Vamos a ver su codificación con los dos métodos descritos. Como la longitud de \(\mathcal C\) es \(15\) y el grado de su polinomio generador es \(8\), la dimensión del código es \(15 - 8 = 7\). Escribimos el mensaje \(m(x)\) en forma de vector: \(\mathbf{m}= (1, 0, 1, 0, 0, 1, 0)\). La matriz generadora del código \(\mathcal C\) es: 
+  Sea \(\mathcal C\) un código cíclico de longitud 15 con polinomio generador \(g(x) = (1 + x + x^4)(1 + x + x^2 + x^3 + x^4)\). Supongamos que queremos codificar el mensaje \(m(x) = 1 + x^2 + x^5\). Vamos a ver su codificación con los dos métodos descritos. Como la longitud de \(\mathcal C\) es \(15\) y el grado de su polinomio generador es \(8\), la dimensión del código es \(15 - 8 = 7\). Escribimos el mensaje \(m(x)\) en forma de vector: \(\mathbf{m}= (1, 0, 1, 0, 0, 1, 0)\). Una matriz generadora del código \(\mathcal C\) es: 
   \[
     G = \left(\begin{array}{rrrrrrrrrrrrrrr}
       1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
