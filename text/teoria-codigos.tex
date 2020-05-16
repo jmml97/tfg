@@ -40,14 +40,14 @@ Esto motiva la siguiente definición.
 % TODO: Gabriel me comenta que ponga punto y seguido, aunque no sé si se refiere
 
 \begin{remark}
-  Un código lineal \(\mathcal C\) tiene \(q^k\) palabras codificadas.
+  Un código lineal \(\mathcal C\) tiene \(q^k\) palabras código.
 \end{remark}
 
-Así, hemos pasado de trabajar con un objeto que no tiene estructura alguna a trabajar con espacios vectoriales, cuyas propiedades son conocidas y disponemos de numerosas herramientas para tratarlos.
-Un primer ejemplo es la siguiente definición.
+Así, hemos pasado de trabajar con un objeto que no tiene estructura alguna a trabajar con espacios vectoriales, cuyas propiedades son ampliamente conocidas y disponemos de numerosas herramientas para tratarlos.
+Un primer ejemplo de este hecho es la siguiente definición.
 
 \begin{definition}
-  Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\).
+  Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\)\footnote{Efectivamente la matriz generadora no es única: basta tomar la correspondiente a cualquier otra base del código —que no deja de ser un espacio vectorial— para obtener una distinta. Pero es más, podemos simplemente reordenar las filas de una matriz generadora y en esencia estaremos obteniendo otra distinta.}.
 \end{definition}
 
 \begin{definition}
@@ -55,7 +55,7 @@ Un primer ejemplo es la siguiente definición.
   Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
 \end{definition}
 
-Si las primeras \(k\) coordenadas forman un conjunto de información el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
+Si las primeras \(k\) coordenadas de una matriz generadora \(G\) forman un conjunto de información entonces el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
 Esta matriz generadora se dice que está en \textit{forma estándar}.
 A partir de cualquier matriz generadora siempre es posible obtener una matriz en forma estándar realizando una permutación adecuada de las coordenadas.
 %Esta matriz resultante no será una matriz generadora del código inicial, pero sí de un código equivalente.
@@ -68,7 +68,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 
 \begin{definition}
   El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \forall c \in \mathcal C\right\},\]
-  donde \(\cdot\) representa el producto escalar usual.
+  donde \((\cdot)\) representa el producto escalar usual.
 \end{definition}
 
 \begin{definition}
@@ -82,7 +82,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 \end{proposition}
 
 \begin{proof}
-  Sea \(c \in \mathcal C\) una palabra codificada. 
+  Sea \(c \in \mathcal C\) una palabra código. 
   Sabemos que la podemos expresar como \(c = uG\), donde \(u \in \mathbb F_q^k\) y \(G\) es una matriz generadora de \(\mathcal C\). 
   Tenemos entonces que \(c\cramped{H^T} = uG\cramped{H^T}\) y como \(G\cramped{H^T} = 0\) —por ser H matriz generadora del subespacio ortogonal \(\mathcal C\)— se tiene que \[\mathcal C \subset S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\},\] que es el espacio solución de un sistema de \(n - k\) ecuaciones con \(n\) incógnitas y de rango \(n - k\). Como \(\dim(S_H) = n - (n - k) = k = \dim L\), concluimos que \[L = S_H = \left\{x \in \mathbb F_q^n : Hx^T = 0\right\}.\qedhere\]
 \end{proof}
@@ -97,8 +97,9 @@ Como nota final sobre nomenclatura de códigos duales, apuntamos que un código 
 
 \subsection{Codificación y decodificación}
 
+Codificar un mensaje consiste en escribirlo como palabra código de un código.
 La forma estándar de codificar mensajes con códigos lineales es utilizando una matriz generadora.
-Dado un mensaje \(\mathbf{m} \in \mathbb F_q^k\) podemos obtener la palabra codificada \(\mathbf{c}\) en \(\mathcal C\) realizando la operación \(\mathbf{c}= \mathbf{m}G\).
+Dado un mensaje \(\mathbf{m} \in \mathbb F_q^k\) podemos obtener la palabra código \(\mathbf{c}\) en \(\mathcal C\) realizando la operación \(\mathbf{c}= \mathbf{m}G\).
 Vamos a verlo mejor con un ejemplo.
 
 \begin{example}
@@ -118,7 +119,7 @@ Podemos comprobar también que es posible codificar en los mismos códigos linea
 Veamos un ejemplo con el mismo código binario lineal que en el ejemplo anterior pero con distinta matriz generadora.
 
 \begin{example}
-  Sea \(\mathcal C\) \([3, 2]\) un código binario lineal y \(G\) la matriz generadora dada por 
+  Sea \(\mathcal C\) un \([3, 2]\) código binario lineal y \(G\) la matriz generadora dada por 
   \[
     G = \begin{pmatrix}
       1 & 0 & 1 \\ 0 & 1 & 1
@@ -136,7 +137,8 @@ En caso contario, se dice que es \textit{no-sistemática}.
 Veamos un ejemplo de codificación no-sistemática con el mismo código binario lineal de antes.
 
 \begin{example}
-  Sea \(\mathcal C\) \([3, 2]\) un código binario lineal y \(G\) la matriz generadora dada por 
+  \label{ej:codificacion-no-sistematica}
+  Sea \(\mathcal C\) un \([3, 2]\) código binario lineal y \(G\) la matriz generadora dada por 
   \[
     G = \begin{pmatrix}
       1 & 0 & 1 \\ 1 & 1 & 1
@@ -148,7 +150,58 @@ Veamos un ejemplo de codificación no-sistemática con el mismo código binario 
   Comprobamos que los mensajes \(01\) y \(11\) no están contenidos en las palabras código correspondientes, \(111\) y \(010\), respectivamente, luego la codificación es no-sistemática.
 \end{example}
 
-El proceso de decodificación de los mensajes es mucho más complicado, pues como se ha comentado hay que tener en cuenta las posibles interferencias que se hayan podido producir en la comunicación.
+Dada una palabra código \(\mathbf{c}\) si se desea obtener el mensaje \(\mathbf{m}\) a partir del que se obtuvo podemos realizar el procedimiento inverso a la codificación.
+Para ello tenemos en cuenta que al codificar mediante una matriz generadora \(G\) de tamaño \(n \times k\) establecemos una correspondencia biyectiva entre mensajes y palabras código.
+Existe por tanto una matriz \(K\) de tamaño \(k \times n\) llamada \textit{inversa por la derecha} tal que \(GK = I_k\).
+Así, puesto que \(\mathbf{c} = \mathbf{m}G\) podemos obtener el mensaje original calculando \(\mathbf{c}K = \mathbf{m}GK = \mathbf{m}\).
+Veamos un ejemplo de este proceso.
+
+\begin{example}
+  Sea \(\mathcal C\) un \([7, 3]\) código binario lineal y \(G\) la matriz generadora dada por 
+  \[
+    G = \left(\begin{array}{rrrrrrr}
+      1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+      0 & 0 & 1 & 1 & 1 & 0 & 1
+      \end{array}\right) \in \mathcal M_{3 \times 7}(\mathbb F_2).
+  \]
+  Esta matriz codifica el mensaje \(\mathbf{m} = (1, 0, 1)\) como:
+  \[
+    \mathbf{c} = (1, 0, 1)\left(\begin{array}{rrrrrrr}
+      1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+      0 & 0 & 1 & 1 & 1 & 0 & 1
+      \end{array}\right) = \left(1,\,1,\,0,\,1,\,0,\,0,\,1\right).
+  \]
+  Para realizar el procedimiento inverso buscamos una matriz \(K\) tal que \(GK = I_7\).
+  Esta matriz viene dada por
+  \[
+    K = \left(\begin{array}{rrr}
+      1 & 1 & 0 \\
+      0 & 1 & 1 \\
+      0 & 0 & 1 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0
+      \end{array}\right)
+  \] y por tanto el mensaje original era
+  \[
+    \mathbf{m} = \left(1,\,1,\,0,\,1,\,0,\,0,\,1\right)\left(\begin{array}{rrr}
+      1 & 1 & 0 \\
+      0 & 1 & 1 \\
+      0 & 0 & 1 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0
+      \end{array}\right) = (1, 0, 1).
+  \]
+  
+\end{example}
+
+El proceso de decodificación de los mensajes consiste en obtener una palabra código válida a partir de un mensaje recibido\footnote{Es importante llamar la atención sobre el hecho de que \textit{decodificar} no es el proceso inverso a \textit{codificar}. Codificar consiste en escribir un mensaje como palabra código y decodificar, en corregir los errores que se hayan podido producir en la transmisión de dicha palabra.}. 
+Es una tarea mucho más complicada que los procesos comentados antes, pues como ya se ha mencionado hay que tener en cuenta las posibles interferencias que se hayan podido producir en la comunicación.
 Los métodos de decodificación de códigos lineales en general se escapan del alcance de este trabajo, pues su objetivo principal es la descripción de un algoritmo de decodificación para un tipo concreto de códigos que veremos más adelante.
 
 \subsection{Distancias y pesos}
@@ -167,7 +220,7 @@ muy relacionadas con esta idea.
   La función de distancia \(\operatorname{d}(\symbf{x}, \symbf{y})\) verifica las siguientes propiedades.
   \begin{enumerate}
     \item No negatividad: \(\operatorname{d}(\symbf{x}, \symbf{y}) \geq 0\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
-    \item \(\operatorname{d}(\symbf{x}, \symbf{y}) = 0\) si y solo si \(\symbf{x} = \symbf{y}\).
+    \item La distancia \(\operatorname{d}(\symbf{x}, \symbf{y}) = 0\) si y solo si \(\symbf{x} = \symbf{y}\).
     \item Simetría: \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{d}(\symbf{y}, \symbf{x})\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
     \item Desigualdad triangular: \(\operatorname{d}(\symbf{x}, \symbf{z}) \leq \operatorname{d}(\symbf{x}, \symbf{y}) + \operatorname{d}(\symbf{y}, \symbf{z})\) para todo elemento \(\symbf{x}, \symbf{y}, \symbf{z}\in \mathbb F_q^n\).
   \end{enumerate}
@@ -177,7 +230,7 @@ muy relacionadas con esta idea.
   
 \end{proof}
 
-La \textit{distancia (mínima)} de un código \(\mathcal C\) es la menor distancia posible entre dos palabras codificadas distintas. 
+La \textit{distancia} (\textit{mínima}) de un código \(\mathcal C\) es la menor distancia posible entre dos palabras código distintas. 
 Si la distancia mínima \(d\) de un \([n,k]\) código es conocida, nos referiremos a él como un \([n,k,d]\) código.
 Este valor es importante pues nos ayuda a determinar la capacidad de corrección de errores del código \(\mathcal C\), como ilustra el siguiente teorema.
 
@@ -196,9 +249,11 @@ Otra medida interesante es el \textit{peso de Hamming}.
   El \textit{peso de Hamming} \(\operatorname{wt}(\symbf{x})\) de un vector \(\symbf{x}\) es el número de coordenadas distintas de cero de \(\symbf{x}\).
 \end{definition}
 
+El siguiente teorema nos ilustra la relación existente entre los conceptos de peso y distancia.
+
 \begin{theorem}
   Si \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{wt}(\symbf{x} - \symbf{y})\).
-  Si \(\mathcal C\) es un código lineal, la distancia mínima es igual al peso mínimo de las palabras codificadas de \(\mathcal C\) distintas de cero.
+  Si \(\mathcal C\) es un código lineal, la distancia mínima es igual al peso mínimo de las palabras código de \(\mathcal C\) distintas de cero.
 \end{theorem}
 
 \begin{proof}
@@ -208,7 +263,7 @@ Otra medida interesante es el \textit{peso de Hamming}.
 Como consecuencia de este teorema —para códigos lineales— la distancia mínima también se llama \textit{peso mínimo} del código.
 
 \begin{definition}
-  Sea \(A_i(\mathcal C)\) —que abreviaremos \(A_i\)— el número de palabras codificadas de peso \(i\) en \(\mathcal C\).
+  Sea \(A_i(\mathcal C)\) —que abreviaremos \(A_i\)— el número de palabras código de peso \(i\) en \(\mathcal C\).
   Para cada \(0 \leq i \leq n\), la lista \(A_i\) se denomina \textit{distribución de peso} o \textit{espectro de peso} de \(\mathcal C\).
 \end{definition}
 
@@ -258,7 +313,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 
 \begin{theorem}
   Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
-  Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra codificada en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
+  Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra código en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
 \end{theorem}
 
 \begin{proof}
@@ -330,32 +385,32 @@ Cuando \(q = 2\), \(\mathcal H_{2,r}\) es el código \(\mathcal H_r\).
 \section{Códigos cíclicos}
 
 En esta sección vamos a estudiar los aspectos fundamentales de la familia de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
-Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) —obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)— también está en \(\mathcal C\).
-Pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
-Al hablar de <<coordenadas consecutivas>> siempre tendremos en cuenta esta ciclicidad.
 
-% FIXME: revisar uso palabra "ciclicidad"
+\begin{definition}
+  Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) —obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)— también está en \(\mathcal C\).
+\end{definition}
 
-Cuando trabajemos con códigos cíclicos representaremos las palabras codificadas como polinomios.
-Podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\). 
+Al trabajar con códigos cíclicos pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
+Al hablar de «coordenadas consecutivas» siempre tendremos en cuenta esta ciclicidad.
+Representaremos las palabras código de los códigos cíclicos como polinomios, pues podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\). 
 Obtenemos así un isomorfismo entre \(\mathbb F_q\)-espacios vectoriales.
-Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra codificada \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
+Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra código \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
 Formalmente, el hecho de que un código \(\mathcal C\) sea invariante bajo un desplazamiento cíclico implica que si \(c(x)\) está en \(\mathcal C\), también ha de estar \(xc(x)\), siempre que multipliquemos módulo \(x^n -1\). 
 Esto nos sugiere que el contexto adecuado para estudiar códigos cíclicos es el anillo cociente \(\mathcal R_n = \mathbb F_q[x]/(x^n - 1)\).
 
 Por tanto, bajo la correspondencia vectores-polinomios que hemos descrito antes, los códigos cíclicos son ideales de \(\mathcal R_n\), y los ideales de \(\mathcal R_n\) son códigos cíclicos.
-En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que va a depender de la factorización de \(x^n-1\).
+En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es equivalente al estudio de los ideales en \(\mathcal R_n\), que va a depender de la factorización de \(x^n-1\) y por tanto lo vamos a abordar a continuación.
 
 \subsection{Factorización de \texorpdfstring{\(x^n -1\)}{xn - 1}}
 
 \label{sec:factorizacion-xn-1}
 
-A la hora de factorizar \(x^n -1\) existen dos posibilidades, pues puede tener factores irreducibles repetidos o no.
-Vamos a asumir que \(q\) y \(n\) son primos relativos y por tanto \(x^n - 1\) no tiene factores repetidos; en caso contrario el anillo cociente sería semisimple, lo que no nos aporta nada: los ideales generados por los polinomios con factores repetidos no aumentan la distancia, siendo la misma que la del subcódigo sin factores repetidos.
+A la hora de factorizar \(x^n -1\) existen dos posibilidades, pues dicha factorización puede tener factores irreducibles repetidos o no.
+Vamos a asumir que \(q\) y \(n\) son primos relativos y por tanto \(x^n - 1\) no tiene factores repetidos; en caso contrario el anillo cociente sería semisimple, lo que no nos aportaría nada: los ideales generados por los polinomios con factores repetidos no aumentan la distancia, pues es la misma que la del subcódigo sin factores repetidos.
 
 Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) necesitamos considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
-El cuerpo \(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que ocurre cuando \(n \mid (q^t - 1)\) por el teorema \ref{th:Fq-ast-cilcico}.
+El cuerpo \(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que por el teorema \ref{th:Fq-ast-cilcico} sabemos que ocurre cuando \(n \mid (q^t - 1)\).
 Definimos el \textit{orden} \(\operatorname{ord}_n(q)\) de \(q\) módulo \(n\) como el menor entero positivo \(a\) tal que \(q^{a} \equiv 1 \bmod n\).
 Si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\) pero no hay una extensión de cuerpos más pequeña de \(\mathbb F_q\) que la contenga.
 Como todos los \(\alpha^{i}\) son distintos dos a dos para \(0 \leq i < n\) y \((\alpha^{i})^n = 1\), entonces \(\mathbb F_{q^t}\) contiene todas las raíces de \(x^n - 1\).
@@ -411,7 +466,8 @@ Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclo
 
 \subsection{Construcción de códigos cíclicos}
 
-Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos en \(\mathcal R_n\) y los polinomios mónicos divisores de \(x^n-1\).
+Una vez factorizado \(x^n - 1\) vamos a ver que hay una correspondencia biyectiva entre sus polinomios divisores mónicos y los códigos cíclicos en \(\mathcal R_n\).
+El siguiente teorema es el resultado fundamental de códigos cíclicos que nos va a permitir describirlos.
 
 \begin{theorem}
   \label{th:corr-cod-div}
@@ -484,8 +540,8 @@ Vamos a ver que hay una correspondencia biyectiva entre los códigos cíclicos e
   \end{enumerate}
 \end{proof}
 
-Este teorema nos muestra que existe un polinomio mónico \(g(x)\) que divide a \(x^n - 1\) y genera \(\mathcal C\).
-Vamos a ver a continuación que dicho polinomio es único.
+Este teorema nos proporciona una forma de obtener los códigos cíclicos de longitud \(n\) a partir de los divisores del polinomio \(x^n - 1\) así como describir una matriz generadora de dichos códigos a partir de ellos.
+Vamos a ver a continuación que el polinomio mónico divisor de \(x^n - 1\) que genera a un código cíclico \(\mathcal C\) es único.
 
 \begin{corollary}
   \label{cor:pol-gen-unico}
@@ -507,7 +563,7 @@ Vamos a ver a continuación que dicho polinomio es único.
   En consecuencia, como \(g_1(x)\) y \(g(x)\) son ambos mónicos y dividen el uno al otro en \(\mathbb F_q[x]\), son necesariamente iguales.
 \end{proof}
 
-A este polinomio lo llamamos \textit{polinomio generador} del código cíclico \(\mathcal C\).
+A este polinomio \(g(x)\) lo llamamos \textit{polinomio generador} del código cíclico \(\mathcal C\).
 Por el corolario anterior, este polinomio es tanto el polinomio mónico en \(\mathcal C\) de grado mínimo como el polinomio mónico que divide a \(x^n - 1\) y genera a \(\mathcal C\).
 Existe por tanto una correspondencia biunívoca entre los códigos cíclicos distintos de cero y los divisores de \(x^n - 1\) distintos de él mismo.
 Para extender dicha correspondencia entre todos los códigos cíclicos en \(\mathcal R_n\) y todos los divisores mónicos de \(x^n - 1\) definimos como polinomio generador del código cíclico \(\{\mathbf 0\}\) el polinomio \(x^n - 1\). 
@@ -649,7 +705,7 @@ Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polino
 
 % TODO: ejemplo? ejemplo 4.2.4 del libro
 
-El siguiente resultado nos muestra la relación entre dos polinomios generadores cuando un código es subcódigo de otro.
+Finalmente, el siguiente resultado nos muestra la relación entre dos polinomios generadores cuando un código es subcódigo de otro.
 
 \begin{corollary}
   Sean \(\mathcal C_1\) y \(\mathcal C_2\) códigos cíclicos sobre \(\mathbb F_q\) con polinomios generadores \(g_1(x)\) y \(g_2(x)\), respectivamente.
@@ -658,9 +714,9 @@ El siguiente resultado nos muestra la relación entre dos polinomios generadores
 
 % TODO: resultados sobre duales de códigos cíclicos (4.2.6, 4.2.7)
 
-\subsection{Codificación y decodificación de códigos cíclicos}
+\subsection{Codificación de códigos cíclicos}
 
-Los códigos cíclicos son más sencillos de decodificar que otros tipos de códigos debido a su estructura adicional.
+%Los códigos cíclicos son más sencillos de decodificar que otros tipos de códigos debido a su estructura adicional.
 Vamos a ver a continuación tres tipos de codificación de códigos cíclicos.
 Consideraremos un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) con polinomio generador \(g(x)\) de grado \(n - k\), por lo que \(\mathcal C\) tiene dimensión \(k\).
 
@@ -670,7 +726,7 @@ Esta forma de codificación está basada en la técnica natural de codificación
   %TODO: referencia
 ).
 Sea \(G\) la matriz generadora obtenida a partir de los desplazamientos de \(g(x)\) descrita en el teorema \ref{th:corr-cod-div}.
-Dado el mensaje \(\mathbf m \in \mathbb F_q^k\), lo codificamos como la palabra codificada \(\mathbf c = \mathbf mG\).
+Dado el mensaje \(\mathbf m \in \mathbb F_q^k\), lo codificamos como la palabra código \(\mathbf c = \mathbf mG\).
 De igual forma, si \(m(x)\) y \(c(x)\) son los polinomios en \(\mathbb F_q[x]\) asociados a \(\mathbf{m}\) y \(\mathbf c\), entonces \(c(x) = m(x)g(x)\).
 
 \paragraph{Codificación sistemática}
@@ -886,7 +942,7 @@ Del teorema \ref{th:corr-cod-div} concluimos que la dimensión de \(\mathcal C\)
   Sea \(\alpha\) una raíz primitiva de la unidad en una extensión de cuerpos de \(\mathbb F_q\) y sea \(\mathcal C\) un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) con conjunto característico \(T\) y polinomio generador \(g(x)\).
   Se verifica que: \begin{enumerate}
     \item El polinomio generador se puede expresar como \(g(x) = \prod_{i \in T}(x - \alpha^i)\).
-    \item Una palabra codificada \(c(x) \in \mathcal R_n\) está en \(\mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\).
+    \item Una palabra código \(c(x) \in \mathcal R_n\) está en \(\mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\).
     \item La dimensión de \(\mathcal C\) es \(n - |T|\).
   \end{enumerate}
 \end{theorem}
