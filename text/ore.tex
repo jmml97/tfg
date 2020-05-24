@@ -23,16 +23,19 @@ Las definiciones y el desarrollo teórico seguidos en esta sección proceden de 
   se conoce como \textit{anillo de polinomios de Ore} o \textit{anillos de polinomios torcidos}.
 \end{definition}
 
-Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que comprobar que efectivamente se verifican las propiedades de los anillos.
+Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que ver que efectivamente con las operaciones que hemos dado se verifican todas las propiedades de los anillos.
 Puesto que hemos usado la suma usual de los polinomios, bastaría probar que se verifica la propiedad asociativa para la multiplicación que hemos definido.
+No vamos a entrar en detalle, pues no es el objetivo de este trabajo el estudio de los anillos de polinomios de Ore en general.
 
-El estudio de los códigos cíclicos sesgados se hará sobre el anillo \(\mathbb F_q[x, \sigma]\), con \(\sigma\) un automorfismo.
-Es decir, nos limitaremos al estudio de los anillos de polinomios de Ore en los que \(R = \mathbb F_q\) —cuerpo finito de \(q\) elementos—, hemos llamado \(x\) a \(t\), \(\sigma\) es un automorfismo y \(\delta = 0\).
-Por tanto, vamos a centrarnos en comprobar que \(\mathbb F_q[x, \sigma]\) es un anillo, que como hemos comentado, se reduce a comprobar que se verifica la propiedad asociativa para la multiplicación, operación que en este caso verifica la relación 
+Trabajar con códigos cíclicos sesgados requiere del estudio del anillo \(\mathbb F_q[x, \sigma]\), con \(\sigma\) un automorfismo.
+Por tanto, nos vamos a centrar los anillos de polinomios de Ore en los que \(R = \mathbb F_q\) —cuerpo finito de \(q\) elementos—, hemos llamado \(x\) a \(t\), \(\sigma\) es un automorfismo y \(\delta = 0\).
+En estos anillos la multiplicación verifica la relación 
 \[
   xa = (\sigma a)x, \qquad a \in R.
 \]
-Vamos a ver inductivamente que, como podemos intuir, \(x^n a = (\sigma^n a)x^n\). 
+Es este caso particular el que sí vamos a estudiar en profundidad, justificando que, como ya hemos adelantado, se trata de un anillo.
+
+Vamos a ver por inducción que, como podemos intuir, \(x^n a = (\sigma^n a)x^n\). 
 Estudiado el caso base anterior y supuesto que se verifica la igualdad para \(n - 1\), para \(n\) tenemos que
 \[
   x^{n}a = xx^{n - 1}a = x(\sigma^{n-1} a)x^{n-1} = \sigma(\sigma^{n-1} a)x^{n-1}x = (\sigma^{n}a)x^{n}.
@@ -45,3 +48,54 @@ con lo que, junto a la propiedad distributiva podemos definir el producto de pol
 \[
   \textstyle(\sum a_nx^n)(\sum b_mx^m) = \sum(a_nx^n)(b_mx^m).
 \]
+
+Para comprobar que \(\mathbb F_q[x, \sigma]\) es un anillo, como ya hemos comentado en el caso general, necesitamos comprobar que se verifica la propiedad asociativa para la multiplicación.
+Comprobar esta afirmación directamente es tedioso, por lo que Jacobson propone (cita) demostrarlo utilizando una representación matricial de los elementos.
+
+A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, \(\mathbb F_q[x, \sigma]\) es un dominio de integridad no conmutativo.
+% ...
+Por tanto, \(\mathbb F_q[x, \sigma]\) no tiene divisores de cero distintos del cero, por lo que es un dominio de integridad no conmutativo, como habíamos afirmado.
+
+Podemos definir algoritmos de división en \(\mathbb F_q[x, \sigma]\) tanto a la izquierda como a la derecha (cita)  —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x, \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
+\[
+  f(x) = q(x)g(x) + r(x),
+\]
+y al dividir por la derecha, 
+\[
+  f(x) = g(x)q(x) + r(x),
+\]
+Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio \(g(x)\) se le llama \textit{cociente por la izquierda} (\textit{derecha}) y a \(r(x)\), \textit{resto por la izquierda} (\textit{derecha}).
+
+\begin{Ualgorithm}[h]
+  \DontPrintSemicolon
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(g \neq 0\)}
+  \KwOut{polinomios \(q, r \in \mathbb F_q[x, \sigma]\) tales que \(f = qg + r\), y \(\deg(r) < \deg(g)\)}
+  \(q \longleftarrow 0\)\;
+  \(r \longleftarrow f\)\;
+  \While{\(\deg(g) \leq \deg(r)\)}{
+    \(a \longleftarrow \lc (r) \sigma^{\deg (r) - \deg (g)}(\lc (g)^{-1})\)\;
+    \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
+    \(r \longleftarrow r - ax^{\deg (r) - \deg (g)}g\)
+  }
+  \caption{División por la izquierda en \(\mathbb F_q[x, \sigma]\)}
+  \label{alg:ore-fq-division-izquierda}
+ \end{Ualgorithm}
+
+\begin{Ualgorithm}[h]
+  \DontPrintSemicolon
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(g \neq 0\)}
+  \KwOut{polinomios \(q, r \in \mathbb F_q[x, \sigma]\) tales que \(f = gq + r\), y \(\deg(r) < \deg(g)\)}
+  \(q \longleftarrow 0\)\;
+  \(r \longleftarrow f\)\;
+  \While{\(\deg(g) \leq \deg(r)\)}{
+    \(a \longleftarrow \sigma^{-\deg(g)}(\lc(g)^{-1}\lc(r))\)\;
+    \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
+    \(r \longleftarrow r - gax^{\deg (r) - \deg (g)}\)
+  }
+  \caption{División por la derecha en \(\mathbb F_q[x, \sigma]\)}
+  \label{alg:ore-fq-division-derecha}
+ \end{Ualgorithm}
+ 
+ % Right divides, left divides
+ % Common multiples, common divisors
+ 
