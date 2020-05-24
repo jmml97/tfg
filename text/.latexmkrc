@@ -1,1 +1,1 @@
-$lualatex = 'lualatex --fmt tfgheader';
+#$lualatex = 'lualatex --fmt tfgheader';
