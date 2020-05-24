@@ -485,22 +485,15 @@ El siguiente teorema es el resultado fundamental de códigos cíclicos que nos v
       \mathcal C = \langle g(x) \rangle = \{f(x)g(x) : \operatorname{gr} f(x) < k\}.
     \]
     \item El conjunto \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\) y \(\mathcal C\) tiene dimensión \(k\).
-    \item \label{thi:corr-cod-div:mat-gen} La matriz \(G\) dada por \begin{align*}
-      G &= \begin{bmatrix}
+    \item \label{thi:corr-cod-div:mat-gen} La matriz \(G\) dada por \[
+      G = \begin{bmatrix}
         g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} & 0 & 0 & \dots & 0 \\
         0 & g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} & 0 & \dots & 0 \\
         0 & 0 & g_0 & g_1 & g_2 & \dots & \dots & g_r & \ddots & \vdots \\
         \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & & & \ddots & 0\\
         0 & 0 & \dots & 0 & g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} 
       \end{bmatrix},
-      % \\
-      %   &\iff \begin{bmatrix}
-      %     g(x) & & & \\
-      %      & xg(x) & & \\
-      %      & & \dots & \\
-      %      & & & x^{k-1}g(x)
-      %   \end{bmatrix}
-    \end{align*}
+    \]
     donde cada fila es un desplazamiento cíclico de la fila previa, es una matriz generadora de \(\mathcal C\).
     \item \label{thi:pol-generador-prod-minimal} Si \(\alpha\) es una enésima raíz primitiva de la unidad en alguna extensión de cuerpos de \(\mathbb F_q\) entonces \[
       g(x) = \prod_s M_{\alpha^s}(x),
@@ -1160,7 +1153,7 @@ En resumen, el algoritmo consiste en: \begin{enumerate}
 Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo PGZ en pseudocódigo siguiendo este esquema.
 A partir de él se ha realizado una implementación en el sistema Sage que puede consultarse en el anexo \ref{annex:pgz-sage}.
 
-\begin{algorithm}[h]
+\begin{Ualgorithm}[h]
   \DontPrintSemicolon
   \KwIn{el código \(\mathcal C\), el mensaje recibido \(y(x)\)}
   \KwOut{el mensaje decodificado \(c(x)\)}
@@ -1198,5 +1191,5 @@ A partir de él se ha realizado una implementación en el sistema Sage que puede
   \(c(x) = y(x) - e(x)\)\;
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos.}
   \label{alg:pgz-cc}
- \end{algorithm}
+ \end{Ualgorithm}
  \footnotetext{Aquí estamos describiendo una matriz por sus entradas, las filas varían en \(i\), y las columnas, en \(j\).}
