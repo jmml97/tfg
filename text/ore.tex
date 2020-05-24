@@ -1,0 +1,47 @@
+\chapter{Anillos de polinomios de Ore}
+
+En esta sección vamos a hablar sobre los anillos de polinomios de Ore, que serán la base de los códigos cíclicos sesgados.
+% TODO: nota histórica sobre polinomios Ore
+[Introducir nota histórica]
+Primero vamos a dar la definición general, sin detenernos a justificar su construcción, pues acto seguido vamos a centrarnos en el caso que nos va a ocupar cuando trabajemos con códigos cíclicos sesgados.
+Las definiciones y el desarrollo teórico seguidos en esta sección proceden de (citas).
+% CITEME: libro Jacobson, artículo original de Ore
+
+\begin{definition}
+  Sea \(R\) un anillo, \(\sigma\) un endomorfismo de \(R\) y \(\delta\) una \(\sigma\)-\textit{derivación} de \(R\), es decir, \(\delta\) es un homomorfismo de grupos abelianos tal que para \(a, b \in R\) se verifica que
+  \[
+    \delta(ab) = (\sigma a)(\delta b) + (\delta a)b.
+  \]
+  Entonces, el anillo \(R[t; \sigma, \delta]\) de los polinomios en \(R[t]\) de la forma
+  \[
+    a_0 + a_1t + \dots + a_nt^n,
+  \]
+  donde \(a_i \in R\), con la igualdad y suma usuales, y en el que la multiplicación verifica la relación 
+  \[
+  ta = (\sigma a)t + \delta a, \qquad a \in R,
+  \]
+  se conoce como \textit{anillo de polinomios de Ore} o \textit{anillos de polinomios torcidos}.
+\end{definition}
+
+Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que comprobar que efectivamente se verifican las propiedades de los anillos.
+Puesto que hemos usado la suma usual de los polinomios, bastaría probar que se verifica la propiedad asociativa para la multiplicación que hemos definido.
+
+El estudio de los códigos cíclicos sesgados se hará sobre el anillo \(\mathbb F_q[x, \sigma]\), con \(\sigma\) un automorfismo.
+Es decir, nos limitaremos al estudio de los anillos de polinomios de Ore en los que \(R = \mathbb F_q\) —cuerpo finito de \(q\) elementos—, hemos llamado \(x\) a \(t\), \(\sigma\) es un automorfismo y \(\delta = 0\).
+Por tanto, vamos a centrarnos en comprobar que \(\mathbb F_q[x, \sigma]\) es un anillo, que como hemos comentado, se reduce a comprobar que se verifica la propiedad asociativa para la multiplicación, operación que en este caso verifica la relación 
+\[
+  xa = (\sigma a)x, \qquad a \in R.
+\]
+Vamos a ver inductivamente que, como podemos intuir, \(x^n a = (\sigma^n a)x^n\). 
+Estudiado el caso base anterior y supuesto que se verifica la igualdad para \(n - 1\), para \(n\) tenemos que
+\[
+  x^{n}a = xx^{n - 1}a = x(\sigma^{n-1} a)x^{n-1} = \sigma(\sigma^{n-1} a)x^{n-1}x = (\sigma^{n}a)x^{n}.
+\]
+Ahora definimos
+\[
+  (ax^n)(bx^m) = a(\sigma^n b)x^{n+m},
+\]
+con lo que, junto a la propiedad distributiva podemos definir el producto de polinomios en \(x\) como
+\[
+  \textstyle(\sum a_nx^n)(\sum b_mx^m) = \sum(a_nx^n)(b_mx^m).
+\]
