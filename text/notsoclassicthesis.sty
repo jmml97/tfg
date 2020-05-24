@@ -321,7 +321,7 @@
       \DeclareRobustCommand{\spacedlowsmallcaps}[1]{\textls[80]{\ct@caps\MakeTextLowercase{#1}}}
       }{\relax}
     \ifthenelse{\boolean{luatex}}{
-      \newfontfamily{\spacedcaps}{Libertinus Serif}[
+      \newfontfamily{\spacedcaps}{EBGaramond}[
         WordSpace={1.8}
       ]
       \PackageInfo{classicthesis}{Using fontspec for character spacing.}%
@@ -637,7 +637,7 @@
 % ********************************************************************
 % \PassOptionsToPackage{font=small}{caption} % ,format=hang ,labelformat=smallcaps
 \RequirePackage{caption}
-\captionsetup{font=small, labelfont=sc, textfont=normalfont}
+\captionsetup{font=small, labelfont=sc, textfont=sf, justification   = raggedright, singlelinecheck = false}
 % Thanks to cgnieder and Claus Lahiri
 % http://tex.stackexchange.com/questions/69349/spacedlowsmallcaps-in-caption-label
 % [REMOVED DUE TO OTHER PROBLEMS, SEE ISSUE #82]

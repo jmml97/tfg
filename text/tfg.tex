@@ -25,14 +25,14 @@
 {\itshape}                                  % Fuente del cuerpo
 {0pt}                                  % Identación
 {\scshape}                      % Fuente para la cabecera
-{.}                                 % Puntuación tras la cabecera
+{}                                 % Puntuación tras la cabecera
 {5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
-{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
+{\lsc{{\thmname{#1}\thmnumber{ #2}}.\thmnote{ (#3.)}}}  % Especificación de la cabecera
 \theoremstyle{theorem-style}
-\newtheorem{theorem}{teorema}[section]
+\newtheorem{theorem}{Teorema}[section]
 \newtheorem{corollary}[theorem]{Corolario}
 \newtheorem{lemma}[theorem]{Lema}
-\newtheorem{proposition}[theorem]{proposición}
+\newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{question}{Pregunta}
 \newtheorem{conjecture}[theorem]{Conjetura}
 \newtheorem{remark}[theorem]{Nota}
@@ -41,13 +41,13 @@
 {\topsep}                                  % Espacio por debajo
 {}                                  % Fuente del cuerpo
 {0pt}                                  % Identación
-{\scshape}                      % Fuente para la cabecera
+{}                      % Fuente para la cabecera
 {.}                                 % Puntuación tras la cabecera
 {5pt plus 1pt minus 1pt}                              % Espacio tras la cabecera
-{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Especificación de la cabecera
+{\lsc{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}}  % Especificación de la cabecera
 \theoremstyle{definition-style}
-\newtheorem{definition}[theorem]{definición}
-\newtheorem{example}[theorem]{ejemplo}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
 \newtheorem{notation}[theorem]{Notación}
 \newtheorem{exercise}[theorem]{Ejercicio}
 
@@ -68,8 +68,10 @@
 % Otros elementos de página
 
 \usepackage{enumitem}
+\setlist[itemize]{ noitemsep, leftmargin=*}
+\setlist[enumerate]{noitemsep, leftmargin=*}
 
-
+\DeclareRobustCommand{\textacr}[1]{\textls{\small #1}}
 
 % Código
 
@@ -100,6 +102,7 @@
 % Idioma
 
 \usepackage[es-noindentfirst, es-lcroman, es-tabla]{babel}
+\spanishdashitems
 
 % Citas de texto en línea/bloque
 
@@ -122,7 +125,7 @@
 
 % Algoritmos
 
-\usepackage[linesnumbered, onelanguage]{algorithm2e}
+\usepackage[linesnumbered, onelanguage, ruled]{algorithm2e}
 \SetAlCapFnt{\sffamily}
 \SetAlCapNameFnt{\sffamily}
 \newcommand\mycommentfont[1]{\sffamily\textcolor{darkgray}{#1}}
@@ -132,6 +135,37 @@
 \SetAlCapSkip{.5em}
 \SetAlgoCaptionLayout{raggedright}
 \SetAlgorithmName{Algoritmo}{Algoritmo}{Lista de algoritmos}
+%\SetAlgoSkip{medskip}
+\SetAlgoInsideSkip{medskip}
+
+% Entorno algoritmo con líneas pero caption debajo
+\makeatletter
+\newenvironment{Ualgorithm}[1][htpb]{\def\@algocf@post@ruled{\color{gray}\hrule  height\algoheightrule\kern6pt\relax}%
+\def\@algocf@capt@ruled{under}%
+\setlength\algotitleheightrule{0pt}%
+\SetAlgoCaptionLayout{raggedright}%
+\begin{algorithm}[#1]}
+{\end{algorithm}}
+\makeatother
+
+\makeatletter
+\newcommand{\setalgotoprulecolor}[1]{\colorlet{toprulecolor}{#1}}
+\let\old@algocf@pre@ruled\@algocf@pre@ruled % Adjust top rule colour
+\renewcommand{\@algocf@pre@ruled}{\textcolor{toprulecolor}{\old@algocf@pre@ruled}}
+
+\newcommand{\setalgobotrulecolor}[1]{\colorlet{bottomrulecolor}{#1}}
+\let\old@algocf@post@ruled\@algocf@post@ruled % Adjust middle rule colour
+\renewcommand{\@algocf@post@ruled}{\textcolor{bottomrulecolor}{\old@algocf@post@ruled}}
+
+\newcommand{\setalgomidrulecolor}[1]{\colorlet{midrulecolor}{#1}}
+\renewcommand{\algocf@caption@ruled}{%
+  \box\algocf@capbox{\color{midrulecolor}\kern\interspacetitleruled\hrule
+    width\algocf@ruledwidth height\algotitleheightrule depth0pt\kern\interspacealgoruled}}
+\makeatother
+
+\setalgotoprulecolor{gray}
+\setalgomidrulecolor{gray}
+\setalgobotrulecolor{gray}
 
 %-------------------------------------------------------------------------------
 %	NOTSOCLASSICTHESIS & FUENTES
@@ -151,10 +185,10 @@
 \setmainfont[%
 Contextuals=Alternate,
 SmallCapsFeatures={LetterSpace=1}]%
-{Adobe Garamond Pro}
-\setsansfont[Scale=0.8]{PT Sans}
+{EBGaramond}
+\setsansfont[Scale=0.8]{Open Sans} 
 \renewfontface\chapterNumber[Scale=7, Color=000000]{EBGaramond}
-\setmonofont[Scale=0.8]{Hack}
+\setmonofont[Scale=0.8]{Go Mono}
 
 \usepackage[math-style=TeX, bold-style=ISO]{unicode-math}
 \setmathfont{Garamond Math}[StylisticSet={3}]
@@ -165,12 +199,18 @@ SmallCapsFeatures={LetterSpace=1}]%
 \linespread{1.1}
 \setlength{\parindent}{1.5em}
 
+% Operadores
+
+\let\deg\relax
+\DeclareMathOperator{\deg}{gr}
+\DeclareMathOperator{\lc}{cl}
+
 %-------------------------------------------------------------------------------
 %	TÍTULO
 %-------------------------------------------------------------------------------
 
 \title{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
-\renewcommand{\myVersion}{0.4} 
+\renewcommand{\myVersion}{0.6} 
 
 \author{José María Martín Luque}
 
