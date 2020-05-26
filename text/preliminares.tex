@@ -70,9 +70,7 @@ Supongamos que en cualquier otro anillo se da que \(1 = 0\).
 Entonces para cada elemento \(x\) del anillo se tiene que \(x = x1 = x0 = 0\), luego tiene un único elemento.
 
 Dos anillos son \textit{isomorfos} si hay un \textit{isomorfismo} entre ellos, es decir, existe una biyección que preserva todas las operaciones.
-
 % MAYBE: abreviar na = a + a + a (Cohn 137 [147])
-
 Un elemento \(a\) de un anillo se dice que es \textit{invertible} si existe un elemento \(a'\) en el anillo tal que \(aa' = a'a = 1\).
 A este elemento, que es único, lo llamamos \textit{elemento inverso} de \(a\) y lo denotamos por \(a^{-1}\).
 % TODO: por qué es único (anillo está formado por monoide multiplicativo de R)
@@ -87,25 +85,38 @@ Los anillos en los que todo elemento distinto de 0 es invertible se llaman \text
   Un subconjunto \(S\) de un anillo \(R\) se denomina \textit{subanillo} si \(S\) contiene a los elementos neutros de la suma y el producto de \(R\), es cerrado bajo dichas operaciones y forma un anillo con ellas.
 \end{definition}
 
-\begin{definition}
-  Un subconjunto \(J\) de un anillo \(R\) se denomina \textit{ideal} si para todo \(a \in J\) y \(r \in R\) se verifica que \(ar \in J\) y \(ra \in J\).
-\end{definition}
-
-% TODO: Ideales a izquierda y derecha
-
-\begin{example}\hfill
-  \begin{itemize}
-    \item Sea \(R\) el cuerpo \(\mathbb Q\) de números racionales. Entonces, el conjunto \(\mathbb Z\) de los enteros es un subanillo de \(\mathbb Q\) pero no es un ideal porque, por ejemplo, \(1 \in \mathbb Z, 1/2 \in \mathbb Q\), pero \(1/2 \cdot 1 = 1/2 \notin \mathbb Z\). 
-    \item Sea \(R\) un anillo conmutativo, \(a \in R\) y sea \(J = \{ra : r \in R\}\). Entonces, \(J\) es un ideal.
-    % TODO: algún ejemplillo más?
-  \end{itemize}
+\begin{example}
+  Sea \(R\) el cuerpo \(\mathbb Q\) de los racionales.
+  Entonces, el subconjunto \(\mathbb Z\) de los enteros es un subanillo, pues contiene a los elementos neutros de producto y suma —\(1\) y \(0\), respectivamente—, la suma de dos enteros es un entero y el producto de dos enteros es, de nuevo, un entero.
+  \label{ex:subanillo-racionales}
 \end{example}
 
 \begin{definition}
-  Sea \(R\) un anillo conmutativo. Un ideal \(J\) de \(R\) se dice que es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = (a) = \{ra : r \in R\}\).
+  Sea \(J\) un subconjunto de un anillo \(R\).
+  \begin{itemize}
+    \item Se dice que \(J\) es un \emph{ideal por la izquierda} si es un subgrupo aditivo de \(R\) y verifica que para todo \(j \in J\) y para todo \(r \in R\), el elemento \(rj \in J\).
+    \item De igual forma, se dice que \(J\) es un \emph{ideal por la derecha} si es un subgrupo aditivo de \(R\) y verifica que para todo \(j \in J\) y para todo \(r \in R\), el elemento \(jr \in J\).
+    \item Finalmente, se dice que \(J\) es un \emph{ideal bilátero} si es ideal tanto por la izquierda como por la derecha.
+  \end{itemize}
 \end{definition}
 
-% MAYBE: si el anillo no es conmutativo, ideales por la izquierda y por la derecha.
+Notamos que en un anillo conmutativo solo habrá ideales biláteros y por tanto nos referiremos a ellos como ideales a secas.
+Veamos a continuación un par de ejemplos.
+
+\begin{example}
+  Continuando el ejemplo \ref{ex:subanillo-racionales}, el conjunto \(\mathbb Z\) de los enteros no es un ideal pues, por ejemplo, \(1 \in \mathbb Z, 1/2 \in \mathbb Q\), pero \(1/2 \cdot 1 = 1/2 \notin \mathbb Z\).
+\end{example}
+
+\begin{example}
+  Sea \(R\) el anillo de los enteros \(\mathbb Z\) y consideremos el subconjunto de los números enteros \(J = \{2n : n \in \mathbb Z\}\).
+  Entonces \(J\) es un ideal (bilátero), pues todo producto de un número par es otro número par.
+\end{example}
+
+\begin{definition}
+  Sea \(R\) un anillo. Un ideal por la izquierda \(J\) de \(R\) se dice que es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = Ra = \{ra : r \in R\}\).
+  \marginpar{Un ideal bilátero será principal si verifica cualquiera de las dos condiciones.}
+  De forma análoga, un ideal por la derecha \(J\) de \(R\) es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = aR = \{ar : r \in R\}\).
+\end{definition}
 
 A continuación vamos a definir algunos otros conceptos relativos a anillos.
 Decimos que un ideal \(J\) es \textit{minimal} si no existe ningún otro ideal entre \(\{0\}\) y \(J\).
@@ -132,25 +143,23 @@ Para cerrar esta sección vamos a introducir dos definiciones: una será una pro
 
 \section{Cuerpos finitos}
 
-A continuación vamos a introducir el concepto de cuerpo así como otras definiciones y propiedades relevantes.
+En esta sección vamos a introducir el concepto de cuerpo, junto a otros conceptos relevantes, para posteriormente centrarnos en los cuerpos finitos.
+Estudiaremos además los anillos de polinomios que podemos definir sobre ellos y cómo a partir del cociente de estos podemos construir cuerpos finitos.
 
 \begin{definition}
   Un \textit{cuerpo} es un anillo de división conmutativo.
-  Se dice que un cuerpo es \textit{finito} si tiene un número finito de elementos, al que llamamos \textit{orden} del cuerpo.
+  Se dice que un cuerpo es \textit{finito}\footnote{Los cuerpos finitos también se suelen conocer como \textit{cuerpos de Galois} en honor a Évariste Galois, uno de los primeros matemáticos en trabajar con ellos.} si tiene un número finito de elementos, al que llamamos \textit{orden} del cuerpo.
 \end{definition}
-
-Los cuerpos finitos también se suelen conocer como \textit{cuerpos de Galois}, en honor a Évariste Galois, uno de los primeros matemáticos en trabajar con ellos. 
-Los notaremos por \(\mathbb F_p\), donde \(p\) es el orden del cuerpo.
-Vamos a centrar el estudio de los cuerpos en los cuerpos finitos pues los vamos a utilizar de forma prominente cuando trabajemos con códigos.
 
 % MAYBE: todo dominio de integridad finito es un cuerpo (Niederreiter, 12 [21])
 
 Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerpo bajo las operaciones de \(F\) se denomina \textit{subcuerpo} de \(F\).
-También podemos decir que \(F\) es una \textit{extensión} de \(K\).
-Las extensiones de cuerpos se suelen notar de la forma \(F/K\).
+También podemos referirnos a ello al revés, diciendo que \(F\) es una \textit{extensión} de \(K\), lo que notaremos como \(F/K\).
 Observamos que \(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
-
 Todas las nociones que hemos definido para anillos —como la característica— son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
+
+Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_p\), donde \(p\) denota el orden del cuerpo.
+Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utilizar de forma prominente cuando trabajemos con códigos.
 
 \begin{theorem}
   % Cohn Vol 2, 63 [74]
@@ -169,40 +178,54 @@ Todas las nociones que hemos definido para anillos —como la característica—
 
 \begin{proof}
   Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\).
-  Si \(u_1, \dots, u_n\) es una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
+  Si los elementos \(u_1, \dots, u_n\) forman una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
   Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
 \end{proof}
 
 Concluimos destacando que en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} todo cuerpo finito \(F\) tiene característica \(p\) (un primo) y su subcuerpo primo es \(\mathbb F_p\).
 
+% TODO: qué es un subcuerpo primo, eso no lo he explicado
 % TODO: añadir que todos los cuerpos finitos tienen cardinal p^r, donde p es la característica
 
 \subsection{Anillos de polinomios sobre cuerpos finitos}
 
-Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\). En particular, vamos a trabajar con con anillos de polinomios en cuerpos finitos pues, como ya hemos comentado anteriormente, son los que necesitaremos para la teoría de códigos.
-
-Denotamos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
-Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios.
-Es, de hecho, un dominio de integridad.
-
-Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
+Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con coeficientes en \(R\), que denotamos \(R[x]\) y que está compuesto por el conjunto
+\[
+  \{a_0 + a_1x + \dots + a_nx^n : a_0, a_1, \dots, a_n \in R\}.
+\]
+Dados \(f = a_0 + a_1x + \dots + a_nx^n\) y \(g = b_0 + b_1x + \dots + b_mx^m\) las operaciones de suma y multiplicación de \(R[x]\) (suponiendo \(m \leq n\)) vienen dadas por:
+\[
+  f + g = a_0 + b_0 + (a_1 + b_1)x + \dots + (a_m + b_m)x^m + \dots + a_nx^n,
+\]
+\[
+  fg = a_0b_0 + (a_0b_0 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + \dots + a_nb_mx^{m+n}.
+\]
+El elemento neutro para la suma es el \(0 \in R\), y el del producto, el \(1 \in R\).
+Es fácil comprobar que efectivamente \(R[x]\) así definido satisface todas las propiedades de los anillos.
+Veamos a continuación algunos conceptos básicos sobre polinomios.
 El \textit{grado} de un polinomio es el mayor grado de cualquier término con coeficiente distinto de cero.
-
 % \begin{proposition}
 %   Grado de sumas y productos
 %   % MAYBE: (Cohn, 149 [159])
 % \end{proposition}
-
 El coeficiente del término de mayor grado se denomina \textit{coeficiente líder}.
 Un polinomio es \textit{mónico} si su coeficiente líder es 1.
-Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
-Decimos que \(f(x)\) \textit{divide a} \(g(x)\), denotado por \(f(x) | g(x)\), si existe un polinomio \(h(x) \in \mathbb F_q[x]\) tal que \(g(x) = f(x)h(x)\).
+Sean \(f(x)\) y \(g(x)\) polinomios en \(R[x]\).
+Decimos que \(f(x)\) \textit{divide a} \(g(x)\), denotado por \(f(x) | g(x)\), si existe un polinomio \(h(x) \in \mathbb R[x]\) tal que \(g(x) = f(x)h(x)\).
 El polinomio \(f(x)\) se llama \textit{divisor} o \textit{factor} de \(g(x)\).
-El \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_q[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
-Lo denotamos por \(\operatorname{mcd}(f(x), g(x))\).
-Dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
+%Un polinomio \(f(x)\) se dice que es \emph{irreducible} cuando no es posible expresarlo como producto de dos polinomios no constantes y distintos entre sí.
 
-% TODO: polinomios irreducibles
+Como ya hemos anticipado vamos a centrarnos en el estudio de los anillos de polinomios en cuerpos finitos pues son los que necesitaremos para la teoría de códigos.
+Siguiendo la notación que hemos establecido, denotaremos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
+Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios que acabamos de describir.
+Es, de hecho, un dominio de integridad.
+
+Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
+Dados \(f(x), g(x) \in \mathbb F_q[x]\) el \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_q[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
+Lo denotamos por \(\operatorname{mcd}(f(x), g(x))\).
+Decimos que dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
+
+El siguiente resultado nos proporciona la existencia y unicidad de divisores de un polinomio en \(\mathbb F_q[x]\).
 
 % Algoritmo de división (cambiado nombre del teorema para quitar algoritmo de división por sugerencia de Gabriel)
 
@@ -246,8 +269,8 @@ A continuación vamos a comentar un par de resultados que nos serán útiles en 
 \begin{proposition}
   Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
   \begin{enumerate}
-    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor de \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
-    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\) entonces \(k(x)\) es divisor de \(\operatorname{mcd}(f(x), g(x))\).
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\) entonces \(k(x)\) es divisor del polinomio \(\operatorname{mcd}(f(x), g(x))\).
   \end{enumerate}
 \end{proposition}
 
@@ -260,6 +283,17 @@ A continuación vamos a comentar un par de resultados que nos serán útiles en 
     \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_q\).
   \end{enumerate}
 \end{proposition}
+
+Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
+\begin{theorem}
+  Sea \(f(x)\) un polinomio no constante. Entonces, 
+  \[
+    f(x) = p_1(x)^{a_1}p_2(x)^{a_2}\dots p_k(x)^{a_k},
+  \]
+  donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
+\end{theorem}
+Este resultado nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
+Se puede comprobar que es, además, un dominio de ideales principales.
 
 % 3.3 Primitive elements
 
@@ -303,19 +337,7 @@ Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) cont
 
 \subsection{Construcción de cuerpos finitos}
 
-En esta subsección vamos a construir cuerpos finitos a partir del cociente de anillos de polinomios.
-Cuando realizamos el cociente por un tipo de polinomios concreto, llamados irreducibles, vamos a comprobar que el anillo cociente que obtenemos tiene estructura de cuerpo.
-Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
-\begin{theorem}
-  Sea \(f(x)\) un polinomio no constante. Entonces, 
-  \[
-    f(x) = p_1(x)^{a_1}p_2(x)^{a_2}\dots p_k(x)^{a_k},
-  \]
-  donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
-\end{theorem}
-Este resultado nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
-Se puede comprobar que es, además, un dominio de ideales principales.
-
+En esta subsección vamos a construir cuerpos finitos a partir del cociente de anillos de polinomios por polinomios irreducibles.
 %\begin{proof}
   % Me ha dicho Gabriel que no es necesario
   % NOPE: demostración de que F_q[x] es un dominio de ideales principales.
