@@ -188,7 +188,7 @@ SmallCapsFeatures={LetterSpace=1}]%
 {EBGaramond}
 \setsansfont[Scale=0.8]{Open Sans} 
 \renewfontface\chapterNumber[Scale=7, Color=000000]{EBGaramond}
-\setmonofont[Scale=0.8]{Go Mono}
+\setmonofont[Scale=0.75]{Go Mono}
 
 \usepackage[math-style=TeX, bold-style=ISO]{unicode-math}
 \setmathfont{Garamond Math}[StylisticSet={3}]
@@ -292,13 +292,14 @@ SmallCapsFeatures={LetterSpace=1}]%
 
 \newpage
 
+\include{abstract}
+
 {\hypersetup{hidelinks}
 \tableofcontents
 }
 
 \newpage
 
-\include{abstract}
 \include{introduccion}
 
 \include{preliminares}
@@ -308,12 +309,13 @@ SmallCapsFeatures={LetterSpace=1}]%
 \appendix
 \include{sage-pgz}
 
-
 %-------------------------------------------------------------------------------
 %	BIBLIOGRAFÍA
 %-------------------------------------------------------------------------------
 
 \newpage
 \printbibliography
+
+\include{colofon}
 
 \end{document}
