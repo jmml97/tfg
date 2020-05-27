@@ -298,42 +298,6 @@ Se puede comprobar que es, además, un dominio de ideales principales.
 
 % 3.3 Primitive elements
 
-\subsection{Elementos primitivos}
-
-Vamos a ver que el conjunto \(\mathbb F_q^*\) —de los elementos de \(\mathbb F_q\) distintos de cero— es un grupo.
-
-\begin{theorem}
-  \label{th:Fq-ast-cilcico}
-  Se verifican las siguientes afirmaciones.
-  \begin{enumerate}
-    \item El grupo \(\mathbb F_q^*\) es cíclico de orden \(q - 1\) con la multiplicación de \(\mathbb F_q\).
-    \item Si \(\gamma\) es un generador de este grupo cíclico entonces
-    \[
-      \mathbb F_q = \{0, 1 = \gamma^0, \gamma, \gamma^2, \dots, \gamma^{q-2}\},
-    \] y se tiene que \(\gamma^i = 1\) si y solo si \((q-1) \mid i\).
-  \end{enumerate}
-\end{theorem}
-
-Cada generador \(\gamma\) de \(\mathbb F_q^*\) se llama \textit{elemento primitivo} de \(\mathbb F_q\).
-Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\) e \(i + j \equiv s \bmod q - 1\).
-
-\begin{theorem}
-  \label{th:el-Fq-raices-pol}
-  Los elementos de \(\mathbb F_q\) son las raíces del polinomio \(x^q - x\).
-\end{theorem}
-
-\begin{proof}
-  Sea \(\gamma\) un elemento primitivo de \(\mathbb F_q\).
-  Entonces, \(\gamma^{q-1} = 1\) por definición.
-  Por tanto, \((\gamma^i)^{q-1} = 1\) para todo \(i\) tal que \(0 \leq i \leq q - 2\).
-  En consecuencia, los elementos de \(\mathbb F_q^*\) son las raíces de \(x^{q-1}-1 \in \mathbb F_p[x]\) y en consecuencia, de \(x^q - x\).
-  Como \(0\) es raíz de \(x^q - x\), por la proposición \ref{prop:raices-factores-pol-Fq} sabemos que los elementos de \(\mathbb F_q\) son las raíces de \(x^q - x\), como queríamos.
-\end{proof}
-
-Un elemento \(\xi \in \mathbb F_q\) es una raíz enésima de la unidad si \(\xi^n = 1\), y es una raíz enésima primitiva de la unidad si además \(\xi^s \neq 1\) para todo s tal que \(0 < s < n\).
-Un elemento primitivo \(\gamma\) de \(\mathbb F_q\) es por tanto una raíz \((q-1)\)-ésima de la unidad.
-Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) contiene una raíz enésima primitiva de la unidad si y solo si \(n \mid (q - 1)\), en cuyo caso \(\gamma^{(q-1)/n}\) es dicha raíz.
-
 % 3.4 Constructing finite fields
 
 \subsection{Construcción de cuerpos finitos}
@@ -369,6 +333,13 @@ En esta subsección vamos a construir cuerpos finitos de característica arbitra
 %   Finalmente, para ver que tiene \(q = p^m\) elementos
 % \end{proof}
 
+Puede probarse que existen polinomios irreducibles de cualquier grado, lo que nos lleva a afirmar el siguiente teorema.
+% TODO: probar? referencia prueba? mejorar afirmación?
+
+\begin{theorem}
+  Para cualquier primo \(p\) y cualquier entero positivo \(m\), existe un cuerpo finito, único salvo isomorfismos, con \(q = p^m\) elementos.
+\end{theorem}
+
 A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
 \[
   g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \iff g_{m-1}g_{m-2}\dots g_1g_0.
@@ -385,41 +356,152 @@ Puesto que estamos en el anillo cociente \(\mathbb F_p[x]/(f(x))\) nos queda
   (g_1(x) + (f(x)))(g_2(x) + (f(x))) = r(x) + (f(x)).
 \]
 
-Esta notación es engorrosa, por lo que habitualmente operaremos en \(\alpha\) en vez de en \(x\) suponiendo que \(f(\alpha) = 0\).
-Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\).
-% TODO: correspondencia vectorial de los polinomios en alpha (3.4)
+Notamos rápidamente que esta notación es engorrosa, por lo que vamos a tratar de encontrar otra mejor que nos permita multiplicar con más facilidad.
+Para ello vamos a tomar una raíz \(\alpha\) de \(f(x)\), es decir, un elemento tal que \(f(\alpha) = 0\) y operaremos en \(\alpha\) vez de en \(x\).
+Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\) y podemos extender la correspondencia vectorial a
+\[
+  g_{m-1}g_{m-2}\dots g_1g_0 \iff g_{m-1}\alpha^{m-1} + g_{m-2}\alpha^{m-2}+ \dots + g_1\alpha + g_0.
+\]
 En consecuencia, multiplicamos los polinomios en \(\alpha\) de la forma habitual y utilizamos la ecuación \(f(\alpha) = 0\) para reducir las potencias de \(\alpha\) de grado mayor a \(m-1\) a polinomios en \(\alpha\) de grado menor que \(m\).
+Veamos un ejemplo.
 
-%El conjunto \(\{0\alpha^{m-1} + 0\alpha^{m-2} + \dots + 0\alpha + a_0 \mid a_0 \in \mathbb F_p\} = \{a_0 \mid a_0 \in \mathbb F_p\}\) es el subcuerpo primo de \(\mathbb F_q\).
+\begin{example}
+  El polinomio \(f(x) = x^2 + 1\) es irreducible sobre \(\mathbb F_3\).
+  Vamos a construir el cuerpo finito \(\mathbb F_9\) como \(\mathbb F_3[x]/(x^2 + 1)\).
+  Sea \(\alpha\) una raíz del polinomio \(f(x)\).
+  Utilizando la correspondencia clases laterales-vectores-polinomios en \(\alpha\) obtenemos los elementos descritos en la tabla.
+  \begin{table}[h]
+    \centering
+    \sffamily
+    \begin{tabular}{lcc}
+      \toprule
+      Clases laterales & Vectores & Polinomio en \(\alpha\)\\
+      \midrule
+      \(0 + (f(x))\) & \(00\) & \(0\)\\
+      \(1 + (f(x))\) & \(01\) & \(1\)\\
+      \(2 + (f(x))\) & \(02\) & \(2\)\\
+      \(x + (f(x))\) & \(10\) & \(\alpha\)\\
+      \(x + 1 + (f(x))\) & \(11\) & \(\alpha + 1\)\\
+      \(x + 2 + (f(x))\) & \(12\) & \(\alpha + 2\)\\
+      \(2x + (f(x))\) & \(20\) & \(2\alpha\)\\
+      \(2x + 1 + (f(x))\) & \(21\) & \(2\alpha + 1\)\\
+      \(2x + 2 + (f(x))\) & \(22\) & \(2\alpha + 2\)\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
 
-Decimos que obtenemos \(\mathbb F_q\) a partir de \(\mathbb F_p\) yuxtaponiendo una raíz \(\alpha\) de \(f(x)\) a \(\mathbb F_p\).
+  Veamos un par de ejemplos de operaciones: \begin{itemize}
+    \item Sumemos \((x + 2 + (f(x))) + (2x + 1 + (f(x)))\). Lo haremos con la notación vectorial, sumando \(12 + 21 = 00 = 0\).
+    \item Multipliquemos \((2x + 1 + (f(x)))(2x + 2 + (f(x)))\). Lo haremos con la expresión del polinomio en \(\alpha\):
+    \[
+      (2\alpha + 1)(2\alpha + 2) = 4\alpha^2 + 6\alpha + 2 = \alpha^2 + 2,
+    \]
+    y usando que \(\alpha^2 = 2\), 
+    \[
+      \alpha^2 + 2 = 2 + 4 = 1.
+    \]
+  \end{itemize}
+\end{example}
+
+Decimos \(\mathbb F_q\) es la extensión generada por una una raíz \(\alpha\) de \(f(x)\) a partir de \(\mathbb F_p\), lo que se nota como \(\mathbb F_q = \mathbb F_p(\alpha)\).
 Esta raíz viene dada formalmente por \(\alpha = x + (f(x))\) en el anillo cociente \(\mathbb F_p[x]/(f(x))\).
 Por tanto, ya hemos visto antes que \(g(x) + (f(x)) = g(\alpha)\) y \(f(\alpha) = f(x + (f(x))) = f(x) + (f(x)) = 0 + (f(x))\).
 
-Un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\) es \textit{primitivo} si tiene una raíz que es un elemento primitivo de \(\mathbb F_q = \mathbb F_{p^m}\).
-Puede probarse que existen polinomios irreducibles de cualquier grado, lo que nos lleva a afirmar el siguiente teorema.
-% TODO: probar? referencia prueba? mejorar afirmación?
+En el siguiente apartado veremos que multiplicar elementos de un cuerpo finito generado por una raíz \(\alpha\) es más sencillo cuando esta raíz es un tipo de elemento concreto.
+
+\subsection{Elementos primitivos}
+
+Vamos a buscar otra forma de expresar los elementos de un cuerpo \(\mathbb F_q\) de tal forma que podamos conectarla con nuestra notación como tuplas y que haga que la multiplicación sea más sencilla de expresar.
+Esta expresión vendrá dada por lo que vamos a denominar elementos primitivos.
+
+Comenzamos viendo que el conjunto \(\mathbb F_q^*\) —de los elementos de \(\mathbb F_q\) distintos de cero— es un grupo.
 
 \begin{theorem}
-  Para cualquier primo \(p\) y cualquier entero positivo \(m\), existe un cuerpo finito, único salvo isomorfismos, con \(q = p^m\) elementos.
+  \label{th:Fq-ast-cilcico}
+  Se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item El grupo \(\mathbb F_q^*\) es cíclico de orden \(q - 1\) con la multiplicación de \(\mathbb F_q\).
+    \item Si \(\gamma\) es un generador de este grupo cíclico entonces
+    \[
+      \mathbb F_q = \{0, 1 = \gamma^0, \gamma, \gamma^2, \dots, \gamma^{q-2}\},
+    \] y se tiene que \(\gamma^i = 1\) si y solo si \((q-1) \mid i\).
+  \end{enumerate}
 \end{theorem}
+
+Cada generador \(\gamma\) de \(\mathbb F_q^*\) se llama \textit{elemento primitivo} de \(\mathbb F_q\).
+Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\) e \(i + j \equiv s \bmod q - 1\).
+
+\begin{theorem}
+  \label{th:el-Fq-raices-pol}
+  Los elementos de \(\mathbb F_q\) son las raíces del polinomio \(x^q - x\).
+\end{theorem}
+
+\begin{proof}
+  Sea \(\gamma\) un elemento primitivo de \(\mathbb F_q\).
+  Entonces, \(\gamma^{q-1} = 1\) por definición.
+  Por tanto, \((\gamma^i)^{q-1} = 1\) para todo \(i\) tal que \(0 \leq i \leq q - 2\).
+  En consecuencia, los elementos de \(\mathbb F_q^*\) son las raíces de \(x^{q-1}-1 \in \mathbb F_p[x]\) y en consecuencia, de \(x^q - x\).
+  Como \(0\) es raíz de \(x^q - x\), por la proposición \ref{prop:raices-factores-pol-Fq} sabemos que los elementos de \(\mathbb F_q\) son las raíces de \(x^q - x\), como queríamos.
+\end{proof}
+
+Un elemento \(\xi \in \mathbb F_q\) es una raíz enésima de la unidad si \(\xi^n = 1\), y es una raíz enésima primitiva de la unidad si además \(\xi^s \neq 1\) para todo s tal que \(0 < s < n\).
+Un elemento primitivo \(\gamma\) de \(\mathbb F_q\) es por tanto una raíz \((q-1)\)-ésima de la unidad.
+Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) contiene una raíz enésima primitiva de la unidad si y solo si \(n \mid (q - 1)\), en cuyo caso \(\gamma^{(q-1)/n}\) es dicha raíz.
+
+
+%El conjunto \(\{0\alpha^{m-1} + 0\alpha^{m-2} + \dots + 0\alpha + a_0 \mid a_0 \in \mathbb F_p\} = \{a_0 \mid a_0 \in \mathbb F_p\}\) es el subcuerpo primo de \(\mathbb F_q\).
+
+
+
+Un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\) es \textit{primitivo} si tiene una raíz que es un elemento primitivo de \(\mathbb F_q = \mathbb F_{p^m}\).
+Cuando construimos un cuerpo finito con un polinomio \emph{primitivo}, podemos expresar sus elementos como potencias de la raíz primitiva correspondiente, lo que simplificará las operaciones de multiplicación.
+Veamos un ejemplo.
+
+\begin{example}
+  El polinomio \(f(x) = x^2 + x + 2\) es irreducible sobre \(\mathbb F_3\).
+  Vamos a construir el cuerpo finito \(\mathbb F_9\) como \(\mathbb F_3[x]/(f(x))\).
+  Sea \(\alpha\) una raíz del polinomio \(f(x)\).
+  Utilizando de nuevo la correspondencia clases laterales-vectores-polinomios en \(\alpha\) obtenemos la misma descripción de los elementos, pero usando la correspondencia \(\alpha^2 = -\alpha - 2 = 2\alpha + 1\) podemos expresarlos en forma de potencias de \(\alpha\), como vemos en la tabla.
+  \begin{table}[h]
+    \centering
+    \sffamily
+    \begin{tabular}{lccc}
+      \toprule
+      Clases laterales & Vectores & Polinomio en \(\alpha\) & Potencia de \(\alpha\)\\
+      \midrule
+      \(0 + (f(x))\) & \(00\) & \(0\) & \(0\)\\
+      \(1 + (f(x))\) & \(01\) & \(1\) & \(1 = \alpha^0\)\\
+      \(2 + (f(x))\) & \(02\) & \(2\) & \(\alpha^4\)\\
+      \(x + (f(x))\) & \(10\) & \(\alpha\) & \(\alpha\)\\
+      \(x + 1 + (f(x))\) & \(11\) & \(\alpha + 1\) & \(\alpha^7\)\\
+      \(x + 2 + (f(x))\) & \(12\) & \(\alpha + 2\) & \(\alpha^6\)\\
+      \(2x + (f(x))\) & \(20\) & \(2\alpha\) & \(\alpha^5\)\\
+      \(2x + 1 + (f(x))\) & \(21\) & \(2\alpha + 1\) & \(\alpha^2\)\\
+      \(2x + 2 + (f(x))\) & \(22\) & \(2\alpha + 2\) & \(\alpha^3\)\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  Así, si queremos multiplicar \((2x + 1 + (f(x)))(2x + 2 + (f(x)))\) podemos hacer simplemente \(\alpha^2 \alpha^3 = \alpha^5 = 2\alpha = 2x + (f(x))\).
+\end{example}
 
 % 3.7 Cyclotomic cosets and minimal polynomials
 
 \subsection{Clases ciclotómicas y polinomios minimales}
 
-Sea \(\mathbb F_{q^t}/\mathbb F_q\) una extensión de cuerpos.
-Por el teorema \ref{th:el-Fq-raices-pol} cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(\cramped{x^{q^t}} - x\).
+Si consideramos la extensión de cuerpos \(\mathbb F_{q^t}/\mathbb F_q\) sabemos por el teorema \ref{th:el-Fq-raices-pol} que cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(\cramped{x^{q^t}} - x\).
 Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
-Este polinomio se conoce como \textit{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
-En el siguiente teorema vamos a estudiar algunas propiedades de los polinomios minimales.
+Este polinomio se conoce como \emph{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
+El siguiente teorema nos detalla algunas de las propiedades de los polinomios minimales.
 
 \begin{theorem}
+  \label{th:pol-minimal}
   Sea \(\mathbb F_{q^t}/\mathbb F\) una extensión de cuerpos y sea \(\alpha\) un elemento de \(\mathbb F_{q^t}\) cuyo polinomio minimal es \(M_{\alpha} \in \mathbb F_q[x]\).
   Se verifica:
   \begin{enumerate}
     \item El polinomio \(M_{\alpha}(x)\) es irreducible sobre \(\mathbb F_q\).
     \item Si \(g(x)\) es cualquier polinomio en \(\mathbb F_q[x]\) tal que \(g(\alpha) = 0\) entonces \(M_{\alpha}(x) \mid g(x)\).
+    \label{thi:pol-minimal-div}
     \item El polinomio \(M_{\alpha}(x)\) es único.
   \end{enumerate}
 \end{theorem}
@@ -432,13 +514,30 @@ De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x
   Entonces:
   \begin{enumerate}
     \item Todas las raíces de \(f(x)\) están en \(\mathbb F_{q^r}\) y en cualquier extensión de cuerpos de \(\mathbb F_q\) generada por una de sus raíces.
+    \label{thi:pol-irr-raices}
     \item Podemos expresar \(f(x)\) como \(f(x) = \prod_{i=1}^r (x - \alpha_i)\), donde \(\alpha_i \in \mathbb F_{q^r}\) para \(1 \leq i \leq r\).
     \item El polinomio \(f(x)\) divide a \(x^{q^r} - x\).
+    \label{thi:pol-irr-factor}
   \end{enumerate}
+  \label{th:pol-irr}
 \end{theorem}
 
 \begin{proof}
   % TODO (ECC 113 [132] theorem 3.7.2)
+  Veamos la demostración por partes.
+  \begin{enumerate}
+    \item Sea \(\alpha\) una raíz de \(f(x)\) y consideramos el cuerpo \(\mathbb F_{q^r} = \mathbb F_{q}(\alpha)\), la extensión de \(\mathbb F_q\) generada por \(\alpha\).
+    Sea \(\beta\) otra raíz de \(f(x)\) y supongamos que no está en \(\mathbb F_{q}(\alpha)\).
+    Entonces, será raíz de algún factor irreducible de \(f(x)\) sobre \(\mathbb F_{q}(\alpha)\).
+    Consideramos ahora la extensión \(\mathbb F_{q}(\alpha, \beta)\), la extensión de \(\mathbb F_{q}(\alpha)\) generada por \(\beta\).
+    Dentro de \(\mathbb F_{q}(\alpha, \beta)\) hay un subcuerpo \(\mathbb F_{q}(\beta)\), que es la extensión de \(\mathbb F_q\) generada por \(\beta\).
+    Además, \(\mathbb F_{q}(\beta)\) ha de tener \(q^r\) elementos, pues \(f(x)\) es un irreducible de grado \(r\) sobre \(\mathbb F_q\).
+    Como tanto \(\mathbb F_{q}(\alpha)\) como \(\mathbb F_{q}(\beta)\) son subcuerpos del mismo tamaño, han de ser iguales (cita). % TODO: mencionar el teorema (no incluido) de que dos subcuerpos de F_p del mismo tamaño son iguales
+    Por tanto, todas las raíces de \(f(x)\) están en \(\mathbb F_{q^r}\).
+    Finalmente, todo cuerpo conteniendo a \(\mathbb F_q\) y una raíz de \(f(x)\) contiene a \(\mathbb F_{q^r}\).
+    \item Se deduce de lo anterior y de la proposición \ref{prop:raices-factores-pol-Fq}.
+    \item Se deduce del apartado anterior y del hecho de que por el teorema \ref{th:el-Fq-raices-pol}, \(x^{q^r} - x = \prod_{\alpha \in \mathbb F_{q^r}}(x - \alpha)\).
+  \end{enumerate}
 \end{proof}
 
 En particular este teorema se verifica para los polinomios minimales \(M_{\alpha}(x)\) sobre \(\mathbb F_q\), pues son mónicos irreducibles.
@@ -449,15 +548,29 @@ En particular este teorema se verifica para los polinomios minimales \(M_{\alpha
   Se verifican las siguientes afirmaciones.
   \begin{enumerate}
     \item El polinomio \(M_{\alpha}(x)\) divide a \(x^{q^t} - x\).
+    \label{thi:prop-pol-minimal-div}
     \item El polinomio \(M_{\alpha}(x)\) tiene raíces distintas dos a dos, todas en \(\mathbb F_{q^t}\).
     \item El grado de \(M_{\alpha}(x)\) divide a \(t\).
-    \item Podemos expresar \(x^{q^t}- x = \prod_{\alpha}M_{\alpha}(x)\), donde \(\alpha\) varía entre los elementos de un subconjunto de \(\mathbb F_{q^t}\) que enumera los polinomios minimales de todos los elementos de \(\mathbb F_{q^t}\) una sola vez.
+    \item Podemos expresar \(x^{q^t}- x = \prod_{\alpha}M_{\alpha}(x)\), donde \(\alpha\) varía entre los elementos de un subconjunto de \(\mathbb F_{q^t}\) de forma que enumera los polinomios minimales de todos los elementos de \(\mathbb F_{q^t}\) una sola vez.
     \item Podemos expresar \(x^{q^t}- x = \prod_{f}f(x)\), donde \(f\) varía entre todos los mónicos irreducibles sobre \(\mathbb F_q\) cuyo grado divide a \(t\).
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
   % TODO (ECC teorema 3.7.3, p 113 [132])
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item Se deduce del teorema \ref{th:pol-minimal}(\ref{thi:pol-minimal-div}), pues por el teorema \ref{th:el-Fq-raices-pol}, \(\alpha^{q^t} - \alpha = 0\).
+    \item Las raíces del polinomio \(x^{q^t} - x\) son los \(q^t\) elementos de \(\mathbb F_{q^t}\), luego este polinomio tiene raíces distintas dos a dos en \(\mathbb F_{q^t}\) por el teorema \ref{th:pol-irr}(\ref{thi:pol-irr-raices}).
+    Ahora, como por \ref{thi:prop-pol-minimal-div} \(M_{\alpha}(x)\) divide a \(x^{q^t} - x\), todas sus raíces también son distintas dos a dos y están en \(\mathbb F_{q^t}\).
+    \item Si el grado de \(M_{\alpha}(x)\) es \(r\), la extensión \(\mathbb F_{q}(\alpha)\) genera el subcuerpo \(\mathbb F_{q^r} = \mathbb F_{p^{mr}}\) de \(\mathbb F_{q^t} = \mathbb F_{p^{mt}}\), de forma que \(mr | mt\) por el teorema (cita) y por tanto el grado de \(M_{\alpha}(x)\) divide a \(t\). % TODO: mencionar el teorema (no incluido) de que dos subcuerpos de F_p del mismo tamaño son iguales
+    \item Como \(x^{q^t} - x\) tiene raíces distintas dos a dos, sus factores \(p_i\)(x) también lo son, y puesto que es mónico, podemos asumir que también lo son.
+    Por tanto, \(p_{i}(x) = M_{\alpha}(x)\) para cualquier \(\alpha \in \mathbb F_{q^t}\) tal que \(p_i(\alpha) = 0\), obteniendo así los factores del producto que buscamos.
+    \item Este apartado se deduce del anterior, si demostramos que todo polinomio mónico irreducible de grado \(r | t\) sobre \(\mathbb F_q\) es un factor de \(x^{q^t} - x\).
+    Pero \(f(x) | (x^{q^r} - x)\) por el teorema \label{th:pol-irr}(\label{thi:pol-irr-factor}).
+    Como \(mr | mt\), \((x^{q^r} - x) | (x^{q^t} - x)\) por el lema (cita)
+    % TODO: citar lema 3.5.2 del libro (no incluido)
+  \end{enumerate}
 \end{proof}
 
 Dos elementos de \(\mathbb F_{q^t}\) que tienen el mismo polinomio minimal en \(\mathbb F_q[x]\) se llaman \textit{conjugados sobre} \(\mathbb F_q\).
