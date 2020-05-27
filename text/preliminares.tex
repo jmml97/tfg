@@ -261,6 +261,7 @@ Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy pareci
       a(x)f(x) + b(x)g(x) = \operatorname{mcd}(f(x), g(x)).
     \]
   \end{enumerate}
+  \label{th:algoritmo-euclides}
 \end{theorem}
 
 La secuencia de pasos descrita termina porque en cada paso el grado del resto se reduce al menos en 1.
@@ -337,20 +338,38 @@ Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) cont
 
 \subsection{Construcción de cuerpos finitos}
 
-En esta subsección vamos a construir cuerpos finitos a partir del cociente de anillos de polinomios por polinomios irreducibles.
+En esta subsección vamos a construir cuerpos finitos de característica arbitraria —siempre que sea un primo, por supuesto— a partir del cociente de anillos de polinomios por polinomios irreducibles.
 %\begin{proof}
   % Me ha dicho Gabriel que no es necesario
   % NOPE: demostración de que F_q[x] es un dominio de ideales principales.
   % Ejercicio 153 (p. 102 [121]), F_q[x] es un anillo conmutativo con unidad y un dominio de integridad
   % Ejercicio 166 (p. 106 [125]), cada ideal de F_q[x] es un ideal principal
 %\end{proof}
-Tomamos por tanto un polinomio \(f(x) \in \mathbb F_p[x]\) que sea irreducible sobre \(\mathbb F_p\) y de grado \(m\).
-Consideramos el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\).
-Utilizando el algoritmo de Euclides podemos comprobar que es un cuerpo de característica \(p\), y de hecho, es un cuerpo finito con \(q = p^m\) elementos.
-Al tratarse de un cociente todo elemento es una clase lateral y será de la forma \(g(x) + (f(x))\), donde el polinomio \(g(x)\) es único y con grado como mucho \(m-1\).
 
+\begin{proposition}
+  Sea \(p\) un número primo y \(f(x) \in \mathbb F_p[x]\) un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\).
+  Entonces, el anillo cociente dado por \(\mathbb F_p[x]/(f(x))\)  es un cuerpo de característica \(p\) con \(q = p^m\) elementos.
+\end{proposition}
 
-Escribiremos cada clase lateral como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
+% \begin{proof}
+%   Tenemos que probar que el anillo cociente \(\mathbb F_p[x]/(f(x))\) es un anillo de división conmutativo.
+%   Sabemos que es conmutativo, pues \(\mathbb F_p[x]\) lo es.
+%   Resta comprobar que es un anillo de división, es decir, que todo elemento tiene inverso.
+%   Consideremos una clase lateral de este cociente distinta de cero, que será de la forma \(g(x) + (f(x))\), donde el polinomio \(g(x)\) es único y con grado como mucho \(m-1\).
+%   Por definición \(g(x)\) no es múltiplo de \(f(x)\).
+%   Como \(f(x)\) es irreducible, \(\operatorname{mcd}(f(x), g(x))\) es, o bien \(1\), o bien \(f(x)\).
+%   Como \(f(x)\) no divide a \(g(x)\) necesariamente \(\operatorname{mcd}(f(x), g(x)) = 1\).
+%   El algoritmo de Euclides \ref{th:algoritmo-euclides} nos da polinomios \(a(x)\) y \(b(x)\) tales que \(g(x)a(x) + b(x)f(x) = 1\).
+%   Observamos que entonces \(a(x)\) representa a un inverso de la clase \(g(x) + (f(x))\).
+%   Esto implica que la clase lateral de \(g(x)\) es invertible, y por tanto, todos los elementos no nulos de \(\mathbb F_p[x]/(f(x))\) lo son, por lo que es un anillo de división conmutativo, como queríamos.
+%   Vemos que además tiene caracterítica \(p\), pues dado \(g(x)\), 
+%   \[
+%     \underbrace{g(x) + g(x) + \dots + g(x)}_{p \text{ términos}} = (1 + 1 + \dots + 1)g(x) = p \cdot g(x) = 0.
+%   \]
+%   Finalmente, para ver que tiene \(q = p^m\) elementos
+% \end{proof}
+
+A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
 \[
   g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \iff g_{m-1}g_{m-2}\dots g_1g_0.
 \]
@@ -365,20 +384,20 @@ Puesto que estamos en el anillo cociente \(\mathbb F_p[x]/(f(x))\) nos queda
 \[
   (g_1(x) + (f(x)))(g_2(x) + (f(x))) = r(x) + (f(x)).
 \]
-% TODO: qué es alpha????
+
 Esta notación es engorrosa, por lo que habitualmente operaremos en \(\alpha\) en vez de en \(x\) suponiendo que \(f(\alpha) = 0\).
 Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\).
 % TODO: correspondencia vectorial de los polinomios en alpha (3.4)
 En consecuencia, multiplicamos los polinomios en \(\alpha\) de la forma habitual y utilizamos la ecuación \(f(\alpha) = 0\) para reducir las potencias de \(\alpha\) de grado mayor a \(m-1\) a polinomios en \(\alpha\) de grado menor que \(m\).
 
-El conjunto \(\{0\alpha^{m-1} + 0\alpha^{m-2} + \dots + 0\alpha + a_0 \mid a_0 \in \mathbb F_p\} = \{a_0 \mid a_0 \in \mathbb F_p\}\) es el subcuerpo primo de \(\mathbb F_q\).
+%El conjunto \(\{0\alpha^{m-1} + 0\alpha^{m-2} + \dots + 0\alpha + a_0 \mid a_0 \in \mathbb F_p\} = \{a_0 \mid a_0 \in \mathbb F_p\}\) es el subcuerpo primo de \(\mathbb F_q\).
 
 Decimos que obtenemos \(\mathbb F_q\) a partir de \(\mathbb F_p\) yuxtaponiendo una raíz \(\alpha\) de \(f(x)\) a \(\mathbb F_p\).
 Esta raíz viene dada formalmente por \(\alpha = x + (f(x))\) en el anillo cociente \(\mathbb F_p[x]/(f(x))\).
 Por tanto, ya hemos visto antes que \(g(x) + (f(x)) = g(\alpha)\) y \(f(\alpha) = f(x + (f(x))) = f(x) + (f(x)) = 0 + (f(x))\).
 
 Un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\) es \textit{primitivo} si tiene una raíz que es un elemento primitivo de \(\mathbb F_q = \mathbb F_{p^m}\).
-Puede probarse que existen polinomios irreducibles de cualquier grado.
+Puede probarse que existen polinomios irreducibles de cualquier grado, lo que nos lleva a afirmar el siguiente teorema.
 % TODO: probar? referencia prueba? mejorar afirmación?
 
 \begin{theorem}
