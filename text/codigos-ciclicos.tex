@@ -479,7 +479,14 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
     sage: (x^7 - 1).factor()
     > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
     sage: print(generadores_idempotentes(x^7 - 1))
-    > [(1, 1), (x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x), (x^3 + x + 1, x^4 + x^2 + x), (x^3 + x^2 + 1, x^6 + x^5 + x^3), (x^4 + x^3 + x^2 + 1, x^6 + x^5 + x^3 + 1), (x^4 + x^2 + x + 1, x^4 + x^2 + x + 1), (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1), (x^7 + 1, 0)]
+    > [(1, 1),
+       (x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x),
+       (x^3 + x + 1, x^4 + x^2 + x),
+       (x^3 + x^2 + 1, x^6 + x^5 + x^3),
+       (x^4 + x^3 + x^2 + 1, x^6 + x^5 + x^3 + 1),
+       (x^4 + x^2 + x + 1, x^4 + x^2 + x + 1),
+       (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1),
+       (x^7 + 1, 0)]
   \end{lstlisting}
   En la tabla siguiente mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
   \begin{table}[h]
@@ -487,7 +494,7 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
     \sffamily
     \begin{tabular}{lcll}
       \toprule
-      \(i\) & dimensión & \(g_i(x)\) & \(e_i(x)\)\\
+      \(i\) & dimensión & generador \(g_i(x)\) & idempotente \(e_i(x)\)\\
       \midrule
       \(0\) & \(0\) & \(1 + x^7\) & \(0\)\\
       \(1\) & \(1\) & \(1 + x + x^2 + \dots + x^6\) & \(1 + x + x^2 + \dots + x^6\)\\
@@ -502,7 +509,7 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
   \end{table}
 \end{example}
 
-Puesto que los idempotentes generadores generan códigos cíclicos es de rigor preguntarse si a partir de ellos podemos obtener una base del mismo, tal y como ocurre con los polinomios generadores.
+Puesto que los idempotentes generadores producen códigos cíclicos es de rigor preguntarse si a partir de los idempotentes podemos obtener una base de los códigos generados, tal y como ocurre con los polinomios generadores.
 El siguiente teorema nos dice que sí, y además de la misma forma: a partir de los primeros \(k - 1\) desplazamientos cíclicos del idempotente generador.
 
 \begin{theorem}
@@ -634,8 +641,44 @@ El conjunto \(T\) se denomina \textit{conjunto característico} de \(\mathcal C\
 
 Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
 
-% FIXME: este teorema resume lo que está encima, así que habría que retocar la redacción de toda esta parte; nos interesa que esté como teorema porque así nos podemos referir a él
-
+\begin{example}
+  Continuando con el ejemplo \ref{ex:codigos-ciclicos-long-7} en el que describimos todos los códigos cíclicos binarios de longitud \(7\) vamos a indicar a continuación cuales son los conjuntos de definición de cada uno, tomando como \(\alpha = \zeta_7^3\).
+  Para ello vamos a utilizar el código descrito en el anexo \ref{annex:sage-gen-idemp} tal y como mostramos en el listado siguiente.
+  \begin{lstlisting}[gobble=4]
+    sage: F = GF(2)
+    sage: x = polygen(F)
+    sage: ctos_caracteristicos(x^7 - 1)
+    > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
+    sage: ctos_caracteristicos(x^7 - 1)
+    > [(1, [], z3),
+       (x + 1, [0], z3),
+       (x^3 + x + 1, [1, 2, 4], z3),
+       (x^3 + x^2 + 1, [3, 5, 6], z3),
+       (x^4 + x^3 + x^2 + 1, [0, 1, 2, 4], z3),
+       (x^4 + x^2 + x + 1, [0, 3, 5, 6], z3),
+       (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, [1, 2, 3, 4, 5, 6], z3),
+       (x^7 + 1, [0, 1, 2, 3, 4, 5, 6], z3)]
+  \end{lstlisting}
+  En la tabla siguiente mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
+  \begin{table}[h]
+    \centering
+    \sffamily
+    \begin{tabular}{ccll}
+      \toprule
+      \(i\) & dimensión & generador \(g_i(x)\) & conjunto \(T\)\\
+      \midrule
+      \(0\) & \(0\) & \(1 + x^7\) & \(\{0, 1, 2, 3, 4, 5, 6\}\)\\
+      \(1\) & \(1\) & \(1 + x + x^2 + \dots + x^6\) & \(\{1, 2, 3, 4, 5, 6\}\)\\
+      \(2\) & \(3\) & \(1 + x^2 + x^3 + x^4\) & \(\{0, 3, 5, 6\}\)\\
+      \(3\) & \(3\) & \(1 + x + x^2 + x^4\) & \(\{0, 1, 2, 4\}\)\\
+      \(4\) & \(4\) & \(1 + x + x^3\) & \(\{3, 5, 6\}\)\\
+      \(5\) & \(4\) & \(1 + x^2 + x^3\) & \(\{1, 2, 4\}\)\\
+      \(6\) & \(6\) & \(1 + x\) & \(\{0\}\)\\
+      \(7\) & \(7\) & \(1\) & \(\emptyset\)\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{example}
 
 
 % MAYBE: ejemplo de esto??? Ejemplo 4.4.1
