@@ -758,13 +758,17 @@ Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los
   \end{enumerate}
 \end{example}
 
-\section{Idempotentes, multiplicadores y ceros de un código cíclico}
+\section{Idempotentes y multiplicadores de un código cíclico}
 
 % TODO: something something sobre que R_n es semisimple y Wedderburn Structure Theorems
+En esta sección vamos a estudiar otra forma alternativa de generar los códigos cíclicos en \(\mathcal R_n\).
+Se basará en encontrar unos elementos concretos de \(\mathcal R_n\) que además podremos relacionar con los polinomios generadores que hemos definido hasta ahora.
 
-Cada código cíclico en \(\mathcal R_n\) contiene un único idempotente que genera el ideal.
+Como ya vimos en la sección (cita) un elemento \(e\) de un anillo es idempotente si \(e^2 = e\).
+Partiendo de la suposición de que \(\operatorname{mcd}(n, q) = 1\) afirmamos que el anillo \(\mathcal R_n\) es semisimple.
+Esto implica, además de lo que ya comentamos, que cada ideal de \(\mathcal R_n\) tiene un único elemento idempotente que lo genera.
 Este elemento se denomina \textit{idempotente generador} del código cíclico.
-En el siguiente teorema probaremos este hecho y mostraremos además un método para determinar el idempotente generador de un código cíclico.
+En el siguiente teorema probaremos este hecho y mostraremos además un método para determinar el idempotente generador de un código cíclico a partir de su polinomio generador.
 
 \begin{theorem}
   \label{th:idempotente-unico-unidad}
@@ -818,7 +822,7 @@ En el siguiente teorema probaremos este hecho y mostraremos además un método p
 
 Deducimos por tanto que un método para encontrar el idempotente generador \(e(x)\) de un código cíclico \(\mathcal C\) a partir del polinomio generador \(g(x)\) es resolver la ecuación \[1 = a(x)g(x) + b(x)h(x)\] para \(a(x)\) utilizando el algoritmo de Euclides, donde \(h(x) = (x^n - 1)/g(x)\).
 Entonces, reduciendo \(a(x)g(x)\) módulo \(x^n - 1\) obtenemos el idempotente \(e(x)\) que buscamos.
-De hecho, el siguiente teorema nos muestra además que podemos obtener \(g(x)\) a partir de \(e(x)\). 
+Pero vamos a ver además esta relación a la inversa, es decir, que podemos obtener el polinomio generador \(g(x)\) a partir del idempotente \(e(x)\).
 
 \begin{theorem}
   Sea \(\mathcal C\) un código cíclico sobre \(\mathbb F_q\) con idempotente generador \(e(x)\).
@@ -837,7 +841,8 @@ De hecho, el siguiente teorema nos muestra además que podemos obtener \(g(x)\) 
 
 % MAYBE: ejemplos de códigos cíclicos 4.3.4, 4.3.5??
 
-El siguiente teorema nos muestra —igual que para el polinomio generador— que el idempotente generador y sus primeros \(k - 1\) desplazamientos cíclicos forman una base de un código cíclico.
+Puesto que los idempotentes generadores generan códigos cíclicos es de rigor preguntarse si a partir de ellos podemos obtener una base del mismo, tal y como ocurre con los polinomios generadores.
+El siguiente teorema nos dice que sí, y además de la misma forma: a partir de los primeros \(k - 1\) desplazamientos cíclicos del idempotente generador.
 
 \begin{theorem}
   Sea \(\mathcal C\) un \([n, k]\) código cíclico con idempotente generador \(e(x) = \sum_{i=0}^{n-1}e_ix^i\).
@@ -859,20 +864,38 @@ El siguiente teorema nos muestra —igual que para el polinomio generador— que
   Si \(a(x)e(x) = 0\), entonces \(0 = a(x)e(x)g(x) = a(x)g(x)\), tal que \(e(x)\) es la unidad de \(\mathcal C\) según el teorema \ref{th:idempotente-unico-unidad}, y por tanto, si \(a(x)\) no es cero estaríamos contradiciendo el teorema \ref{th:corr-cod-div}.
 \end{proof}
 
-% MAYBE: sumas e intersecciones de códigos cíclicos
-
-Estamos ya en disposición de describir un conjunto especial de idempotentes, denominados \textit{idempotentes primitivos}.
-Estos elementos, una vez conocidos, nos permitirán obtener todos los idempotentes en \(\mathcal R_n\), y en consecuencia, todos los códigos cíclicos.
-
-Sea \(x^n - 1 = f_1(x)\cdots f_s(x)\), donde cada polinomio \(f_i(x)\) es irreducible sobre \(\mathbb F_q\) para \(1 \leq i \leq s\).
-Todos los \(f_i(x)\) son distintos, pues \(x^n - 1\) tiene raíces distintas.
-Sea \(\widehat{f_i}(x) = (x^n - 1)/f_i(x)\).
-En el teorema * veremos que los ideales \(\langle \widehat{f_i}(x)\rangle\) de \(\mathcal R_n\) son los ideales minimales de \(\mathcal R_n\).
-% FIXME: ideales minimales, definir
-Al idempotente generador de \(\langle \widehat{f_i}(x)\rangle\) lo denotaremos por \(\widehat{e_i}(x)\).
-Los elementos idempotentes \(\widehat{e_1}(x), \dots, \widehat{e_s}(x)\) se denominan \textit{primitivos idempotentes} de \(\mathcal R_n\).
+El siguiente resultado, que nos informa sobre los polinomios generadores e idempotentes generadores de sumas e intersecciones de códigos cíclicos de la misma longitud, nos será útil un poco más adelante, pues veremos que .
+Dados dos códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2\) de longitud \(n\) sobre \(\mathbb F_q\) definimos su suma como
+\[
+  \mathcal C_1 + \mathcal C_2 = \{\mathbf{c}_1 + \mathbf{c_2} : \mathbf{c}_1 \in \mathcal C_1 \text{ y } \mathbf{c}_2\}.
+\]
 
 \begin{theorem}
+  Sean \(\mathcal C_1\) y \(\mathcal C_2\) códigos cíclicos de longitud \(n\) sobre \(\mathbb F_q\) con polinomios generadores \(g_1(x)\) y \(g_2(x)\) e idempotentes generadores \(e_1(x)\) y \(e_2(x)\), respectivamente.
+  Entonces \begin{enumerate}
+    \item La intersección \(\mathcal C_1 \cup \mathcal C_2\) es un código cíclico y tiene polinomio generador \(\operatorname{mcm}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x)e_2(x)\).
+    \item La suma \(\mathcal C_1 + \mathcal C_2\) es un código cíclico y tiene polinomio generador \(\operatorname{mcd}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x) + e_2(x) - e_1(x)e_2(x)\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+Estamos ya en disposición de describir los elementos que prometimos al comienzo de la sección.
+Nos permitirán obtener todos los idempotentes en \(\mathcal R_n\), y en consecuencia, todos los códigos cíclicos en \(\mathcal R_n\).
+Son los conocidos como \emph{idempotentes primitivos}.
+
+Consideremos la descomposición en factores \(x^n - 1 = f_1(x)\cdots f_s(x)\), donde cada polinomio \(f_i(x)\) es irreducible sobre \(\mathbb F_q\) para \(1 \leq i \leq s\).
+Sabemos que los factores \(f_i(x)\) son distintos, pues estamos en el supuesto de que \(x^n - 1\) tiene raíces distintas.
+Sea \(\widehat{f_i}(x) = (x^n - 1)/f_i(x)\).
+En el teorema \ref{th:idempotentes-ideales-minimales} a continuación vamos a ver que los ideales \(\langle \widehat{f_i}(x)\rangle\) de \(\mathcal R_n\) son los ideales minimales de \(\mathcal R_n\) y cómo podemos obtener \(\mathcal R_n\) a partir de ellos.
+Al idempotente generador de \(\langle \widehat{f_i}(x)\rangle\) lo denotaremos por \(\widehat{e_i}(x)\).
+Los elementos idempotentes \(\widehat{e_1}(x), \dots, \widehat{e_s}(x)\) son los \emph{idempotentes primitivos} de \(\mathcal R_n\).
+El teorema \ref{th:idempotentes-ideales-minimales} que sigue nos muestra además la forma de obtener todos los idempotentes de \(\mathcal R_n\) a partir de los idempotentes primitivos.
+
+\begin{theorem}
+  \label{th:idempotentes-ideales-minimales}
   En \(\mathcal R_n\) se verifican las siguientes afirmaciones.
   \begin{enumerate}
     \item Los ideales \(\langle \widehat{f_i}(x)\rangle\) para cada \(1 \leq i \leq s\) son todos los ideales minimales de \(\mathcal R_n\).
@@ -888,7 +911,7 @@ Los elementos idempotentes \(\widehat{e_1}(x), \dots, \widehat{e_s}(x)\) se deno
   
 \end{proof}
 
-El teorema * nos muestra que los ideales minimales del teorema * son extensiones de cuerpos de \(\mathbb F_q\).
+El siguiente teorema nos muestra que los ideales minimales descritos en el teorema \ref{th:idempotentes-ideales-minimales} son extensiones de cuerpos de \(\mathbb F_q\).
 
 \begin{theorem}
   Sea \(\mathcal M\) un ideal minimal de \(\mathcal R_n\).
@@ -914,6 +937,8 @@ Si \(a < 0\) podemos dar significado a \(f(x^a)\) en \(\mathcal R_n\) definiendo
 Con esta interpretación la ecuación (\ref{eq:multiplier-rn}) es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
 
 % TODO: Más sobre multiplicadores (4.3)
+
+\section{Ceros de un código cíclico}
 
 Como vimos en la sección \ref{sec:factorizacion-xn-1}, si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) es un cuerpo de descomposición de \(x^n - 1\).
 Por tanto, \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\), y \(x^n - 1 = \prod_{i=0}^{n-1}(x - \alpha^{i})\) es la factorización de \(x^n - 1\) sobre \(\mathbb F_{q^t}\).
@@ -1153,7 +1178,7 @@ En resumen, el algoritmo consiste en: \begin{enumerate}
 Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo PGZ en pseudocódigo siguiendo este esquema.
 A partir de él se ha realizado una implementación en el sistema Sage que puede consultarse en el anexo \ref{annex:pgz-sage}.
 
-\begin{Ualgorithm}[h]
+\begin{Ualgorithm}[htbp]
   \DontPrintSemicolon
   \KwIn{el código \(\mathcal C\), el mensaje recibido \(y(x)\)}
   \KwOut{el mensaje decodificado \(c(x)\)}
