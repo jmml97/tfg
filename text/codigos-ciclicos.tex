@@ -53,6 +53,7 @@ En la sección * estudiamos el caso particular en el que \(n = q^t - 1\).
 Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclotómica \(C_1\) módulo \(n\).
 
 \begin{theorem}
+  \label{th:pol-minimal-raiz-primitiva}
   Sea \(n\) un entero positivo primo relativo con \(q\).
   Sea \(t = \operatorname{ord}_n(q)\).
   Sea \(\alpha\) una raíz enésima primitiva de la unidad en \(\mathbb F_{q^t}\).
@@ -63,6 +64,7 @@ Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclo
       M_{\alpha^s}(x) = \prod_{i \in C_s}(x - \alpha^i),
     \]
     donde \(C_s\) es la clase \(q\)-ciclotómica de \(s\) módulo \(n\).
+    \label{thi:pol-minimal-raiz-primitiva-producto}
     \item Los conjugados de \(\alpha^s\) son los elementos \(\alpha^i\) con \(i \in C_s\).
     \item Se tiene que
     \[
@@ -192,11 +194,21 @@ Ahora mismo todo este desarrollo puede parecer demasiado abstracto.
 Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polinomios generadores de los códigos cíclicos de una longitud arbitraria y cómo éstos son generados a partir de ellos.
 
 \begin{example}
+  \label{ex:codigos-ciclicos-long-7}
   Vamos a describir todos los códigos cíclicos binarios de longitud 7.
-  Sobre \(\mathbb F_2\) podemos descomponer \(x^7 - 1\) como \[
-    x^7 - 1 = (x + 1)(x^{3} + x + 1)(x^{3} + x^{2} + 1).
+  Para ello vamos a utilizar el código descrito en el anexo \ref{annex:sage-gen-idemp} tal y como mostramos en el listado siguiente.
+  \begin{lstlisting}[gobble=4]
+    sage: F = GF(2)
+    sage: x = polygen(F)
+    sage: (x^7 - 1).factor()
+    > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
+    sage: print(generadores(x^7 - 1))
+    > [1, x + 1, x^3 + x + 1, x^3 + x^2 + 1, x^4 + x^3 + x^2 + 1, x^4 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^7 + 1]
+  \end{lstlisting}
+  Así sobre \(\mathbb F_2\) podemos descomponer \(x^7 - 1\) como \[
+    x^7 - 1 = (x + 1)(x^{3} + x + 1)(x^{3} + x^{2} + 1)
   \]
-  Así, los 8 polinomios generadores son todos los divisores de \(x^7 - 1\), a saber: \begin{enumerate}
+  y los 8 polinomios generadores, todos los divisores de \(x^7 - 1\), son: \begin{enumerate}
     \item \(1\)
     \item \((x + 1)\)
     \item \((x^{3} + x + 1)\)
@@ -458,6 +470,38 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
 
 % MAYBE: ejemplos de códigos cíclicos 4.3.4, 4.3.5??
 
+\begin{example}
+  Continuando con el ejemplo \ref{ex:codigos-ciclicos-long-7} en el que describimos todos los códigos cíclicos binarios de longitud \(7\) vamos a indicar a continuación cuales son los idempotentes generadores de cada uno.
+  Para ello vamos a utilizar el código descrito en el anexo \ref{annex:sage-gen-idemp} tal y como mostramos en el listado siguiente.
+  \begin{lstlisting}[gobble=4]
+    sage: F = GF(2)
+    sage: x = polygen(F)
+    sage: (x^7 - 1).factor()
+    > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
+    sage: print(generadores_idempotentes(x^7 - 1))
+    > [(1, 1), (x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x), (x^3 + x + 1, x^4 + x^2 + x), (x^3 + x^2 + 1, x^6 + x^5 + x^3), (x^4 + x^3 + x^2 + 1, x^6 + x^5 + x^3 + 1), (x^4 + x^2 + x + 1, x^4 + x^2 + x + 1), (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1), (x^7 + 1, 0)]
+  \end{lstlisting}
+  En la tabla siguiente mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
+  \begin{table}[h]
+    \centering
+    \sffamily
+    \begin{tabular}{lcll}
+      \toprule
+      \(i\) & dimensión & \(g_i(x)\) & \(e_i(x)\)\\
+      \midrule
+      \(0\) & \(0\) & \(1 + x^7\) & \(0\)\\
+      \(1\) & \(1\) & \(1 + x + x^2 + \dots + x^6\) & \(1 + x + x^2 + \dots + x^6\)\\
+      \(2\) & \(3\) & \(1 + x^2 + x^3 + x^4\) & \(1 + x^3 + x^5 + x^6\)\\
+      \(3\) & \(3\) & \(1 + x + x^2 + x^4\) & \(1 + x + x^2 + x^4\)\\
+      \(4\) & \(4\) & \(1 + x + x^3\) & \(x + x^2 + x^4\)\\
+      \(5\) & \(4\) & \(1 + x^2 + x^3\) & \(x^3 + x^5 + x^6\)\\
+      \(6\) & \(6\) & \(1 + x\) & \(x + x^2 + \dots + x^6\)\\
+      \(7\) & \(7\) & \(1\) & \(1\)\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{example}
+
 Puesto que los idempotentes generadores generan códigos cíclicos es de rigor preguntarse si a partir de ellos podemos obtener una base del mismo, tal y como ocurre con los polinomios generadores.
 El siguiente teorema nos dice que sí, y además de la misma forma: a partir de los primeros \(k - 1\) desplazamientos cíclicos del idempotente generador.
 
@@ -557,29 +601,41 @@ Con esta interpretación la ecuación (\ref{eq:multiplier-rn}) es consistente co
 
 \section{Ceros y conjuntos característicos}
 
+En esta sección vamos a ver que podemos caracterizar los códigos cíclicos \(\mathcal R_n\) de otra forma: a partir de los ceros del polinomio \(x^n - 1\), es decir, a partir de ciertas raíces enésimas de la unidad.
+Esta caracterización cobrará especial relevancia cuando estudiemos los conocidos como códigos \textacr{BCH}.
+
 Como vimos en la sección \ref{sec:factorizacion-xn-1}, si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) es un cuerpo de descomposición de \(x^n - 1\).
 Por tanto, \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\), y \(x^n - 1 = \prod_{i=0}^{n-1}(x - \alpha^{i})\) es la factorización de \(x^n - 1\) sobre \(\mathbb F_{q^t}\).
 De hecho, \(x^n - 1 = \prod_s M_{\alpha^s}(x)\) es la factorización de \(x^n - 1\) en factores irreducibles sobre \(\mathbb F_q\), donde \(s\) varía en un conjunto de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
 
 Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\) con polinomio generador \(g(x)\).
-Por los teoremas * y \ref{th:corr-cod-div}(\ref{thi:pol-generador-prod-minimal}), \(g(x) = \prod_{s}M_{\alpha^s}(x) = \prod_s\prod_{i \in C_s}(x - \alpha^{i})\), donde \(s\) de nuevo varía en un conjunto \(C_s\) de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
-Sea \(T = \cup_s C_s\) la unión de estas clases \(q\)-ciclotómicas.
+Por los teoremas \ref{th:pol-minimal-raiz-primitiva}(\ref{thi:pol-minimal-raiz-primitiva-producto}) y \ref{th:corr-cod-div}(\ref{thi:pol-generador-prod-minimal}), podemos expresar el polinomio generador como \(g(x) = \prod_{s}M_{\alpha^s}(x) = \prod_s\prod_{i \in C_s}(x - \alpha^{i})\), donde \(s\) de nuevo varía en un conjunto \(C_s\) de representantes de las clases \(q\)-ciclotómicas módulo \(n\).
+Sea \(T = \bigcup_s C_s\) la unión de estas clases \(q\)-ciclotómicas.
 Las raíces de la unidad \(\mathcal Z = \{\alpha^{i} \mid i \in T\}\) se denominan los \textit{ceros} del código cíclico \(\mathcal C\) y los elementos \(\{\alpha^{i} \mid i \notin T\}\), los \textit{elementos no nulos} de \(\mathcal C\).
 El conjunto \(T\) se denomina \textit{conjunto característico} de \(\mathcal C\).
-Se deduce del teorema \ref{th:corr-cod-div} que \(c(x)\) pertenece a \(\mathcal C\) si y solo si \(c(\alpha^{i}) = 0\) para cada \(i \in T\).
-Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
-Del teorema \ref{th:corr-cod-div} concluimos que la dimensión de \(\mathcal C\) es \(n - |T|\), pues \(|T|\) es el grado de \(g(x)\).
-
-% FIXME: este teorema resume lo que está encima, así que habría que retocar la redacción de toda esta parte; nos interesa que esté como teorema porque así nos podemos referir a él
 
 \begin{theorem}
   \label{th:cicl-cto-caracteristico}
   Sea \(\alpha\) una raíz primitiva de la unidad en una extensión de cuerpos de \(\mathbb F_q\) y sea \(\mathcal C\) un código cíclico de longitud \(n\) sobre \(\mathbb F_q\) con conjunto característico \(T\) y polinomio generador \(g(x)\).
   Se verifica que: \begin{enumerate}
-    \item El polinomio generador se puede expresar como \(g(x) = \prod_{i \in T}(x - \alpha^i)\).
+    %\item El polinomio generador se puede expresar como \(g(x) = \prod_{i \in T}(x - \alpha^i)\).
     \item Una palabra código \(c(x) \in \mathcal R_n\) está en \(\mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\).
     \item La dimensión de \(\mathcal C\) es \(n - |T|\).
   \end{enumerate}
 \end{theorem}
+
+\begin{proof}
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item Se deduce directamente del teorema \ref{th:corr-cod-div}.
+    \item Se de deduce del teorema \ref{th:corr-cod-div}, pues \(|T|\) es el grado de \(g(x)\).
+  \end{enumerate}
+\end{proof}
+
+Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
+
+% FIXME: este teorema resume lo que está encima, así que habría que retocar la redacción de toda esta parte; nos interesa que esté como teorema porque así nos podemos referir a él
+
+
 
 % MAYBE: ejemplo de esto??? Ejemplo 4.4.1
