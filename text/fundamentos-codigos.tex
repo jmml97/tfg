@@ -30,25 +30,26 @@ Como se puede ver realmente un código es un objeto muy sencillo.
 Concluimos que es necesario añadir más estructura a los códigos para que puedan ser de utilidad.
 Esto motiva la siguiente definición.
 
-% TODO: Ejemplo de un código que no es lineal
-% Quizás que ilustre por qué es necesario añadirles más estructura
-
 \begin{definition}
   Decimos que un código \(\mathcal C\) es un código \textit{lineal de longitud \(n\) y dimensión \(k\)} —abreviado como \([n, k]\)-\textit{lineal}, o como \([n, k]_q\)~-\textit{lineal} en caso de querer informar del cuerpo base— si dicho código es un subespacio vectorial de \(\mathbb F_q^n\) de dimensión \(k\).
 \end{definition}
-
-% TODO: Gabriel me comenta que ponga punto y seguido, aunque no sé si se refiere
 
 \begin{remark}
   Un código lineal \(\mathcal C\) tiene \(q^k\) palabras código.
 \end{remark}
 
 Así, hemos pasado de trabajar con un objeto que no tiene estructura alguna a trabajar con espacios vectoriales, cuyas propiedades son ampliamente conocidas y disponemos de numerosas herramientas para tratarlos.
-Un primer ejemplo de este hecho es la siguiente definición.
+Por ejemplo, en ocasiones hablaremos de \emph{subcódigos} de un código \(\mathcal C\).
+Si \(\mathcal C\) es un código lineal entonces el subcódigo será un subespacio vectorial del mismo.
+En caso de que sea no lineal un subcódigo será simplemente un subconjunto de \(\mathcal C\).
+
+Veamos en la siguiente definición otro ejemplo de las herramientas que nos proporciona trabajar con espacios vectoriales.
 
 \begin{definition}
   Una \textit{matriz generadora} para un \([n, k]\) código \(\mathcal C\) es una matriz \(k \times n\) cuyas filas conforman una base de \(\mathcal C\)\footnote{Efectivamente la matriz generadora no es única: basta tomar la correspondiente a cualquier otra base del código —que no deja de ser un espacio vectorial— para obtener una distinta. Pero es más, podemos simplemente reordenar las filas de una matriz generadora y en esencia estaremos obteniendo otra distinta.}.
 \end{definition}
+
+
 
 \begin{definition}
   Para cada conjunto \(k\) de columnas independientes de una matriz generadora \(G\) el conjunto de coordenadas correspondiente se denomina \textit{conjunto de información} para un código \(\mathcal C\). 
@@ -206,11 +207,8 @@ Los métodos de decodificación de códigos lineales en general se escapan del a
 
 \subsection{Distancias y pesos}
 
-% FIXME: revisar introducción
-
 Códigos distintos poseen distintas propiedades, lo que implica que sus capacidades de corrección difieran.
-En este apartado vamos a estudiar dos propiedades de los códigos 
-muy relacionadas con esta idea.
+En este apartado vamos a estudiar dos propiedades de los códigos muy relacionadas con esta idea.
 
 \begin{definition}
   La \textit{distancia de Hamming} \(\operatorname{d}(\symbf{x}, \symbf{y})\) entre dos vectores \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\) se define como el número de coordenadas en las que difieren \(\symbf{x}\) e \(\symbf{y}\).
@@ -328,8 +326,6 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 \begin{proof}
   
 \end{proof}
-
-% TODO: teoremas sobre códigos que cumplen ciertas condiciones, no sé si merece Huffman 9-11
 
 \section{Ejemplos de códigos}
 
