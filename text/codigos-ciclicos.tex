@@ -100,10 +100,10 @@ El siguiente teorema es el resultado fundamental de códigos cíclicos que nos v
   \begin{enumerate}[resume]
     %\item La dimensión de \(\mathcal C\) es \(k\) y \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\).
     %\item Cada elemento de \(\mathcal C\) se puede expresar como producto de \(g(x)\) por un polinomio \(f(x)\), donde \(f(x) = 0\) o bien \(\operatorname{gr} f(x) < k\).
-    \item \label{thi:corr-codc-div:dim-ideal} Se verifica que \[
+    \item \label{thi:corr-codc-div:forma-elem} Se verifica que \[
       \mathcal C = \langle g(x) \rangle = \{f(x)g(x) : \operatorname{gr} f(x) < k\}.
     \]
-    \item El conjunto \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\) y \(\mathcal C\) tiene dimensión \(k\).
+    \item \label{thi:corr-codc-div:dim-ideal} El conjunto \(\{g(x), xg(x), \dots, x^{k-1}g(x)\}\) es una base de \(\mathcal C\) y \(\mathcal C\) tiene dimensión \(k\).
     \item \label{thi:corr-cod-div:mat-gen} La matriz \(G\) dada por \[
       G = \begin{bmatrix}
         g_0 & g_1 & g_2 & \dots & \dots & g_{n-k} & 0 & 0 & \dots & 0 \\
@@ -134,7 +134,6 @@ El siguiente teorema es el resultado fundamental de códigos cíclicos que nos v
     \item Por el algoritmo de división, al dividir \(x^n - 1\) por \(g(x)\) tenemos que \(x^n - 1 = q(x)g(x) + r(x)\). De nuevo, o bien \(r(x) = 0\) o bien \(\operatorname{gr} r(x) < \operatorname{gr} g(x)\).
     Como en \(\mathcal R_n\) se tiene que \(x^n - 1 = 0 \in \mathcal C\), necesariamente \(r(x) \in \mathcal C\).
     Esto supone una contradicción, a menos que \(r(x) = 0\).
-    % FIXME: por qué supone una contradicción??? mirar 24-2-20 en el cuaderno
     En consecuencia, \(g(x) \mid x^n - 1\).
     \item El ideal generado por \(g(x)\) es \(\langle g(x) \rangle = \{f(x)g(x) : f(x) \in \mathcal R_n\}\).
     Queremos ver que podemos restringir los polinomios \(f(x)\) a aquellos que tengan grado menor que \(k\).
@@ -148,7 +147,7 @@ El siguiente teorema es el resultado fundamental de códigos cíclicos que nos v
     \item A partir de (\ref{thi:corr-codc-div:dim-ideal}) tenemos que el conjunto \[\{g(x), xg(x), \dots, x^{k-1}g(x)\}\] genera \(\mathcal C\), y como es linealmente independiente, forma una base de \(\mathcal C\).
     Esto demuestra también que la dimensión de \(\mathcal C\) es \(k\).
     \item La matriz \(G\) es matriz generadora de \(\mathcal C\) pues \[\{g(x), xg(x), \dots, x^{k-1}g(x)\}\] es una base de \(\mathcal C\).
-    \item TODO. % TODO: apartado 7, tiene que ver con la factorización de x^n - 1 que todavía no he comentado
+    \item Se deduce del teorema \ref{th:pol-minimal-raiz-primitiva} y de (\ref{thi:corr-codc-div:div-xn-1}).\qedhere
   \end{enumerate}
 \end{proof}
 
@@ -183,12 +182,8 @@ Esta correspondencia biyectiva nos conduce al siguiente corolario.
 
 \begin{corollary}
   El número de códigos cíclicos en \(\mathcal R_n\) es \(2^m\), donde \(m\) es el número de clases \(q\)-ciclotómicas módulo \(n\).
-  Es más, las dimensiones de los códigos cíclicos en \(\mathcal R_n\) son todas sumas de tamaños de las clases \(q\)-ciclotómicas módulo \(n\).
+  %Es más, las dimensiones de los códigos cíclicos en \(\mathcal R_n\) son todas sumas de tamaños de las clases \(q\)-ciclotómicas módulo \(n\).
 \end{corollary}
-
-\begin{proof}
-  % TODO: demostrar? en el libro no viene demostrado y tampoco entiendo muy bien la segunda afirmación
-\end{proof}
 
 Ahora mismo todo este desarrollo puede parecer demasiado abstracto.
 Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polinomios generadores de los códigos cíclicos de una longitud arbitraria y cómo éstos son generados a partir de ellos.
@@ -325,14 +320,28 @@ Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polino
   \end{enumerate}
 \end{example}
 
-% TODO: ejemplo? ejemplo 4.2.4 del libro
-
 Finalmente, el siguiente resultado nos muestra la relación entre dos polinomios generadores cuando un código es subcódigo de otro.
 
 \begin{corollary}
+  \label{cor:subcodigos-ciclicos}
   Sean \(\mathcal C_1\) y \(\mathcal C_2\) códigos cíclicos sobre \(\mathbb F_q\) con polinomios generadores \(g_1(x)\) y \(g_2(x)\), respectivamente.
-  Entonces, \(\mathcal C_1 \subset \mathcal C_2 \) si y solo si \(g_2(x) \mid g_1(x)\).
+  Entonces, \(\mathcal C_1 \subseteq \mathcal C_2 \) si y solo si \(g_2(x) \mid g_1(x)\).
 \end{corollary}
+
+\begin{proof}
+  Recordamos que por el teorema \ref{th:corr-cod-div}(\ref{thi:corr-codc-div:forma-elem}) todos los elementos \(a(x)\) de los códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2 \in \mathcal R_n\) pueden expresarse como \(a(x) = g_i(x)f_i(x)\) —donde, o bien\(f_i(x) = 0\), o bien \(\deg(f_i(x)) < k = n - \deg(g_i(x))\)— para \(i = 1, 2\) respectivamente.
+  Veamos ambas implicaciones por separado.
+  \begin{enumerate}
+    \item Comenzamos con que si \(g_2(x) | g_1(x)\) entonces \(\mathcal C_1 \subseteq \mathcal C_2\).
+    Por hipótesis podemos expresar \(g_1(x) = r(x)g_2(x)\) para algún polinomio \(r(x)\).
+    Así, todo elemento \(a(x)\) de \(\mathcal C_1\) puede expresarse como \(g_1(x)f_1(x) = r(x)g_2(x)f_1(x) = g_2(x)f_2(x)\) para algún \(f_2(x)\), por lo que si \(a(x) \in \mathcal C_1\), \(a(x) \in \mathcal C_2\).
+    Por tanto, \(\mathcal C_1 \subseteq \mathcal C_2\).
+    \item Vemos a continuación que si \(\mathcal C_1 \subseteq \mathcal C_2\) entonces \(g_2(x) | g_1(x)\).
+    Vamos a usar un argumento similar al anterior.
+    Como \(\mathcal C_1 \subseteq \mathcal C_2\) todo elemento de \(\mathcal C_1\) puede expresarse como \(g_1(x)f_1(x) = g_2(x)f_2(x)\) para ciertos \(f_1(x)\), \(f_2(x)\).
+    Por tanto, \(g_1(x) = g_2(x)f_2(x)/f_1(x)\) y en consecuencia, \(g_2 | g_1(x)\), como queríamos.\qedhere
+  \end{enumerate}
+\end{proof}
 
 % TODO: resultados sobre duales de códigos cíclicos (4.2.6, 4.2.7)
 
@@ -389,7 +398,6 @@ Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los
 
 \section{Idempotentes y multiplicadores}
 
-% TODO: something something sobre que R_n es semisimple y Wedderburn Structure Theorems
 En esta sección vamos a estudiar otra forma alternativa de generar los códigos cíclicos en \(\mathcal R_n\).
 Se basará en encontrar unos elementos concretos de \(\mathcal R_n\) que además podremos relacionar con los polinomios generadores que hemos definido hasta ahora.
 
@@ -404,7 +412,7 @@ En el siguiente teorema probaremos este hecho y mostraremos además un método p
   Sea \(\mathcal C\) un código cíclico en \(\mathcal R_n\). Entonces:
   \begin{enumerate}
     \item Existe un único idempotente \(e(x) \in \mathcal C\) tal que \(\mathcal C = \langle e(x)\rangle\).
-    \item Si \(e(x)\) es un idempotente no nulo en \(\mathcal C\), entonces \(\mathcal C = \langle e(x)\rangle\) si y solo si \(e(x)\) es la unidad de \(\mathcal C\).
+    \item \label{th:idempotente-unico-unidad:unidad} Si \(e(x)\) es un idempotente no nulo en \(\mathcal C\), entonces \(\mathcal C = \langle e(x)\rangle\) si y solo si \(e(x)\) es una unidad de \(\mathcal C\).
   \end{enumerate}
 \end{theorem}
 
@@ -425,8 +433,7 @@ En el siguiente teorema probaremos este hecho y mostraremos además un método p
     Entonces, sabemos que \(g(x) \mid (x^n - 1)\) por el teorema \ref{th:corr-cod-div}.
     Tomemos \(h(x) = (x^n - 1)/g(x)\).
     Sabemos que \(\operatorname{mcd}(g(x), h(x)) = 1\) en \(\mathbb F_q[x]\), ya que \(x^n - 1\) tiene todas sus raíces distintas.
-    En consecuencia, el algoritmo de Euclides %TODO: está explicado?
-    nos proporciona los polinomios \(a(x),b(x) \in \mathbb F_q[x]\) tales que \(a(x)g(x) + b(x)h(x) = 1\).
+    En consecuencia, el algoritmo de Euclides nos proporciona los polinomios \(a(x),b(x) \in \mathbb F_q[x]\) tales que \(a(x)g(x) + b(x)h(x) = 1\).
     Llamemos \(e(x) \equiv a(x)g(x) \bmod x^n - 1\), que será el representante de dicha clase de equivalencia en \(\mathcal R_n\).
     Entonces, en \(\mathcal R_n\),
     \begin{align*}
@@ -443,9 +450,9 @@ En el siguiente teorema probaremos este hecho y mostraremos además un método p
         &\equiv f(x)g(x) \bmod x^n - 1\\
         &\equiv c(x) \bmod x^n - 1,
     \end{align*}
-    por lo que \(e(x)\) es la unidad en \(\mathcal C\).
+    por lo que \(e(x)\) es una unidad en \(\mathcal C\).
     En consecuencia, podemos deducir la existencia a partir de (2).
-    Veamos ahora la unicidad. Por (2), si tenemos dos elementos idempotentes \(e_1(x)\) y \(e_2(x)\) que generan \(\mathcal C\), ambos han de ser unidades, y en consecuencia se tiene que \(e_1(x) = e_1(x)e_2(x) = e_2(x)\), con lo que podemos deducir la unicidad.
+    Veamos ahora la unicidad. Por (2), si tenemos dos elementos idempotentes \(e_1(x)\) y \(e_2(x)\) que generan \(\mathcal C\), ambos han de ser unidades, y en consecuencia se tiene que \(e_1(x) = e_1(x)e_2(x) = e_2(x)\), con lo que podemos deducir la unicidad.\qedhere
   \end{enumerate}
 \end{proof}
 
@@ -468,8 +475,6 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
   Como \(d(x)\) es divisor mónico de \(x^n - 1\) y genera a \(\mathcal C\), necesariamente \(d(x) = g(x)\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}. 
 \end{proof}
 
-% MAYBE: ejemplos de códigos cíclicos 4.3.4, 4.3.5??
-
 \begin{example}
   Continuando con el ejemplo \ref{ex:codigos-ciclicos-long-7} en el que describimos todos los códigos cíclicos binarios de longitud \(7\) vamos a indicar a continuación cuales son los idempotentes generadores de cada uno.
   Para ello vamos a utilizar el código descrito en el anexo \ref{annex:sage-gen-idemp} tal y como mostramos en el listado siguiente.
@@ -488,7 +493,7 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
        (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1),
        (x^7 + 1, 0)]
   \end{lstlisting}
-  En la tabla siguiente mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
+  En la tabla \ref{tab:gen-idempotentes-7} mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
   \begin{table}[h]
     \centering
     \sffamily
@@ -496,16 +501,18 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
       \toprule
       \(i\) & dimensión & generador \(g_i(x)\) & idempotente \(e_i(x)\)\\
       \midrule
-      \(0\) & \(0\) & \(1 + x^7\) & \(0\)\\
-      \(1\) & \(1\) & \(1 + x + x^2 + \dots + x^6\) & \(1 + x + x^2 + \dots + x^6\)\\
-      \(2\) & \(3\) & \(1 + x^2 + x^3 + x^4\) & \(1 + x^3 + x^5 + x^6\)\\
-      \(3\) & \(3\) & \(1 + x + x^2 + x^4\) & \(1 + x + x^2 + x^4\)\\
-      \(4\) & \(4\) & \(1 + x + x^3\) & \(x + x^2 + x^4\)\\
-      \(5\) & \(4\) & \(1 + x^2 + x^3\) & \(x^3 + x^5 + x^6\)\\
-      \(6\) & \(6\) & \(1 + x\) & \(x + x^2 + \dots + x^6\)\\
+      \(0\) & \(0\) & \(x^7 + 1\) & \(0\)\\
+      \(1\) & \(1\) & \(x^6 + x^5 + \dots + x + 1\) & \(x^6 + x^5 + \dots + x + 1\)\\
+      \(2\) & \(3\) & \(x^4 + x^3 + x^2 + 1\) & \(x^6 + x^5 + x^3 + 1\)\\
+      \(3\) & \(3\) & \(x^4 + x^2 + x +1 \) & \(x^4 + x^2 + x +1 \)\\
+      \(4\) & \(4\) & \(x^3 + x + x +1 \) & \(x^4 + x^2 + x\)\\
+      \(5\) & \(4\) & \(x^3 + x^2 +1 \) & \(x^6 + x^5 + x^3\)\\
+      \(6\) & \(6\) & \(x + 1\) & \(x^6 + x^5 + \dots + x\)\\
       \(7\) & \(7\) & \(1\) & \(1\)\\
       \bottomrule
     \end{tabular}
+    \caption{Polinomios generadores e idempotentes para los códigos cíclicos de longitud 7}
+    \label{tab:gen-idempotentes-7}
   \end{table}
 \end{example}
 
@@ -541,13 +548,41 @@ Dados dos códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2\) de longitud \(n
 \begin{theorem}
   Sean \(\mathcal C_1\) y \(\mathcal C_2\) códigos cíclicos de longitud \(n\) sobre \(\mathbb F_q\) con polinomios generadores \(g_1(x)\) y \(g_2(x)\) e idempotentes generadores \(e_1(x)\) y \(e_2(x)\), respectivamente.
   Entonces \begin{enumerate}
-    \item La intersección \(\mathcal C_1 \cup \mathcal C_2\) es un código cíclico y tiene polinomio generador \(\operatorname{mcm}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x)e_2(x)\).
-    \item La suma \(\mathcal C_1 + \mathcal C_2\) es un código cíclico y tiene polinomio generador \(\operatorname{mcd}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x) + e_2(x) - e_1(x)e_2(x)\).
+    \item La intersección \(\mathcal C_1 \cap \mathcal C_2\) es también un código cíclico, con polinomio generador \(\operatorname{mcm}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x)e_2(x)\).
+    \item La suma \(\mathcal C_1 + \mathcal C_2\) es también un código cíclico, con polinomio generador \(\operatorname{mcd}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x) + e_2(x) - e_1(x)e_2(x)\).
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-  
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item La intersección \(\mathcal C_1 \cap \mathcal C_2\) es un subcódigo y por tanto, por el corolario \ref{cor:subcodigos-ciclicos} es un código cíclico.
+    Por el mismo corolario su polinomio generador debe ser divisible por \(g_1(x)\) y \(g_2(x)\), por lo que ha de ser divisible por el \(g(x) = \operatorname{mcm}(g_1(x), g_2(x))\).
+    Así, \(g(x)\) es un polinomio generador de un código cíclico que está contenido tanto en \(\mathcal C_1\) como en \(\mathcal C_2\).
+    Por tanto, \(g(x)\) ha de ser el generador de \(\mathcal C_1 \cap \mathcal C_2\), pues si no lo fuese, el código cíclico generador por \(g(x)\) ha de ser mayor que la intersección, lo que contradice la propia definición de intersección.
+    Veamos ahora que el idempotente generador es \(e_1(x)e_2(x)\).
+    Claramente \(e_1(x)e_2(x) \in \mathcal C_1 \cap \mathcal C_2\) y es idempotente, pues \((e_1(x)e_2(x))^2 = e_1(x)^2e_2(x)^2 = e_1(x)e_2(x)\).
+    Si \(c(x) \in \mathcal C_1 \cap \mathcal C_2\) entonces \(e_1(x)e_2(x)c(x) = e_1(x)c(x) = c(x)\), pues por el teorema \ref{th:idempotente-unico-unidad}(\ref{th:idempotente-unico-unidad:unidad}) \(e_1\) y \(e_2\) son unidades de \(\mathcal C_1\) y \(\mathcal C_2\), respectivamente.
+    El mismo teorema nos asegura entonces que \(e_1(x)e_2(x)\) es el idempotente generador que buscamos.
+    \item Veamos primero que \(\mathcal C_1 + \mathcal C_2\) es un código cíclico. (TODO: terminar)
+    A continuación, sea \(g(x) = \operatorname{mcd}(g_1(x), g_2(x))\).
+    El algoritmo de Euclides nos proporciona \(a(x)\) y \(b(x) \in \mathbb F_q[x]\) tales que \(g(x) = g_1(x)a(x) + g_2(x)b(x)\).
+    Por tanto, \(g(x) \in \mathcal C_1 + \mathcal C_2\).
+    Como \(\mathcal C_1 + \mathcal C_2\) es cíclico, \(\langle g(x) \rangle \subseteq \mathcal C_1 + \mathcal C_2\).
+    Por otro lado \(g(x) | g_1(x)\) luego por el corolario \ref{cor:subcodigos-ciclicos} \(\mathcal C_1 \subseteq \langle g(x) \rangle\).
+    De la misma forma deducimos que \(\mathcal C_2 \subseteq \langle g(x) \rangle\) y por tanto \(\mathcal C_1 + \mathcal C_2 \subseteq \langle g(x) \rangle\).
+    Así, \(\mathcal C_1 + \mathcal C_2 = \langle g(x) \rangle\).
+    Se tiene que \(g(x) | (x^n - 1)\) puesto que \(g(x) | g_1(x)\).
+    Además, como \(g(x)\) es mónico, se tiene por el corolario \ref{cor:pol-gen-unico} que \(g(x) = \operatorname{mcd}(g_1(x), g_2(x))\) es el polinomio generador de \(\mathcal C_1 + \mathcal C_2\).
+    Veamos finalmente que dado \(c(x) = c_1(x) + c_2(x)\), con \(c_1 \in \mathcal C_1\) y \(c_2 \in \mathcal C_2\) se tiene que 
+    \begin{align*}
+      c(&x)(e_1(x) + e_2(x) - e_1(x)e_2(x))\\
+      &= c_1(x) + c_1(x)e_2(x) - c_1(x)e_2(x) + c_2(x)e_1(x) + c_2(x) - c_2(x)e_1(x)\\
+      &=  c_1(x) + c_2(x)\\
+      &= c(x).
+    \end{align*}
+    Por tanto, por el teorema \ref{th:idempotente-unico-unidad} obtenemos que \(e_1(x) + e_2(x) - e_1(x)e_2(x) \in \mathcal C_1 + \mathcal C_2\) es el idempotente generador, como queríamos demostrar.\qedhere
+  \end{enumerate}
 \end{proof}
 
 Estamos ya en disposición de describir los elementos que prometimos al comienzo de la sección.
@@ -635,20 +670,18 @@ El conjunto \(T\) se denomina \textit{conjunto característico} de \(\mathcal C\
   Veamos la demostración por apartados.
   \begin{enumerate}
     \item Se deduce directamente del teorema \ref{th:corr-cod-div}.
-    \item Se de deduce del teorema \ref{th:corr-cod-div}, pues \(|T|\) es el grado de \(g(x)\).
+    \item Se de deduce del teorema \ref{th:corr-cod-div}, pues \(|T|\) es el grado de \(g(x)\).\qedhere
   \end{enumerate}
 \end{proof}
 
 Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el de elementos distintos de cero, determinan por completo el polinomio generador \(g(x)\).
 
 \begin{example}
-  Continuando con el ejemplo \ref{ex:codigos-ciclicos-long-7} en el que describimos todos los códigos cíclicos binarios de longitud \(7\) vamos a indicar a continuación cuales son los conjuntos de definición de cada uno, tomando como \(\alpha = \zeta_7^3\).
+  Continuando con el ejemplo \ref{ex:codigos-ciclicos-long-7} en el que describimos todos los códigos cíclicos binarios de longitud \(7\) vamos a indicar a continuación cuales son los conjuntos característicos, tomando como \(\alpha = \zeta_7^3\).
   Para ello vamos a utilizar el código descrito en el anexo \ref{annex:sage-gen-idemp} tal y como mostramos en el listado siguiente.
   \begin{lstlisting}[gobble=4]
     sage: F = GF(2)
     sage: x = polygen(F)
-    sage: ctos_caracteristicos(x^7 - 1)
-    > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
     sage: ctos_caracteristicos(x^7 - 1)
     > [(1, [], z3),
        (x + 1, [0], z3),
@@ -659,7 +692,7 @@ Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el 
        (x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, [1, 2, 3, 4, 5, 6], z3),
        (x^7 + 1, [0, 1, 2, 3, 4, 5, 6], z3)]
   \end{lstlisting}
-  En la tabla siguiente mostramos de forma más clara cuáles son los generadores y cuáles los idempotentes correspondientes.
+  En la tabla siguiente mostramos de forma más clara cuáles son los generadores e idempotentes correspondientes para cada código.
   \begin{table}[h]
     \centering
     \sffamily
@@ -667,18 +700,16 @@ Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el 
       \toprule
       \(i\) & dimensión & generador \(g_i(x)\) & conjunto \(T\)\\
       \midrule
-      \(0\) & \(0\) & \(1 + x^7\) & \(\{0, 1, 2, 3, 4, 5, 6\}\)\\
-      \(1\) & \(1\) & \(1 + x + x^2 + \dots + x^6\) & \(\{1, 2, 3, 4, 5, 6\}\)\\
-      \(2\) & \(3\) & \(1 + x^2 + x^3 + x^4\) & \(\{0, 3, 5, 6\}\)\\
-      \(3\) & \(3\) & \(1 + x + x^2 + x^4\) & \(\{0, 1, 2, 4\}\)\\
-      \(4\) & \(4\) & \(1 + x + x^3\) & \(\{3, 5, 6\}\)\\
-      \(5\) & \(4\) & \(1 + x^2 + x^3\) & \(\{1, 2, 4\}\)\\
-      \(6\) & \(6\) & \(1 + x\) & \(\{0\}\)\\
+      \(0\) & \(0\) & \(x^7 + 1\) & \(\{0, 1, 2, 3, 4, 5, 6\}\)\\
+      \(1\) & \(1\) & \(x^6 + x^5 + \dots + x + 1\) & \(\{1, 2, 3, 4, 5, 6\}\)\\
+      \(2\) & \(3\) & \(x^4 + x^3 + x^2 + 1\) & \(\{0, 3, 5, 6\}\)\\
+      \(3\) & \(3\) & \(x^4 + x^2 + x + 1\) & \(\{0, 1, 2, 4\}\)\\
+      \(4\) & \(4\) & \(x^3 + x + 1\) & \(\{3, 5, 6\}\)\\
+      \(5\) & \(4\) & \(x^3 + x^2 + 1\) & \(\{1, 2, 4\}\)\\
+      \(6\) & \(6\) & \(x + 1\) & \(\{0\}\)\\
       \(7\) & \(7\) & \(1\) & \(\emptyset\)\\
       \bottomrule
     \end{tabular}
+    \caption{Polinomios generadores y conjuntos característicos para los códigos cíclicos de longitud 7}
   \end{table}
 \end{example}
-
-
-% MAYBE: ejemplo de esto??? Ejemplo 4.4.1
