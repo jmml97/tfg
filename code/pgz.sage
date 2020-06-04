@@ -16,6 +16,7 @@ def PGZ(C, y):
     g = C.generator_polynomial()
     a = C.primitive_root()
     
+    logger('polinomio generador: ' + str(g))
     logger('raíz primitiva: ' + str(a))
     
     # Paso 1: calcular los síndromes
