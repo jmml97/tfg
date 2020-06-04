@@ -10,10 +10,11 @@ A este respecto es útil disponer de cotas en la distancia mínima, especialment
 Existen varias cotas conocidas para la distancia mínima de un código cíclico, pero nos vamos a centrar en la llamada \textit{cota de Bose-Ray-Chaudhuri-Hocquenghem}, usualmente abreviada como \textit{cota \textacr{BCH}}.
 Esta cota es esencial para comprender la definición de los códigos \textacr{BCH} que estudiamos en esta sección.
 La cota \textacr{BCH} va a depender de los ceros del código, concretamente en la posibilidad de encontrar cadenas de ceros «consecutivos».
+La fuente principal de este capítulo ha sido \parencite{huffman_fundamentals_2003}.
 
 \section{Construcción de códigos BCH}
 
-En lo que sigue vamos a consdierar un código cíclico \(\mathcal C\)  de longitud \(n\) sobre \(\mathbb F_q\) y \(\alpha\) una enésima raíz primitiva de la unidad en \(\mathbb F_{q^t}\), donde \(t = \operatorname{ord}_n(q)\).
+En lo que sigue vamos a considerar un código cíclico \(\mathcal C\)  de longitud \(n\) sobre \(\mathbb F_q\) y \(\alpha\) una enésima raíz primitiva de la unidad en \(\mathbb F_{q^t}\), donde \(t = \operatorname{ord}_n(q)\).
 Recordemos que \(T\) es un conjunto característico de \(\mathcal C\) siempre y cuando los ceros de \(\mathcal C\) sean \(\{\alpha^{i} \mid i \in T\}\).
 Por tanto \(T\) ha de ser una unión de clases \(q\)-ciclotómicas módulo \(n\).
 Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} si existe un conjunto \(\{b, b + 1, \dots, b + s - 1\}\) de \(s\) enteros consecutivos tal que
@@ -27,6 +28,7 @@ La matriz \(s \times s\) \(V = (v_{i, j})\), onde \(v_{i,j} = \alpha_{j}^{i-1}\)
 Observamos que la transpuesta de una matriz de Vandermonde es otra matriz de Vandermonde.
 
 \begin{lemma}
+  \label{lem:vandermonde}
   El determinante de una matriz Vandermonde \(V\) viene dado por \(\operatorname{det}V = \prod_{1 \leq i < j \leq s}(\alpha_j - \alpha_i)\).
   En particular, \(V\) es no singular si los elementos \(\alpha_1, \dots, \alpha_s\) son todos diferentes dos a dos.
 \end{lemma}
@@ -41,7 +43,37 @@ Estamos ya en condiciones de presentar y demostrar el teorema de la cota \textac
 \end{theorem}
 
 \begin{proof}
-  
+  Asumimos que el código \(\mathcal C\) tiene ceros que incluyen
+  \[
+    \alpha^b, \alpha^{b+1}, \dots, \alpha^{b + \delta - 2}.
+  \]
+  Sea \(c(x)\) una palabra código de \(\mathcal C\) de peso \(w\) de la forma
+  \[
+    c(c) = \sum_{j = 1}^w c_{i_j}x^{i_j}.
+  \]
+  Vamos a proceder por reducción al absurdo.
+  Supongamos que \(w \leq \delta\).
+  Como \(c(\alpha^i) = 0\) para \(b \leq i \leq b + \delta - 2\), \(M \mathbf{u}^T = \mathbf{0}\), donde
+  \[
+    M = \begin{pmatrix}
+      \alpha^{i_1b} & \alpha^{i_2b} & \dots & \alpha^{i_wb}\\
+      \alpha^{i_1(b+1)} & \alpha^{i_2(b+1)} & \dots & \alpha^{i_w(b+1)}\\
+        & & \vdots & \\
+      \alpha^{i_1(b+w-1)} & \alpha^{i_2(b+w-1)} & \dots & \alpha^{i_w(b+w-1)}\\
+    \end{pmatrix}
+  \]
+  y \(\mathbf{u} = c_{i_1}c_{i_2}\dotsc_{i_w}\).
+  Como \(\mathbf{u} \neq \mathbf{0}\) la matriz \(M\) es singular, y por tanto \(\det M = 0\).
+  Pero \(\det M = \alpha^{(i_1 + i_2 + \dots + i_w)b}\det V\), donde \(V\) es la matriz de Vandermonde
+  \[
+    V = \begin{pmatrix}
+      1 & 1 & \dots & 1 \\
+      \alpha^{i_1} & \alpha^{i_2} & \dots & \alpha^{i_w} \\
+       &  & \vdots & \\
+      \alpha^{i_1(w - 1)} & \alpha^{i_2(w - 1)} & \dots & \alpha^{i_w(w - 1)} \\
+    \end{pmatrix}.
+  \]
+  Como los \(\alpha^{i_j}\) son todos distintos dos a dos, \(\det V \neq 0\) por el lema \ref{lem:vandermonde}, lo que contradice que \(\det M = 0\).
 \end{proof}
 
 Los códigos \textacr{BCH} son códigos cíclicos diseñados para aprovechar la cota \textacr{BCH}.
@@ -49,7 +81,7 @@ Nos gustaría poder construir un código cíclico \(\mathcal C\) de longitud \(n
 Tener un peso mínimo grande, basándonos en la cota \textacr{BCH}, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
 
 Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema \ref{th:cicl-cto-caracteristico}, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
-Por tanto, si quisiesemos que \(\mathcal C\) tenga distancia mínima de al menos \(\delta\), podemos escoger un conjunto característico tan pequeño como sea posible que sea una unión de clases \(q\)-ciclotómicas con \(\delta - 1\) elementos consecutivos.
+Por tanto, si quisiésemos que \(\mathcal C\) tenga distancia mínima de al menos \(\delta\), podemos escoger un conjunto característico tan pequeño como sea posible que sea una unión de clases \(q\)-ciclotómicas con \(\delta - 1\) elementos consecutivos.
 
 Sea \(\delta\) un entero tal que \(2 \leq \delta \leq n\). Un \textit{código \textacr{BCH}} \(\mathcal C\) sobre \(\mathbb F_q\) de longitud \(n\) y \textit{distancia mínima prevista} \(\delta\) es un código cíclico con conjunto característico
 \begin{equation}
@@ -111,7 +143,7 @@ A fin de simplificar la notación, para \(1 \leq j \leq v\) definimos: \begin{it
   \item \(X_j = \alpha^{k_j}\), que llamaremos \textit{número de coordenada de error correspondiente a la coordenada} \(k_j\).
 \end{itemize}
 Observamos que al conocer \(X_j\) conocemos de forma unívoca la coordenada de error \(k_j\), ya que si \(\alpha^i = \alpha^k\) para \(i\) y \(k\) entre \(0\) y \(n-1\), entonces \(i = k\).
-Con la notación que hemos descito la igualdad (\ref{eq:sindromes}) la podemos escribir como \begin{equation}
+Con la notación que hemos descrito la igualdad (\ref{eq:sindromes}) la podemos escribir como \begin{equation}
   \label{eq:sindromes-alt}
   S_i = \sum_{j = 1}^v E_jX_{j}^i, \quad\text{para } 1 \leq i \leq 2t,
 \end{equation}
@@ -212,6 +244,66 @@ En resumen, el algoritmo consiste en: \begin{enumerate}
 
 Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo PGZ en pseudocódigo siguiendo este esquema.
 A partir de él se ha realizado una implementación en el sistema Sage que puede consultarse en el anexo \ref{annex:pgz-sage}.
+Veamos un par de ejemplos que utilizan esta implementación.
+
+\begin{example}
+  Sea \(\mathcal C\) un \([15, 7]\) código BCH en sentido estricto de distancia designada \(\delta = 5\).
+  Supongamos que recibimos el mensaje \(y(x) = x^{10} + x^9 + x^6 + x^5 + x + 1\).
+  Vamos a corregir los errores que puedan haberse producido en la transmisión.
+  \begin{lstlisting}[gobble=4]
+    sage: C = codes.BCHCode(GF(2), 15, 5, offset=1)
+    sage: x = polygen(GF(2))
+    sage: y = 1 + x +x^5 + x^6 + x^9 + x^10
+    sage: DEBUG = true
+    sage: PGZ(C, y)
+    > polinomio generador: x^8 + x^7 + x^6 + x^4 + 1
+      raíz primitiva: z4
+      síndromes: [z4^2, z4 + 1, z4^3 + z4^2 + z4, z4^2 + 1]
+      tamaño de m_mu: 2
+      matriz m_mu: 
+      [            z4^2           z4 + 1]
+      [          z4 + 1 z4^3 + z4^2 + z4]
+      vector b_mu: (z4^3 + z4^2 + z4, z4^2 + 1)
+      matriz de soluciones de m_mu*S = b_mu: (z4^3 + 1, z4^2)
+      polinomio localizador sigma(x): (z4^3 + 1)*x^2 + z4^2*x + 1
+      raíces de sigma(x): [(z4^2 + z4, 1), (z4^3 + z4^2 + z4, 1)]
+      X_j: [z4^2 + z4 + 1, z4 + 1]
+      k_j: [10, 4]
+      error e: x^10 + x^4
+    > x^9 + x^6 + x^5 + x^4 + x + 1
+  \end{lstlisting}
+  El mensaje corregido es por tanto \(m(x) = x^9 + x^6 + x^5 + x^4 + x + 1\).
+\end{example}
+
+\begin{example}
+  Sea \(\mathcal C\) un \([15, 5]\) código BCH en sentido estricto de distancia designada \(\delta = 5\).
+  Supongamos que recibimos el mensaje \(y(x) = x^{12} + x^9 + x^7 + x^5 + x^4 + x + 1\).
+  Vamos a corregir los errores que puedan haberse producido en la transmisión.
+  \begin{lstlisting}[gobble=4, breaklines=false, basicstyle=\small\ttfamily]
+    sage: C = codes.BCHCode(GF(2), 15, 7, offset=1)
+    sage: x = polygen(GF(2))
+    sage: y = 1 + x +x^4 + x^5 + x^7 + x^9 + x^12
+    sage: DEBUG = true
+    sage: PGZ(C, y)
+    > polinomio generador: x^10 + x^8 + x^5 + x^4 + x^2 + x + 1
+      raíz primitiva: z4
+      síndromes: [z4^3, z4^3 + z4^2, z4^3, z4^3 + z4^2 + z4 + 1, 0, z4^3 + z4^2]
+      tamaño de m_mu: 3
+      matriz m_mu: 
+      [                z4^3          z4^3 + z4^2                 z4^3]
+      [         z4^3 + z4^2                 z4^3 z4^3 + z4^2 + z4 + 1]
+      [                z4^3 z4^3 + z4^2 + z4 + 1                    0]
+      vector b_mu: (z4^3 + z4^2 + z4 + 1, 0, z4^3 + z4^2)
+      matriz de soluciones de m_mu*S = b_mu: (z4^3 + z4^2, z4^2 + 1, z4^3)
+      polinomio localizador sigma(x): (z4^3 + z4^2)*x^3 + (z4^2 + 1)*x^2 + z4^3*x + 1
+      raíces de sigma(x): [(1, 1), (z4 + 1, 1), (z4^2 + z4, 1)]
+      X_j: [1, z4^3 + z4^2 + z4, z4^2 + z4 + 1]
+      k_j: [0, 11, 10]
+      error e: x^11 + x^10 + 1
+    > x^12 + x^11 + x^10 + x^9 + x^7 + x^5 + x^4 + x
+  \end{lstlisting}
+  El mensaje corregido es por tanto \(m(x) = x^{12} + x^{11} + x^{10} + x^9 + x^7 + x^5 + x^4 + x\).
+\end{example}
 
 \begin{Ualgorithm}[htbp]
   \DontPrintSemicolon
@@ -251,5 +343,5 @@ A partir de él se ha realizado una implementación en el sistema Sage que puede
   \(c(x) = y(x) - e(x)\)\;
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos.}
   \label{alg:pgz-cc}
- \end{Ualgorithm}
- \footnotetext{Aquí estamos describiendo una matriz por sus entradas, las filas varían en \(i\), y las columnas, en \(j\).}
+\end{Ualgorithm}
+\footnotetext{Aquí estamos describiendo una matriz por sus entradas, las filas varían en \(i\), y las columnas, en \(j\).}
