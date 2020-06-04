@@ -1,7 +1,8 @@
 
 \chapter{Códigos cíclicos}
 
-En esta sección vamos a estudiar los aspectos fundamentales de la familia de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
+En este capítulo vamos a estudiar los aspectos fundamentales de la familia de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
+Las fuentes de este capítulo han sido \parencite{huffman_fundamentals_2003}, \parencite{kelbert_information_2013} y \parencite{macwilliams_theory_1977}.
 
 \begin{definition}
   Un código lineal \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) es \textit{cíclico} si para cada vector \(\mathbf c = c_0\dots c_{n-2}c_{n-1}\) en \(\mathcal C\), el vector \(c_{n-1}c_0\dots c_{n-2}\) —obtenido a partir de \(\mathbf c\) desplazando cíclicamente las coordenadas, llevando \(i \mapsto i +1 \bmod n\)— también está en \(\mathcal C\).
@@ -36,11 +37,10 @@ Por tanto, \(\mathbb F_{q^t}\) es lo que se conoce como \textit{cuerpo de descom
 Los factores irreducibles de \(x^n - 1\) sobre \(\mathbb F_q\) deben ser el producto de los distintos polinomios minimales de las enésimas raíces de la unidad en \(\mathbb F_{q^t}\).
 Supongamos que \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\).
 Entonces \(\alpha = \gamma^d\) es una enésima raíz primitiva de la unidad, donde \(d = (q^t - 1)/n\).
-Las raíces del polinomio \(M_{a^s}(x)\) son \(\{\gamma^{ds}, \gamma^{dsq}, \gamma^{dsq^2}, \dots, \gamma^{dsq^{r-1}}\} = \{\alpha^s, \alpha^{sq}, \alpha^{sq^2}, \dots, \alpha^{sq^{r-1}}\}\), donde \(r\) es el menor entero positivo tal que \(dsq^r \equiv ds \bmod q^t - 1\) por el teorema *.
-% TODO: referenciar Theorem 3.7.6
+Las raíces del polinomio \(M_{a^s}(x)\) son \(\{\gamma^{ds}, \gamma^{dsq}, \gamma^{dsq^2}, \dots, \gamma^{dsq^{r-1}}\} = \{\alpha^s, \alpha^{sq}, \alpha^{sq^2}, \dots, \alpha^{sq^{r-1}}\}\), donde \(r\) es el menor entero positivo tal que \(dsq^r \equiv ds \bmod q^t - 1\) por el teorema \ref{th:pol-minimal-el-primitivo}.
 Pero \(dsq^r \equiv ds \bmod q^t - 1\) si y solo si \(sq^r \equiv s \bmod n\).
 
-Todo esto nos lleva a extender la definición de clases \(q\)-ciclotómicas que hemos introducido en la sección *.
+Todo esto nos lleva a extender la definición de clases \(q\)-ciclotómicas que hemos introducido en la sección \ref{subsec:clases-ciclotomicas}.
 Sea \(s\) un entero tal que \(0 \leq s < n\).
 La \textit{clase \(q\)-ciclotómica de \(s\) módulo \(n\)} es el conjunto
 \[
@@ -54,8 +54,7 @@ Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclo
 
 \begin{theorem}
   \label{th:pol-minimal-raiz-primitiva}
-  Sea \(n\) un entero positivo primo relativo con \(q\).
-  Sea \(t = \operatorname{ord}_n(q)\).
+  Sea \(n\) un entero positivo primo relativo con \(q\) y sea \(t = \operatorname{ord}_n(q)\).
   Sea \(\alpha\) una raíz enésima primitiva de la unidad en \(\mathbb F_{q^t}\).
   Se verifican las siguientes afirmaciones.
   \begin{enumerate}
@@ -343,7 +342,7 @@ Finalmente, el siguiente resultado nos muestra la relación entre dos polinomios
   \end{enumerate}
 \end{proof}
 
-% TODO: resultados sobre duales de códigos cíclicos (4.2.6, 4.2.7)
+% MAYBE: resultados sobre duales de códigos cíclicos (4.2.6, 4.2.7)
 
 \section{Codificación de códigos cíclicos}
 
@@ -353,9 +352,7 @@ Consideraremos un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mat
 
 \paragraph{Codificación no-sistemática}
 
-Esta forma de codificación está basada en la técnica natural de codificación que describimos en la sección (
-  %TODO: referencia
-).
+Esta forma de codificación está basada en la técnica natural de codificación que describimos en la sección \ref{subsec:codificacion-descodificacion}.
 Sea \(G\) la matriz generadora obtenida a partir de los desplazamientos de \(g(x)\) descrita en el teorema \ref{th:corr-cod-div}.
 Dado el mensaje \(\mathbf m \in \mathbb F_q^k\), lo codificamos como la palabra código \(\mathbf c = \mathbf mG\).
 De igual forma, si \(m(x)\) y \(c(x)\) son los polinomios en \(\mathbb F_q[x]\) asociados a \(\mathbf{m}\) y \(\mathbf c\), entonces \(c(x) = m(x)g(x)\).
@@ -470,7 +467,7 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
   Como \(d(x) \mid e(x)\), podemos expresarlo como \(e(x) = d(x)k(x)\) para algún \(k(x) \in \mathbb F_q[x]\).
   Por tanto cada elemento de \(\mathcal C = \langle e(x) \rangle\) es también múltiplo de \(d(x)\), por lo que \(\mathcal C \subset \langle d(x) \rangle\).
   Por el teorema \ref{th:corr-cod-div} tenemos que en \(\mathbb F_q[x]\), \(g(x) \mid (x^n -1)\) y que \(g(x) \mid e(x)\), ya que \(e(x) \in \mathcal C\).
-  Luego, por la proposición (TODO: proposición, ejercicio 158) tenemos que \(g(x) \mid d(x)\) y en consecuencia \(d(x) \in \mathcal C\).
+  Luego, por la proposición \ref{prop:k-divisor-f-g} tenemos que \(g(x) \mid d(x)\) y en consecuencia \(d(x) \in \mathcal C\).
   Por tanto, \(\langle d(x) \rangle \subseteq \mathcal C\) y deducimos entonces que \(\mathcal C = \langle d(x) \rangle\).
   Como \(d(x)\) es divisor mónico de \(x^n - 1\) y genera a \(\mathcal C\), necesariamente \(d(x) = g(x)\) por el corolario \ref{cor:peso-minimo-columnas-dependientes}. 
 \end{proof}
@@ -542,14 +539,16 @@ El siguiente teorema nos dice que sí, y además de la misma forma: a partir de 
 El siguiente resultado, que nos informa sobre los polinomios generadores e idempotentes generadores de sumas e intersecciones de códigos cíclicos de la misma longitud, nos será útil un poco más adelante, pues veremos que .
 Dados dos códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2\) de longitud \(n\) sobre \(\mathbb F_q\) definimos su suma como
 \[
-  \mathcal C_1 + \mathcal C_2 = \{\mathbf{c}_1 + \mathbf{c_2} : \mathbf{c}_1 \in \mathcal C_1 \text{ y } \mathbf{c}_2\}.
+  \mathcal C_1 + \mathcal C_2 = \{\mathbf{c}_1 + c_2(x) : \mathbf{c}_1 \in \mathcal C_1 \text{ y } \mathbf{c}_2\}.
 \]
 
 \begin{theorem}
+  \label{th:intersecciones-sumas-ciclicos}
   Sean \(\mathcal C_1\) y \(\mathcal C_2\) códigos cíclicos de longitud \(n\) sobre \(\mathbb F_q\) con polinomios generadores \(g_1(x)\) y \(g_2(x)\) e idempotentes generadores \(e_1(x)\) y \(e_2(x)\), respectivamente.
   Entonces \begin{enumerate}
     \item La intersección \(\mathcal C_1 \cap \mathcal C_2\) es también un código cíclico, con polinomio generador \(\operatorname{mcm}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x)e_2(x)\).
     \item La suma \(\mathcal C_1 + \mathcal C_2\) es también un código cíclico, con polinomio generador \(\operatorname{mcd}(g_1(x), g_2(x))\) e idempotente generador \(e_1(x) + e_2(x) - e_1(x)e_2(x)\).
+    \label{th:intersecciones-sumas-ciclicos:sumas}
   \end{enumerate}
 \end{theorem}
 
@@ -564,7 +563,9 @@ Dados dos códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2\) de longitud \(n
     Claramente \(e_1(x)e_2(x) \in \mathcal C_1 \cap \mathcal C_2\) y es idempotente, pues \((e_1(x)e_2(x))^2 = e_1(x)^2e_2(x)^2 = e_1(x)e_2(x)\).
     Si \(c(x) \in \mathcal C_1 \cap \mathcal C_2\) entonces \(e_1(x)e_2(x)c(x) = e_1(x)c(x) = c(x)\), pues por el teorema \ref{th:idempotente-unico-unidad}(\ref{th:idempotente-unico-unidad:unidad}) \(e_1\) y \(e_2\) son unidades de \(\mathcal C_1\) y \(\mathcal C_2\), respectivamente.
     El mismo teorema nos asegura entonces que \(e_1(x)e_2(x)\) es el idempotente generador que buscamos.
-    \item Veamos primero que \(\mathcal C_1 + \mathcal C_2\) es un código cíclico. (TODO: terminar)
+    \item Veamos primero que \(\mathcal C_1 + \mathcal C_2\) es un código cíclico.
+    Sabemos que si \(c_1(x) \in \mathcal C_1\) y \(c_2(x) \in \mathcal C_2\) entonces \(xc_1(x) \in \mathcal C_1\) y \(xc_2(x) \in \mathcal C_2\).
+    Dado un elemento \(c_1(x) + c_2(x) \in \mathcal C_1 + \mathcal C_2\) tenemos que \(x(c_1(x) + c_2(x)) = xc_1(x) + xc_2(x) \in \mathcal C_1 + \mathcal C_2\), por lo que \(\mathcal C_1 + \mathcal C_2\) es cíclico.
     A continuación, sea \(g(x) = \operatorname{mcd}(g_1(x), g_2(x))\).
     El algoritmo de Euclides nos proporciona \(a(x)\) y \(b(x) \in \mathbb F_q[x]\) tales que \(g(x) = g_1(x)a(x) + g_2(x)b(x)\).
     Por tanto, \(g(x) \in \mathcal C_1 + \mathcal C_2\).
@@ -603,15 +604,68 @@ El teorema \ref{th:idempotentes-ideales-minimales} que sigue nos muestra además
   \begin{enumerate}
     \item Los ideales \(\langle \widehat{f_i}(x)\rangle\) para cada \(1 \leq i \leq s\) son todos los ideales minimales de \(\mathcal R_n\).
     \item \(\mathcal R_n\) es el espacio vectorial suma directa de todos los \(\langle \widehat{f_i}(x)\rangle\) para \(1 \leq i \leq s\).
+    \label{thi:idempotentes-ideales-minimales:suma-directa}
     \item Si \(i \neq j\) entonces \(\widehat{e_i}(x)\widehat{e_j}(x) = 0\) en \(\mathcal R_n\).
-    \item La suma \(\sum_{i=1}^s \widehat{e_i}(x) = 1\) en \(\mathcal R_n\).
-    \item Los únicos idempotentes en \(\langle \widehat{f_i}(x)\rangle\) son \(0\) y \(\widehat{e_i}(x)\).
+    \item \label{thi:idempotentes-ideales-minimales:cero}
+    \item \label{thi:idempotentes-ideales-minimales:suma-idempotentes} La suma \(\sum_{i=1}^s \widehat{e_i}(x) = 1\) en \(\mathcal R_n\).
+    \item \label{thi:idempotentes-ideales-minimales:unicos-idempotentes} Los únicos idempotentes en \(\langle \widehat{f_i}(x)\rangle\) son \(0\) y \(\widehat{e_i}(x)\).
     \item Si \(e(x)\) es un idempotente no nulo en \(\mathcal R_n\), entonces existe un subconjunto \(T\) de \(\{1, 2, \dots, s\}\) tal que \(e(x) = \sum_{i \in T}\widehat{e_i}(x)\) y \(\langle e(x) \rangle = \sum_{i \in T}\langle \widehat{f_i}(x)\rangle\).
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-  
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item Veamos por reducción al absurdo que cada \(\langle \widehat{f_i}(x)\rangle\) es un ideal minimal de \(\mathcal R_n\).
+    Supongamos que no es un ideal minimal.
+    Entonces, por el corolario \ref{cor:subcodigos-ciclicos} existiría un polinomio generador \(g(x)\) de un ideal no trivial contenido en \(\langle \widehat{f_i}(x)\rangle\) tal que \(\widehat{f_i}(x) | g(x)\), con \(g(x) \neq \widehat{f_i}(x)\).
+    Pero como \(f_i(x)\) es irreducible y \(g(x) | (x^n - 1)\), es imposible.
+    Por tanto cada \(\langle \widehat{f_i}(x)\rangle\) es un ideal minimal de \(\mathcal R_n\).
+    Veamos que estos son todos los ideales minimales de \(\mathcal R_n\).
+    Sea \(\mathcal M = \langle m(x) \rangle\) un ideal minimal de \(\mathcal R_n\).
+    Como el conjunto \(\{\widehat{f_i}(x) : 1 \leq i \leq s\}\) no tiene factores irreducibles de \(x^n - 1\) repetidos y cada uno de ellos divide a \(x^n - 1\) el \(\operatorname{mcd}(\widehat{f_1}(x), \dots, \widehat{f_s}(x)) = 1\).
+    Por tanto, aplicando el algoritmo de Euclides inductivamente obtenemos
+    \begin{equation}
+      1 = \sum_{i = 1}^s a_i(x)\widehat{f_i}(x)
+      \label{eq:1-suma-ideales-minimales}
+    \end{equation}
+    para ciertos \(a_i(x) \in \mathbb F_q[x]\).
+    Así, como 
+    \[
+      0 \neq m(x) = m(x) \cdot 1 = \sum_{i = 1}^s m(x)a_i(x)\widehat{f_i}(x)
+    \]
+    existe un \(i\) tal que \(m(x)a_i(x)\widehat{f_i}(x) \neq 0\).
+    Por tanto, \(\mathcal M \cap \langle \widehat{f_i}(x) \rangle \neq \{0\}\), pues \(m(x)a_i(x)\widehat{f_i}(x) \in \mathcal M \cap \langle \widehat{f_i}(x) \rangle\).
+    Pero entonces \(\mathcal M = \langle \widehat{f_i}(x) \rangle\) pues tanto \(\mathcal M\) como \(\langle \widehat{f_i}(x) \rangle\) son minimales.
+    Por tanto todos los ideales minimales son de la forma \(\langle \widehat{f_i}(x) \rangle\), como queríamos.
+    \item Por (\ref{eq:1-suma-ideales-minimales}) concluimos que el \(1\) está en la suma de los ideales \(\langle \widehat{f_i}(x) \rangle\), que es en sí mismo un ideal de \(\mathcal R_n\).
+    Por tanto, por la proposición \ref{prop:ideal-unidad}, \(\mathcal R_n\) es la suma de los ideales \(\langle \widehat{f_i}(x) \rangle\).
+    Para probar que es una suma directa tenemos que comprobar que los ideales son disjuntos, es decir, \(\langle \widehat{f_i}(x) \rangle \cap \sum_{j\neq i} \langle \widehat{f_j}(x) \rangle = \{0\}\) para \(1 \leq i \leq s\).
+    Como \(f_i(x) | \widehat{f_j}(x)\) para \(j \neq i\), \(f_j(x) \not| \widehat{f_j}(x)\) y los factores irreducibles de \(x^n - 1\) son todos distintos, concluimos que
+    \[
+      f_i(x) = \operatorname{mcd}\{\widehat{f_j}(x) : 1 \leq j \leq s, j \neq i\}.
+    \]
+    Utilizando inducción sobre el teorema \ref{th:intersecciones-sumas-ciclicos}(\ref{th:intersecciones-sumas-ciclicos:sumas}) concluimos que \(\langle \widehat{f_i}(x) \rangle = \sum_{j\neq i}\langle \widehat{f_j}(x) \rangle\).
+    Por tanto, 
+    \begin{align*}
+      \langle \widehat{f_i}(x) \rangle \cap \sum_{j\neq i}\langle \widehat{f_j}(x) \rangle 
+       &= \langle \widehat{f_i}(x) \rangle \cap \langle f_i(x) \rangle \\
+       &= \langle\operatorname{mcm}(\widehat{f_i}(x), f_i(x))\rangle \\ 
+       &= \langle x^n - 1\rangle \\
+       &= \{0\},
+    \end{align*}
+    por lo que los \(\langle \widehat{f_i}(x) \rangle\) son disjuntos y la suma es directa, como queríamos ver.
+    \item Si \(i \neq j\), \(\widehat{e_i}(x)\widehat{e_j}(x) \in \langle \widehat{f_i}(x) \rangle \cap \langle \widehat{f_j}(x) \rangle = \{0\}\) por (\ref{thi:idempotentes-ideales-minimales:suma-directa}), luego \(\widehat{e_i}(x)\widehat{e_j}(x) = 0\) como queríamos.
+    \item Usando (\ref{thi:idempotentes-ideales-minimales:cero}) y aplicando inducción al teorema \ref{th:intersecciones-sumas-ciclicos}(\ref{th:intersecciones-sumas-ciclicos:sumas}) obtenemos que \(\sum_{i=1}^s \widehat{e_i}(x)\) es el idempotente generador de \(\sum_{i=1}^s \langle \widehat{f_i}(x) \rangle = \mathcal R_n\), por (\ref{thi:idempotentes-ideales-minimales:suma-directa}).
+    Luego el idempotente generador de \(\mathcal R_n\) es \(1\).
+    \item Si \(e(x)\) es un idempotente no nulo en \(\langle \widehat{f_i}(x) \rangle\) entonces \(\langle e(x) \rangle\) es un ideal contenido en \(\langle \widehat{f_i}(x) \rangle\).
+    Por minimalidad, dado que \(e(x)\) es distinto de cero, \(\langle \widehat{f_i}(x) \rangle = \langle e(x)\rangle\), lo que por el teorema \ref{th:idempotente-unico-unidad} implica que \(e(x) = \widehat{e_i}(x)\) ya que ambos son la unidad de \(\langle \widehat{f_i}(x) \rangle\).
+    \item Notemos que \(e(x)\widehat{e_i}(x)\) es un idempotente en  \(\langle \widehat{f_i}(x) \rangle\).
+    Por tanto, por (\ref{thi:idempotentes-ideales-minimales:unicos-idempotentes}), \(e(x)\widehat{e_i}(x)\) es, o bien \(0\) o bien \(\widehat{e_i}(x)\).
+    Sea \(T = \{i : e(x)\widehat{e_i}(x) \neq 0\}\).
+    Entonces, por (\ref{thi:idempotentes-ideales-minimales:suma-idempotentes}), \(e(x) = e(x) \cdot 1 = e(x)\sum_{i=1}^s \widehat{e_i}(x) = \sum_{i=1}^s e(x)\widehat{e_i}(x) = \sum_{i \in T}\widehat{e_i}(x)\).
+    De hecho, \(\langle e(x)\rangle = \langle \sum_{i \in T}\widehat{e_i}(x)\) = \(\sum_{i \in T}\langle\widehat{e_i}(x)\rangle\) aplicando por inducción el teorema \ref{th:intersecciones-sumas-ciclicos}(\ref{th:intersecciones-sumas-ciclicos:sumas}).\qedhere
+  \end{enumerate}
 \end{proof}
 
 El siguiente teorema nos muestra que los ideales minimales descritos en el teorema \ref{th:idempotentes-ideales-minimales} son extensiones de cuerpos de \(\mathbb F_q\).
@@ -622,7 +676,12 @@ El siguiente teorema nos muestra que los ideales minimales descritos en el teore
 \end{theorem}
 
 \begin{proof}
-  
+  Basta con probar que cada elemento distinto de cero en \(\mathcal M\) tiene inverso para el producto.
+  Sea \(a(x) \in \mathcal M\) distinto de cero.
+  Entonces \(\langle a(x) \rangle\) es un ideal de \(\mathcal R_n\) distinto de cero contenido en \(\mathcal M\), y por tanto, \(\langle a(x) \rangle = \mathcal M\).
+  Por tanto, si \(e(x)\) es la unidad de \(\mathcal M\) existe un elemento \(b(x) \in \mathcal R_n\) tal que \(a(x)b(x) = e(x)\).
+  Sea ahora \(c(x) = b(x)e(x) \in \mathcal M\), pues \(e(x) \in \mathcal M\).
+  Por tanto, \(a(x)c(x) = e(x)^2 = e(x)\), con lo que \(a(x)\) tiene inverso, como queríamos.
 \end{proof}
 
 A continuación vamos a describir una permutación que lleva idempotentes de \(\mathcal R_n\) en idempotentes de \(\mathcal R_n\).
@@ -639,7 +698,7 @@ En otras palabras, \(x^i\mu_a = x^{ia \bmod n}\).
 Si \(a < 0\) podemos dar significado a \(f(x^a)\) en \(\mathcal R_n\) definiendo \(x^{i}\mu_a = x^{ia \bmod n}\), donde \(0 \leq ia \bmod n < n\).
 Con esta interpretación la ecuación (\ref{eq:multiplier-rn}) es consistente con la definición original de \(\mu_a\) cuando \(a < 0\).
 
-% TODO: Más sobre multiplicadores (4.3)
+% MAYBE: Más sobre multiplicadores (4.3)
 
 \section{Ceros y conjuntos característicos}
 
