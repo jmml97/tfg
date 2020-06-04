@@ -4,8 +4,7 @@ En esta sección vamos a hablar sobre los anillos de polinomios de Ore, que ser�
 % TODO: nota histórica sobre polinomios Ore
 [Introducir nota histórica]
 Primero vamos a dar la definición general, sin detenernos a justificar su construcción, pues acto seguido vamos a centrarnos en el caso que nos va a ocupar cuando trabajemos con códigos cíclicos sesgados.
-Las definiciones y el desarrollo teórico seguidos en esta sección proceden de (citas).
-% CITEME: libro Jacobson, artículo original de Ore
+Las definiciones y el desarrollo teórico seguidos en esta sección proceden de \parencite{jacobson_finite-dimensional_1996}, \parencite{ore_theory_1933} y [añadir: Factoring Ore Polynomials over Fields].
 
 \begin{definition}
   Sea \(R\) un anillo, \(\sigma\) un endomorfismo de \(R\) y \(\delta\) una \(\sigma\)-\textit{derivación} de \(R\), es decir, \(\delta\) es un homomorfismo de grupos abelianos tal que para \(a, b \in R\) se verifica que
@@ -50,10 +49,14 @@ con lo que, junto a la propiedad distributiva podemos definir el producto de pol
 \]
 
 Para comprobar que \(\mathbb F_q[x, \sigma]\) es un anillo, como ya hemos comentado en el caso general, necesitamos comprobar que se verifica la propiedad asociativa para la multiplicación.
-Comprobar esta afirmación directamente es tedioso, por lo que Jacobson propone (cita) demostrarlo utilizando una representación matricial de los elementos.
+Comprobar esta afirmación directamente es tedioso, pero en \parencite[p. 2-3]{jacobson_finite-dimensional_1996} puede consultarse una demostración utilizando una representación matricial de los elementos.
 
 A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, \(\mathbb F_q[x, \sigma]\) es un dominio de integridad no conmutativo.
-% ...
+Dado un polinomio \(f(x) = a_0 + a_1x + \dots + a_nx^n\) con \(a_n \neq 0\) y definimos \(\deg(f(x)) = n\) y \(\deg(0) = -\infty\).
+Si consideramos otro polinomio \(g(x) = b_0 + b_1x + \dots + b_mx^m\) con \(b_m\) entonces \(f(x)g(x) = \dots + a_n(\sigma^n b_m)x^{n+m}\) y \(a_n(\sigma^nb_m) \neq 0\) y así,
+\[
+  \deg(f(x)g(x)) = \deg(f(x)) + \deg(g(x)).
+\]
 Por tanto, \(\mathbb F_q[x, \sigma]\) no tiene divisores de cero distintos del cero, por lo que es un dominio de integridad no conmutativo, como habíamos afirmado.
 
 Podemos definir algoritmos de división en \(\mathbb F_q[x, \sigma]\) tanto a la izquierda como a la derecha (cita)  —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x, \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
@@ -65,6 +68,7 @@ y al dividir por la derecha,
   f(x) = g(x)q(x) + r(x),
 \]
 Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio \(g(x)\) se le llama \textit{cociente por la izquierda} (\textit{derecha}) y a \(r(x)\), \textit{resto por la izquierda} (\textit{derecha}).
+Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{cod}(f(x), g(x))\) y \(r(x) = \operatorname{rei}(f(x), g(x))\) o \(\operatorname{red}(f(x), g(x))\).
 
 \begin{Ualgorithm}[h]
   \DontPrintSemicolon
@@ -76,10 +80,10 @@ Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio 
     \(a \longleftarrow \lc (r) \sigma^{\deg (r) - \deg (g)}(\lc (g)^{-1})\)\;
     \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
     \(r \longleftarrow r - ax^{\deg (r) - \deg (g)}g\)
-  }
-  \caption{División por la izquierda en \(\mathbb F_q[x, \sigma]\)}
+    }
+    \caption{División por la izquierda en \(\mathbb F_q[x, \sigma]\)}
   \label{alg:ore-fq-division-izquierda}
- \end{Ualgorithm}
+\end{Ualgorithm}
 
 \begin{Ualgorithm}[h]
   \DontPrintSemicolon
@@ -91,11 +95,105 @@ Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio 
     \(a \longleftarrow \sigma^{-\deg(g)}(\lc(g)^{-1}\lc(r))\)\;
     \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
     \(r \longleftarrow r - gax^{\deg (r) - \deg (g)}\)
+    }
+    \caption{División por la derecha en \(\mathbb F_q[x, \sigma]\)
   }
-  \caption{División por la derecha en \(\mathbb F_q[x, \sigma]\)}
   \label{alg:ore-fq-division-derecha}
- \end{Ualgorithm}
- 
- % Right divides, left divides
- % Common multiples, common divisors
- 
+\end{Ualgorithm}
+
+La existencia de algoritmos de algoritmos de división a izquierda y a derecha implica que \(F_q[x, \sigma]\) es un dominio de ideales principales a izquierda y a derecha, es decir, que es lo que llamamos un dominio de ideales principales a secas.
+% Ideales biláteros, teorema del centro
+
+% right divisor, left multiple
+Para ser más concisos con la notación vamos a llamar \(R = F_q[x, \sigma]\) y cuando no sea necesario hacer referencia a la variable \(x\), a un polinomio \(f(x)\) lo denotaremos simplemente por \(f\).
+Dados \(g, f \in R\) supongamos que \(Rg \subseteq Rf\) con \(Rg \neq 0\).
+Entonces \(g = hf\), por lo que decimos que \(f\) es un \emph{divisor por la derecha} de \(g\) y lo notaremos por \(f \mid_{d} g\).
+Equivalentemente, podemos decir que \(g\) es un \emph{múltiplo por la izquierda} de \(f\).
+Observemos que de igual forma, si \(f \mid_{d} g\) entonces \(Rg \subseteq Rf\).
+
+Tenemos que \(Rf = Rg \neq 0\) si y solo si \(f \mid_d g\) y \(g \mid_d f\).
+Así, \(g = hf\) y \(f = lg\), por lo que \(g = hlg\).
+Por tanto, \(hl = lh = 1\) por lo que \(h\) y \(l\) son unidades de \(R\).
+Se dice entonces que \(f\) y \(g\) son \emph{asociados por la izquierda} en el sentido de que \(g = uf\), siendo \(u\) una unidad de \(R\).
+
+Se tiene que \(Rf + Rg = Rh\).
+Entonces \(h \mid_d f\) y \(h \mid_d g\).
+De hecho si \(l \mid_d f\) y \(l \mid_d f\) entonces \(Rf \subset Rl\) y \(Rg \subset Rl\), por lo que \(Rh \subset Rl\) y \(l \mid_d h\).
+Por tanto \(h\) es un \emph{máximo común divisor por la derecha} de \(f\) y \(g\) y lo notamos como \(h = (f, g)_d\).
+Dos máximo común divisor por la derecha de los mismos dos elementos son asociados por la izquierda.
+
+Se puede comprobar que \(R\) satisface la condición de Ore por la izquierda \parencite[ver][p. 4]{jacobson_finite-dimensional_1996}, por lo que si \(f \neq 0\) y \(g \neq 0\) se tiene que \(Rf \cap Rg \neq 0\).
+Tenemos por tanto que \(Rf \cap Rg Rh\) para algún \(h\) por lo que \(m = g'f = f'g\).
+De hecho si \(f \mid_d l\) y \(g \mid_d l\) entonces \(Rl \subset Rf \cap Rg = Rh\), por lo que \(h \mid_d l\).
+Por tanto \(h\) es un \emph{mínimo común múltiplo por la izquierda} y lo notamos por \(h = [f, g]_i\).
+De nuevo, dos mínimo común múltiplo por la izquierda de los mismos dos elementos son asociados por la izquierda.
+
+Puede definirse una versión del algoritmo extendido de Euclides en este contexto (ver el algoritmo \ref{alg:ore-fq-euclides}), que nos permite calcular tanto el máximo común divisor como el mínimo común múltiplo.
+
+\begin{Ualgorithm}[h]
+  \DontPrintSemicolon
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(f \neq 0\), \(g \neq 0\)}
+  \KwOut{un número \(n \in \mathbb N\), polinomios \(u_i, v_i, q_i, f_i \in \mathbb F_q[x, \sigma]\) tales que \(f_i = u_if + v_ig\), \(q_i = \operatorname{coi}(f_{i-1}, f_i)\), para \(1 \leq i \leq n + 1\) y \(f_n = (f, g)_d\), \(u_nf = -v_ng = [f, g]_i\).}
+  \(u_0 \longleftarrow v_1 = 1\)\;
+  \(u_1 \longleftarrow v_0 = 1\)\;
+  \(f_0 \longleftarrow f\)\;
+  \(f_1 \longleftarrow g\)\;
+  \(i \longleftarrow 1\)\;
+  \While{\(f_i \neq 0\)}{
+    \(q_i \longleftarrow \operatorname{coi}(f_{i-1}, f_i)\)\;
+    \(u_{i+1} \longleftarrow u_{i-1} - q_iu_i\)\;
+    \(v_{i+1} \longleftarrow v_{i-1} - q_iv_i\)\;
+    \(f_{i+1} \longleftarrow f_{i-1} - q_if_i\)\;
+    \(n \longleftarrow i\)\;
+    }
+    \caption{Algoritmo extendido de Euclides por la izquierda en \(\mathbb F_q[x, \sigma]\)
+  }
+  \label{alg:ore-fq-euclides}
+\end{Ualgorithm}
+  
+Como \(R\) es un dominio de ideales principales es posible descomponer cada polinomio \(f \in R\) en un producto de factores irreducibles.
+Pero esta factorización no será única.
+
+Decimos que dos polinomios \(f, g \in R\) distintos de cero son \emph{similares por la izquierda}, que notamos \(f \sim_i g\) si existe un polinomio \(h \in R\) tal que 
+\[
+  (h, g)_d = 1 \quad\text{y}\quad f = [g, h]_ih^{-1}.
+\]
+La condición \((h, g)_d = 1\) equivale a que existan \(a\) y \(b \in R\) tales que
+\[
+  1 = ah + bg
+\]
+y \(f =  [g, h]_ih^{-1}\) equivale a que 
+\[
+  l = h'g = fh,
+\]
+donde \((h', f)_i = 1\).
+Por tanto tenemos un \(h'\) tal que \((h', f)_i = 1\) y \(g = h^{'-1}[h', f]_d\).
+Por tanto si \(f\) es similar por la izquierda a \(g\) entonces \(g\) es similar por la derecha a \(f\), por lo que escribiremos simplemente que \(f \sim g\).
+Es posible comprobar que la \emph{similitud} es una relación de equivalencia \parencite[ver][p. 11]{jacobson_finite-dimensional_1996}.
+
+% MAYBE: Esto se deriva de que... (módulos etc) (consultar tal).
+
+\begin{theorem}
+  Si \(f = p_1 \dots p_r\) y \(f = q_1 \dots q_t\) son factorizaciones de \(f \in R\) como producto de irreducibles entonces \(r= t\) y salvo una posible reordenación, \(q_i \sim p_i\).
+\end{theorem}
+
+\begin{proof}
+  Puede consultarse una generalización de la demostración en \parencite[Teorema 1.2.9]{jacobson_finite-dimensional_1996}.
+\end{proof}
+
+El problema de comprobar si dos polinomios \(f, g \in R\) verifican que \(f \sim g\).
+
+% TODO: completar con la dificultad
+
+Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(b \in \mathbb F_q\) como
+\[
+  N_i(b) = (\sigma^{i-1}b)\dots (\sigma b)b \quad\text{para } i > 0 \quad\text{y } N_0(b) = 1.
+\]
+
+\begin{proposition}
+  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x, \sigma]\) y \(b \in \mathbb F_q\) entonces \((x - b) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(b) = 0\).
+\end{proposition}
+
+\begin{proof}
+  Tenemos la identidad
+\end{proof}
