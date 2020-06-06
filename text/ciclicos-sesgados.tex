@@ -1,0 +1,165 @@
+\chapter{Códigos cíclicos sesgados}
+
+En este capítulo definiremos los códigos cíclicos sesgados sobre un cuerpo finito \(\mathbb F_q\).
+Consideremos el anillo de polinomios de Ore \(R = \mathbb F_q[x, \sigma]\).
+Supondremos que el orden del automorfismo \(\sigma\) es \(n\).
+Entonces el polinomio \(x^n - 1\) es central en \(R\), por lo que podemos definir el anillo cociente \(\mathcal R = \mathbb F_q[x, \sigma]/(x^n - 1)\).
+\(\mathcal R\) es isomorfo a \(\mathbb F_q^n\) mediante la aplicación de coordenadas \(\mathfrak v : \mathcal R \to \mathbb F_q^n\).
+
+\begin{definition}
+  Un \emph{código cíclico sesgado} sobre \(\mathbb F_q\) es un subespacio vectorial \(\mathcal C \subseteq \mathbb F_q^n\) tal que \(\mathfrak v^{-1}(\mathcal C)\) es un ideal por la izquierda de \(\mathcal R\).
+  Equivalentemente, es un subespacio vectorial \(\mathcal C \subseteq \mathbb F_q^n\) tal que si \((a_0, \dots, a_{n-2}, a_{n-1}) \in \mathcal C\) entonces \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in \mathcal C\).
+\end{definition}
+
+Sabemos que todo ideal por la izquierda de \(\mathcal R\) es principal, por lo que todo código cíclico sesgado está generado por un polinomio en \(R\).
+De forma análoga a como ocurría con los códigos cíclicos, este generador es un divisor por la derecha de \(x^n - 1\), por lo que nos interesa conocer de nuevo la descomposición de \(x^n - 1\) en factores, esta vez sobre \(R\).
+
+No existe un algoritmo de factorización completo para los polinomios de Ore, por lo que vamos a utilizar a continuación un método concreto para \(x^n - 1\), descrito en \parencite{gomez-torrecillas_new_2016}.
+Por el teorema de la base normal podemos tomar un elemento \(\alpha \in \mathbb F_q\) tal que \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) sea una base de  \(\mathbb F_q\) como \(\mathbb F_q^{\sigma}\)-espacio vectorial.
+% TODO: explicar todo esto un poquito
+Fijamos en lo que sigue \(\beta = \alpha^{-1}\sigma(\alpha)\).
+
+\begin{lemma}
+  \label{lem:pol-t-beta}
+  Para cada subconjunto \(\{t_1, t_2, \dots, t_m\} \subseteq \{0, 1, \dots, n - 1\}\) el polinomio 
+  \[
+    g = \left[x - \sigma^{t_1}(\beta), x - \sigma^{t_{2}}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_{i}
+  \]
+  tiene grado \(m\).
+  Por tanto, si \(x - \sigma^s(\beta) \mid_d g\) entonces \(s \in T\).
+\end{lemma}
+
+\begin{proof}
+  TODO: referenciar.
+\end{proof}
+
+\begin{corollary}
+  Se tiene que
+  \[
+  x^n - 1 = \left[x - \beta, x - \sigma(\beta), \dots, x - \sigma^{n-1}(\beta)\right]_i
+  \]
+\end{corollary}
+
+\begin{proof}
+  Como consecuencia del lema \ref{lem:pol-t-beta} se tiene que 
+  \[
+    \left[x - \beta, x - \sigma(\beta), \dots, x - \sigma^{n-1}(\beta)\right]_i
+  \]
+  tiene grado \(n\).
+  Pero además, por (\ref{eq:norma-beta}) se tiene que
+  \[
+  N_n(\sigma^k(\beta)) = \sigma^k(\alpha)^{-1}\sigma^{k+n}(\alpha) = \sigma^k(\alpha^{-1}\alpha) = 1
+  \]
+  y por tanto 
+  \[
+    -1N_0(\sigma^k(\beta)) + 1N_n(\sigma^k(\beta)) = -1 + 1 = 0,
+  \]
+  por lo que por la proposición \ref{prop:norma-divisor} cada \(x - \sigma^k(\beta)\) divide a \(x^n -1\) por la derecha para todo \(0 \leq k \leq n -1\).
+  Estas dos afirmaciones nos conducen a que 
+  \[
+  x^n - 1 = \left[x - \beta, x - \sigma(\beta), \dots, x - \sigma^{n-1}(\beta)\right]_i,
+  \]
+  como queríamos. 
+\end{proof}
+
+Este corolario nos permite afirmar que dados \(\{t_1, \dots, t_k\} \subset \{0, 1, \dots, n - 1\}\) el polinomio \(g = [x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_k}(\beta)]_i\) genera un ideal por la izquierda \(\mathcal Rg\) tal que \(\mathfrak v(\mathcal Rg)\) es un código cíclico sesgado de dimensión \(n - k\).
+
+% MAYBE: antes de proceder a definir los códigos que vamos a usar en el algoritmo...
+Antes de proceder a definir el tipo de códigos cíclicos sesgados que vamos a utilizar es necesario que comentemos algunos resultados que necesitaremos más adelante.
+Comenzamos indicando que llamaremos \(\beta\)-raíces a los elementos del conjunto \(\{\beta, \sigma(\beta), \dots, \sigma^{n-1}(\beta)\}\).
+Por la proposición \ref{prop:norma-divisor} y (\ref{eq:norma-beta}) se tiene que, dado un polinomio \(f = \sum_{i=0}^{n-1}a_ix^i \in \mathcal R\),
+\[
+  x - \sigma^j(\beta) \mid_d f \iff \sum_{i=0}^{n-1}a_iN_i(\sigma^j(\beta)) = 0 \iff \sum_{i=0}^{n-1}a_i\sigma^{i+j}(\alpha) = 0.
+\]
+Sea \(N\) la matriz formada por las normas de las \(\beta\)-raíces:
+\[
+  N = \begin{pmatrix}
+    N_0(\beta) & N_0(\sigma(\beta)) & \cdots & N_0(\sigma^{n-1}(\beta))\\
+    N_1(\beta) & N_1(\sigma(\beta)) & \cdots & N_1(\sigma^{n-1}(\beta))\\
+    \vdots & \vdots & \ddots & \vdots\\
+    N_{n-1}(\beta) & N_{n-1}(\sigma(\beta)) & \cdots & N_{n-1}(\sigma^{n-1}(\beta))\\
+  \end{pmatrix}.
+\]
+Las componentes de \(\mathfrak v(f)N = (a_1, \dots, a_{n-1})N\) son las evaluaciones por la derecha de \(f\) en el conjunto de las \(\beta\)-raíces, es decir, el vector compuesto por los restos por la izquierda obtenidos al dividir \(f\) por los polinomios \(x - \sigma^i(\beta)\) para \(i = 0, \dots, n - 1\).
+Por tanto, tenemos que el diagrama es conmutativo
+\begin{center}
+  \begin{tikzcd}[column sep=large, row sep=large]
+    \mathcal R \arrow[d, "\mathfrak v"] \arrow[rd, bend left, "ev"] & \\
+    L^n \arrow[r, "\cdot N"] & L^n
+  \end{tikzcd}
+\end{center}
+en el que \(ev\) representa una aplicación que lleva cada polinomio \(f\) en la \(n\)-tupla formada por los restos por la izquierda de dividir \(f\) por \(x - \sigma^i(\beta)\), para \(i = 0, \dots, n - 1\).
+Es posible probar que la matriz \(N\) es no singular \parencite[ver][Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018}, por lo que es un cambio de base de \(L^n\).
+
+Dado un polinomio \(f\) llamamos \emph{conjunto de}\(\beta\)\emph{-raíces} del polinomio \(f\) al conjunto formado por las \(\beta\)-raíces \(\gamma\) que cumplen \(x - \gamma \mid_d f\), es decir, a aquellas correspondientes a las coordenadas nulas de \((a_0, \dots, a_{n-1})N\).
+Decimos que un divisor por la derecha no constante \(f \mid_d x^n - 1\) \(\beta\)\emph{-descompone totalmente} si existen \(\{t_1, \dots, t_m\} \subseteq \{0, 1, \dots, n-1\}\) tales que
+\[
+  f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_{i}.
+\]
+Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del conjunto de las \(\beta\)-raíces de \(f\).
+
+\begin{lemma}
+  Sea \(f = \sum_{i=0}^m a_ix^i \in \mathcal R\) con \(a_m \neq 0\) y
+  \[
+    M_f = \begin{pmatrix}
+      a_0 & a_1 & \cdots & a_m & 0 & \cdots & 0 \\
+      0 & \sigma(a_0) & \cdots & \sigma(a_{m-1}) & \sigma(a_m) & \cdots & 0 \\
+       &  & \ddots &  &  & \ddots & 0 \\
+      0 & \cdots & 0 & \sigma^{n-m-1}(a_0) & \cdots & \cdots & \sigma^{n-m-1}(a_m) \\
+    \end{pmatrix}_{(n-m) \times n}.
+  \]
+  Entonces las filas de \(M_f\) son la base de \(\mathfrak v(\mathcal Rf)\) como un \(L\)-espacio vectorial.
+  Es más, \(f\) \(\beta\)-descompone totalmente si y solo si 
+  \[
+    \operatorname{mepf}(M_jN) = \left( \begin{array}{@{}c@{}}
+      \varepsilon_{i_1}\\\hline
+      \vdots\\\hline
+      \varepsilon_{i_{m-n}}
+    \end{array}\right)
+  \]
+  para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\).
+\end{lemma}
+%TODO: consultar lo del vector canónico
+\begin{proof}
+  Una \(\mathbb F_q\)-base de \(\mathcal Rf\) es \(\{f, xf, \dots, x^{n-m-1}f\}\) cuyas coordenadas corresponden precisamente a las filas de \(M_f\).
+  Tenemos entonces que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si cada múltiplo por la izquierda de \(f\) es también múltiplo por la izquierda de \(x - \sigma^{t_i}(\beta)\) para \(1 \leq i \leq m\), si y solo si las \(t_i\)-ésimas columnas de \(M_fN\) son cero para \(i = 1, \dots, m\).
+  Como \(M_fN\) tiene \(n - m\) filas, rango \(n - m\) y \(n - m\) columnas distintas de cero, el resultado se deduce fácilmente.
+\end{proof}
+\begin{lemma}
+  Sean \(f, g \in \mathcal R\) polinomios que pueden \(\beta\)-descomponerse totalmente.
+  Entonces \((f, g)_d\) y \([f, g]_i\) también pueden \(\beta\)-descomponerse totalmente.
+\end{lemma}
+
+\begin{proof}
+  Como \(f\) y \(g\) pueden \(\beta\)-descomponerse totalmente existen subconjuntos \(T_1, T_2 \subseteq \{0, \dots, n - 1\}\) tales que 
+  \[
+    f = \left[\{x - \sigma^i(\beta)\}_{i \in T_1}\right]_i \quad \text{y} \quad g = \left[\{x - \sigma^i(\beta)\}_{i \in T_2}\right]_i.
+  \]
+  Se deduce rápidamente entonces que
+  \[
+    [f, g]_i = \left[\{x - \sigma^i(\beta)\}_{i \in T_1 \cup T_2}\right]_i.
+  \]
+  Por otro lado es evidente que 
+  \[
+    \left[\{x - \sigma^i(\beta)\}_{i \in T_1 \cap T_2}\right]_i \mid_d (f, g)_d,
+  \]
+  pero como \(\deg(f) + \deg(g) = \deg((f, g)_d) + \deg([f, g]_i)\) por el lema \ref{lem:pol-t-beta} se tiene la igualdad.
+\end{proof}
+
+Estamos ya en disposición de definir la clase de códigos que vamos a utilizar.
+
+\begin{definition}
+  Bajo las condiciones y notación de este capítulo, un \emph{código RS (Reed-Solomon) sesgado} de distancia mínima prevista \(\delta\) es un código cíclico \(\mathcal C\) tal que \(\mathfrak v^{-1}(\mathcal C)\) está generado por 
+  \[
+    \left[x - \sigma^r(\beta), x - \sigma^{r+1}(\beta), \dots, x - \sigma^{r+\delta-2}(\beta)\right]_i
+  \] 
+  para algún \(r \geq 0\).
+\end{definition}
+
+\begin{theorem}
+  Un código RS sesgado de distancia mínima prevista \(\delta\) tiene distancia \(\delta\).
+\end{theorem}
+
+\begin{proof}
+  (TODO: citar)
+\end{proof}
