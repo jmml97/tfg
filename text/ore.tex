@@ -185,15 +185,24 @@ El problema de comprobar si dos polinomios \(f, g \in R\) verifican que \(f \sim
 
 % TODO: completar con la dificultad
 
-Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(b \in \mathbb F_q\) como
+Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathbb F_q\) como
 \[
-  N_i(b) = (\sigma^{i-1}b)\dots (\sigma b)b \quad\text{para } i > 0 \quad\text{y } N_0(b) = 1.
+  N_i(\gamma) = (\sigma^{i-1}\gamma)\dots (\sigma \gamma)\gamma \quad\text{para } i > 0 \quad\text{y } N_0(\gamma) = 1.
 \]
 
 \begin{proposition}
-  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x, \sigma]\) y \(b \in \mathbb F_q\) entonces \((x - b) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(b) = 0\).
+  \label{prop:norma-divisor}
+  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x, \sigma]\) y \(\gamma \in \mathbb F_q\) entonces \((x - \gamma) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(\gamma) = 0\).
 \end{proposition}
 
 \begin{proof}
   Tenemos la identidad
 \end{proof}
+
+También se dan las siguientes identidades, que nos serán útiles cuando estudiemos los códigos cíclicos sesgados en el capítulo siguiente.
+Dados \(\alpha, \beta, \gamma \in \mathbb F_q\) tales que \(\beta = \alpha^{-1}\sigma(\alpha)\) se tiene que
+\begin{align}
+  N_i(\sigma^k(\gamma)) &= \sigma^k(N_i(\gamma)),\nonumber\\
+  N_i(\sigma^k(\beta)) &= \sigma^k(\alpha)^{-1}\sigma^{k+1}(\alpha).
+  \label{eq:norma-beta}
+\end{align}
