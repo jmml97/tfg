@@ -1,0 +1,50 @@
+\chapter{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
+
+En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio.
+
+\begin{Ualgorithm}[htbp]
+  \DontPrintSemicolon
+  \KwIn{el código \(\mathcal C\), el mensaje recibido \(y = (y_0, \dots, y_{n-1}) \in \mathbb F_q^n\) con no más de \(t\) errores}
+  \KwOut{el error \(e = (e_0, \dots, e_{n-1})\) tal que \(y - e \in \mathcal C\)}
+  \tcp{Paso 1: calcular síndromes}
+  \For{\(0 \leq i \leq 2t - 1\)}{
+      $s_i \longleftarrow \sum_{j=0}^{n-1}y_jN_j(\sigma^i(\beta))$\;
+  }
+  \If{\(s_i = 0\) para todo \(0 \leq i \leq 2t - 1\)}{\Return{\(0\)}}
+  \tcp{Paso 2: hallar polinomio localizador y las coordenadas de error}
+  \(S^t \longleftarrow \left(\sigma^{-j}(s_{i+j})\sigma^i(\alpha)\right)_{0 \leq i \leq t, 0 \leq j \leq t -1}\)\;
+  Calcular
+  \[
+    \operatorname{mepc}(S^t) = \left( \begin{array}{@{}c|c@{}}
+      I_{\mu} & \multirow{3}{*}{\(0_{(t+ 1)\times (t - \mu)}\)} \\\cline{1-1}
+      a_0 \cdots a_{\mu -1 } & \\\cline{1-1}
+      H' &
+    \end{array}\right)
+  \]\;
+  \(\rho = (\rho_0, \dots, \rho_{\mu}) \longleftarrow (-a_0, \dots, -a_{\mu-1}, 1)\) y \(\rho N \longleftarrow (\rho_0, \dots, \rho_{\mu}, 0, \dots, 0)N\)\;
+  \(\{k_1, \dots, k_v\} \longleftarrow \) coordenadas igual a cero de \(\rho N\)\;
+  \If{\(\mu \neq v\)}{
+    Calcular \[M_{\rho} \longleftarrow \begin{pmatrix}
+      \rho_0 & \rho_1 & \dots & \rho_{\mu} & 0 & \dots & 0\\
+      0 & \sigma(\rho_0) & \dots & \sigma(\rho_{\mu - 1}) & \sigma(\rho_{\mu}) & \dots & 0\\
+       & & \ddots & & & \ddots & \\
+      0 & \dots & 0 & \sigma^{n - \mu - 1}(\rho_0) & \dots & \dots & \sigma^{n - \mu - 1}(\rho_{\mu})
+    \end{pmatrix}_{(n - \mu) \times n}\]\;
+    \(N_{\rho} \longleftarrow M_{\rho}N\)\;
+    \(H_{\rho} \longleftarrow \operatorname{mepf}(N_{\rho})\)\;
+    \(H' \longleftarrow\) la matriz obtenida al eliminar las filas de \(H_{\rho}\) distintas de \(\varepsilon_i\) para algún \(i\)\;
+    \(\{k_1, \dots, k_v\} \longleftarrow\) las coordenadas de las columnas igual a cero de \(H'\)\;
+  }
+  \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (I).}
+\end{Ualgorithm}
+
+\begin{Ualgorithm}[htbp]
+  \DontPrintSemicolon
+  \setcounter{AlgoLine}{17}
+  \tcp{Paso 3: resolver el sistema de los síndromes, obteniendo las magnitudes de error}
+  Encontrar \((x_1, \dots, x_v)\) tal que \((x_1, \dots, x_v)(\Sigma^{v-1})^T = (\alpha s_0, \sigma(\alpha)s_1, \dots, \sigma^{v-1}(\alpha)s_{v-1})\)\;
+  \tcp{Paso 4: construir el error y devolverlo}
+  \Return{\((e_0, \dots, e_{n-1})\) con \(e_i = x_i\) para \(i \in \{k_1, \dots, k_v\}\), cero en otro caso}
+  \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (II).}
+  \label{alg:pgz-skwcc-2}
+\end{Ualgorithm}
