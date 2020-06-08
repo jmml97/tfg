@@ -111,10 +111,15 @@ Veamos a continuación un par de ejemplos.
   Entonces \(J\) es un ideal (bilátero), pues todo producto de un número par es otro número par.
 \end{example}
 
+\begin{proposition}
+  \label{prop:ideal-unidad}
+  Sea \(J\) un ideal de un anillo \(R\). Si \(1 \in J\) entonces \(J = R\).
+\end{proposition}
+
 \begin{definition}
   Sea \(R\) un anillo. Un ideal por la izquierda \(J\) de \(R\) se dice que es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = Ra = \{ra : r \in R\}\).
-  \marginpar{Un ideal bilátero será principal si verifica cualquiera de las dos condiciones.}
   De forma análoga, un ideal por la derecha \(J\) de \(R\) es \textit{principal} si existe un elemento \(a \in R\) tal que \(J = aR = \{ar : r \in R\}\).
+  Un ideal bilátero será principal si verifica cualquiera de las dos condiciones.
 \end{definition}
 
 A continuación vamos a definir algunos otros conceptos relativos a anillos.
@@ -163,7 +168,7 @@ Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utiliza
 \begin{theorem}
   % Cohn Vol 2, 63 [74]
   \label{th:cuerpo-subcuerpo-primo-caracteristica}
-  Todo cuerpo \(F\) tiene al menos un subcuerpo \(P\), el subcuerpo primo de \(F\) que está contenido en cada subcuerpo de \(F\).
+  Todo cuerpo \(F\) tiene al menos un subcuerpo \(P\), el subcuerpo primo de \(F\), que está contenido en cada subcuerpo de \(F\).
   O bien \(F\) tiene característica \(0\) y \(P \cong \mathbb Q\), o bien \(F\) tiene característica \(p\), un número primo, y entonces \(P \cong \mathbb F_p\).
 \end{theorem}
 
@@ -182,8 +187,6 @@ Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utiliza
 \end{proof}
 
 Concluimos destacando que en virtud del teorema \ref{th:cuerpo-subcuerpo-primo-caracteristica} todo cuerpo finito \(F\) tiene característica \(p\) (un primo) y su subcuerpo primo es \(\mathbb F_p\).
-
-% TODO: qué es un subcuerpo primo, eso no lo he explicado
 
 \subsection{Anillos de polinomios sobre cuerpos finitos}
 
@@ -266,6 +269,7 @@ La secuencia de pasos descrita termina porque en cada paso el grado del resto se
 A continuación vamos a comentar un par de resultados que nos serán útiles en el futuro.
 
 \begin{proposition}
+  \label{prop:k-divisor-f-g}
   Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
   \begin{enumerate}
     \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
@@ -332,7 +336,6 @@ En esta subsección vamos a construir cuerpos finitos de característica arbitra
 % \end{proof}
 
 Puede probarse que existen polinomios irreducibles de cualquier grado, lo que nos lleva a afirmar el siguiente teorema.
-% TODO: probar? referencia prueba? mejorar afirmación?
 
 \begin{theorem}
   Para cualquier primo \(p\) y cualquier entero positivo \(m\), existe un cuerpo finito, único salvo isomorfismos, con \(q = p^m\) elementos.
@@ -486,6 +489,7 @@ Veamos un ejemplo.
 % 3.7 Cyclotomic cosets and minimal polynomials
 
 \subsection{Clases ciclotómicas y polinomios minimales}
+\label{subsec:clases-ciclotomicas}
 
 Si consideramos la extensión de cuerpos \(\mathbb F_{q^t}/\mathbb F_q\) sabemos por el teorema \ref{th:el-Fq-raices-pol} que cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(\cramped{x^{q^t}} - x\).
 Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
@@ -603,6 +607,7 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
 % TODO: justificación de este teorema
 
 \begin{theorem}
+  \label{th:pol-minimal-el-primitivo}
   Si \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\) entonces el polinomio minimal de \(\gamma^s\) sobre \(\mathbb F_q\) es
   \[
     M_{\gamma^s}(x) = \prod_{i \in C_s}(x - \gamma^i).
