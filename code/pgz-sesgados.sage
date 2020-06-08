@@ -362,7 +362,8 @@ class SkewRSPGZDecoder(Decoder):
         - a vector of ``self``'s message space
         """
         R = self._polynomial_ring
-        y = R(word)
+        y = R(word.list())
+        y_list = _to_complete_list(y, self.code().length())
         sigma = self.code().ring_automorphism()
         a = self.code().primitive_root()
         b = sigma(a)*a^-1
@@ -379,7 +380,8 @@ class SkewRSPGZDecoder(Decoder):
             s_i = 0
             for j in (0..n-1):
                 logger("cálculo de síndromes, índice j: ", j)
-                s_i = s_i + y.list()[j]*norm(j, (sigma^i)(b), sigma)
+                logger("y_list[j]: ", y_list[j])
+                s_i = s_i + y_list[j]*norm(j, (sigma^i)(b), sigma)
             s.append(s_i)
 
         # Comprobamos si los síndromes son todos nulos
@@ -455,7 +457,7 @@ class SkewRSPGZDecoder(Decoder):
             e = e + E[i]*R.gen()^(k[i])
         logger("error: ", e)
 
-        return vector((y - e).list())
+        return vector(_to_complete_list(y - e, self.code().length()))
     
     def correction_capability(self):
         return self._correction_capability
