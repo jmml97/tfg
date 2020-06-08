@@ -10,6 +10,19 @@ def logger(s):
     if DEBUG:
         print(s)
 
+def _to_complete_list(poly, length):
+    r"""
+    Returns the vector of length exactly ``length`` corresponding to the
+    coefficients of the provided polynomial. If needed, zeros are added.
+    INPUT:
+    - ``poly`` -- a polynomial
+    - ``length`` -- an integer
+    OUTPUT:
+    - the list of coefficients
+    """
+    L = poly.coefficients(sparse=False)
+    return L + [poly.base_ring().zero()] * (length - len(L))
+
 # Functions for PGZ Decoder
 
 def xentries_m_mu(i, j, s):
@@ -61,7 +74,7 @@ class BCHPGZDecoder(Decoder):
         R = self._polynomial_ring
         logger(R)
         logger(R.gen())
-        y = R(word)
+        y = R(word.list())
         t = self.correction_capability()
         g = self.code().generator_polynomial()
         a = self.code().primitive_root()
@@ -159,7 +172,7 @@ class BCHPGZDecoder(Decoder):
         
         c = y - e
         
-        return c
+        return vector(_to_complete_list(c, self.code().length()))
     
     def correction_capability(self):
         return self._correction_capability
