@@ -71,6 +71,10 @@
 \setlist[itemize]{ noitemsep, leftmargin=*}
 \setlist[enumerate]{noitemsep, leftmargin=*}
 
+\usepackage{adjustbox}
+
+\usepackage{multirow}
+
 \DeclareRobustCommand{\textacr}[1]{\textls{\small #1}}
 
 % Código
@@ -111,7 +115,7 @@
 % Tikz
 
 \usepackage{tikz}
-\usetikzlibrary{babel}
+\usetikzlibrary{babel, cd}
 \usepackage{float}
 
 % Bibliografía
@@ -210,7 +214,7 @@ SmallCapsFeatures={LetterSpace=1}]%
 %-------------------------------------------------------------------------------
 
 \title{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
-\renewcommand{\myVersion}{0.6} 
+\renewcommand{\myVersion}{0.7} 
 
 \author{José María Martín Luque}
 
@@ -307,6 +311,8 @@ SmallCapsFeatures={LetterSpace=1}]%
 \include{codigos-ciclicos}
 \include{codigos-bch}
 \include{ore}
+\include{ciclicos-sesgados}
+\include{pgz-sesgados}
 
 \appendix
 \include{sage-funciones-codigos}
@@ -319,6 +325,6 @@ SmallCapsFeatures={LetterSpace=1}]%
 \newpage
 \printbibliography
 
-\include{colofon}
+%\include{colofon}
 
 \end{document}
