@@ -97,6 +97,7 @@ Este último resultado, junto a la definición previa, nos conducen al siguiente
 Como nota final sobre nomenclatura de códigos duales, apuntamos que un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
 
 \subsection{Codificación y decodificación}
+\label{subsec:codificacion-descodificacion}
 
 Codificar un mensaje consiste en escribirlo como palabra código de un código.
 La forma estándar de codificar mensajes con códigos lineales es utilizando una matriz generadora.
@@ -134,7 +135,7 @@ Veamos un ejemplo con el mismo código binario lineal que en el ejemplo anterior
 Observamos en este ejemplo que las primeras \(2\) coordenadas de cada palabra código son iguales a las del mensaje que las genera.
 Pero en el código anterior también podemos encontrar el mensaje, lo que hay que fijarse en la primera y última coordenada.
 Cuando un mensaje se encuentra incrustado íntegramente en la palabra código —aunque puede que desordenado— se dice que la codificación seguida es \textit{sistemática}.
-En caso contario, se dice que es \textit{no-sistemática}.
+En caso contrario, se dice que es \textit{no-sistemática}.
 Veamos un ejemplo de codificación no-sistemática con el mismo código binario lineal de antes.
 
 \begin{example}
@@ -280,15 +281,15 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
       0 & 0 & 0 & 0 & 1 & 1
   \end{pmatrix} = (x_1, x_1, x_2, x_2, x_3, x_3),\] y por tanto podemos obtener las palabras código de la forma 
   \[
-    000 \to 000000, \quad 
-    001 \to 000011,\quad 
-    010 \to 001100,\quad 
+    000 \to 000000, \!\quad 
+    001 \to 000011,\!\quad 
+    010 \to 001100,\!\quad 
     011 \to 001111,
   \]
   \[
-    100 \to 110000, \quad 
-    101 \to 110011,\quad 
-    110 \to 111100,\quad 
+    100 \to 110000, \!\quad 
+    101 \to 110011,\!\quad 
+    110 \to 111100,\!\quad 
     111 \to 111111.
   \]
   Luego la distribución de peso de \(\mathcal C\) es \(A_0 = A_6 = 1\) y \(A_2 = A_4 = 3\).
@@ -304,7 +305,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 \end{theorem}
 
 \begin{proof}
-  
+  TODO
 \end{proof}
 
 % Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
@@ -315,7 +316,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 \end{theorem}
 
 \begin{proof}
-  
+  TODO
 \end{proof}
 
 \begin{corollary}
@@ -324,7 +325,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 \end{corollary}
 
 \begin{proof}
-  
+  TODO
 \end{proof}
 
 \section{Ejemplos de códigos}
