@@ -11,4 +11,5 @@
 *.synctex.gz
 *.bcf
 *.run.xml
+*.ilg
 .DS_Store
