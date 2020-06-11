@@ -1,6 +1,7 @@
 \chapter{Códigos cíclicos sesgados}
 
 En este capítulo definiremos los códigos cíclicos sesgados sobre un cuerpo finito \(\mathbb F_q\).
+Las principales fuentes de este capítulo son \parencite{gomez-torrecillas_new_2016}, \parencite{gomez-torrecillas_petersongorensteinzierler_2018} y \parencite{shi_codes_2017}.
 Consideremos el anillo de polinomios de Ore \(R = \mathbb F_q[x, \sigma]\).
 Supondremos que el orden del automorfismo \(\sigma\) es \(n\).
 Entonces el polinomio \(x^n - 1\) es central en \(R\), por lo que podemos definir el anillo cociente \(\mathcal R = \mathbb F_q[x, \sigma]/(x^n - 1)\).
@@ -10,6 +11,7 @@ Entonces el polinomio \(x^n - 1\) es central en \(R\), por lo que podemos defini
   Un \emph{código cíclico sesgado} sobre \(\mathbb F_q\) es un subespacio vectorial \(\mathcal C \subseteq \mathbb F_q^n\) tal que \(\mathfrak v^{-1}(\mathcal C)\) es un ideal por la izquierda de \(\mathcal R\).
   Equivalentemente, es un subespacio vectorial \(\mathcal C \subseteq \mathbb F_q^n\) tal que si \((a_0, \dots, a_{n-2}, a_{n-1}) \in \mathcal C\) entonces \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in \mathcal C\).
 \end{definition}
+
 
 Sabemos que todo ideal por la izquierda de \(\mathcal R\) es principal, por lo que todo código cíclico sesgado está generado por un polinomio en \(R\).
 De forma análoga a como ocurría con los códigos cíclicos, este generador es un divisor por la derecha de \(x^n - 1\), por lo que nos interesa conocer de nuevo la descomposición de \(x^n - 1\) en factores, esta vez sobre \(R\).
@@ -64,7 +66,6 @@ Fijamos en lo que sigue \(\beta = \alpha^{-1}\sigma(\alpha)\).
 
 Este corolario nos permite afirmar que dados \(\{t_1, \dots, t_k\} \subset \{0, 1, \dots, n - 1\}\) el polinomio \(g = [x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_k}(\beta)]_i\) genera un ideal por la izquierda \(\mathcal Rg\) tal que \(\mathfrak v(\mathcal Rg)\) es un código cíclico sesgado de dimensión \(n - k\).
 
-% MAYBE: antes de proceder a definir los códigos que vamos a usar en el algoritmo...
 Antes de proceder a definir el tipo de códigos cíclicos sesgados que vamos a utilizar es necesario que comentemos algunos resultados que necesitaremos más adelante.
 Comenzamos indicando que llamaremos \(\beta\)-raíces a los elementos del conjunto \(\{\beta, \sigma(\beta), \dots, \sigma^{n-1}(\beta)\}\).
 Por la proposición \ref{prop:norma-divisor} y (\ref{eq:norma-beta}) se tiene que, dado un polinomio \(f = \sum_{i=0}^{n-1}a_ix^i \in \mathcal R\),
@@ -120,6 +121,7 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
   para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\).
 \end{lemma}
 %TODO: consultar lo del vector canónico
+%TODO: añadir que esta matriz es una matriz generadora del código
 \begin{proof}
   Una \(\mathbb F_q\)-base de \(\mathcal Rf\) es \(\{f, xf, \dots, x^{n-m-1}f\}\) cuyas coordenadas corresponden precisamente a las filas de \(M_f\).
   Tenemos entonces que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si cada múltiplo por la izquierda de \(f\) es también múltiplo por la izquierda de \(x - \sigma^{t_i}(\beta)\) para \(1 \leq i \leq m\), si y solo si las \(t_i\)-ésimas columnas de \(M_fN\) son cero para \(i = 1, \dots, m\).
@@ -157,6 +159,7 @@ Estamos ya en disposición de definir la clase de códigos que vamos a utilizar.
 \end{definition}
 
 \begin{theorem}
+  \label{th:distancia-skew-rs}
   Un código RS sesgado de distancia mínima prevista \(\delta\) tiene distancia \(\delta\).
 \end{theorem}
 
