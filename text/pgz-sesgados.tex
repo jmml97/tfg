@@ -1,6 +1,184 @@
 \chapter{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
 
-En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio.
+En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
+
+\(\mathcal C\) es un código RS sesgado en sentido estricto, \(r = 0\).
+Escribiremos \(\alpha' = \sigma^r(\alpha)\).
+Proporciona una base normal.
+Se tiene que \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) es un generador de \(\mathcal C\).
+El ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) para algún \(2 \leq \delta \leq n\).
+La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\).
+
+Se quiere enviar un mensaje \(m = (m_0, \dots, m_{n - \delta})\) a través de un canal.
+Tenemos que \(m = \sum_{i=0}^{n-\delta}m_ix^{i}\).
+El mensaje se codifica como \(c = mg\).
+Se recibe \(y = c + e\) donde \(e = e_1x^{k_1} + \dots + e_vx^{k_v}\) con \(v \leq t\) es el error.
+
+Vamos a describir un algoritmo para decodificar códigos cíclicos sesgados similar al ya descrito para códigos BCH.
+
+Comenzamos con el mismo paso, el cálculo de síndromes.
+Para cada \(0 \leq i \leq 2t - 1\) el síndrome \(i\)-ésimo \(s_i\) del polinomio recibido \(y\) se define como el resto de dividir por la izquierda \(y\) entre \(x - \sigma^{i}(\beta)\).
+Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \(i = 0, \dots, \delta - 2\) se tiene que 
+\begin{align}
+  s_i &= \sum_{j = 0}^{n-1}y_jN_j(\sigma^{i}(\beta)) = \sum_{j=1}^{v}e_jN_{k_j}(\sigma^{i}(\beta))\nonumber\\
+   &= \sum_{j = 1}^{v}e_j\sigma^{i}(\alpha^{-1})\sigma^{i+k_j}(\alpha) = \sigma^{i}(\alpha^{-1})\sum_{j = 1}^{v}e_j\sigma^{i+k_j}(\alpha).
+   \label{eq:sindromes-sesgados}
+\end{align}
+
+El objetivo es determinar las magnitudes de error \((e_{1}, \dots, e_{v})\) así como las coordenadas de error \((k_1, \dots, k_v)\).
+
+\begin{proposition}
+  \label{prop:pgz-sesgados-magnitudes-error}
+  Las magnitudes de error \((e_{1}, \dots, e_{v})\) son las soluciones del sistema de ecuaciones lineales
+  \[
+    X \begin{pmatrix}
+     \sigma^{k_1}(\alpha) & \sigma^{k_1 + 1}(\alpha) & \dots & \sigma^{k_1 + v - 1}(\alpha)\\ 
+     \sigma^{k_2}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_2 + v - 1}(\alpha)\\ 
+     \vdots & \vdots & \ddots & \vdots\\ 
+     \sigma^{k_v}(\alpha) & \sigma^{k_v + 1}(\alpha) & \dots & \sigma^{k_v + v - 1}(\alpha)\\ 
+    \end{pmatrix}
+    = (\alpha s_0, \sigma(\alpha)s_1, \dots, \sigma^{v-1}(\alpha)s_{v-1}).
+  \]
+\end{proposition}
+
+\begin{proof}
+  Comenzamos viendo que
+  \[
+    \begin{pmatrix}
+      \sigma^{k_1}(\alpha) & \sigma^{k_1 + 1}(\alpha) & \dots & \sigma^{k_1 + v - 1}(\alpha)\\ 
+      \sigma^{k_2}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_2 + v - 1}(\alpha)\\ 
+      \vdots & \vdots & \ddots & \vdots\\ 
+      \sigma^{k_v}(\alpha) & \sigma^{k_v + 1}(\alpha) & \dots & \sigma^{k_v + v - 1}(\alpha)\\ 
+     \end{pmatrix} =  \begin{pmatrix}
+      \sigma^{k_1}(\alpha) & \sigma\sigma^{k_1}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_1}(\alpha)\\ 
+      \sigma^{k_2}(\alpha) & \sigma\sigma^{k_2}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_2}(\alpha)\\ 
+      \vdots & \vdots & \ddots & \vdots\\ 
+      \sigma^{k_v}(\alpha) & \sigma\sigma^{k_v}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_v}(\alpha)\\ 
+     \end{pmatrix},
+  \]
+  que por \parencite[Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018} es no singular.
+  Por (\ref{eq:sindromes-sesgados}) tenemos que 
+  \[
+    \sigma^{i}(\alpha)s_i = \sum_{j = 1}^{v}e_j\sigma^{i + k_j}(\alpha),
+  \]
+  por lo que es evidente que dado \(X = (e_1, \dots, e_v)\) tenemos que
+  \[
+    (e_1, \dots, e_v) \begin{pmatrix}
+      \sigma^{k_1}(\alpha) & \sigma^{k_1 + 1}(\alpha) & \dots & \sigma^{k_1 + v - 1}(\alpha)\\ 
+      \sigma^{k_2}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_2 + v - 1}(\alpha)\\ 
+      \vdots & \vdots & \ddots & \vdots\\ 
+      \sigma^{k_v}(\alpha) & \sigma^{k_v + 1}(\alpha) & \dots & \sigma^{k_v + v - 1}(\alpha)\\ 
+     \end{pmatrix} = \left(\sigma^{i}(\alpha)s_i\right)_{1 \times v},
+  \]
+  como queríamos demostrar.
+\end{proof}
+
+Como consecuencia de esta proposición \ref{prop:pgz-sesgados-magnitudes-error} el proceso de decodificación se reduce a encontrar las coordenadas de error \(\{k_1, \dots, k_v\}\).
+Definimos el polinomio localizador de errores como
+\[
+  \lambda = \left[x - \sigma^{k-1}(\beta), x - \sigma^{k_2}(\beta), \dots, x - \sigma^{k_v}(\beta)\right]_{i}.
+\]
+Por el lema \ref{lem:pol-t-beta} este polinomio \(\lambda\) tiene grado \(v\) y nos permitirá determinar las coordenadas de error.
+
+Observamos que un polinomio \(f = \sum_{k = 0}^{n-1}f_k x^{k} \in \mathcal R\lambda\) si y solo si \(x - \sigma^{k_j}(\beta) \mid_d f\) para todo \(j = 1, \dots, v\), o bien si y solo si \(\sum_{k=0}^{n -1}f_k N_k(\sigma^{k_j}(\beta))= 0\) para todo \(j = 1, \dots, v\).
+Así \((f_0, \dots, f_{n-1}) \in \mathfrak v(\mathcal R\lambda)\) si y solo si satisface la ecuación \((f_0, \dots, f_n)T = 0\), donde
+\[
+  T = \begin{pmatrix}
+    N_{0}(\sigma^{k_1}(\beta)) & N_{0}(\sigma^{k_2}(\beta)) & \dots & N_{0}(\sigma^{k_v}(\beta))\\
+    N_{1}(\sigma^{k_1}(\beta)) & N_{1}(\sigma^{k_2}(\beta)) & \dots & N_{1}(\sigma^{k_v}(\beta))\\
+    \vdots & \vdots & & \vdots\\
+    N_{n-1}(\sigma^{k_1}(\beta)) & N_{n-1}(\sigma^{k_2}(\beta)) & \dots & N_{n-1}(\sigma^{k_v}(\beta))\\
+  \end{pmatrix}.
+\]
+Ahora bien, como por (\ref{eq:norma-beta}) \(N_k(\sigma^{k_j}(\beta)) = \sigma^{k_j}(\alpha)^{-1}\sigma^{k_j + k}(\alpha)\), tenemos que \(R\lambda\) es el núcleo por la izquierda de la matriz
+\[
+  \Sigma = \begin{pmatrix}
+    \sigma^{k_1}(\alpha) & \sigma^{k_2}(\alpha) & \dots & \sigma^{k_v}(\alpha)\\
+    \sigma^{k_1 + 1}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_v + 1}(\alpha)\\
+    \vdots & \vdots & \ddots & \vdots \\
+    \sigma^{k_1 + n - 1}(\alpha) & \sigma^{k_2 + n - 1}(\alpha) & \dots & \sigma^{k_v + n - 1}(\alpha)\\
+  \end{pmatrix}
+  = \left( \begin{array}{@{}c@{}}
+    \Sigma_0\\\hline
+    \Sigma_1
+  \end{array}\right),
+\]
+donde \(\Sigma_0\) se corresponde a las primeras \(v + 1\) filas de la matriz \(\Sigma\) anterior.
+
+Consideramos ahora la matriz 
+\[
+  E = \begin{pmatrix}
+    e_1 & \sigma^{-1}(e_1) & \dots & \sigma^{-v + 1}(e_1)\\
+    e_2 & \sigma^{-1}(e_2) & \dots & \sigma^{-v + 1}(e_2)\\
+    \vdots & \vdots & \ddots & \vdots \\
+    e_v & \sigma^{-1}(e_v) & \dots & \sigma^{-v + 1}(e_v)\\
+  \end{pmatrix}.
+\]
+
+Por tanto \(S = \Sigma E\) es una matriz de tamaño \((n \times v)\), cuya componente \(k, i\)-ésima la podemos expresar como \(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\).
+Por (\ref{eq:sindromes-sesgados}) cuando \(k + i < 2t - 1\) esta componente puede escribirse como \(\sigma^{-i}(s_{k+1})(\alpha)\) de tal forma que podemos dividir la matriz \(S\) como
+\[
+  S = \left( \begin{array}{@{}c@{}}
+    S_0\\\hline
+    S_1
+  \end{array}\right),
+\]
+donde \(S_0\) viene dada por
+\[
+  S_0 = \begin{pmatrix}
+    s_0\alpha & \sigma^{-1}(s_1)\alpha & \dots & \sigma^{-v+1}(s_{v-1})\alpha\\
+    s_1\sigma(\alpha) & \sigma^{-1}(s_1)\sigma(\alpha) & \dots & \sigma^{-v+1}(s_{v})\sigma(\alpha)\\
+    \vdots & \vdots & & \vdots \\
+    s_v\sigma^v(\alpha) & \sigma^{-1}(s_{v+1})\sigma^v(\alpha) & \dots & \sigma^{-v+1}(s_{2v-1})\sigma^v(\alpha)\\
+  \end{pmatrix}_{(v + 1) \times v}
+\]
+y cuyos coeficientes pueden calcularse a partir del polinomio \(y\).
+Para calcular el parámetro \(v\) utilizaremos el mismo procedimiento utilizado en el algoritmo PGZ para códigos BCH.
+Para cualquier \(1 \leq r \leq t\) denotaremos por \(S^r\) a la matriz
+\[
+  S^r = \begin{pmatrix}
+    s_0\alpha & \sigma^{-1}(s_1)\alpha & \dots & \sigma^{-r+1}(s_{r-1})\alpha\\
+    s_1\sigma(\alpha) & \sigma^{-1}(s_1)\sigma(\alpha) & \dots & \sigma^{-r+1}(s_{r})\sigma(\alpha)\\
+    \vdots & \vdots & & \vdots \\
+    s_t\sigma^t(\alpha) & \sigma^{-1}(s_{t+1})\sigma^t(\alpha) & \dots & \sigma^{-r+1}(s_{t+r-1})\sigma^t(\alpha)\\
+  \end{pmatrix}_{(t + 1) \times r}.
+\]
+
+Para todo \(r \leq t\) se tiene que \(S^r = \Sigma^tE^r\), donde 
+\[
+  E^r = \begin{pmatrix}
+    e_1 & \sigma^{-1}(e_1) & \dots & \sigma^{-r + 1}(e_1)\\
+    e_2 & \sigma^{-1}(e_2) & \dots & \sigma^{-r + 1}(e_2)\\
+    \vdots & \vdots & \ddots & \vdots \\
+    e_v & \sigma^{-1}(e_v) & \dots & \sigma^{-r + 1}(e_v)\\
+  \end{pmatrix}_{v \times r}.
+\]
+y
+\[
+  \Sigma^t = \begin{pmatrix}
+    \sigma^{k_1}(\alpha) & \sigma^{k_2}(\alpha) & \dots & \sigma^{k_v}(\alpha)\\
+    \sigma^{k_1 + 1}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_v + 1}(\alpha)\\
+    \vdots & \vdots & \ddots & \vdots \\
+    \sigma^{k_1 + t}(\alpha) & \sigma^{k_2 + t}(\alpha) & \dots & \sigma^{k_v + t}(\alpha)\\
+  \end{pmatrix}_{(t+1)\times v}.
+\]
+
+\begin{lemma}
+  Para cada \(r \leq t\) se tiene que \(\rank(S^r) = \rank(\Sigma E^r) = \rank(E^r)\).
+\end{lemma}
+
+\begin{proof}
+  Por \parencite[Lema 2.1] se tiene que \(\rank\Sigma = \rank\Sigma^t = v\).
+  Usando la desigualdad del rango de Sylvester se tiene que
+  % MAYBE: citar?
+  \[
+    \min\{\rank(\Sigma), \rank(E^r)\} \geq \rank(\Sigma E^r) \geq \rank(\Sigma) + \rank E^r - v = \rank(E^r).
+  \]
+  Por tanto \(\rank(\Sigma E^r) = \rank(E^r)\).
+  Con un razonamiento análogo se puede comprobar que \(\rank(S^r) = \rank(E^r)\).
+\end{proof}
+
+Hay que calcular el mayor \(r\) tal que \(S^r\) tenga rango máximo.
 
 \begin{Ualgorithm}[htbp]
   \DontPrintSemicolon
