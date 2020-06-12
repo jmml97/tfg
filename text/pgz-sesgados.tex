@@ -164,6 +164,7 @@ y
 \]
 
 \begin{lemma}
+  \label{lem:pgz-sesgados-rangos}
   Para cada \(r \leq t\) se tiene que \(\rank(S^r) = \rank(\Sigma E^r) = \rank(E^r)\).
 \end{lemma}
 
@@ -179,6 +180,188 @@ y
 \end{proof}
 
 Hay que calcular el mayor \(r\) tal que \(S^r\) tenga rango máximo.
+Por el lema \ref{lem:pgz-sesgados-rangos} es el mayor entero \(r \leq t\) tal que \(E^r\) y \(\Sigma E^r\) tienen rango máximo.
+Denotaremos por \(\mu\) a tal máximo.
+
+\begin{lemma}
+  \label{lem:pgz-sesgados-rango-mu}
+  Para cada \(\mu \leq r \leq t\) el máximo \(\mu = \rank(E^r) = \rank(S^r)\).
+  Además \(\mu \leq v\).
+\end{lemma}
+
+\begin{proof}
+  Por el lema \ref{lem:pgz-sesgados-rangos} \(\mu = \rank(E^{\mu}) = \rank(S^{\mu})\), por lo que suponemos que \(\mu < r\).
+  Por la maximalidad de \(\mu\) tenemos que la \((\mu + 1)\)-ésima columna de \(E^r\) es una combinación lineal de las \(\mu\) columnas anteriores.
+  Aplicando \(\sigma^{-1}\) obtenemos que la \((\mu + 2)\)-ésima columna es una combinación lineal de las columnas segunda a \(\mu + 1\)-ésima, y por tanto una combinación lineal de las primeras \(\mu\) columnas.
+  Si repetimos el proceso obtenemos que todas las columnas desde la \((\mu + 1)\)-ésima hasta la \(r\)-ésima son combinaciones lineales de las primeras \(\mu\) columnas, y por tanto \(\rank(E^r = \mu)\).
+  Como \(E^r\) tiene \(v\) filas, \(\mu \leq v\).
+  Finalmente, \(\rank(S^r) = \mu\) de nuevo por el lema \ref{lem:pgz-sesgados-rangos}.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:pgz-sesgados-kernel-sesgado}
+  El núcleo por la izquierda \(V\) de la matriz \(\Sigma E^{\mu}\) es un código cíclico sesgado.
+  Por ello \(\mathfrak v^{-1}(V) = \mathcal R\rho\) para algún polinomio \(\rho \in \mathcal R\) de grado \(\mu\).
+  Además, \(\rho\) es un divisor por la derecha de \(\lambda\).
+\end{proposition}
+
+\begin{proof}
+  Demostraremos la primera afirmación comprobando que si \((a_0, \dots, a_{n-2}, a_{n-1}) \in V \subseteq \mathbb F_q^n\) también se da que \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\).
+  Esto es porque \(xa_ix^{i} = \sigma(a_i)x^{i+1}\) para cada \(0 \leq i \leq n -1\).
+  Supongamos entonces que \((a_0, a_1, \dots, a_{n-1})\Sigma E^{\mu} = 0\).
+  La maximalidad de \(\mu\) nos asegura que la última columna de \(E^{\mu + 1}\) es una combinación lineal de las \(\mu\) columnas anteriores.
+  Por tanto, \((a_0, a_1, \dots, a_{n-1})\Sigma E^{\mu + 1} = 0\).
+  Así,
+  \begin{align*}
+    0 &= (a_0, a_1, \dots, a_{n-1})\Sigma E^{\mu + 1}\\
+      &= (a_0, a_1, \dots, a_{n-1})\left( \begin{array}{@{}c|c@{}}
+        0 & I_{n-1}\\\hline
+        1 & 0
+      \end{array}\right)\left( \begin{array}{@{}c|c@{}}
+        0 & 1\\\hline
+        I_{n-1} & 0
+      \end{array}\right)\Sigma E^{\mu + 1}\\
+      &= (a_{n-1}, a_0, \dots, a_{n-2})\left( \begin{array}{@{}c|c@{}}
+        0 & 1\\\hline
+        I_{n-1} & 0
+      \end{array}\right)\Sigma E^{\mu + 1}.
+  \end{align*}
+  Si aplicamos \(\sigma\) a esta ecuación matricial componente a componente obtenemos
+  \[
+    (\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\left( \begin{array}{@{}c|c@{}}
+      0 & 1\\\hline
+      I_{n-1} & 0
+    \end{array}\right)\Sigma \sigma(E)\sigma(E^{\mu}) = 0.
+  \]
+  Observamos que
+  \[
+    \Sigma = \left( \begin{array}{@{}c|c@{}}
+      0 & 1\\\hline
+      I_{n-1} & 0
+    \end{array}\right)\Sigma(\Sigma) \text{ y } \Sigma(E^{\mu + 1}) = \left( \begin{array}{@{}c|c@{}}
+      \sigma(e_1) & \multirow{3}{*}{\(E^{\mu}\)}\\
+      \vdots & \\
+      \sigma(e_v) & \\
+    \end{array}\right)
+  \]
+  por lo que 
+  \[
+    (\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\Sigma \left( \begin{array}{@{}c|c@{}}
+      \sigma(e_1) & \multirow{3}{*}{\(E^{\mu}\)}\\
+      \vdots & \\
+      \sigma(e_v) & \\
+    \end{array}\right) = 0.
+  \]
+  En particular, \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\Sigma E^{\mu} = 0\) por lo que \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\) como queríamos.
+  Además, como cualquier ideal de \(\mathcal R\) es principal, \(\mathfrak v^{-1}(V)\) lo es y estará generado por un polinomio \(\rho \in \mathcal R\).
+  Como \(\mathfrak v(\mathcal R \lambda)\) es el núcleo por la izquierda de la matriz \(\Sigma\) se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\), y por tanto \(\rho\) divide por la derecha a \(\lambda\).
+  Finalmente la dimensión de \(\mathcal \rho\) como un \(\mathbb F_q\) espacio vectorial es \(n - \deg(\rho)\).
+  Por el lema \ref{lem:pgz-sesgados-rangos} se tiene que \(\rank(\Sigma E^{\mu}) = \mu\) y por tanto \(\deg(\rho) = \mu\).
+\end{proof}
+
+\begin{lemma}
+  La forma escalonada por columnas de la matriz \(S^t\) es
+  \[
+    \operatorname{mepc}(S^t) = \left( \begin{array}{@{}c|c@{}}
+      I_{\mu} & \multirow{3}{*}{\(0_{(t+ 1)\times (t - \mu)}\)} \\\cline{1-1}
+      a_0 \cdots a_{\mu -1 } & \\\cline{1-1}
+      H' &
+    \end{array}\right),
+  \]
+  donde \(I_{\mu}\) es la matriz identidad \(\mu \times \mu\) y \(a_0, \dots, a_{\mu - 1} \in \mathbb F_q\) tales que \(\rho = x^{\mu} - \sum_{i = 0}^{\mu - 1}a_ix^{i}\).
+\end{lemma}
+
+\begin{proof}
+  Por el lema \ref{lem:pgz-sesgados-rango-mu} el \(\rank(S^t) = \mu = \rank(S^{\mu})\), por lo que 
+  \[
+    \operatorname{mrpc}(S^t) = \left( \begin{array}{@{}c|c@{}}
+      \operatorname{mrpc}(S^{\mu}) & 0_{(t + 1) \times (t- \mu)}
+    \end{array}\right).
+  \]
+  La matriz \(S^{\mu}\) consiste en las primeras \(t + 1\) filas de \(\Sigma E^{\mu}\) y ambas tienen el mismo rango \(\mu\), por lo que \(\operatorname{mrpc}(S^{\mu})\) está formada por las primeras \(t + 1\) filas de \(\operatorname{mrpc}(\Sigma E^{\mu})\).
+  Por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} \(\mathfrak v(\mathcal R\rho)\) es el núcleo por la izquierda de la matriz \(\operatorname{mrpc}(\Sigma E^{\mu})\).
+  Una solución no nula del sistema homogéneo
+  \begin{equation}
+    \label{eq:pgz-sesgados-mepc-sigma-e-mu}
+    X \left( \begin{array}{@{}c|c@{}}
+      \multirow{2}{*}{\(\operatorname{mepc}(\Sigma E^{\mu})\)} & 0\\\cline{2-2}
+       & I_{n - (\mu + 1)} 
+    \end{array}\right) = 0
+  \end{equation}
+  es un elemento distinto de cero de \(\mathfrak v(\mathcal R(\rho))\) cuyas últimas \(n - (\mu + 1)\) coordenadas son cero.
+  Como \(\rho\) tiene grado \(\mu\) y su grado es mínimo en \(\mathcal R \rho\) se deduce que \(\mathfrak v(\rho)\) es la única solución, salvo producto por escalares de (\ref{eq:pgz-sesgados-mepc-sigma-e-mu}).
+  Sea \(S_{0}^{\mu}\) la matriz formada por las primeras \(\mu + 1\) filas de \(S^{\mu}\).
+  Entonces
+  \[
+    \operatorname{mepc}(S^{\mu}) = \left( \begin{array}{@{}c@{}}
+      \operatorname{mepc}(S^{\mu})\\\hline
+      H'
+    \end{array}\right).
+  \]
+  Si realizamos más reducciones de columnas utilizando la matriz identidad en el bloque derecho de la matriz (\ref{eq:pgz-sesgados-mepc-sigma-e-mu}) podemos ver que \(\rho\) es también la solución no nula, salvo producto por es calares, del sistema homogéneo
+  \begin{equation}
+    \label{eq:pgz-sesgados-mepc-sigma-e-mu-4}
+    X \left( \begin{array}{@{}c|c@{}}
+      \operatorname{mepc}(S_{0}^{\mu}) & 0\\\hline
+      0 & I_{n - (\mu + 1)}\\
+    \end{array}\right) = 0.
+  \end{equation}
+  El tamaño de \(\operatorname{mepc}(S_{0}^{\mu})\) es \((\mu + 1) \times \mu\).
+  De hecho \(\rank(\operatorname{mepc}(S_{0}^{\mu})) = \mu\) porque el espacio de soluciones de (\ref{eq:pgz-sesgados-mepc-sigma-e-mu-4}) tiene dimensión 1.
+  Por tanto solo hay una fila de \(\operatorname{mepc}(S_{0}^{\mu})\) sin pivote.
+  Si no es la última entonces habría un polinomio no nulo de \(\mathcal R \rho\) de grado estrictamente menor que \(\mu\), lo cual es imposible.
+  Por tanto,
+  \[
+    \operatorname{mepc}(S_{0}^{\mu}) = \left( \begin{array}{@{}c@{}}
+      I_{\mu} \\\hline
+      a_0 \dots a_{\mu - 1}
+    \end{array}\right).
+  \]
+  Finalmente \((-a_0, \dots, -a_{\mu - 1}, 1, 0 \dots, 0)\) es una solución no nula de (\ref{eq:pgz-sesgados-mepc-sigma-e-mu-4}), por lo que \(\rho = x^{\mu}- \sigma_{i = 0}^{\mu - 1}a_ix^{i}\).
+\end{proof}
+
+ \begin{lemma}
+  \label{lem:pgz-sesgados-diagrama}
+   Si el ideal por la izquierda \(\mathcal R \rho\) se corresponde, mediante \(\mathfrak v\), con el núcleo por la izquierda de una matriz \(H\) entonces \(H = \Sigma B\) para alguna matriz \(B \in \mathcal M_{v \times \mu}(L)\) que no tiene ninguna fila nula.
+ \end{lemma}
+
+\begin{proof}
+  % TODO: añadir? referenciar?
+\end{proof}
+
+Hay una conexión entre los polinomios \(\rho\) y \(\lambda\).
+
+\begin{proposition}
+  Sea \(\lambda' \in \mathcal R\) un polinomio que \(\beta\)-descompone totalmente y es múltiplo de \(\rho\).
+  Entonces, \(\lambda \mid_d \lambda'\).
+\end{proposition}
+
+\begin{proof}
+  Por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} se tiene que \(\rho \mid_d \lambda\) y, por hipótesis, \(\rho \mid_d \lambda'\).
+  Así, \(\rho \mid_d (\lambda, \lambda')_{r}\).
+  De hecho, por el lema \ref{lem:b-descomposicion-mcm-mcd} el polinomio \((\lambda, \lambda')_{r}\) también \(\beta\)-descompone totalmente.
+  Denotemos por \(\phi = (\lambda, \lambda')_{r}\).
+  Vamos a demostrar que \(\phi = \lambda\), lo que implica el hecho que queremos demostrar.
+
+  Efectivamente, \(\mathcal R \lambda \subseteq \mathcal R\phi\), por lo que \(\mathcal R\phi\) se corresponde con el núcleo por la izquierda de una matriz \(\Sigma Q\), donde \(Q\) es una matriz de rango máximo.
+  De forma análoga se tiene que \(\mathcal R\phi \subseteq \mathcal R\rho\), por lo que existe otra matriz \(Q'\) tal que \(\mathcal R\rho\) es el núcleo por la izquierda de \(\Sigma QQ'\).
+  Por el lema \ref{lem:pgz-sesgados-diagrama} se tiene que \(\Sigma QQ' = \Sigma B\), donde \(B\) es una matriz de rango máximo y sin ninguna fila nula.
+  Por tanto \(QQ' = B\), porque \(\Sigma\) define una aplicación lineal sobreyectiva y \(Q\) no tiene filas nulas.
+
+  Como \(\phi \mid_r \lambda\) cualquier \(\beta\)-raíz de \(\phi\) tiene que ser también \(\beta\)-raíz de \(\lambda\) por lo que pertenece al conjunto \(\{\sigma^{k_1}(\beta), \dots, \sigma^{k_v}(\beta)\}\).
+  Obsérvese que por (\ref{eq:equivalencias-divisor-sigma-b}) se tiene que \(\sigma^{k_j}(\beta)\) es una \(\beta\)-raíz de \(\phi\) si y solo si
+  \[
+    \rank\left( \begin{array}{@{}c|c@{}}
+      \Sigma Q & \sigma^{k_j}(\alpha)^{[\sigma]}
+    \end{array}\right) = \rank(\Sigma Q).
+  \]
+  % FIXME: qué es ese sigma entre corchetes?????????
+  Por tanto, por el lema \parencite[Lema 2.3]{gomez-torrecillas_petersongorensteinzierler_2018} que \(\phi\) se pueda \(\beta\)-descomponer totalmente implica que \(\{\sigma^{k_1}(\beta), \dots, \sigma^{k_v}(\beta)\}\) es el conjunto de \(\beta\)-raíces de \(\phi\).
+  Por tanto, \(\phi = \lambda\).
+\end{proof}
+
+Ya estamos en disposición de calcular el polinomio localizador de errores.
+Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, que puede verse en los algoritmos \ref{alg:pgz-sesgados-1} y \ref{alg:pgz-sesgados-2}.
 
 \begin{Ualgorithm}[htbp]
   \DontPrintSemicolon
@@ -214,6 +397,7 @@ Hay que calcular el mayor \(r\) tal que \(S^r\) tenga rango máximo.
     \(\{k_1, \dots, k_v\} \longleftarrow\) las coordenadas de las columnas igual a cero de \(H'\)\;
   }
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (I).}
+  \label{alg:pgz-sesgados-1}
 \end{Ualgorithm}
 
 \begin{Ualgorithm}[htbp]
@@ -224,5 +408,12 @@ Hay que calcular el mayor \(r\) tal que \(S^r\) tenga rango máximo.
   \tcp{Paso 4: construir el error y devolverlo}
   \Return{\((e_0, \dots, e_{n-1})\) con \(e_i = x_i\) para \(i \in \{k_1, \dots, k_v\}\), cero en otro caso}
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (II).}
-  \label{alg:pgz-skwcc-2}
+  \label{alg:pgz-sesgados-2}
 \end{Ualgorithm}
+
+\begin{theorem}
+  Sea \(\mathbb F_q\) un cuerpo finito, \(\sigma \in \operatorname{Aut}(\mathbb F_q)\) de orden \(n\) y \(\mathbb F_q^{\sigma}\) el subcuerpo invariante del generado por \(\sigma\).
+  Sea \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) una base normal de \(\mathbb F_q\) sobre \(\mathbb F_{q}\) y \(\beta = \alpha^{-1}\sigma(\alpha)\).
+  Sean \(\mathcal R = \mathbb F_q[x, \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
+  Entonces el algoritmo descrito en los algoritmos \ref{alg:pgz-sesgados-1} y \ref{alg:pgz-sesgados-2} encuentra correctamente el erro \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
+\end{theorem}
