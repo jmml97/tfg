@@ -260,6 +260,7 @@ Denotaremos por \(\mu\) a tal máximo.
 \end{proof}
 
 \begin{lemma}
+  \label{lem:pgz-sesgados-escalonada-st}
   La forma escalonada por columnas de la matriz \(S^t\) es
   \[
     \operatorname{mepc}(S^t) = \left( \begin{array}{@{}c|c@{}}
@@ -332,6 +333,7 @@ Denotaremos por \(\mu\) a tal máximo.
 Hay una conexión entre los polinomios \(\rho\) y \(\lambda\).
 
 \begin{proposition}
+  \label{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho}
   Sea \(\lambda' \in \mathcal R\) un polinomio que \(\beta\)-descompone totalmente y es múltiplo de \(\rho\).
   Entonces, \(\lambda \mid_d \lambda'\).
 \end{proposition}
@@ -382,8 +384,8 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
       H' &
     \end{array}\right)
   \]\;
-  \(\rho = (\rho_0, \dots, \rho_{\mu}) \longleftarrow (-a_0, \dots, -a_{\mu-1}, 1)\) y \(\rho N \longleftarrow (\rho_0, \dots, \rho_{\mu}, 0, \dots, 0)N\)\;
-  \(\{k_1, \dots, k_v\} \longleftarrow \) coordenadas igual a cero de \(\rho N\)\;
+  \(\rho = (\rho_0, \dots, \rho_{\mu}) \longleftarrow (-a_0, \dots, -a_{\mu-1}, 1)\) y \(\rho N \longleftarrow (\rho_0, \dots, \rho_{\mu}, 0, \dots, 0)N\)\;\label{algl:pgz-sesgados-rho}
+  \(\{k_1, \dots, k_v\} \longleftarrow \) coordenadas igual a cero de \(\rho N\)\;\label{algl:pgz-sesgados-pos-error}
   \If{\(\mu \neq v\)}{
     Calcular \[M_{\rho} \longleftarrow \begin{pmatrix}
       \rho_0 & \rho_1 & \dots & \rho_{\mu} & 0 & \dots & 0\\
@@ -393,7 +395,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
     \end{pmatrix}_{(n - \mu) \times n}\]\;
     \(N_{\rho} \longleftarrow M_{\rho}N\)\;
     \(H_{\rho} \longleftarrow \operatorname{mepf}(N_{\rho})\)\;
-    \(H' \longleftarrow\) la matriz obtenida al eliminar las filas de \(H_{\rho}\) distintas de \(\varepsilon_i\) para algún \(i\)\;
+    \(H' \longleftarrow\) la matriz obtenida al eliminar las filas de \(H_{\rho}\) distintas de \(\varepsilon_i\) para algún \(i\)\;\label{algl:pgz-sesgados-h-prima}
     \(\{k_1, \dots, k_v\} \longleftarrow\) las coordenadas de las columnas igual a cero de \(H'\)\;
   }
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (I).}
@@ -404,7 +406,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   \DontPrintSemicolon
   \setcounter{AlgoLine}{17}
   \tcp{Paso 3: resolver el sistema de los síndromes, obteniendo las magnitudes de error}
-  Encontrar \((x_1, \dots, x_v)\) tal que \((x_1, \dots, x_v)(\Sigma^{v-1})^T = (\alpha s_0, \sigma(\alpha)s_1, \dots, \sigma^{v-1}(\alpha)s_{v-1})\)\;
+  Encontrar \((x_1, \dots, x_v)\) tal que \((x_1, \dots, x_v)(\Sigma^{v-1})^T = (\alpha s_0, \sigma(\alpha)s_1, \dots, \sigma^{v-1}(\alpha)s_{v-1})\)\;\label{algl:pgz-sesgados-solucion-sistema}
   \tcp{Paso 4: construir el error y devolverlo}
   \Return{\((e_0, \dots, e_{n-1})\) con \(e_i = x_i\) para \(i \in \{k_1, \dots, k_v\}\), cero en otro caso}
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados (II).}
@@ -417,3 +419,47 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   Sean \(\mathcal R = \mathbb F_q[x, \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
   Entonces el algoritmo descrito en los algoritmos \ref{alg:pgz-sesgados-1} y \ref{alg:pgz-sesgados-2} encuentra correctamente el erro \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
 \end{theorem}
+
+\begin{proof}
+  Tras los ajustes iniciales la línea \ref{algl:pgz-sesgados-rho} calcula un divisor por la izquierda \(\rho = \sum_{i = 0}^{\mu}\) del polinomio localizador de errores \(\lambda\), por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} y el lema \ref{lem:pgz-sesgados-escalonada-st}.
+  
+  Por (\ref{eq:equivalencias-divisor-sigma-b}) la línea \ref{algl:pgz-sesgados-pos-error} calcula todas las \(\beta\)-raíces de \(\rho\).
+  Por el lema \ref{lem:pol-t-beta} \(v = \mu\) si y solo si \(\rho\) puede \(\beta\)-descomponerse totalmente.
+  En ese caso, por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} \(\rho = \lambda\).
+  
+  Si \(v \neq \mu\) como el \(\deg(\rho) = \mu\) las fila de \(M_{\rho}\) generan \(\mathcal R\rho\) como un \(\mathbb F_q\) espacio vectorial y las fila de \(N_{\rho}\) también generan \(\mathcal R\rho\) bajo el cambio de base correspondiente a \(N\).
+  Como \(H_{\rho}\) es la forma reducida por columnas de \(M_{\rho}\) entonces sus fijas también son una base de \(\mathcal \rho\) como un \(\mathbb F_q\)- espacio vectorial.
+  Por el lema \ref{lem:matriz-mf-base} las filas de \(H'\) generan un \(\mathbb F_q\)-subespacio vectorial \(\mathcal R\lambda'\) para algún polinomio \(\lambda'\) que puede \(\beta\)-descomponerse totalmente.
+  Como \(H'\) se obtiene eliminando algunas filas de \(H_{\rho}\) se deduce que \(\rho \mid_d \lambda'\).
+
+  Probamos ahora que \(\lambda' = \lambda\).
+  Por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} se tiene que \(\lambda \mid_d \lambda'\).
+  Supongamos que \(\lambda \neq \lambda'\).
+  Entonces la matriz \(H_{\lambda} = \operatorname{mrpf}(M_{\lambda}N)\) contiene una fila adicional \(\varepsilon_{d}\) que no está en \(H'\).
+  %TODO: añadir que hay que aplicar el lema 3.1 (dice Gabriel)
+  Como \(\mathcal R\lambda \subseteq \mathcal R\rho\),
+  \[
+    \rank\left( \begin{array}{@{}c@{}}
+      H_{\rho}\\\hline
+      \varepsilon_{d}
+    \end{array}\right) = \rank (H_{\rho}).
+  \]
+  Por \parencite[Lema 2.4]{gomez-torrecillas_petersongorensteinzierler_2018} \(\varepsilon_{d}\) es una fila de \(H_{\rho}\), por lo que la línea \ref{algl:pgz-sesgados-h-prima} no la elimina.
+  Por tanto \(\varepsilon_{d}\) pertenece a \(H'\), una contradicción.
+  Por tanto \(\lambda = \lambda'\) y se calculan las coordenadas de error.
+  Por la proposición \ref{prop:pgz-sesgados-magnitudes-error} la línea \ref{algl:pgz-sesgados-solucion-sistema} calcula las magnitudes de error.
+\end{proof}
+
+Veamos a continuación algunos ejemplos.
+
+\begin{example}
+  Sea \(\mathbb F = \mathbb F_2(a)\) un cuerpo con \(2^{12} = 1024\) elementos, donde se verifica la relación \(a^{12} + a^7 + a^{6} + a^{5} + a^{3} + a + 1 = 0\).
+  Consideremos el automorfismo \(\mathbb F \to \mathbb F\) dado por \(\sigma = \tau^{10}\), donde \(\tau\) es el automorfismo de Frobenius, tal que \(\sigma(a) = a^{1024}\).
+  El orden de \(\sigma\) es \(6\) por lo que un código cíclico sobre \(\mathbb F\) es un ideal por la izquierda del cociente \(\mathcal R = \mathbb F[x; \sigma]/(x^{6} - 1)\).
+  Tomaremos \(\alpha = a\), lo que nos proporciona una base normal de \(\mathbb F\) como un \(\mathbb F^{\sigma}\)-espacio vectorial, y \(\beta = \sigma(a)a^{-1} = a^{1023}\).
+  Las imágenes de \(\beta\) por las potencias de \(\sigma\) nos da el conjunto \(\{a^{1023}, a^{3327}, a^{3903}, a^{4047}, a^{4083}, a^{4092}\}\).
+  Consideremos el código RS sesgado generado por
+  \[
+    g = \left[x - a^{1023}, x - a^{3327}, x - a^{3903}, x - a^{4047}\right]_i = x^4 + a^{2103}x^3 + a^{687}x^2 + a^{1848} + a^{759}.
+  \]
+\end{example}
