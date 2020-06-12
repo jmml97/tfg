@@ -69,9 +69,10 @@ Este corolario nos permite afirmar que dados \(\{t_1, \dots, t_k\} \subset \{0, 
 Antes de proceder a definir el tipo de códigos cíclicos sesgados que vamos a utilizar es necesario que comentemos algunos resultados que necesitaremos más adelante.
 Comenzamos indicando que llamaremos \(\beta\)-raíces a los elementos del conjunto \(\{\beta, \sigma(\beta), \dots, \sigma^{n-1}(\beta)\}\).
 Por la proposición \ref{prop:norma-divisor} y (\ref{eq:norma-beta}) se tiene que, dado un polinomio \(f = \sum_{i=0}^{n-1}a_ix^i \in \mathcal R\),
-\[
+\begin{equation}
+  \label{eq:equivalencias-divisor-sigma-b}
   x - \sigma^j(\beta) \mid_d f \iff \sum_{i=0}^{n-1}a_iN_i(\sigma^j(\beta)) = 0 \iff \sum_{i=0}^{n-1}a_i\sigma^{i+j}(\alpha) = 0.
-\]
+\end{equation}
 Sea \(N\) la matriz formada por las normas de las \(\beta\)-raíces:
 \[
   N = \begin{pmatrix}
@@ -128,6 +129,7 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
   Como \(M_fN\) tiene \(n - m\) filas, rango \(n - m\) y \(n - m\) columnas distintas de cero, el resultado se deduce fácilmente.
 \end{proof}
 \begin{lemma}
+  \label{lem:b-descomposicion-mcm-mcd}
   Sean \(f, g \in \mathcal R\) polinomios que pueden \(\beta\)-descomponerse totalmente.
   Entonces \((f, g)_d\) y \([f, g]_i\) también pueden \(\beta\)-descomponerse totalmente.
 \end{lemma}
