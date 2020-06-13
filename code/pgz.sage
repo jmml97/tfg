@@ -72,6 +72,7 @@ class BCHPGZDecoder(Decoder):
         - a vector of ``self``'s message space
         """
         R = self._polynomial_ring
+        F = self.code().base_ring()
         logger(R)
         logger(R.gen())
         y = R(word.list())
@@ -161,10 +162,11 @@ class BCHPGZDecoder(Decoder):
         b_syn = vector(b_syn)
         
         E = m_syn.solve_right(b_syn)
+        logger('magnitudes de error E: ' + str(E))
         
         # Paso final: hallamos el error y se lo restamos al mensaje recibido
         
-        e = 0
+        e = R(0)
         for i in [0..mu-1]:
             e = e + E[i]*R.gen()^(k[i])
         
@@ -172,7 +174,7 @@ class BCHPGZDecoder(Decoder):
         
         c = y - e
         
-        return vector(_to_complete_list(c, self.code().length()))
+        return vector(F, _to_complete_list(c, self.code().length()))
     
     def correction_capability(self):
         return self._correction_capability
