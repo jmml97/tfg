@@ -117,7 +117,7 @@ Vamos a considerar que los errores se han producido en coordenadas desconocidas 
   e(x) = e_{k_1}x^{k_1} + e_{k_2}x^{k_2} + \dots + e_{k_v}x^{k_v}.
 \]
 Como nuestro objetivo es determinar \(e(x)\) tenemos que hallar: \begin{itemize}
-  \item las \textit{coordenadas de error} \(k_j\);
+  \item las \textit{coordenadas de error} \(k_j\)\,;
   \item las \textit{magnitudes de error} \(e_{k_j}\).
 \end{itemize}
 
@@ -153,7 +153,7 @@ lo que nos conduce al sistema de ecuaciones: \begin{equation}
     S_2 = E_1X_1^2 + E_2X_2^2 + \dots + E_vX_v^2,\\
     S_3 = E_1X_1^3 + E_2X_2^3 + \dots + E_vX_v^3,\\
     \quad\;\vdots\\
-    S_1 = E_1X_1^{2t} + E_2X_2^{2t} + \dots + E_vX_v^{2t}.
+    S_{2t} = E_1X_1^{2t} + E_2X_2^{2t} + \dots + E_vX_v^{2t}.
   \end{cases}
   \label{eq:sindromes-alt-sistema}
 \end{equation}
@@ -222,8 +222,8 @@ Para ello tenemos en cuenta que la matriz
      & & \vdots & \\
     S_{\mu} & S_{\mu+1} & \dots & S_{2\mu - 1}
   \end{pmatrix}
-\] será no singular si \(\mu = v\) y singular si \(\mu > v\).
-% TODO: copiar demostración de esto????
+\] será no singular si \(\mu = v\) y singular si \(\mu > v\) \parencite[Lema 5.4.2]{huffman_fundamentals_2003}.
+% MAYBE: copiar demostración de esto????
 Así, si \(M_{\mu}\) es singular reducimos el valor de \(\mu\) en 1, \(\mu = \mu - 1\) y probamos de nuevo si \(M_{\mu}\) es singular.
 Repetimos hasta encontrar una matriz que no sea singular.
 Ese valor \(\mu\) será el número de errores \(v\).
