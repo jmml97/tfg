@@ -105,6 +105,31 @@ Cuando \(b = 1\) el código \(\mathcal C\) se dice que es un código \textacr{BC
 Como con cualquier código cíclico, si \(n = q^t - 1\) entonces \(\mathcal C\) es un código \textacr{BCH} \textit{primitivo}.
 En la sección siguiente vamos a estudiar un algoritmo de decodificación que permite aprovechar las ventajas de los códigos \textacr{BCH}.
 
+\section{Códigos Reed-Solomon}
+
+Vamos a describir brevemente los códigos Reed-Solomon, que abreviaremos como códigos RS, pues aludiremos a ellos cuando hablemos de códigos cíclicos sesgados.
+Son una subfamilia de los códigos BCH que acabamos de definir.
+
+\begin{definition}
+  Un código RS sobre \(\mathbb F_q\) es un código BCH de longitud \(n = q - 1\).
+\end{definition}
+
+Veamos un par de propiedades importantes.
+
+\begin{theorem}
+  Sea \(\mathcal C\) un código RS sobre \(\mathbb F_q\) de longitud \(n = q - 1\) y distancia designada \(\delta\).
+  Entonces:
+  \begin{enumerate}
+    \item El código \(\mathcal C\) tiene conjunto característico \(T = \{b, b + 1, \dots, b + \delta - 2\}\) para algún entero \(b\).
+    \item El código \(\mathcal C\) tiene distancia mínima \(d = \delta\) y dimensión \(k = n - d + 1\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Comenzamos observando que \(\operatorname{ord}_n(q) = 1\), por lo que todos los factores irreducibles de \(x^n - 1\) tienen grado \(1\) y las clases \(q\)-ciclotómicas módulo \(n\) tienen tamaño \(1\).
+\end{proof}
+
+
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
 
 El algoritmo de Peterson-Gorenstein-Zierler —de ahora en adelante, algoritmo \textacr{PGZ}— es un algoritmo de decodificación de códigos \textacr{BCH} que permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
