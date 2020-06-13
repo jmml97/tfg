@@ -102,10 +102,25 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
 \end{Ualgorithm}
 
 La existencia de algoritmos de algoritmos de división a izquierda y a derecha implica que \(F_q[x, \sigma]\) es un dominio de ideales principales a izquierda y a derecha, es decir, que es lo que llamamos un dominio de ideales principales a secas.
-% Ideales biláteros, teorema del centro
 
-% right divisor, left multiple
-Para ser más concisos con la notación vamos a llamar \(R = F_q[x, \sigma]\) y cuando no sea necesario hacer referencia a la variable \(x\), a un polinomio \(f(x)\) lo denotaremos simplemente por \(f\).
+A partir de ahora, para ser más concisos con la notación vamos a llamar \(R = F_q[x, \sigma]\) y cuando no sea necesario hacer referencia a la variable \(x\), a un polinomio \(f(x)\) lo denotaremos simplemente por \(f\).
+Los ideales biláteros de \(R\) serán de la forma \(I = Rf = f^{*}R\) y para todo \(g \in R\) existirán \(g', \tilde{g} \in R\) tales que \(fg = g'f\) y \(gf^{*} = f^{*}\tilde{g}\).
+Los elementos \(f\) tales que para todo \(g \in R\) existen \(g'\) y \(\tilde{g}\) tales que \(fg = g'f\) y \(gf = f\tilde{g}\) se llaman elementos \emph{biláteros} y además \(Rf = fR\) es un ideal.
+
+\begin{theorem}
+  \label{th:anillos-ore-centro}
+  Sea \(R = F_q[x, \sigma]\). Se verifican las siguientes afirmaciones.
+  \begin{enumerate}
+    \item Los elementos biláteros de \(R\) son de la forma \(ac(t)x^n\), donde \(a \in \mathbb F_q\), \(n = 0, 1, \dots\) y \(c(t) \in \operatorname{Cent}(R)\), el centro de \(R\).
+    \item Supongamos ahora que \(\sigma\) tiene orden \(n\), de forma que \(\sigma^n = \operatorname{Id}\).
+    El centro de \(R\) es el conjunto de los polinomios de la forma
+    \[
+      \gamma_0 + \gamma_1x^{n} + \gamma_2x^{2n} + \dots + \gamma_sx^{sn},
+    \]
+    donde \(\gamma_i \in \mathbb F_q\).
+  \end{enumerate}
+\end{theorem}
+
 Dados \(g, f \in R\) supongamos que \(Rg \subseteq Rf\) con \(Rg \neq 0\).
 Entonces \(g = hf\), por lo que decimos que \(f\) es un \emph{divisor por la derecha} de \(g\) y lo notaremos por \(f \mid_{d} g\).
 Equivalentemente, podemos decir que \(g\) es un \emph{múltiplo por la izquierda} de \(f\).
