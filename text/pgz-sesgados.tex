@@ -1,31 +1,32 @@
 \chapter{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
 
 En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
+La fuente de este capítulo es \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
 
-\(\mathcal C\) es un código RS sesgado en sentido estricto, \(r = 0\).
-Escribiremos \(\alpha' = \sigma^r(\alpha)\).
-Proporciona una base normal.
-Se tiene que \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) es un generador de \(\mathcal C\).
-El ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) para algún \(2 \leq \delta \leq n\).
-La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\).
+En lo que sigue vamos a considerar que \(\mathcal C\) es un código RS sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
+% TODO: no acabo de entender todo esto de la notación \alpha' porque no vuelve a mencionarse
+También, con el objetivo de simplificar un poco la notación, escribiremos \(\alpha' = \sigma^r(\alpha)\), lo que nos proporcionará una base normal.
+% TODO: tengo que explicar lo que es una base normal
+Continuando con esta notación tenemos que \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta)]_i\) será un generador del código \(\mathcal C\).
+El ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta, x - \sigma(\beta), \dots, x - \sigma^{\delta - 2}(\beta')]_i\) para algún \(2 \leq \delta \leq n\).
+La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
 
-Se quiere enviar un mensaje \(m = (m_0, \dots, m_{n - \delta})\) a través de un canal.
-Tenemos que \(m = \sum_{i=0}^{n-\delta}m_ix^{i}\).
-El mensaje se codifica como \(c = mg\).
-Se recibe \(y = c + e\) donde \(e = e_1x^{k_1} + \dots + e_vx^{k_v}\) con \(v \leq t\) es el error.
+Nos encontramos en la misma situación que en casos anteriores.
+Se quiere enviar un mensaje \(\mathbf{m} = (m_0, \dots, m_{n - \delta})\) a través de un canal.
+Con la identificación de \(\mathcal C\) y \(\mathfrak v^{-1}(\mathcal C)\)podemos escribir \(\mathbf{m}\) como un polinomio, de forma que tenemos que \(m = \sum_{i=0}^{n-\delta}m_ix^{i}\).
+Codificamos el mensaje realizando el producto por el generador, \(c = mg\).
+Suponemos que recibimos el mensaje \(y = c + e\) donde \(e = e_1x^{k_1} + \dots + e_vx^{k_v}\) con \(v \leq t\) es el error que se ha producido durante la transmisión.
+Para determinarlo es necesario por tanto conocer tanto las magnitudes de error \((e_{1}, \dots, e_{v})\) como las coordenadas de error \((k_1, \dots, k_v)\).
 
 Vamos a describir un algoritmo para decodificar códigos cíclicos sesgados similar al ya descrito para códigos BCH.
-
-Comenzamos con el mismo paso, el cálculo de síndromes.
-Para cada \(0 \leq i \leq 2t - 1\) el síndrome \(i\)-ésimo \(s_i\) del polinomio recibido \(y\) se define como el resto de dividir por la izquierda \(y\) entre \(x - \sigma^{i}(\beta)\).
+Así, el primer paso es el del cálculo de los síndromes, que será un procedimiento análogo al realizado entonces pero utilizando la definición de norma \(i\)-ésima de un elemento.
+Por tanto para cada \(0 \leq i \leq 2t - 1\) el \emph{síndrome} \(i\)\emph{-ésimo} \(s_i\) del polinomio recibido \(y\) se define como el resto de dividir por la izquierda dicho polinomio \(y\) entre \(x - \sigma^{i}(\beta)\).
 Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \(i = 0, \dots, \delta - 2\) se tiene que 
 \begin{align}
   s_i &= \sum_{j = 0}^{n-1}y_jN_j(\sigma^{i}(\beta)) = \sum_{j=1}^{v}e_jN_{k_j}(\sigma^{i}(\beta))\nonumber\\
    &= \sum_{j = 1}^{v}e_j\sigma^{i}(\alpha^{-1})\sigma^{i+k_j}(\alpha) = \sigma^{i}(\alpha^{-1})\sum_{j = 1}^{v}e_j\sigma^{i+k_j}(\alpha).
    \label{eq:sindromes-sesgados}
 \end{align}
-
-El objetivo es determinar las magnitudes de error \((e_{1}, \dots, e_{v})\) así como las coordenadas de error \((k_1, \dots, k_v)\).
 
 \begin{proposition}
   \label{prop:pgz-sesgados-magnitudes-error}
@@ -43,19 +44,20 @@ El objetivo es determinar las magnitudes de error \((e_{1}, \dots, e_{v})\) así
 
 \begin{proof}
   Comenzamos viendo que
-  \[
-    \begin{pmatrix}
+  \begin{align*}
+    &\phantom{={}} \begin{pmatrix}
       \sigma^{k_1}(\alpha) & \sigma^{k_1 + 1}(\alpha) & \dots & \sigma^{k_1 + v - 1}(\alpha)\\ 
       \sigma^{k_2}(\alpha) & \sigma^{k_2 + 1}(\alpha) & \dots & \sigma^{k_2 + v - 1}(\alpha)\\ 
       \vdots & \vdots & \ddots & \vdots\\ 
       \sigma^{k_v}(\alpha) & \sigma^{k_v + 1}(\alpha) & \dots & \sigma^{k_v + v - 1}(\alpha)\\ 
-     \end{pmatrix} =  \begin{pmatrix}
+     \end{pmatrix}\\
+     &= \begin{pmatrix}
       \sigma^{k_1}(\alpha) & \sigma\sigma^{k_1}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_1}(\alpha)\\ 
       \sigma^{k_2}(\alpha) & \sigma\sigma^{k_2}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_2}(\alpha)\\ 
       \vdots & \vdots & \ddots & \vdots\\ 
       \sigma^{k_v}(\alpha) & \sigma\sigma^{k_v}(\alpha) & \dots & \sigma^{v - 1}\sigma^{k_v}(\alpha)\\ 
      \end{pmatrix},
-  \]
+  \end{align*}
   que por \parencite[Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018} es no singular.
   Por (\ref{eq:sindromes-sesgados}) tenemos que 
   \[
@@ -73,15 +75,22 @@ El objetivo es determinar las magnitudes de error \((e_{1}, \dots, e_{v})\) así
   como queríamos demostrar.
 \end{proof}
 
-Como consecuencia de esta proposición \ref{prop:pgz-sesgados-magnitudes-error} el proceso de decodificación se reduce a encontrar las coordenadas de error \(\{k_1, \dots, k_v\}\).
-Definimos el polinomio localizador de errores como
+Como consecuencia de la proposición \ref{prop:pgz-sesgados-magnitudes-error} el proceso de decodificación se reduce a encontrar las coordenadas de error \(\{k_1, \dots, k_v\}\).
+Para ello al igual que hicimos en el caso del algoritmo para códigos BCH vamos a definir un polinomio localizador de errores, que en este caso vendrá dado por 
 \[
   \lambda = \left[x - \sigma^{k_1}(\beta), x - \sigma^{k_2}(\beta), \dots, x - \sigma^{k_v}(\beta)\right]_{i}.
 \]
-Por el lema \ref{lem:pol-t-beta} este polinomio \(\lambda\) tiene grado \(v\) y nos permitirá determinar las coordenadas de error.
+Por el lema \ref{lem:pol-t-beta} este polinomio \(\lambda\) tiene grado \(v\) y sus raíces nos permitirán determinar las coordenadas de error.
 
-Observamos que un polinomio \(f = \sum_{k = 0}^{n-1}f_k x^{k} \in \mathcal R\lambda\) si y solo si \(x - \sigma^{k_j}(\beta) \mid_d f\) para todo \(j = 1, \dots, v\), o bien si y solo si \(\sum_{k=0}^{n -1}f_k N_k(\sigma^{k_j}(\beta))= 0\) para todo \(j = 1, \dots, v\).
-Así \((f_0, \dots, f_{n-1}) \in \mathfrak v(\mathcal R\lambda)\) si y solo si satisface la ecuación \((f_0, \dots, f_n)T = 0\), donde
+Observamos que, por definición, un polinomio 
+\[
+  f = \sum_{k = 0}^{n-1}f_k x^{k} \in \mathcal R\lambda \;\text{ si y solo si }\; x - \sigma^{k_j}(\beta) \mid_d f \quad\text{para todo } j = 1, \dots, v,
+\]
+o bien si y solo si
+\[
+  \sum_{k=0}^{n -1}f_k N_k(\sigma^{k_j}(\beta))= 0 \quad\text{para todo } j = 1, \dots, v.
+\]
+De esta forma podemos expresar la condición \((f_0, \dots, f_{n-1}) \in \mathfrak v(\mathcal R\lambda)\) en forma de ecuación matricial, pues si \((f_0, \dots, f_{n-1}) \in \mathfrak v(\mathcal R\lambda)\) se verifica que \((f_0, \dots, f_n)T = 0\), donde
 \[
   T = \begin{pmatrix}
     N_{0}(\sigma^{k_1}(\beta)) & N_{0}(\sigma^{k_2}(\beta)) & \dots & N_{0}(\sigma^{k_v}(\beta))\\
@@ -90,7 +99,7 @@ Así \((f_0, \dots, f_{n-1}) \in \mathfrak v(\mathcal R\lambda)\) si y solo si s
     N_{n-1}(\sigma^{k_1}(\beta)) & N_{n-1}(\sigma^{k_2}(\beta)) & \dots & N_{n-1}(\sigma^{k_v}(\beta))\\
   \end{pmatrix}.
 \]
-Ahora bien, como por (\ref{eq:norma-beta}) \(N_k(\sigma^{k_j}(\beta)) = \sigma^{k_j}(\alpha)^{-1}\sigma^{k_j + k}(\alpha)\), tenemos que \(R\lambda\) es el núcleo por la izquierda de la matriz
+Esto, junto a que por (\ref{eq:norma-beta}) podemos expresar las normas anteriores como \(N_k(\sigma^{k_j}(\beta)) = \sigma^{k_j}(\alpha)^{-1}\sigma^{k_j + k}(\alpha)\), nos da una forma de obtener todos los elementos de \(\mathcal R\lambda\), pues como deben verificar la ecuación antes comentada, forman el núcleo por la izquierda de la matriz
 \[
   \Sigma = \begin{pmatrix}
     \sigma^{k_1}(\alpha) & \sigma^{k_2}(\alpha) & \dots & \sigma^{k_v}(\alpha)\\
@@ -114,9 +123,11 @@ Consideramos ahora la matriz
     e_v & \sigma^{-1}(e_v) & \dots & \sigma^{-v + 1}(e_v)\\
   \end{pmatrix}.
 \]
-
-Por tanto \(S = \Sigma E\) es una matriz de tamaño \((n \times v)\), cuya componente \(k, i\)-ésima la podemos expresar como \(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\).
-Por (\ref{eq:sindromes-sesgados}) cuando \(k + i < 2t - 1\) esta componente puede escribirse como \(\sigma^{-i}(s_{k+1})(\alpha)\) de tal forma que podemos dividir la matriz \(S\) como
+Así podemos considerar la siguiente matriz, que expresaremos por sus entradas para la fila \(k\) y la columna \(i\),
+\[
+  S = \Sigma E = \left(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\right)_{n \times v}.
+\]
+Por (\ref{eq:sindromes-sesgados}), cuando \(k + i < 2t - 1\), la componente \((k, i)\)-ésima puede escribirse como \(\sigma^{-i}(s_{k+i})\sigma(\alpha)\), de tal forma que podemos dividir la matriz \(S\) como
 \[
   S = \left( \begin{array}{@{}c@{}}
     S_0\\\hline
@@ -132,7 +143,7 @@ donde \(S_0\) viene dada por
     s_v\sigma^v(\alpha) & \sigma^{-1}(s_{v+1})\sigma^v(\alpha) & \dots & \sigma^{-v+1}(s_{2v-1})\sigma^v(\alpha)\\
   \end{pmatrix}_{(v + 1) \times v}
 \]
-y cuyos coeficientes pueden calcularse a partir del polinomio \(y\).
+y cuyos coeficientes pueden calcularse directamente a partir del polinomio \(y\).
 Para calcular el parámetro \(v\) utilizaremos el mismo procedimiento utilizado en el algoritmo PGZ para códigos BCH.
 Para cualquier \(1 \leq r \leq t\) denotaremos por \(S^r\) a la matriz
 \[
@@ -143,8 +154,7 @@ Para cualquier \(1 \leq r \leq t\) denotaremos por \(S^r\) a la matriz
     s_t\sigma^t(\alpha) & \sigma^{-1}(s_{t+1})\sigma^t(\alpha) & \dots & \sigma^{-r+1}(s_{t+r-1})\sigma^t(\alpha)\\
   \end{pmatrix}_{(t + 1) \times r}.
 \]
-
-Para todo \(r \leq t\) se tiene que \(S^r = \Sigma^tE^r\), donde 
+Igual que antes, tenemos que para todo \(r \leq t\) se tiene que \(S^r = \Sigma^tE^r\), donde 
 \[
   E^r = \begin{pmatrix}
     e_1 & \sigma^{-1}(e_1) & \dots & \sigma^{-r + 1}(e_1)\\
@@ -169,7 +179,7 @@ y
 \end{lemma}
 
 \begin{proof}
-  Por \parencite[Lema 2.1] se tiene que \(\rank\Sigma = \rank\Sigma^t = v\).
+  Por \parencite[Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018} tiene que \(\rank(\Sigma) = \rank(\Sigma^t) = v\).
   Usando la desigualdad del rango de Sylvester se tiene que
   % MAYBE: citar?
   \[
@@ -179,21 +189,21 @@ y
   Con un razonamiento análogo se puede comprobar que \(\rank(S^r) = \rank(E^r)\).
 \end{proof}
 
-Hay que calcular el mayor \(r\) tal que \(S^r\) tenga rango máximo.
-Por el lema \ref{lem:pgz-sesgados-rangos} es el mayor entero \(r \leq t\) tal que \(E^r\) y \(\Sigma E^r\) tienen rango máximo.
+Hemos de que calcular el mayor natural \(r\) tal que la matriz \(S^r\) tenga rango máximo.
+Por el lema \ref{lem:pgz-sesgados-rangos} que acabamos de demostrar es también el mayor natural \(r \leq t\) tal que las matrices \(E^r\) y \(\Sigma E^r\) tienen rango máximo.
 Denotaremos por \(\mu\) a tal máximo.
 
 \begin{lemma}
   \label{lem:pgz-sesgados-rango-mu}
-  Para cada \(\mu \leq r \leq t\) el máximo \(\mu = \rank(E^r) = \rank(S^r)\).
-  Además \(\mu \leq v\).
+  Para cada \(r\) tal que \(\mu \leq r \leq t\) se tiene que \(\rank(E^r) = \rank(S^r) = \mu\).
+  Por tanto, \(\mu \leq v\).
 \end{lemma}
 
 \begin{proof}
   Por el lema \ref{lem:pgz-sesgados-rangos} \(\mu = \rank(E^{\mu}) = \rank(S^{\mu})\), por lo que suponemos que \(\mu < r\).
   Por la maximalidad de \(\mu\) tenemos que la \((\mu + 1)\)-ésima columna de \(E^r\) es una combinación lineal de las \(\mu\) columnas anteriores.
   Aplicando \(\sigma^{-1}\) obtenemos que la \((\mu + 2)\)-ésima columna es una combinación lineal de las columnas segunda a \(\mu + 1\)-ésima, y por tanto una combinación lineal de las primeras \(\mu\) columnas.
-  Si repetimos el proceso obtenemos que todas las columnas desde la \((\mu + 1)\)-ésima hasta la \(r\)-ésima son combinaciones lineales de las primeras \(\mu\) columnas, y por tanto \(\rank(E^r = \mu)\).
+  Si repetimos el proceso obtenemos que todas las columnas desde la \((\mu + 1)\)-ésima hasta la \(r\)-ésima son combinaciones lineales de las primeras \(\mu\) columnas, y por tanto \(\rank(E^r) = \mu\).
   Como \(E^r\) tiene \(v\) filas, \(\mu \leq v\).
   Finalmente, \(\rank(S^r) = \mu\) de nuevo por el lema \ref{lem:pgz-sesgados-rangos}.
 \end{proof}
@@ -201,13 +211,13 @@ Denotaremos por \(\mu\) a tal máximo.
 \begin{proposition}
   \label{prop:pgz-sesgados-kernel-sesgado}
   El núcleo por la izquierda \(V\) de la matriz \(\Sigma E^{\mu}\) es un código cíclico sesgado.
-  Por ello \(\mathfrak v^{-1}(V) = \mathcal R\rho\) para algún polinomio \(\rho \in \mathcal R\) de grado \(\mu\).
-  Además, \(\rho\) es un divisor por la derecha de \(\lambda\).
+  Por tanto se tiene que \(\mathfrak v^{-1}(V) = \mathcal R\rho\) para algún polinomio \(\rho \in \mathcal R\) de grado \(\mu\).
+  Se tiene además que \(\rho\) es un divisor por la derecha de \(\lambda\).
 \end{proposition}
 
 \begin{proof}
-  Demostraremos la primera afirmación comprobando que si \((a_0, \dots, a_{n-2}, a_{n-1}) \in V \subseteq \mathbb F_q^n\) también se da que \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\).
-  Esto es porque \(xa_ix^{i} = \sigma(a_i)x^{i+1}\) para cada \(0 \leq i \leq n -1\).
+  Demostraremos la primera afirmación comprobando que si el vector \((a_0, \dots, a_{n-2}, a_{n-1}) \in V \subseteq \mathbb F_q^n\) también se da que el desplazamiento cíclico del vector anterior \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\).
+  Recordemos que el desplazamiento tiene esta forma porque \(xa_ix^{i} = \sigma(a_i)x^{i+1}\) para cada \(0 \leq i \leq n -1\).
   Supongamos entonces que \((a_0, a_1, \dots, a_{n-1})\Sigma E^{\mu} = 0\).
   La maximalidad de \(\mu\) nos asegura que la última columna de \(E^{\mu + 1}\) es una combinación lineal de las \(\mu\) columnas anteriores.
   Por tanto, \((a_0, a_1, \dots, a_{n-1})\Sigma E^{\mu + 1} = 0\).
@@ -238,7 +248,7 @@ Denotaremos por \(\mu\) a tal máximo.
     \Sigma = \left( \begin{array}{@{}c|c@{}}
       0 & 1\\\hline
       I_{n-1} & 0
-    \end{array}\right)\Sigma(\Sigma) \text{ y } \Sigma(E^{\mu + 1}) = \left( \begin{array}{@{}c|c@{}}
+    \end{array}\right)\sigma(\Sigma) \quad\text{y}\quad \sigma(E^{\mu + 1}) = \left( \begin{array}{@{}c|c@{}}
       \sigma(e_1) & \multirow{3}{*}{\(E^{\mu}\)}\\
       \vdots & \\
       \sigma(e_v) & \\
@@ -252,9 +262,10 @@ Denotaremos por \(\mu\) a tal máximo.
       \sigma(e_v) & \\
     \end{array}\right) = 0.
   \]
-  En particular, \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\Sigma E^{\mu} = 0\) por lo que \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\) como queríamos.
-  Además, como cualquier ideal de \(\mathcal R\) es principal, \(\mathfrak v^{-1}(V)\) lo es y estará generado por un polinomio \(\rho \in \mathcal R\).
+  En particular, \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\Sigma E^{\mu} = 0\) por lo que el desplazamiento cíclico \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\), como queríamos.
+  Además, dado que cualquier ideal de \(\mathcal R\) es principal, \(\mathfrak v^{-1}(V)\) lo es y estará generado por un polinomio \(\rho \in \mathcal R\).
   Como \(\mathfrak v(\mathcal R \lambda)\) es el núcleo por la izquierda de la matriz \(\Sigma\) se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\), y por tanto \(\rho\) divide por la derecha a \(\lambda\).
+  % TODO: explicar esto de encima mejor, no lo entiendo bien
   Finalmente la dimensión de \(\mathcal \rho\) como un \(\mathbb F_q\) espacio vectorial es \(n - \deg(\rho)\).
   Por el lema \ref{lem:pgz-sesgados-rangos} se tiene que \(\rank(\Sigma E^{\mu}) = \mu\) y por tanto \(\deg(\rho) = \mu\).
 \end{proof}
@@ -295,11 +306,11 @@ Denotaremos por \(\mu\) a tal máximo.
   Entonces
   \[
     \operatorname{mepc}(S^{\mu}) = \left( \begin{array}{@{}c@{}}
-      \operatorname{mepc}(S^{\mu})\\\hline
+      \operatorname{mepc}(S_0^{\mu})\\\hline
       H'
     \end{array}\right).
   \]
-  Si realizamos más reducciones de columnas utilizando la matriz identidad en el bloque derecho de la matriz (\ref{eq:pgz-sesgados-mepc-sigma-e-mu}) podemos ver que \(\rho\) es también la solución no nula, salvo producto por es calares, del sistema homogéneo
+  Si realizamos más reducciones de columnas utilizando la matriz identidad en el bloque derecho de la matriz (\ref{eq:pgz-sesgados-mepc-sigma-e-mu}) podemos ver que \(\rho\) es también la solución no nula, salvo producto por escalares, del sistema homogéneo
   \begin{equation}
     \label{eq:pgz-sesgados-mepc-sigma-e-mu-4}
     X \left( \begin{array}{@{}c|c@{}}
