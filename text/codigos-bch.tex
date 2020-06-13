@@ -110,7 +110,7 @@ En la sección siguiente vamos a estudiar un algoritmo de decodificación que pe
 El algoritmo de Peterson-Gorenstein-Zierler —de ahora en adelante, algoritmo \textacr{PGZ}— es un algoritmo de decodificación de códigos \textacr{BCH} que permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
 Fue desarrollado originalmente en 1960 por Peterson \parencite{peterson_encoding_1960} para decodificar códigos \textacr{BCH} binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios \parencite{gorenstein_class_1961}.
 
-El objetivo es obtener el mensaje original \(c(x)\) a partir de un mensaje recibido \(y(x)\), para lo que hay que hallar primero los errores \(e(x)\) que se han producido en la transmisión, de forma que \(c(x) = y(x) - e(x)\).
+Como en cualquier otro método de decodificación el objetivo es obtener el mensaje original \(c(x)\) a partir de un mensaje recibido \(y(x)\), para lo que hay que hallar primero los errores \(e(x)\) que se han producido en la transmisión, de forma que \(c(x) = y(x) - e(x)\).
 El vector de errores ha de tener peso \(v \leq t\), ya que no podemos corregir más errores de los que el código permite.
 Vamos a considerar que los errores se han producido en coordenadas desconocidas \(k_1, k_2, \dots, k_v\), de forma que el vector de errores lo podemos expresar como
 \[
@@ -122,13 +122,14 @@ Como nuestro objetivo es determinar \(e(x)\) tenemos que hallar: \begin{itemize}
 \end{itemize}
 
 Vamos a estudiar a continuación el desarrollo teórico y la justificación del funcionamiento del algoritmo para después dar una versión del mismo esquematizada en pseudocódigo.
-Comenzamos observando que por el teorema \ref{th:cicl-cto-caracteristico} un elemento \(c(x) \in \mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\), y en nuestro caso particular, dado que \(t = \lfloor (\delta - 1)/2 \rfloor\) y \(T\) contiene a \(\{1, 2, \dots, \delta - 1\}\), se tiene que
+El comienzo de este método es similar al del descrito en la sección \ref{subsec:codificacion-descodificacion}, solo que en lugar de utilizar la propiedad de la matriz de paridad allí descrita utilizaremos la propiedad análoga de que, por el teorema \ref{th:cicl-cto-caracteristico}, un elemento \(c(x) \in \mathcal C\) si y solo si \(c(\alpha^i) = 0\) para todo \(i \in T\).
+En nuestro caso particular, dado que \(t = \lfloor (\delta - 1)/2 \rfloor\) y \(T\) contiene a \(\{1, 2, \dots, \delta - 1\}\), se tiene que
 \[
   y(\alpha^i) = c(\alpha^i) + e(\alpha^i) = e(\alpha^i)
 \]
 para todo \(1 \leq i \leq 2t\).
 Estas ecuaciones van a ser fundamentales para encontrar el error \(e(x)\).
-Vamos a llamar \textit{síndrome} \(s_i\) de \(y(x)\) al elemento de \(\mathbb F_{q}^m\) dado por \(s_i = y(\alpha^i)\).
+En este caso llamaremos \textit{síndrome} \(s_i\) de \(y(x)\) al elemento de \(\mathbb F_{q}^m\) dado por \(s_i = y(\alpha^i)\).
 El primer paso del algoritmo es encontrar los síndromes para todo \(1 \leq i \leq 2t\).
 Estos síndromes nos conducen a un sistema de ecuaciones en el que se encuentran las coordenadas de error \(k_j\) y las magnitudes de error \(e_{k_j}\).
 Desarrollando lo anterior podemos expresar los síndromes como
