@@ -204,7 +204,15 @@ Veamos un ejemplo de este proceso.
 
 El proceso de decodificación de los mensajes consiste en obtener una palabra código válida a partir de un mensaje recibido\footnote{Es importante llamar la atención sobre el hecho de que \textit{decodificar} no es el proceso inverso a \textit{codificar}. Codificar consiste en escribir un mensaje como palabra código y decodificar, en corregir los errores que se hayan podido producir en la transmisión de dicha palabra.}. 
 Es una tarea mucho más complicada que los procesos comentados antes, pues como ya se ha mencionado hay que tener en cuenta las posibles interferencias que se hayan podido producir en la comunicación.
-Los métodos de decodificación de códigos lineales en general se escapan del alcance de este trabajo, pues su objetivo principal es la descripción de un algoritmo de decodificación para un tipo concreto de códigos que veremos más adelante.
+Existen numerosos métodos de decodificación, y en general, cada familia de códigos tendrá un sistema que se aproveche de sus propiedades para ofrecer mejores prestaciones.
+Destacamos de entre todos ellos un sistema aplicable a los códigos lineales, el conocido como \emph{decodificación por síndromes}, pues en él se basará el algoritmo cuya descripción es el objetivo de este trabajo.
+Este método se basa en la propiedad de la matriz de paridad de que para toda palabra código \(\mathbf{c} \in \mathcal C\) se tiene que \(H \mathbf{c} = 0\).
+Someramente el método consiste en computar y almacenar previamente los resultados del producto de todos los posibles vectores error y cuando se recibe un mensaje \(\mathbf{y} = \mathbf{c} + \mathbf{e}\), donde \(\mathbf{e}\) representa el error que se ha producido en la transmisión, se calcula lo que se conoce como \emph{síndrome}, que es el producto
+\[
+  H \mathbf{y} = H(\mathbf{c} + \mathbf{e}) = H \mathbf{c} + H \mathbf{e} = H \mathbf{e}.
+\]
+Este síndrome obtenido se compara con los productos previamente calculados para determinar qué error \(\mathbf{e}\) se ha producido y el mensaje codificado se obtiene como \(\mathbf{c} = \mathbf{y} - \mathbf{e}\).
+%Los métodos de decodificación de códigos lineales en general se escapan del alcance de este trabajo, pues su objetivo principal es la descripción de un algoritmo de decodificación para un tipo concreto de códigos que veremos más adelante.
 
 \subsection{Distancias y pesos}
 
