@@ -24,12 +24,12 @@ Decimos que \(T\) contiene un conjunto de \(s\) \textit{elementos consecutivos} 
 
 Antes de proceder con la cota \textacr{BCH} vamos a enunciar un lema —que será utilizado en la demostración de dicha cota— sobre el determinante de una matriz de Vandermonde.
 Sean \(\alpha_1, \dots, \alpha_s\) elementos de un cuerpo \(\mathbb F\).
-La matriz \(s \times s\) \(V = (v_{i, j})\), onde \(v_{i,j} = \alpha_{j}^{i-1}\) se denomina \textit{matriz de Vandermonde}.
+La matriz de tamaño \(s \times s\) dada por \(V = (v_{i, j})\), donde \(v_{i,j} = \alpha_{j}^{i-1}\) se denomina \textit{matriz de Vandermonde}.
 Observamos que la transpuesta de una matriz de Vandermonde es otra matriz de Vandermonde.
 
 \begin{lemma}
   \label{lem:vandermonde}
-  El determinante de una matriz Vandermonde \(V\) viene dado por \(\operatorname{det}V = \prod_{1 \leq i < j \leq s}(\alpha_j - \alpha_i)\).
+  El determinante de una matriz de Vandermonde \(V\) viene dado por \(\operatorname{det}V = \prod_{1 \leq i < j \leq s}(\alpha_j - \alpha_i)\).
   En particular, \(V\) es no singular si los elementos \(\alpha_1, \dots, \alpha_s\) son todos diferentes dos a dos.
 \end{lemma}
 
