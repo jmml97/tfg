@@ -614,4 +614,20 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
   \]
 \end{theorem}
 
-\section{Automorfismos}
+\section{Automorfismos de cuerpos finitos}
+
+En esta sección vamos a describir someramente los automorfismos de cuerpos finitos, que nos serán necesarios cuando trabajemos con anillos de polinomios de Ore.
+
+Dado un cuerpo finito \(\mathbb F_q\) un automorfismo \(\sigma\) de \(\mathbb F_q\) es una aplicación biyectiva \(\sigma: \mathbb F_q \to \mathbb F_q\) tal que \(\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)\) y \(\sigma(\alpha \beta) = \sigma(\alpha)\sigma(\beta)\) para todo \(\alpha, \beta \in \mathbb F_q\).
+Vamos a describir en el siguiente ejemplo un automorfismo al que nos referiremos en el futuro.
+
+\begin{example}
+  Dado \(\mathbb F_q\) la aplicación biyectiva dada por \(\sigma_p : \mathbb F_q \to \mathbb F_q\) tal que \(\sigma_p(\alpha) = \alpha^p\) para todo \(\alpha \in \mathbb F_q\) es un automorfismo, conocido como \emph{automorfismo de Frobenius}.
+\end{example}
+
+Al grupo que forman los automorfismos de \(\mathbb F_q\) lo llamamos \emph{grupo de Galois} de \(\mathbb F_q\).
+Así, definomos el \emph{orden} de un automorfismo como el menor \(n\) tal que \(\sigma^n(\alpha) = \alpha\) para todo \(\alpha \in \mathbb F_q\).
+
+Decimos que un elemento \(\alpha \in \mathbb F_q\) queda \emph{fijo} por un automorfismo \(\sigma\) si \(\sigma(\alpha) = \alpha\).
+El conjunto de los elementos de \(\mathbb F_q\) que quedan fijos por un automorfismo \(\sigma\) forma un subcuerpo de \(\mathbb F_q\) y se denomina \emph{subuerpo fijo de} \(\mathbb F_q\) por \(\sigma\).
+Lo denotamos por \(\mathbb F_q^{\sigma}\).
