@@ -421,7 +421,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
 \begin{theorem}
   Sea \(\mathbb F_q\) un cuerpo finito, \(\sigma \in \operatorname{Aut}(\mathbb F_q)\) de orden \(n\) y \(\mathbb F_q^{\sigma}\) el subcuerpo invariante del generado por \(\sigma\).
   Sea \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) una base normal de \(\mathbb F_q\) sobre \(\mathbb F_{q}\) y \(\beta = \alpha^{-1}\sigma(\alpha)\).
-  Sean \(\mathcal R = \mathbb F_q[x, \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
+  Sean \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
   Entonces el algoritmo descrito en el algoritmo \ref{alg:pgz-sesgados} encuentra correctamente el erro \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
 \end{theorem}
 

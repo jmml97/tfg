@@ -26,7 +26,7 @@ Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que ver que
 Puesto que hemos usado la suma usual de los polinomios, bastaría probar que se verifica la propiedad asociativa para la multiplicación que hemos definido.
 No vamos a entrar en detalle, pues no es el objetivo de este trabajo el estudio de los anillos de polinomios de Ore en general.
 
-Trabajar con códigos cíclicos sesgados requiere del estudio del anillo \(\mathbb F_q[x, \sigma]\), con \(\sigma\) un automorfismo.
+Trabajar con códigos cíclicos sesgados requiere del estudio del anillo \(\mathbb F_q[x; \sigma]\), con \(\sigma\) un automorfismo.
 Por tanto, nos vamos a centrar los anillos de polinomios de Ore en los que \(R = \mathbb F_q\) —cuerpo finito de \(q\) elementos—, hemos llamado \(x\) a \(t\), \(\sigma\) es un automorfismo y \(\delta = 0\).
 En estos anillos la multiplicación verifica la relación 
 \[
@@ -48,18 +48,18 @@ con lo que, junto a la propiedad distributiva podemos definir el producto de pol
   \textstyle(\sum a_nx^n)(\sum b_mx^m) = \sum(a_nx^n)(b_mx^m).
 \]
 
-Para comprobar que \(\mathbb F_q[x, \sigma]\) es un anillo, como ya hemos comentado en el caso general, necesitamos comprobar que se verifica la propiedad asociativa para la multiplicación.
+Para comprobar que \(\mathbb F_q[x; \sigma]\) es un anillo, como ya hemos comentado en el caso general, necesitamos comprobar que se verifica la propiedad asociativa para la multiplicación.
 Comprobar esta afirmación directamente es tedioso, pero en \parencite[p. 2-3]{jacobson_finite-dimensional_1996} puede consultarse una demostración utilizando una representación matricial de los elementos.
 
-A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, \(\mathbb F_q[x, \sigma]\) es un dominio de integridad no conmutativo.
+A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, \(\mathbb F_q[x; \sigma]\) es un dominio de integridad no conmutativo.
 Dado un polinomio \(f(x) = a_0 + a_1x + \dots + a_nx^n\) con \(a_n \neq 0\) y definimos \(\deg(f(x)) = n\) y \(\deg(0) = -\infty\).
 Si consideramos otro polinomio \(g(x) = b_0 + b_1x + \dots + b_mx^m\) con \(b_m\) entonces \(f(x)g(x) = \dots + a_n(\sigma^n b_m)x^{n+m}\) y \(a_n(\sigma^nb_m) \neq 0\) y así,
 \[
   \deg(f(x)g(x)) = \deg(f(x)) + \deg(g(x)).
 \]
-Por tanto, \(\mathbb F_q[x, \sigma]\) no tiene divisores de cero distintos del cero, por lo que es un dominio de integridad no conmutativo, como habíamos afirmado.
+Por tanto, \(\mathbb F_q[x; \sigma]\) no tiene divisores de cero distintos del cero, por lo que es un dominio de integridad no conmutativo, como habíamos afirmado.
 
-Podemos definir algoritmos de división en \(\mathbb F_q[x, \sigma]\) tanto a la izquierda como a la derecha (cita)  —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x, \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
+Podemos definir algoritmos de división en \(\mathbb F_q[x; \sigma]\) tanto a la izquierda como a la derecha (cita)  —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x; \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
 \[
   f(x) = q(x)g(x) + r(x),
 \]
@@ -72,8 +72,8 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
 
 \begin{Ualgorithm}[h]
   \DontPrintSemicolon
-  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(g \neq 0\)}
-  \KwOut{polinomios \(q, r \in \mathbb F_q[x, \sigma]\) tales que \(f = qg + r\), y \(\deg(r) < \deg(g)\)}
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x; \sigma]\) con \(g \neq 0\)}
+  \KwOut{polinomios \(q, r \in \mathbb F_q[x; \sigma]\) tales que \(f = qg + r\), y \(\deg(r) < \deg(g)\)}
   \(q \longleftarrow 0\)\;
   \(r \longleftarrow f\)\;
   \While{\(\deg(g) \leq \deg(r)\)}{
@@ -81,14 +81,14 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
     \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
     \(r \longleftarrow r - ax^{\deg (r) - \deg (g)}g\)
     }
-    \caption{División por la izquierda en \(\mathbb F_q[x, \sigma]\)}
+    \caption{División por la izquierda en \(\mathbb F_q[x; \sigma]\)}
   \label{alg:ore-fq-division-izquierda}
 \end{Ualgorithm}
 
 \begin{Ualgorithm}[h]
   \DontPrintSemicolon
-  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(g \neq 0\)}
-  \KwOut{polinomios \(q, r \in \mathbb F_q[x, \sigma]\) tales que \(f = gq + r\), y \(\deg(r) < \deg(g)\)}
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x; \sigma]\) con \(g \neq 0\)}
+  \KwOut{polinomios \(q, r \in \mathbb F_q[x; \sigma]\) tales que \(f = gq + r\), y \(\deg(r) < \deg(g)\)}
   \(q \longleftarrow 0\)\;
   \(r \longleftarrow f\)\;
   \While{\(\deg(g) \leq \deg(r)\)}{
@@ -96,7 +96,7 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
     \(q \longleftarrow q + ax^{\deg (r) - \deg (g)}\)\;
     \(r \longleftarrow r - gax^{\deg (r) - \deg (g)}\)
     }
-    \caption{División por la derecha en \(\mathbb F_q[x, \sigma]\)
+    \caption{División por la derecha en \(\mathbb F_q[x; \sigma]\)
   }
   \label{alg:ore-fq-division-derecha}
 \end{Ualgorithm}
@@ -147,8 +147,8 @@ Puede definirse una versión del algoritmo extendido de Euclides en este context
 
 \begin{Ualgorithm}[h]
   \DontPrintSemicolon
-  \KwIn{polinomios \(f, g \in \mathbb F_q[x, \sigma]\) con \(f \neq 0\), \(g \neq 0\)}
-  \KwOut{un número \(n \in \mathbb N\), polinomios \(u_i, v_i, q_i, f_i \in \mathbb F_q[x, \sigma]\) tales que \(f_i = u_if + v_ig\), \(q_i = \operatorname{coi}(f_{i-1}, f_i)\), para \(1 \leq i \leq n + 1\) y \(f_n = (f, g)_d\), \(u_nf = -v_ng = [f, g]_i\).}
+  \KwIn{polinomios \(f, g \in \mathbb F_q[x; \sigma]\) con \(f \neq 0\), \(g \neq 0\)}
+  \KwOut{un número \(n \in \mathbb N\), polinomios \(u_i, v_i, q_i, f_i \in \mathbb F_q[x; \sigma]\) tales que \(f_i = u_if + v_ig\), \(q_i = \operatorname{coi}(f_{i-1}, f_i)\), para \(1 \leq i \leq n + 1\) y \(f_n = (f, g)_d\), \(u_nf = -v_ng = [f, g]_i\).}
   \(u_0 \longleftarrow v_1 = 1\)\;
   \(u_1 \longleftarrow v_0 = 1\)\;
   \(f_0 \longleftarrow f\)\;
@@ -161,7 +161,7 @@ Puede definirse una versión del algoritmo extendido de Euclides en este context
     \(f_{i+1} \longleftarrow f_{i-1} - q_if_i\)\;
     \(n \longleftarrow i\)\;
     }
-    \caption{Algoritmo extendido de Euclides por la izquierda en \(\mathbb F_q[x, \sigma]\)
+    \caption{Algoritmo extendido de Euclides por la izquierda en \(\mathbb F_q[x; \sigma]\)
   }
   \label{alg:ore-fq-euclides}
 \end{Ualgorithm}
@@ -207,7 +207,7 @@ Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathb
 
 \begin{proposition}
   \label{prop:norma-divisor}
-  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x, \sigma]\) y \(\gamma \in \mathbb F_q\) entonces \((x - \gamma) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(\gamma) = 0\).
+  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x; \sigma]\) y \(\gamma \in \mathbb F_q\) entonces \((x - \gamma) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(\gamma) = 0\).
 \end{proposition}
 
 \begin{proof}
