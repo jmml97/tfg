@@ -10,7 +10,8 @@ Las fuentes de este capítulo han sido \parencite{huffman_fundamentals_2003}, \p
 
 Al trabajar con códigos cíclicos pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
 Al hablar de «coordenadas consecutivas» siempre tendremos en cuenta esta ciclicidad.
-Representaremos las palabras código de los códigos cíclicos como polinomios, pues podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\). 
+Representaremos las palabras código de los códigos cíclicos como polinomios, pues podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
+Denotaremos a esta biyección por \(\mathfrak v\).
 Obtenemos así un isomorfismo entre \(\mathbb F_q\)-espacios vectoriales.
 Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra código \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
@@ -685,7 +686,7 @@ El siguiente teorema nos muestra que los ideales minimales descritos en el teore
 \end{proof}
 
 A continuación vamos a describir una permutación que lleva idempotentes de \(\mathcal R_n\) en idempotentes de \(\mathcal R_n\).
-Sra \(a\) un entero tal que \(\operatorname{mcd}(a, n) = 1\).
+Sea \(a\) un entero tal que \(\operatorname{mcd}(a, n) = 1\).
 La función \(\mu_a\) definida sobre \(\{0, 1, \dots, n -1\}\) por \(i\mu_a \equiv ia \bmod n\) es una permutación de las posiciones de coordenadas \(\{0, 1, \dots, n - 1\}\) de un código cíclico de longitud \(n\) y se denomina \textit{multiplicador}.
 Dado que los códigos cíclicos de longitud \(n\) se representan como ideales de \(\mathcal R_n\), para \(a > 0\) es conveniente interpretar que \(\mu_a\) actúa sobre \(\mathcal R_n\) como
 \begin{equation}
