@@ -138,7 +138,7 @@ class SkewRSCode(SkewCyclicCode):
             
             for b_root in b_roots:
                 if not b_root.left_divides(R.gen()^n - 1):
-                    raise ValueError("All the b-roots must divide x^n - 1, "
+                    raise ValueError("All the b_roots must divide x^n - 1, "
                                  "where n is the automorphism order.")
             
             self._generator_polynomial = left_lcm(b_roots)
@@ -376,13 +376,11 @@ class SkewRSPGZDecoder(Decoder):
         s = []
         i = 0
         for i in (0..2*t - 1):
-            logger("cálculo de síndromes, índice i: ", i)
             s_i = 0
             for j in (0..n-1):
-                logger("cálculo de síndromes, índice j: ", j)
-                logger("y_list[j]: ", y_list[j])
                 s_i = s_i + y_list[j]*norm(j, (sigma^i)(b), sigma)
             s.append(s_i)
+        logger("s, syndromes vector: ", s)
 
         # Comprobamos si los síndromes son todos nulos
         if all(s_i == 0 for s_i in s):
@@ -415,7 +413,7 @@ class SkewRSPGZDecoder(Decoder):
         v = len(k)
 
         if mu != v:
-            logger("Estamos en el caso mu != v")
+            logger("Case mu != v")
             M_rho = matrix(n - mu, n, lambda i, j: xentries_M_rho(i, j, rho, sigma))
             logger("M_rho:\n", M_rho)
             N_rho = M_rho*N
@@ -439,6 +437,7 @@ class SkewRSPGZDecoder(Decoder):
 
         logger("k: ", k)
         logger("v: ", v)
+        logger("Note: solve for E, where E*Sigma.transpose() = b_syn")
         Sigma = matrix(v, lambda i, j: xentries_Sigma(i, j, sigma, a, k))
         logger("Sigma:\n", Sigma)
 
@@ -450,12 +449,14 @@ class SkewRSPGZDecoder(Decoder):
 
         # Paso 3: resolvemos el sistema de los síndromes
         E = Sigma.transpose().solve_left(vector(b_syn))
+        logger("E: ", E)
 
         # Paso 4: construimos el error y se lo restamos al mensaje
         e = R(0)
         for i in range(len(k)):
             e = e + E[i]*R.gen()^(k[i])
         logger("error: ", e)
+        logger("m = y - e: ", y - e)
 
         return vector(_to_complete_list(y - e, self.code().length()))
     
