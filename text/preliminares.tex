@@ -217,24 +217,24 @@ El polinomio \(f(x)\) se llama \textit{divisor} o \textit{factor} de \(g(x)\).
 %Un polinomio \(f(x)\) se dice que es \emph{irreducible} cuando no es posible expresarlo como producto de dos polinomios no constantes y distintos entre sí.
 
 Como ya hemos anticipado vamos a centrarnos en el estudio de los anillos de polinomios en cuerpos finitos pues son los que necesitaremos para la teoría de códigos.
-Siguiendo la notación que hemos establecido, denotaremos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
+Siguiendo la notación que hemos establecido, denotaremos el anillo de le los polinomios con coeficientes en \(\mathbb F_p\) por \(\mathbb F_p[x]\).
 Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios que acabamos de describir.
 Es, de hecho, un dominio de integridad.
 
-Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
-Dados \(f(x), g(x) \in \mathbb F_q[x]\) el \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_q[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
+Un polinomio en \(\mathbb F_p[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_p\).
+Dados \(f(x), g(x) \in \mathbb F_p[x]\) el \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_p[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
 Lo denotamos por \(\operatorname{mcd}(f(x), g(x))\).
 Decimos que dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 
-El siguiente resultado nos proporciona la existencia y unicidad de divisores de un polinomio en \(\mathbb F_q[x]\).
+El siguiente resultado nos proporciona la existencia y unicidad de divisores de un polinomio en \(\mathbb F_p[x]\).
 
 % Algoritmo de división (cambiado nombre del teorema para quitar algoritmo de división por sugerencia de Gabriel)
 
 \begin{theorem}
   \label{th:algoritmo-division}
-  Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
+  Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_p[x]\), siendo \(g(x)\) distinto de cero.
   \begin{enumerate}
-    \item \label{thi:algoritmo-division-division} Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_q[x]\) tales que \[
+    \item \label{thi:algoritmo-division-division} Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_p[x]\) tales que \[
       f(x) = g(x)h(x) + r(x), \quad \text{donde } \operatorname{gr} r(x) < \operatorname{gr} g(x) \text{ o } r(x) = 0. 
     \]
     \item \label{thi:algoritmo-division-mcd} Si \(f(x) = g(x)h(x) + r(x)\), entonces \[\operatorname{mcd}(f(x), g(x)) = \operatorname{mcd}(g(x), r(x)).\]
@@ -245,7 +245,7 @@ Podemos utilizar este resultado para hallar el máximo común divisor de dos pol
 Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy parecido a su homólogo para números enteros.
 
 \begin{theorem}[Algoritmo de Euclides]
-  Sean \(f(x)\) y \(g(x)\) dos polinomios en \(\mathbb F_q[x]\) con \(g(x)\) distinto de cero.
+  Sean \(f(x)\) y \(g(x)\) dos polinomios en \(\mathbb F_p[x]\) con \(g(x)\) distinto de cero.
   \begin{enumerate}
     \item Realiza los siguientes pasos hasta que \(r_n(x) = 0\) para algún \(n\):
     \begin{align*}
@@ -256,8 +256,8 @@ Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy pareci
       r_{n-3}(x) &= r_{n-2}(x)h_{n-1}(x) + r_{n-1}(x), \ \text{donde } \operatorname{gr} r_{n-1}(x) < \operatorname{gr} r_{n-2}(x),\\
       r_{n-2}(x) &= r_{n-1}(x)h_n(x) + r_n(x), \qquad \text{donde } r_n(x) = 0.
     \end{align*} 
-    Entonces, \(\operatorname{mcd}(f(x), g(x)) = cr_{n-1}(x)\), donde \(c \in \mathbb F_q\) se escoge para que \(cr_{n-1}(x)\) sea mónico.
-    \item Existen polinomios \(a(x), b(x) \in \mathbb F_q[x]\) tales que 
+    Entonces, \(\operatorname{mcd}(f(x), g(x)) = cr_{n-1}(x)\), donde \(c \in \mathbb F_p\) se escoge para que \(cr_{n-1}(x)\) sea mónico.
+    \item Existen polinomios \(a(x), b(x) \in \mathbb F_p[x]\) tales que 
     \[
       a(x)f(x) + b(x)g(x) = \operatorname{mcd}(f(x), g(x)).
     \]
@@ -270,24 +270,24 @@ A continuación vamos a comentar un par de resultados que nos serán útiles en 
 
 \begin{proposition}
   \label{prop:k-divisor-f-g}
-  Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
+  Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_p[x]\).
   \begin{enumerate}
-    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_p[x]\).
     \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\) entonces \(k(x)\) es divisor del polinomio \(\operatorname{mcd}(f(x), g(x))\).
   \end{enumerate}
 \end{proposition}
 
 \begin{proposition}
-  \label{prop:raices-factores-pol-Fq}
-  Sea \(f(x)\) un polinomio en \(\mathbb F_q[x]\) de grado \(n\). 
+  \label{prop:raices-factores-pol-Fp}
+  Sea \(f(x)\) un polinomio en \(\mathbb F_p[x]\) de grado \(n\). 
   Entonces: 
   \begin{enumerate}
-    \item Si \(\alpha \in \mathbb F_q\) es una raíz de \(f(x)\) entonces \(x - \alpha\) es un factor de \(f(x)\).
-    \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_q\).
+    \item Si \(\alpha \in \mathbb F_p\) es una raíz de \(f(x)\) entonces \(x - \alpha\) es un factor de \(f(x)\).
+    \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_p\).
   \end{enumerate}
 \end{proposition}
 
-Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
+Un polinomio no constante \(f(x) \in \mathbb F_p[x]\) es \textit{irreducible sobre} \(\mathbb F_p\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_p[x]\) de grado menor.
 \begin{theorem}
   Sea \(f(x)\) un polinomio no constante. Entonces, 
   \[
@@ -295,7 +295,7 @@ Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sob
   \]
   donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
 \end{theorem}
-Este resultado nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
+Este resultado nos dice que \(\mathbb F_p[x]\) es lo que se conoce como \textit{dominio de factorización única}.
 Se puede comprobar que es, además, un dominio de ideales principales.
 
 % 3.3 Primitive elements
@@ -412,7 +412,7 @@ En el siguiente apartado veremos que multiplicar elementos de un cuerpo finito g
 
 \subsection{Elementos primitivos}
 
-Vamos a buscar otra forma de expresar los elementos de un cuerpo \(\mathbb F_q\) de tal forma que podamos conectarla con nuestra notación como tuplas y que haga que la multiplicación sea más sencilla de expresar.
+Vamos a buscar otra forma de expresar los elementos de un cuerpo \(\mathbb F_q\) —con \(q = p^m\) para \(p\) primo— de tal forma que podamos conectarla con nuestra notación como tuplas y que haga que la multiplicación sea más sencilla de expresar.
 Esta expresión vendrá dada por lo que vamos a denominar elementos primitivos.
 
 Comenzamos viendo que el conjunto \(\mathbb F_q^*\) —de los elementos de \(\mathbb F_q\) distintos de cero— es un grupo.
@@ -442,7 +442,7 @@ Cuando los elementos distintos de cero de un cuerpo finito se expresan como pote
   Entonces, \(\gamma^{q-1} = 1\) por definición.
   Por tanto, \((\gamma^i)^{q-1} = 1\) para todo \(i\) tal que \(0 \leq i \leq q - 2\).
   En consecuencia, los elementos de \(\mathbb F_q^*\) son las raíces de \(x^{q-1}-1 \in \mathbb F_p[x]\) y en consecuencia, de \(x^q - x\).
-  Como \(0\) es raíz de \(x^q - x\), por la proposición \ref{prop:raices-factores-pol-Fq} sabemos que los elementos de \(\mathbb F_q\) son las raíces de \(x^q - x\), como queríamos.
+  Como \(0\) es raíz de \(x^q - x\), por la proposición \ref{prop:raices-factores-pol-Fp} sabemos que los elementos de \(\mathbb F_q\) son las raíces de \(x^q - x\), como queríamos.
 \end{proof}
 
 Un elemento \(\xi \in \mathbb F_q\) es una raíz enésima de la unidad si \(\xi^n = 1\), y es una raíz enésima primitiva de la unidad si además \(\xi^s \neq 1\) para todo s tal que \(0 < s < n\).
@@ -536,7 +536,7 @@ De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x
     Como tanto \(\mathbb F_{q}(\alpha)\) como \(\mathbb F_{q}(\beta)\) son subcuerpos del mismo tamaño, han de ser iguales (cita). % TODO: mencionar el teorema (no incluido) de que dos subcuerpos de F_p del mismo tamaño son iguales
     Por tanto, todas las raíces de \(f(x)\) están en \(\mathbb F_{q^r}\).
     Finalmente, todo cuerpo conteniendo a \(\mathbb F_q\) y una raíz de \(f(x)\) contiene a \(\mathbb F_{q^r}\).
-    \item Se deduce de lo anterior y de la proposición \ref{prop:raices-factores-pol-Fq}.
+    \item Se deduce de lo anterior y de la proposición \ref{prop:raices-factores-pol-Fp}.
     \item Se deduce del apartado anterior y del hecho de que por el teorema \ref{th:el-Fq-raices-pol}, \(x^{q^r} - x = \prod_{\alpha \in \mathbb F_{q^r}}(x - \alpha)\).\qedhere
   \end{enumerate}
 \end{proof}
