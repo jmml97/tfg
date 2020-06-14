@@ -1,12 +1,10 @@
 \chapter{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
 
-En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
-La fuente de este capítulo es \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
+En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, y es una exposición de los resultados descritos en \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
 
 En lo que sigue vamos a considerar que \(\mathcal C\) es un código RS sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
 % TODO: no acabo de entender todo esto de la notación \alpha' porque no vuelve a mencionarse
-También, con el objetivo de simplificar un poco la notación, escribiremos \(\alpha' = \sigma^r(\alpha)\), lo que nos proporcionará una base normal.
-Continuando con esta notación tenemos que \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta)]_i\) será un generador del código \(\mathcal C\).
+También, con el objetivo de simplificar un poco la notación, escribiremos \(\alpha' = \sigma^r(\alpha)\) y \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta)]_i\) será un generador del código \(\mathcal C\).
 El ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta, x - \sigma(\beta), \dots, x - \sigma^{\delta - 2}(\beta')]_i\) para algún \(2 \leq \delta \leq n\).
 La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
 
@@ -18,6 +16,13 @@ Suponemos que recibimos el mensaje \(y = c + e\) donde \(e = e_1x^{k_1} + \dots 
 Para determinarlo es necesario por tanto conocer tanto las magnitudes de error \((e_{1}, \dots, e_{v})\) como las coordenadas de error \((k_1, \dots, k_v)\).
 
 Vamos a describir un algoritmo para decodificar códigos cíclicos sesgados similar al ya descrito para códigos BCH.
+Los pasos que dimos entonces fueron: \begin{enumerate}
+  \item Determinar los síndromes del mensaje recibido.
+  \item Encontrar el polinomio localizador.
+  \item Obtener las coordenadas de error \(k_j\) y las magnitudes de error \(e_{j}\).
+  \item Hallar el vector de error \(e(x)\) y restárselo al mensaje \(y(x)\).
+\end{enumerate}
+Esta versión del algoritmo sigue un esquema similar.
 Así, el primer paso es el del cálculo de los síndromes, que será un procedimiento análogo al realizado entonces pero utilizando la definición de norma \(i\)-ésima de un elemento.
 Por tanto para cada \(0 \leq i \leq 2t - 1\) el \emph{síndrome} \(i\)\emph{-ésimo} \(s_i\) del polinomio recibido \(y\) se define como el resto de dividir por la izquierda dicho polinomio \(y\) entre \(x - \sigma^{i}(\beta)\).
 Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \(i = 0, \dots, \delta - 2\) se tiene que 
@@ -26,6 +31,8 @@ Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \
    &= \sum_{j = 1}^{v}e_j\sigma^{i}(\alpha^{-1})\sigma^{i+k_j}(\alpha) = \sigma^{i}(\alpha^{-1})\sum_{j = 1}^{v}e_j\sigma^{i+k_j}(\alpha).
    \label{eq:sindromes-sesgados}
 \end{align}
+
+La siguiente proposición nos proporciona una forma de obtener las magnitudes de error a partir de las coordenadas de error y los síndromes, tal y como ocurría en el caso de códigos BCH.
 
 \begin{proposition}
   \label{prop:pgz-sesgados-magnitudes-error}
@@ -75,17 +82,19 @@ Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \
 \end{proof}
 
 Como consecuencia de la proposición \ref{prop:pgz-sesgados-magnitudes-error} el proceso de decodificación se reduce a encontrar las coordenadas de error \(\{k_1, \dots, k_v\}\).
-Para ello al igual que hicimos en el caso del algoritmo para códigos BCH vamos a definir un polinomio localizador de errores, que en este caso vendrá dado por 
+Para ello al igual que hicimos en el caso del algoritmo para códigos BCH vamos a definir un polinomio localizador de errores, que en este caso será el que verifique que 
 \[
   \lambda = \left[x - \sigma^{k_1}(\beta), x - \sigma^{k_2}(\beta), \dots, x - \sigma^{k_v}(\beta)\right]_{i}.
 \]
-Por el lema \ref{lem:pol-t-beta} este polinomio \(\lambda\) tiene grado \(v\) y sus raíces nos permitirán determinar las coordenadas de error.
+Por el lema \ref{lem:pol-t-beta} sabemos que este polinomio \(\lambda\) tiene grado \(v\).
+Son sus raíces las que nos permitirán determinar las coordenadas de error.
+El problema radica por tanto en encontrar este polinomio a partir de la información de la que disponemos.
 
 Observamos que, por definición, un polinomio 
 \[
   f = \sum_{k = 0}^{n-1}f_k x^{k} \in \mathcal R\lambda \;\text{ si y solo si }\; x - \sigma^{k_j}(\beta) \mid_d f \quad\text{para todo } j = 1, \dots, v,
 \]
-o bien si y solo si
+o bien, utilizando la norma, si y solo si
 \[
   \sum_{k=0}^{n -1}f_k N_k(\sigma^{k_j}(\beta))= 0 \quad\text{para todo } j = 1, \dots, v.
 \]
@@ -124,7 +133,7 @@ Consideramos ahora la matriz
 \]
 Así podemos considerar la siguiente matriz, que expresaremos por sus entradas para la fila \(k\) y la columna \(i\),
 \[
-  S = \Sigma E = \left(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\right)_{n \times v}.
+  S = \Sigma E = \left(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\right)_{0 \leq k \leq n,\; 0 \leq i \leq v}.
 \]
 Por (\ref{eq:sindromes-sesgados}), cuando \(k + i < 2t - 1\), la componente \((k, i)\)-ésima puede escribirse como \(\sigma^{-i}(s_{k+i})\sigma(\alpha)\), de tal forma que podemos dividir la matriz \(S\) como
 \[
@@ -340,7 +349,7 @@ Denotaremos por \(\mu\) a tal máximo.
   % TODO: añadir? referenciar?
 \end{proof}
 
-Hay una conexión entre los polinomios \(\rho\) y \(\lambda\).
+La siguiente proposición nos ilustra sobre la relación existente entre los polinomios \(\rho\) y \(\lambda\).
 
 \begin{proposition}
   \label{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho}
@@ -421,7 +430,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   Sea \(\mathbb F_q\) un cuerpo finito, \(\sigma \in \operatorname{Aut}(\mathbb F_q)\) de orden \(n\) y \(\mathbb F_q^{\sigma}\) el subcuerpo invariante del generado por \(\sigma\).
   Sea \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) una base normal de \(\mathbb F_q\) sobre \(\mathbb F_{q}\) y \(\beta = \alpha^{-1}\sigma(\alpha)\).
   Sean \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
-  Entonces el algoritmo descrito en el algoritmo \ref{alg:pgz-sesgados} encuentra correctamente el erro \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
+  Entonces el algoritmo descrito en el algoritmo \ref{alg:pgz-sesgados} encuentra correctamente el error \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
 \end{theorem}
 
 \begin{proof}
@@ -463,7 +472,75 @@ Veamos a continuación algunos ejemplos.
   Tomaremos \(\alpha = a\), lo que nos proporciona una base normal de \(\mathbb F\), y \(\beta = \sigma(a)a^{-1} = a^{1023}\).
   Las imágenes de \(\beta\) por las potencias de \(\sigma\) nos da el conjunto \(\{a^{1023}, a^{3327}, a^{3903}, a^{4047}, a^{4083}, a^{4092}\}\).
   Consideremos el código RS sesgado generado por
-  \[
-    g = \left[x - a^{1023}, x - a^{3327}, x - a^{3903}, x - a^{4047}\right]_i = x^4 + a^{2103}x^3 + a^{687}x^2 + a^{1848} + a^{759}.
-  \]
+  \begin{align*}
+    g &= \left[x - a^{1023}, x - a^{3327}, x - a^{3903}, x - a^{4047}\right]_i \\
+      &= x^4 + a^{2103}x^3 + a^{687}x^2 + a^{1848} + a^{759}.
+  \end{align*}
+  Vamos a seguir este ejemplo utilizando Sage.
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: a^12
+    > a^7 + a^6 + a^5 + a^3 + a + 1
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma); S
+    > Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    sage: b = a^-1*sigma(a)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewRSCode(generator_pol=g); C
+    > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  \end{lstlisting}
+  Definimos el decodificador basado en el algoritmo PGZ.
+  \begin{lstlisting}[gobble=4]
+    sage: D = SkewRSPGZDecoder(C); D
+    > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    sage: D.correction_capability()
+    > 2
+  \end{lstlisting}
+  Supongamos que queremos enviar el mensaje \(m = x + a\), por lo que el polinomio codificado se obtiene como \(c = mg\).
+  \begin{lstlisting}[gobble=4]
+    sage: C.encode(x + a, "SkewCyclicPolynomialEncoder")
+    > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  \end{lstlisting}
+  Este vector equivale a la expresión polinómica \(c = x^5 + a^{3953}x^4 + a^{1333}x^3 + a^{2604}x^2 + a^{1596}x + a^{760}\).
+  Supongamos que se ha recibido tras la transmisión el vector \(y = x^5 + a^{3953}x^4 + a^{671}x^3 + a^{2604}x^2 + a^{1596}x + a^{3699}\).
+  \begin{lstlisting}[gobble=4]
+    sage: y = x^5 + a^3953*x^4 + a^671*x^3 + a^2604*x^2 + a^1596*x + a^3699; y
+    > x^5 + (a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a)*x^4 + (a^11 + a^10 + a^8 + a^6 + a^4 + a^2 + 1)*x^3 + (a^11 + a^9 + a^8 + a^2 + a + 1)*x^2 + (a^9 + a^6 + a^5 + a^4 + a^3 + 1)*x + a^9 + a^8 + a^6 + a^5 + a + 1
+  \end{lstlisting}
+  Vamos a utilizar el decodificador.
+  \begin{lstlisting}[gobble=4, basicstyle=\small\ttfamily]
+    sage: D.decode_to_code(y)
+    > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    sage: D.correction_capability()
+    > 2
+    sage: D.decode_to_code(y)
+    DEBUG: s, syndromes vector: [a^10 + a^6 + a^5 + a^3, a^11 + a^10 + a^7 + a^5 + a^4 + a^3 + a^2 + a, a^11 + a^9 + a^8 + a^5 + a^4 + a^2 + a, a^11 + a^10 + a^6 + a^3 + a^2 + a + 1]
+      S_t:
+      [                    a^11 + a^7 + a^6 + a^4 a^10 + a^7 + a^6 + a^5 + a^4 + a^2 + a + 1]
+      [            a^11 + a^9 + a^4 + a^2 + a + 1            a^9 + a^8 + a^7 + a^5 + a^2 + a]
+      [             a^9 + a^6 + a^4 + a^3 + a + 1          a^11 + a^10 + a^9 + a^4 + a^2 + 1]
+      rcef_S_t:
+      [                                              1                                               0]
+      [                                              0                                               1]
+      [a^11 + a^10 + a^9 + a^8 + a^7 + a^6 + a^5 + a^4                      a^10 + a^8 + a^7 + a^2 + 1]
+      rho: [a^11 + a^10 + a^9 + a^8 + a^7 + a^6 + a^5 + a^4, a^10 + a^8 + a^7 + a^2 + 1, 1]
+      k: [0, 3]
+      v: 2
+      Note: solve for E, where E*Sigma.transpose() = b_syn
+      Sigma:
+      [                                  a             a^8 + a^4 + a^3 + a + 1]
+      [ a^11 + a^9 + a^8 + a^5 + a^4 + a^2 a^11 + a^10 + a^9 + a^7 + a^5 + a^4]
+      b_syn: [a^11 + a^7 + a^6 + a^4, a^11 + a^9 + a^4 + a^2 + a + 1]
+      E: (a^2, a^3)
+      error: a^3*x^3 + a^2
+      m = y - e: x^5 + (a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a)*x^4 + (a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1)*x^3 + (a^11 + a^9 + a^8 + a^2 + a + 1)*x^2 + (a^9 + a^6 + a^5 + a^4 + a^3 + 1)*x + a^9 + a^8 + a^6 + a^5 + a^2 + a + 1
+    > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  \end{lstlisting}
+  Y efectivamente podemos comparar ambos valores para comprobar que son el mismo.
+  \begin{lstlisting}[gobble=4]
+    sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
+    > True
+  \end{lstlisting}
+
 \end{example}
