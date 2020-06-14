@@ -129,7 +129,7 @@ class SkewCyclicCode(AbstractLinearCode):
 
 class SkewRSCode(SkewCyclicCode):
     
-    def __init__(self, b_roots=None, generator_pol=None):
+    def __init__(self, generator_pol=None, b_roots=None):
         
         if (b_roots is not None and generator_pol is None):
             F = b_roots[0].base_ring()
