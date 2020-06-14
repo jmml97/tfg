@@ -122,6 +122,19 @@ Veamos a continuación un par de ejemplos.
   Un ideal bilátero será principal si verifica cualquiera de las dos condiciones.
 \end{definition}
 
+% Cociente de anillos
+
+Dado un ideal bilátero \(I\) de un anillo \(R\) es posible definir una relación de equivalencia, dada por \(a \sim b\) si y solo si \(a - b \in I\).
+Esta relación nos permite definir el conjunto \(R/I\), de las clases de equivalencia obtenidas a partir de ella.
+Para un \(a \in R\) su clase de equivalencia viene dada por
+\[
+  [a] = a + I = \{a + x : x \in I\}.  
+\]
+Pero es más, \(R/I\) también tiene estructura de anillo y se conoce como \emph{anillo cociente} de \(R\) por \(I\), cuyas operaciones —bien definidas— vienen dadas por
+\[
+  (a + I) + (b + I) = (a + b) + I \quad\text{y}\quad (a + I)(b + I) = ab + I.
+\]
+
 A continuación vamos a definir algunos otros conceptos relativos a anillos.
 Decimos que un ideal \(J\) es \textit{minimal} si no existe ningún otro ideal entre \(\{0\}\) y \(J\).
 Podemos clasificar los elementos de un anillo distintos de cero en dos tipos: \textit{divisores de cero} y \textit{regulares}.
