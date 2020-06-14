@@ -56,7 +56,7 @@ Veamos en la siguiente definición otro ejemplo de las herramientas que nos prop
   Las \(r = n - k\) coordenadas restantes se llaman \textit{conjunto redundante}, y el número \(r\), la \textit{redundancia} de \(\mathcal C\).
 \end{definition}
 
-Si las primeras \(k\) coordenadas de una matriz generadora \(G\) forman un conjunto de información entonces el código tiene una única matriz generadora de la forma \([I_k \mid A]\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
+Si las primeras \(k\) coordenadas de una matriz generadora \(G\) forman un conjunto de información entonces el código tiene una única matriz generadora de la forma \((I_k \mid A)\), donde \(I_k\) es la matriz identidad \(k \times k\) y \(A\) es una matriz \(k \times r\). 
 Esta matriz generadora se dice que está en \textit{forma estándar}.
 A partir de cualquier matriz generadora siempre es posible obtener una matriz en forma estándar realizando una permutación adecuada de las coordenadas.
 %Esta matriz resultante no será una matriz generadora del código inicial, pero sí de un código equivalente.
@@ -91,7 +91,7 @@ Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, 
 Este último resultado, junto a la definición previa, nos conducen al siguiente teorema. 
 
 \begin{theorem}
-  Si \(G = [I_k \mid A]\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = [-A \mid I_{n-k}]\) es una matriz de paridad para \(\mathcal C\).
+  Si \(G = (I_k \mid A)\) es una matriz generadora para un \([n, k]\) código \(\mathcal C\) en forma estándar entonces \(H = (-A \mid I_{n-k})\) es una matriz de paridad para \(\mathcal C\).
 \end{theorem}
 
 Como nota final sobre nomenclatura de códigos duales, apuntamos que un código se dice \textit{autoortogonal} cuando \(\mathcal C \subseteq \mathcal C^{\perp}\), y \textit{autodual} cuando \(\mathcal C = \mathcal C^{\perp}\).
