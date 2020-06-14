@@ -207,13 +207,14 @@ Para cualquier anillo \(R\) podemos definir un anillo de polinomios en \(x\) con
 \[
   \{a_0 + a_1x + \dots + a_nx^n : a_0, a_1, \dots, a_n \in R\}.
 \]
-Dados \(f = a_0 + a_1x + \dots + a_nx^n\) y \(g = b_0 + b_1x + \dots + b_mx^m\) las operaciones de suma y multiplicación de \(R[x]\) (suponiendo \(m \leq n\)) vienen dadas por:
+Dados \(f(x) = a_0 + a_1x + \dots + a_nx^n\) y \(g(x) = b_0 + b_1x + \dots + b_mx^m\) las operaciones de suma y multiplicación de \(R[x]\) (suponiendo \(m \leq n\)) vienen dadas por:
 \[
-  f + g = a_0 + b_0 + (a_1 + b_1)x + \dots + (a_m + b_m)x^m + \dots + a_nx^n,
+  f(x) + g(x) = a_0 + b_0 + (a_1 + b_1)x + \dots + (a_m + b_m)x^m + \dots + a_nx^n,
 \]
-\[
-  fg = a_0b_0 + (a_0b_0 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + \dots + a_nb_mx^{m+n}.
-\]
+\begin{align*}
+  f(x)g(x) = &a_0b_0 + (a_0b_0 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2\\
+    &+ \dots + a_nb_mx^{m+n}.
+\end{align*}
 El elemento neutro para la suma es el \(0 \in R\), y el del producto, el \(1 \in R\).
 Es fácil comprobar que efectivamente \(R[x]\) así definido satisface todas las propiedades de los anillos.
 Veamos a continuación algunos conceptos básicos sobre polinomios.
