@@ -220,16 +220,16 @@ Códigos distintos poseen distintas propiedades, lo que implica que sus capacida
 En este apartado vamos a estudiar dos propiedades de los códigos muy relacionadas con esta idea.
 
 \begin{definition}
-  La \textit{distancia de Hamming} \(\operatorname{d}(\symbf{x}, \symbf{y})\) entre dos vectores \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\) se define como el número de coordenadas en las que difieren \(\symbf{x}\) e \(\symbf{y}\).
+  La \textit{distancia de Hamming} \(\operatorname{d}(\mathbf{x}, \mathbf{y})\) entre dos vectores \(\mathbf{x}, \mathbf{y} \in \mathbb F_q^n\) se define como el número de coordenadas en las que difieren \(\mathbf{x}\) e \(\mathbf{y}\).
 \end{definition}
 
 \begin{theorem}
-  La función de distancia \(\operatorname{d}(\symbf{x}, \symbf{y})\) verifica las siguientes propiedades.
+  La función de distancia \(\operatorname{d}(\mathbf{x}, \mathbf{y})\) verifica las siguientes propiedades.
   \begin{enumerate}
-    \item No negatividad: \(\operatorname{d}(\symbf{x}, \symbf{y}) \geq 0\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
-    \item La distancia \(\operatorname{d}(\symbf{x}, \symbf{y}) = 0\) si y solo si \(\symbf{x} = \symbf{y}\).
-    \item Simetría: \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{d}(\symbf{y}, \symbf{x})\) para todo \(\symbf{x}, \symbf{y}\in \mathbb F_q^n\).
-    \item Desigualdad triangular: \(\operatorname{d}(\symbf{x}, \symbf{z}) \leq \operatorname{d}(\symbf{x}, \symbf{y}) + \operatorname{d}(\symbf{y}, \symbf{z})\) para todo elemento \(\symbf{x}, \symbf{y}, \symbf{z}\in \mathbb F_q^n\).
+    \item No negatividad: \(\operatorname{d}(\mathbf{x}, \mathbf{y}) \geq 0\) para todo \(\mathbf{x}, \mathbf{y}\in \mathbb F_q^n\).
+    \item La distancia \(\operatorname{d}(\mathbf{x}, \mathbf{y}) = 0\) si y solo si \(\mathbf{x} = \mathbf{y}\).
+    \item Simetría: \(\operatorname{d}(\mathbf{x}, \mathbf{y}) = \operatorname{d}(\mathbf{y}, \mathbf{x})\) para todo \(\mathbf{x}, \mathbf{y}\in \mathbb F_q^n\).
+    \item Desigualdad triangular: \(\operatorname{d}(\mathbf{x}, \mathbf{z}) \leq \operatorname{d}(\mathbf{x}, \mathbf{y}) + \operatorname{d}(\mathbf{y}, \mathbf{z})\) para todo elemento \(\mathbf{x}, \mathbf{y}, \mathbf{z}\in \mathbb F_q^n\).
   \end{enumerate}
 \end{theorem}
 
@@ -253,13 +253,13 @@ Efectivamente, a mayor distancia mínima, mayor número de errores en el código
 Otra medida interesante es el \textit{peso de Hamming}.
 
 \begin{definition}
-  El \textit{peso de Hamming} \(\operatorname{wt}(\symbf{x})\) de un vector \(\symbf{x}\) es el número de coordenadas distintas de cero de \(\symbf{x}\).
+  El \textit{peso de Hamming} \(\operatorname{wt}(\mathbf{x})\) de un vector \(\mathbf{x}\) es el número de coordenadas distintas de cero de \(\mathbf{x}\).
 \end{definition}
 
 El siguiente teorema nos ilustra la relación existente entre los conceptos de peso y distancia.
 
 \begin{theorem}
-  Si \(\symbf{x}, \symbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\symbf{x}, \symbf{y}) = \operatorname{wt}(\symbf{x} - \symbf{y})\).
+  Si \(\mathbf{x}, \mathbf{y} \in \mathbb F_q^n\), entonces \(\operatorname{d}(\mathbf{x}, \mathbf{y}) = \operatorname{wt}(\mathbf{x} - \mathbf{y})\).
   Si \(\mathcal C\) es un código lineal, la distancia mínima es igual al peso mínimo de las palabras código de \(\mathcal C\) distintas de cero.
 \end{theorem}
 
@@ -319,7 +319,7 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 % Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
 
 \begin{theorem}
-  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\symbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\symbf{c}\) son linealmente independientes.
+  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\mathbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\mathbf{c}\) son linealmente independientes.
   Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra código en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
 \end{theorem}
 
