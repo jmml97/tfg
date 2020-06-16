@@ -1,15 +1,15 @@
 \chapter{Anillos de polinomios de Ore}
 
-En esta sección vamos a hablar sobre los anillos de polinomios de Ore, que serán la base de los códigos cíclicos sesgados.
-% TODO: nota histórica sobre polinomios Ore
-[Introducir nota histórica]
-Primero vamos a dar la definición general, sin detenernos a justificar su construcción, pues acto seguido vamos a centrarnos en el caso que nos va a ocupar cuando trabajemos con códigos cíclicos sesgados.
-Las definiciones y el desarrollo teórico seguidos en esta sección proceden de \parencite{jacobson_finite-dimensional_1996}, \parencite{ore_theory_1933} y \parencite{gomez-torrecillas_factoring_2020}.
+En este capítulo vamos a hablar sobre los anillos de polinomios de Ore, que serán la base de los códigos cíclicos sesgados.
+Fueron descritos simultáneamente por Oystein Ore \parencite{ore_theory_1933} y  por Joseph Wedderburn.
+Básicamente se trata de anillos de polinomios no conmutativos en los que el producto no está definido de la forma usual sino que sigue una regla concreta que vamos a describir a continuación. 
+Primero daremos la definición general, sin detenernos a justificar su construcción, pues acto seguido vamos a centrarnos en el caso que nos va a ocupar cuando trabajemos con códigos cíclicos sesgados.
+Las definiciones y el desarrollo teórico seguido en este capítulo proceden de \parencite{jacobson_finite-dimensional_1996}, \parencite{ore_theory_1933} y \parencite{gomez-torrecillas_factoring_2020}.
 
 \begin{definition}
   Sea \(R\) un anillo, \(\sigma\) un endomorfismo de \(R\) y \(\delta\) una \(\sigma\)-\textit{derivación} de \(R\), es decir, \(\delta\) es un homomorfismo de grupos abelianos tal que para \(a, b \in R\) se verifica que
   \[
-    \delta(ab) = (\sigma a)(\delta b) + (\delta a)b.
+    \delta(ab) = \sigma(a)\delta(b) + \delta(a)b.
   \]
   Entonces, el anillo \(R[t; \sigma, \delta]\) de los polinomios en \(R[t]\) de la forma
   \[
@@ -17,7 +17,7 @@ Las definiciones y el desarrollo teórico seguidos en esta sección proceden de 
   \]
   donde \(a_i \in R\), con la igualdad y suma usuales, y en el que la multiplicación verifica la relación 
   \[
-  ta = (\sigma a)t + \delta a, \qquad a \in R,
+  ta = \sigma(a)t + \delta a, \qquad a \in R,
   \]
   se conoce como \textit{anillo de polinomios de Ore} o \textit{anillos de polinomios sesgados}.
 \end{definition}
@@ -25,41 +25,46 @@ Las definiciones y el desarrollo teórico seguidos en esta sección proceden de 
 Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que ver que efectivamente con las operaciones que hemos dado se verifican todas las propiedades de los anillos.
 Puesto que hemos usado la suma usual de los polinomios, bastaría probar que se verifica la propiedad asociativa para la multiplicación que hemos definido.
 No vamos a entrar en detalle, pues no es el objetivo de este trabajo el estudio de los anillos de polinomios de Ore en general.
+En cualquier caso, si se desea consultar una demostración, puede encontrarse en \parencite[p. 2-3]{jacobson_finite-dimensional_1996} una que utiliza cierta representación matricial de los elementos.
+
+\section{Anillos de polinomios de Ore sobre cuerpos finitos}
 
 Trabajar con códigos cíclicos sesgados requiere del estudio del anillo \(\mathbb F_q[x; \sigma]\), con \(\sigma\) un automorfismo.
 Por tanto, nos vamos a centrar los anillos de polinomios de Ore en los que \(R = \mathbb F_q\) —cuerpo finito de \(q\) elementos—, hemos llamado \(x\) a \(t\), \(\sigma\) es un automorfismo y \(\delta = 0\).
 En estos anillos la multiplicación verifica la relación 
 \[
-  xa = (\sigma a)x, \qquad a \in R.
+  xa = \sigma(a)x, \qquad a \in R.
 \]
-Es este caso particular el que sí vamos a estudiar en profundidad, justificando que, como ya hemos adelantado, se trata de un anillo.
+Es este caso particular que nos va a ocupar de ahora en adelante.
 
-Vamos a ver por inducción que, como podemos intuir, \(x^n a = (\sigma^n a)x^n\). 
-Estudiado el caso base anterior y supuesto que se verifica la igualdad para \(n - 1\), para \(n\) tenemos que
+Vamos a ver por inducción que, como podemos intuir, \(x^n a = \sigma^n(a)x^n\). 
+Visto el caso base \(xa\) y supuesto que se verifica la igualdad para \(n - 1\), para \(n\) tenemos que
 \[
-  x^{n}a = xx^{n - 1}a = x(\sigma^{n-1} a)x^{n-1} = \sigma(\sigma^{n-1} a)x^{n-1}x = (\sigma^{n}a)x^{n}.
+  x^{n}a = xx^{n - 1}a = x\sigma^{n-1}(a)x^{n-1} = \sigma(\sigma^{n-1}(a))x^{n-1}x = \sigma^{n}(a)x^{n},
 \]
+como habíamos afirmado.
 Ahora definimos
 \[
-  (ax^n)(bx^m) = a(\sigma^n b)x^{n+m},
+  (ax^n)(bx^m) = a\sigma^n(b)x^{n+m},
 \]
-con lo que, junto a la propiedad distributiva podemos definir el producto de polinomios en \(x\) como
+con lo que, junto a la propiedad distributiva podemos definir el producto de polinomios en \(x\) como cabría esperar,
 \[
   \textstyle(\sum a_nx^n)(\sum b_mx^m) = \sum(a_nx^n)(b_mx^m).
 \]
+Para comprobar que \(\mathbb F_q[x; \sigma]\) es un anillo es necesario comprobar que se verifica la propiedad asociativa para la multiplicación, lo que efectivamente se cumple, como ya hemos comentado en el caso general.
 
-Para comprobar que \(\mathbb F_q[x; \sigma]\) es un anillo, como ya hemos comentado en el caso general, necesitamos comprobar que se verifica la propiedad asociativa para la multiplicación.
-Comprobar esta afirmación directamente es tedioso, pero en \parencite[p. 2-3]{jacobson_finite-dimensional_1996} puede consultarse una demostración utilizando una representación matricial de los elementos.
-
-A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, \(\mathbb F_q[x; \sigma]\) es un dominio de integridad no conmutativo.
-Dado un polinomio \(f(x) = a_0 + a_1x + \dots + a_nx^n\) con \(a_n \neq 0\) y definimos \(\deg(f(x)) = n\) y \(\deg(0) = -\infty\).
-Si consideramos otro polinomio \(g(x) = b_0 + b_1x + \dots + b_mx^m\) con \(b_m\) entonces \(f(x)g(x) = \dots + a_n(\sigma^n b_m)x^{n+m}\) y \(a_n(\sigma^nb_m) \neq 0\) y así,
+A continuación vemos que, partiendo de que \(\mathbb F_q\) es en particular un anillo de división, el anillo de polinomios de Ore \(\mathbb F_q[x; \sigma]\) es un dominio de integridad no conmutativo.
+Dado un polinomio \(f(x) = a_0 + a_1x + \dots + a_nx^n\) con \(a_n \neq 0\) definimos el grado de dicho polinomio de la forma habitual, es decir, \(\deg(f(x)) = n\) y establecemos el convenio de que \(\deg(0) = -\infty\).
+Si consideramos otro polinomio \(g(x) = b_0 + b_1x + \dots + b_mx^m\) con \(b_m \neq 0\) entonces \(f(x)g(x) = \dots + a_n\sigma^n(b_m)x^{n+m}\) y \(a_n\sigma^n(b_m) \neq 0\) y así,
 \[
   \deg(f(x)g(x)) = \deg(f(x)) + \deg(g(x)).
 \]
+Observamos entonces que \(\deg(f(x)) + \deg(g(x)) = -\infty\) si y solo si \(f(x)\) o \(g(x)\) son el polinomio cero.
 Por tanto, \(\mathbb F_q[x; \sigma]\) no tiene divisores de cero distintos del cero, por lo que es un dominio de integridad no conmutativo, como habíamos afirmado.
 
-Podemos definir algoritmos de división en \(\mathbb F_q[x; \sigma]\) tanto a la izquierda como a la derecha (cita)  —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x; \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
+\section{División}
+
+Podemos definir algoritmos de división en \(\mathbb F_q[x; \sigma]\) tanto a la izquierda como a la derecha —descritos en los algoritmos \ref{alg:ore-fq-division-izquierda} y \ref{alg:ore-fq-division-derecha}—, de forma que para cada \(f(x), g(x) \in \mathbb F_q[x; \sigma]\) —con \(g(x) \neq 0\)— existen elementos \(q(x), r(x)\) únicos, con \(\deg(r) < \deg(g)\) tales que al dividir por la izquierda obtenemos
 \[
   f(x) = q(x)g(x) + r(x),
 \]
@@ -67,10 +72,8 @@ y al dividir por la derecha,
 \[
   f(x) = g(x)q(x) + r(x),
 \]
-Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio \(g(x)\) se le llama \textit{cociente por la izquierda} (\textit{derecha}) y a \(r(x)\), \textit{resto por la izquierda} (\textit{derecha}).
-Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{cod}(f(x), g(x))\) y \(r(x) = \operatorname{rei}(f(x), g(x))\) o \(\operatorname{red}(f(x), g(x))\).
 
-\begin{Ualgorithm}[h]
+\begin{Ualgorithm}[hb]
   \DontPrintSemicolon
   \KwIn{polinomios \(f, g \in \mathbb F_q[x; \sigma]\) con \(g \neq 0\)}
   \KwOut{polinomios \(q, r \in \mathbb F_q[x; \sigma]\) tales que \(f = qg + r\), y \(\deg(r) < \deg(g)\)}
@@ -85,7 +88,7 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
   \label{alg:ore-fq-division-izquierda}
 \end{Ualgorithm}
 
-\begin{Ualgorithm}[h]
+\begin{Ualgorithm}[htb]
   \DontPrintSemicolon
   \KwIn{polinomios \(f, g \in \mathbb F_q[x; \sigma]\) con \(g \neq 0\)}
   \KwOut{polinomios \(q, r \in \mathbb F_q[x; \sigma]\) tales que \(f = gq + r\), y \(\deg(r) < \deg(g)\)}
@@ -101,9 +104,12 @@ Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{
   \label{alg:ore-fq-division-derecha}
 \end{Ualgorithm}
 
-La existencia de algoritmos de algoritmos de división a izquierda y a derecha implica que \(F_q[x, \sigma]\) es un dominio de ideales principales a izquierda y a derecha, es decir, que es lo que llamamos un dominio de ideales principales a secas.
+Cuando dividimos por la izquierda (respectivamente por la derecha) el polinomio \(g(x)\) se le llama \textit{cociente por la izquierda} (\textit{derecha}) y a \(r(x)\), \textit{resto por la izquierda} (\textit{derecha}).
+Los denotaremos por \(g(x) = \operatorname{coi}(f(x), g(x))\) o \(\operatorname{cod}(f(x), g(x))\) y \(r(x) = \operatorname{rei}(f(x), g(x))\) o \(\operatorname{red}(f(x), g(x))\).
 
-A partir de ahora, para ser más concisos con la notación vamos a llamar \(R = F_q[x, \sigma]\) y cuando no sea necesario hacer referencia a la variable \(x\), a un polinomio \(f(x)\) lo denotaremos simplemente por \(f\).
+La existencia de algoritmos de algoritmos de división a izquierda y a derecha implica que \(\mathbb F_q[x; \sigma]\) es un dominio de ideales principales a izquierda y a derecha, es decir, que es lo que llamamos simplemente dominio de ideales principales.
+
+De ahora en adelante, para ser más concisos con la notación, vamos a llamar \(R = \mathbb F_q[x; \sigma]\) y cuando no sea necesario hacer referencia a la variable \(x\), a un polinomio \(f(x)\) lo denotaremos simplemente por \(f\).
 Los ideales biláteros de \(R\) serán de la forma \(I = Rf = f^{*}R\) y para todo \(g \in R\) existirán \(g', \tilde{g} \in R\) tales que \(fg = g'f\) y \(gf^{*} = f^{*}\tilde{g}\).
 Los elementos \(f\) tales que para todo \(g \in R\) existen \(g'\) y \(\tilde{g}\) tales que \(fg = g'f\) y \(gf = f\tilde{g}\) se llaman elementos \emph{biláteros} y además \(Rf = fR\) es un ideal.
 
@@ -125,6 +131,8 @@ Dados \(g, f \in R\) supongamos que \(Rg \subseteq Rf\) con \(Rg \neq 0\).
 Entonces \(g = hf\), por lo que decimos que \(f\) es un \emph{divisor por la derecha} de \(g\) y lo notaremos por \(f \mid_{d} g\).
 Equivalentemente, podemos decir que \(g\) es un \emph{múltiplo por la izquierda} de \(f\).
 Observemos que de igual forma, si \(f \mid_{d} g\) entonces \(Rg \subseteq Rf\).
+
+\section{Mínimo común múltiplo y máximo común divisor}
 
 Tenemos que \(Rf = Rg \neq 0\) si y solo si \(f \mid_d g\) y \(g \mid_d f\).
 Así, \(g = hf\) y \(f = lg\), por lo que \(g = hlg\).
@@ -166,6 +174,8 @@ Puede definirse una versión del algoritmo extendido de Euclides en este context
   \label{alg:ore-fq-euclides}
 \end{Ualgorithm}
   
+\section{Descomposición en factores irreducibles}
+
 Como \(R\) es un dominio de ideales principales es posible descomponer cada polinomio \(f \in R\) en un producto de factores irreducibles.
 Pero esta factorización no será única.
 
@@ -196,13 +206,15 @@ Es posible comprobar que la \emph{similitud} es una relación de equivalencia \p
   Puede consultarse una generalización de la demostración en \parencite[Teorema 1.2.9]{jacobson_finite-dimensional_1996}.
 \end{proof}
 
-El problema de comprobar si dos polinomios \(f, g \in R\) verifican que \(f \sim g\).
+Comprobar si dos polinomios \(f, g \in R\) verifican que \(f \sim g\) supone un problema complicado para el que no hay un procedimiento aplicable en la práctica.
 
-% TODO: completar con la dificultad
+\section{Norma}
+
+A continuación vamos a introducir un concepto que es muy útil a la hora de calcular los restos obtenidos al dividir un polinomio.
 
 Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathbb F_q\) como
 \[
-  N_i(\gamma) = (\sigma^{i-1}\gamma)\dots (\sigma \gamma)\gamma \quad\text{para } i > 0 \quad\text{y } N_0(\gamma) = 1.
+  N_i(\gamma) = \sigma^{i-1}(\gamma)\dots \sigma(\gamma)\gamma \quad\text{para } i > 0 \quad\text{y } N_0(\gamma) = 1.
 \]
 
 \begin{proposition}
@@ -212,6 +224,20 @@ Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathb
 
 \begin{proof}
   Tenemos la identidad
+  \begin{align*}
+    x^{i} &- \sigma^{i-1}(\gamma)\sigma^{i-2}(\gamma) \cdots \gamma\\
+      &= (x^{i-1} + \sigma^{i-1}(\gamma)x^{i-2} + \dots + \sigma^{i-1}(\gamma)\cdots\sigma(\gamma))(x - \gamma)
+  \end{align*}
+  para \(i = 1, 2, \dots\). 
+  Si multiplicamos por la izquierda por \(a_{n-i}\) y sumamos en \(i\) obtenemos que
+  \[
+    f(x) = q(x)(x - \gamma) + a_0N_n(\gamma) + a_1N_{n-1}(\gamma) + \dots + a_nN_0(\gamma),
+  \]
+  por lo que el resto de dividir \(f(x)\) por \((x - \gamma)\) por la derecha es 
+  \[
+    a_0N_n(\gamma) + a_1N_{n-1}(\gamma) + \dots + a_nN_0(\gamma),
+  \]
+  de lo que deducimos lo que queremos demostrar.
 \end{proof}
 
 También se dan las siguientes identidades, que nos serán útiles cuando estudiemos los códigos cíclicos sesgados en el capítulo siguiente.
