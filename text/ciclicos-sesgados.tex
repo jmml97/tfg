@@ -18,7 +18,6 @@ De forma análoga a como ocurría con los códigos cíclicos, este generador es 
 
 No existe un algoritmo de factorización completo para los polinomios de Ore, por lo que vamos a utilizar a continuación un método concreto para \(x^n - 1\), descrito en \parencite{gomez-torrecillas_new_2016}.
 Por el teorema de la base normal podemos tomar un elemento \(\alpha \in \mathbb F_q\) tal que \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) sea una base de  \(\mathbb F_q\) como \(\mathbb F_q^{\sigma}\)-espacio vectorial.
-% TODO: explicar todo esto un poquito
 Fijamos en lo que sigue \(\beta = \alpha^{-1}\sigma(\alpha)\).
 
 \begin{lemma}
@@ -111,7 +110,7 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
       0 & \cdots & 0 & \sigma^{n-m-1}(a_0) & \cdots & \cdots & \sigma^{n-m-1}(a_m) \\
     \end{pmatrix}_{(n-m) \times n}.
   \]
-  Entonces las filas de \(M_f\) son la base de \(\mathfrak v(\mathcal Rf)\) como un \(L\)-espacio vectorial.
+  Entonces las filas de \(M_f\) son la base de \(\mathfrak v(\mathcal Rf)\) como un \(\mathbb F_q\)-espacio vectorial.
   Es más, \(f\) \(\beta\)-descompone totalmente si y solo si 
   \[
     \operatorname{mepf}(M_jN) = \left( \begin{array}{@{}c@{}}
@@ -120,15 +119,16 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
       \varepsilon_{i_{m-n}}
     \end{array}\right)
   \]
-  para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\).
+  para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\)\footnote{Un vector canónico \(\varepsilon_i\) de longitud \(n\) es de la forma \((0, \dots, 1, \dots, 0)\), una tupla de \(n\) elementos formada por \(0\) en todas las posiciones salvo en la \(i\)-ésima, que es \(1\)}.
 \end{lemma}
-%TODO: consultar lo del vector canónico
-%TODO: añadir que esta matriz es una matriz generadora del código
 \begin{proof}
   Una \(\mathbb F_q\)-base de \(\mathcal Rf\) es \(\{f, xf, \dots, x^{n-m-1}f\}\) cuyas coordenadas corresponden precisamente a las filas de \(M_f\).
   Tenemos entonces que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si cada múltiplo por la izquierda de \(f\) es también múltiplo por la izquierda de \(x - \sigma^{t_i}(\beta)\) para \(1 \leq i \leq m\), si y solo si las \(t_i\)-ésimas columnas de \(M_fN\) son cero para \(i = 1, \dots, m\).
   Como \(M_fN\) tiene \(n - m\) filas, rango \(n - m\) y \(n - m\) columnas distintas de cero, el resultado se deduce fácilmente.
 \end{proof}
+
+En otras palabras, la proposición \ref{lem:matriz-mf-base} nos dice que matriz \(M_f\) ahí definida es una matriz generadora del código \(\mathfrak v(\mathcal R f)\).
+
 \begin{lemma}
   \label{lem:b-descomposicion-mcm-mcd}
   Sean \(f, g \in \mathcal R\) polinomios que pueden \(\beta\)-descomponerse totalmente.
@@ -151,7 +151,7 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
   pero como \(\deg(f) + \deg(g) = \deg((f, g)_d) + \deg([f, g]_i)\) por el lema \ref{lem:pol-t-beta} se tiene la igualdad.
 \end{proof}
 
-Estamos ya en disposición de definir la clase de códigos que vamos a utilizar.
+Con todas estas herramientas ya podemos definir la clase de códigos que vamos a utilizar en el siguiente capítulob.
 
 \begin{definition}
   Bajo las condiciones y notación de este capítulo, un \emph{código RS (Reed-Solomon) sesgado} de distancia mínima prevista \(\delta\) es un código cíclico \(\mathcal C\) tal que \(\mathfrak v^{-1}(\mathcal C)\) está generado por 
