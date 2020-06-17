@@ -1,4 +1,4 @@
-\chapter{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
+\chapter[Algoritmo PGZ para códigos cíclicos sesgados]{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
 
 En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, y es una exposición de los resultados descritos en \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
 
@@ -133,9 +133,9 @@ Consideramos ahora la matriz
 \]
 Así podemos considerar la siguiente matriz, que expresaremos por sus entradas para la fila \(k\) y la columna \(i\),
 \[
-  S = \Sigma E = \left(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\right)_{0 \leq k \leq n,\; 0 \leq i \leq v}.
+  S = \Sigma E = \left(\sum_{j=1}^v \sigma^{-i}(e_j)\sigma^{k_j+k}(\alpha)\right)_{0 \leq k < n,\; 0 \leq i < v}.
 \]
-Por (\ref{eq:sindromes-sesgados}), cuando \(k + i < 2t - 1\), la componente \((k, i)\)-ésima puede escribirse como \(\sigma^{-i}(s_{k+i})\sigma(\alpha)\), de tal forma que podemos dividir la matriz \(S\) como
+Por (\ref{eq:sindromes-sesgados}), cuando \(k + i < 2t - 1\), la componente \((k, i)\)-ésima puede escribirse como \(\sigma^{-i}(s_{k+i})\sigma^{k}(\alpha)\), de tal forma que podemos dividir la matriz \(S\) como
 \[
   S = \left( \begin{array}{@{}c@{}}
     S_0\\\hline
@@ -151,8 +151,8 @@ donde \(S_0\) viene dada por
     s_v\sigma^v(\alpha) & \sigma^{-1}(s_{v+1})\sigma^v(\alpha) & \dots & \sigma^{-v+1}(s_{2v-1})\sigma^v(\alpha)\\
   \end{pmatrix}_{(v + 1) \times v}
 \]
-y cuyos coeficientes pueden calcularse directamente a partir del polinomio \(y\).
-Para calcular el parámetro \(v\) utilizaremos el mismo procedimiento utilizado en el algoritmo PGZ para códigos BCH.
+y cuyos coeficientes pueden calcularse directamente a partir del polinomio \(y\), pues ya no aparecen los \(e_j\).
+Para calcular el parámetro \(v\), que es el número de coordenadas de error, utilizaremos un procedimiento análogo al usado en el algoritmo PGZ para códigos BCH cuando buscábamos una matriz de síndromes no singular (de rango máximo).
 Para cualquier \(1 \leq r \leq t\) denotaremos por \(S^r\) a la matriz
 \[
   S^r = \begin{pmatrix}
@@ -197,8 +197,8 @@ y
   Con un razonamiento análogo se puede comprobar que \(\rank(S^r) = \rank(E^r)\).
 \end{proof}
 
-Hemos de que calcular el mayor natural \(r\) tal que la matriz \(S^r\) tenga rango máximo.
-Por el lema \ref{lem:pgz-sesgados-rangos} que acabamos de demostrar es también el mayor natural \(r \leq t\) tal que las matrices \(E^r\) y \(\Sigma E^r\) tienen rango máximo.
+Hemos de que calcular el mayor valor de \(r\) para el que la matriz \(S^r\) tenga rango máximo.
+Por el lema \ref{lem:pgz-sesgados-rangos} que acabamos de demostrar es también el mayor valor de \(r \leq t\) tal que las matrices \(E^r\) y \(\Sigma E^r\) tienen rango máximo.
 Denotaremos por \(\mu\) a tal máximo.
 
 \begin{lemma}
@@ -278,6 +278,8 @@ Denotaremos por \(\mu\) a tal máximo.
   Por el lema \ref{lem:pgz-sesgados-rangos} se tiene que \(\rank(\Sigma E^{\mu}) = \mu\) y por tanto \(\deg(\rho) = \mu\).
 \end{proof}
 
+% Este teorema es el que nos da la forma de rho
+
 \begin{lemma}
   \label{lem:pgz-sesgados-escalonada-st}
   La forma escalonada por columnas de la matriz \(S^t\) es
@@ -349,7 +351,7 @@ Denotaremos por \(\mu\) a tal máximo.
   % TODO: añadir? referenciar?
 \end{proof}
 
-La siguiente proposición nos ilustra sobre la relación existente entre los polinomios \(\rho\) y \(\lambda\).
+La siguiente proposición nos ilustra sobre la relación existente entre el polinomio \(\rho\) que hemos obtenido y el polinomio localizador de errores \(\lambda\).
 
 \begin{proposition}
   \label{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho}
@@ -359,21 +361,24 @@ La siguiente proposición nos ilustra sobre la relación existente entre los pol
 
 \begin{proof}
   Por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} se tiene que \(\rho \mid_d \lambda\) y, por hipótesis, \(\rho \mid_d \lambda'\).
-  Así, \(\rho \mid_d (\lambda, \lambda')_{r}\).
-  De hecho, por el lema \ref{lem:b-descomposicion-mcm-mcd} el polinomio \((\lambda, \lambda')_{r}\) también \(\beta\)-descompone totalmente.
-  Denotemos por \(\phi = (\lambda, \lambda')_{r}\).
+  Así, \(\rho \mid_d (\lambda, \lambda')_{d}\).
+  De hecho, por el lema \ref{lem:b-descomposicion-mcm-mcd} el polinomio \((\lambda, \lambda')_{d}\) también \(\beta\)-descompone totalmente.
+  Denotemos por \(\phi = (\lambda, \lambda')_{d}\).
   Vamos a demostrar que \(\phi = \lambda\), lo que implica el hecho que queremos demostrar.
 
-  Efectivamente, \(\mathcal R \lambda \subseteq \mathcal R\phi\), por lo que \(\mathcal R\phi\) se corresponde con el núcleo por la izquierda de una matriz \(\Sigma Q\), donde \(Q\) es una matriz de rango máximo.
+  Por definición, \(\mathcal R \lambda \subseteq \mathcal R\phi\), por lo que \(\mathcal R\phi\) se corresponde con el núcleo por la izquierda de una matriz \(\Sigma Q\), donde \(Q\) es una matriz de rango máximo.
   De forma análoga se tiene que \(\mathcal R\phi \subseteq \mathcal R\rho\), por lo que existe otra matriz \(Q'\) tal que \(\mathcal R\rho\) es el núcleo por la izquierda de \(\Sigma QQ'\).
   Por el lema \ref{lem:pgz-sesgados-diagrama} se tiene que \(\Sigma QQ' = \Sigma B\), donde \(B\) es una matriz de rango máximo y sin ninguna fila nula.
   Por tanto \(QQ' = B\), porque \(\Sigma\) define una aplicación lineal sobreyectiva y \(Q\) no tiene filas nulas.
 
-  Como \(\phi \mid_r \lambda\) cualquier \(\beta\)-raíz de \(\phi\) tiene que ser también \(\beta\)-raíz de \(\lambda\) por lo que pertenece al conjunto \(\{\sigma^{k_1}(\beta), \dots, \sigma^{k_v}(\beta)\}\).
+  Como \(\phi \mid_d \lambda\) cualquier \(\beta\)-raíz de \(\phi\) tiene que ser también \(\beta\)-raíz de \(\lambda\) por lo que pertenece al conjunto \(\{\sigma^{k_1}(\beta), \dots, \sigma^{k_v}(\beta)\}\).
   Obsérvese que por (\ref{eq:equivalencias-divisor-sigma-b}) se tiene que \(\sigma^{k_j}(\beta)\) es una \(\beta\)-raíz de \(\phi\) si y solo si
   \[
     \rank\left( \begin{array}{@{}c|c@{}}
-      \Sigma Q & \sigma^{k_j}(\alpha)^{[\sigma]}
+      \multirow{4}{*}{\(\Sigma Q\)} & \sigma^{k_j}(\alpha)^{[\sigma]}\\
+       & \sigma^{k_j + 1}(\alpha)\\
+       & \vdots \\
+       & \sigma^{k_j + n - 1}(\alpha)
     \end{array}\right) = \rank(\Sigma Q).
   \]
   % FIXME: qué es ese sigma entre corchetes?????????
@@ -421,7 +426,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   \tcp{Paso 3: resolver el sistema de los síndromes, obteniendo las magnitudes de error}
   Encontrar \((x_1, \dots, x_v)\) tal que \((x_1, \dots, x_v)(\Sigma^{v-1})^T = (\alpha s_0, \sigma(\alpha)s_1, \dots, \sigma^{v-1}(\alpha)s_{v-1})\)\;\label{algl:pgz-sesgados-solucion-sistema}
   \tcp{Paso 4: construir el error y devolverlo}
-  \Return{\((e_0, \dots, e_{n-1})\) con \(e_i = x_i\) para \(i \in \{k_1, \dots, k_v\}\), cero en otro caso}
+  \Return{\((e_0, \dots, e_{n-1})\) con \(e_i = x_i\) para \(i \in \{k_1, \dots, k_v\}\), cero en otro caso}\label{algl:pgz-sesgados-error}
   \caption{Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.}
   \label{alg:pgz-sesgados}
 \end{Ualgorithm}
@@ -434,33 +439,35 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
 \end{theorem}
 
 \begin{proof}
-  Tras los ajustes iniciales la línea \ref{algl:pgz-sesgados-rho} calcula un divisor por la izquierda \(\rho = \sum_{i = 0}^{\mu}\) del polinomio localizador de errores \(\lambda\), por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} y el lema \ref{lem:pgz-sesgados-escalonada-st}.
+  Tras los ajustes iniciales la línea \ref{algl:pgz-sesgados-rho} calcula un polinomio \(\rho = \sum_{i = 0}^{\mu}\rho_ix^{i}\) como describe el lema \ref{lem:pgz-sesgados-escalonada-st} y que por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} es divisor por la izquierda del polinomio localizador de errores \(\lambda\).
   
   Por (\ref{eq:equivalencias-divisor-sigma-b}) la línea \ref{algl:pgz-sesgados-pos-error} calcula todas las \(\beta\)-raíces de \(\rho\).
-  Por el lema \ref{lem:pol-t-beta} \(v = \mu\) si y solo si \(\rho\) puede \(\beta\)-descomponerse totalmente.
+  Sabemos por el lema \ref{lem:pol-t-beta} que el número de \(\beta\)-raíces es \(v = \mu\) si y solo si \(\rho\) —de grado \(\mu\)— puede \(\beta\)-descomponerse totalmente.
   En ese caso, por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} \(\rho = \lambda\).
   
-  Si \(v \neq \mu\) como el \(\deg(\rho) = \mu\) las fila de \(M_{\rho}\) generan \(\mathcal R\rho\) como un \(\mathbb F_q\) espacio vectorial y las fila de \(N_{\rho}\) también generan \(\mathcal R\rho\) bajo el cambio de base correspondiente a \(N\).
-  Como \(H_{\rho}\) es la forma reducida por columnas de \(M_{\rho}\) entonces sus fijas también son una base de \(\mathcal \rho\) como un \(\mathbb F_q\)- espacio vectorial.
+  Si por el contrario \(v \neq \mu\) como el \(\deg(\rho) = \mu\) las filas de \(M_{\rho}\) generan \(\mathcal R\rho\) como un \(\mathbb F_q\) espacio vectorial y las fila de \(N_{\rho}\) también generan \(\mathcal R\rho\) bajo el cambio de base correspondiente a \(N\).
+  Como \(H_{\rho}\) es la forma reducida por columnas de \(M_{\rho}\) entonces sus filas también son una base de \(\mathcal \rho\) como un \(\mathbb F_q\)- espacio vectorial.
   Por el lema \ref{lem:matriz-mf-base} las filas de \(H'\) generan un \(\mathbb F_q\)-subespacio vectorial \(\mathcal R\lambda'\) para algún polinomio \(\lambda'\) que puede \(\beta\)-descomponerse totalmente.
-  Como \(H'\) se obtiene eliminando algunas filas de \(H_{\rho}\) se deduce que \(\rho \mid_d \lambda'\).
+  Como \(H'\) se obtiene eliminando algunas filas de \(H_{\rho}\) el polinomio \(\lambda'\) tiene que tener mayor grado que \(\rho\) y se deduce que \(\rho \mid_d \lambda'\).
 
-  Probamos ahora que \(\lambda' = \lambda\).
-  Por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} se tiene que \(\lambda \mid_d \lambda'\).
-  Supongamos que \(\lambda \neq \lambda'\).
-  Entonces la matriz \(H_{\lambda} = \operatorname{mrpf}(M_{\lambda}N)\) contiene una fila adicional \(\varepsilon_{d}\) que no está en \(H'\).
+  Vamos a ver que el polinomio que hemos encontrado es el polinomio localizador de errores, \(\lambda' = \lambda\).
+  Como \(\rho \mid_d \lambda'\) por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} se tiene que \(\lambda \mid_d \lambda'\).
+  Procederemos por reducción al absurdo.
+  Supongamos entonces que \(\lambda \neq \lambda'\).
+  Entonces la matriz \(H_{\lambda} = \operatorname{mrpf}(M_{\lambda}N)\) contiene una fila adicional, un vector canónico \(\varepsilon_{d}\), que no está en \(H'\).
   %TODO: añadir que hay que aplicar el lema 3.1 (dice Gabriel)
-  Como \(\mathcal R\lambda \subseteq \mathcal R\rho\),
+  Como \(\rho \mid_d \lambda\) por definición se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\) y por tanto,
   \[
     \rank\left( \begin{array}{@{}c@{}}
       H_{\rho}\\\hline
       \varepsilon_{d}
     \end{array}\right) = \rank (H_{\rho}).
   \]
-  Por \parencite[Lema 2.4]{gomez-torrecillas_petersongorensteinzierler_2018} \(\varepsilon_{d}\) es una fila de \(H_{\rho}\), por lo que la línea \ref{algl:pgz-sesgados-h-prima} no la elimina.
-  Por tanto \(\varepsilon_{d}\) pertenece a \(H'\), una contradicción.
-  Por tanto \(\lambda = \lambda'\) y se calculan las coordenadas de error.
-  Por la proposición \ref{prop:pgz-sesgados-magnitudes-error} la línea \ref{algl:pgz-sesgados-solucion-sistema} calcula las magnitudes de error.
+  Por \parencite[Lema 2.4]{gomez-torrecillas_petersongorensteinzierler_2018} \(\varepsilon_{d}\) es una fila de \(H_{\rho}\), por lo que la línea \ref{algl:pgz-sesgados-h-prima} no la elimina, y en consecuencia, \(\varepsilon_{d}\) pertenece a \(H'\), lo que se contradice con la afirmación anterior.
+  Concluimos entonces que \(\lambda = \lambda'\).
+  Una vez obtenido el polinomio localizador de errores \(\lambda\) podemos calcular las coordenadas de error a partir de sus \(\beta\)-raíces.
+  Finalmente, por la proposición \ref{prop:pgz-sesgados-magnitudes-error}, la línea \ref{algl:pgz-sesgados-solucion-sistema} calcula las magnitudes de error.
+  Con ellas ya podemos construir el polinomio de error en la línea \ref{algl:pgz-sesgados-error} y obtener el mensaje.
 \end{proof}
 
 Veamos a continuación algunos ejemplos.
