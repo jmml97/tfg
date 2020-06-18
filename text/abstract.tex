@@ -1,12 +1,29 @@
 \chapter*{Resumen}
 
-El objetivo de este trabajo es estudiar y presentar el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.  
+El objetivo principal de este trabajo es estudiar, presentar e implementar el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
+Por tanto, nos encargamos de exponer todo el conocimiento necesario para abordar su estudio.
+Para ello primero nos centraremos en los fundamentos necesarios de álgebra y teoría de códigos, especialmente en los códigos lineales y los códigos cíclicos.
+Estudiaremos además la versión original del algoritmo PGZ para ayudarnos en la compresión del algoritmo para códigos cíclicos sesgados.
+Posteriormente abordaremos los anillos de polinomios de Ore, que constituyen la base de los códigos cíclicos sesgados.
+Una vez explicada esta clase de códigos, estaremos en disposición de estudiar e implementar el algoritmo que es el objeto de nuestro trabajo:  Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
+
+\paragraph{Palabras clave}
+\begin{itemize*}[label=,itemsep=4em,itemjoin=\hspace{2em}]
+  \item teoría de códigos
+  \item códigos cíclicos
+  \item polinomios torcidos
+\end{itemize*}
 
 \chapter*{Summary}
 
 The main objetive of this project is to present, study and implement the Peterson-Gorenstein-Zierler algorithm for Skew Cyclic Codes.
+But, in order to do so, we need a seizable amount of knowledge, and that's precisely what we cover in the chapters of this project.
 
-\paragraph{Chapter 1} This chapter, sets the foundations of mathematic knowledge that's needed to understand the latter parts of the project. Skew Cyclic Codes require knowledge of two concepts: Ore Polynomial Rings and Cyclic Codes. On the one hand, Ore Polynomial Rings require the theory of Rings and Field Automorphisms. On the other hand, Cyclic Codes require the theory of Finite Fields and Rings. We introduce all the concepts needed.
+\paragraph{Chapter 1} This chapter sets the foundations of the mathematic knowledge that's needed to understand the latter parts of the project. 
+Skew Cyclic Codes require knowledge of two concepts: Ore Polynomial Rings and Cyclic Codes. 
+On the one hand, Ore Polynomial Rings require the theory of Rings and Field Automorphisms. 
+On the other hand, Cyclic Codes require the theory of Finite Fields and Rings. 
+We introduce all the concepts needed.
 
 \paragraph{Chapter 2} In this chapter, we introduce the concept of a code and the most studied class of codes: linear codes.
 We also explain that linear codes over a finite field are just a vector subspace, so they conform to a mathematical structure that is well known and easy to study.
@@ -27,7 +44,7 @@ We also show how to encode messages in cyclic codes.
 An alternate way of describing cyclic codes is also explained, using what we call generating idempotents.
 Finally, we explain the concept of zeroes of cyclic codes, a notion we'll need in the next chapter.
 
-\paragraph{Chapter 4} In this chapter, we describe the family of BCH codes and the ``classic'' version of the Peterson-Gorenstein-Zierler algorithm for BCH codes.
+\paragraph{Chapter 4} In this chapter, we describe the family of BCH codes and the original version of the Peterson-Gorenstein-Zierler algorithm for BCH codes.
 We also take an opportunity to briefly introduce the family of RS codes, as we'll refer to them in later chapters.
 To properly introduce BCH codes, we explain the BCH bound, a result that links the concept of zeroes of a cyclic code and the minimum distance of said code.
 Then BCH codes are defined to take advantage of the BCH bound.
@@ -60,6 +77,7 @@ We've also used some other helpful functions that we've described in annex \ref{
 
 \paragraph{Keywords}
 \begin{itemize*}[label=,itemsep=4em,itemjoin=\hspace{2em}]
+  \item coding theory
   \item cyclic codes 
   \item skew polynomials
 \end{itemize*}
