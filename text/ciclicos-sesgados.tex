@@ -119,12 +119,14 @@ Sabemos por el lema \ref{lem:pol-t-beta} que \(\deg f = m\), el cardinal del con
       \varepsilon_{i_{m-n}}
     \end{array}\right)
   \]
-  para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\)\footnote{Un vector canónico \(\varepsilon_i\) de longitud \(n\) es de la forma \((0, \dots, 1, \dots, 0)\), una tupla de \(n\) elementos formada por \(0\) en todas las posiciones salvo en la \(i\)-ésima, que es \(1\)}.
+  para algunos \(0 \leq i_1 < \dots < i_{n-m} \leq n -1\), donde \(\operatorname{mepf}\) denota una matriz escalonada por filas y \(\varepsilon_i\) es un vector canónico de longitud \(n\)\footnote{Recordemos que un vector canónico \(\varepsilon_i\) de longitud \(n\) es de la forma \((0, \dots, 1, \dots, 0)\), una tupla de \(n\) elementos formada por \(0\) en todas las posiciones salvo en la \(i\)-ésima, que es \(1\)}.
 \end{lemma}
 \begin{proof}
   Una \(\mathbb F_q\)-base de \(\mathcal Rf\) es \(\{f, xf, \dots, x^{n-m-1}f\}\) cuyas coordenadas corresponden precisamente a las filas de \(M_f\).
-  Tenemos entonces que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si cada múltiplo por la izquierda de \(f\) es también múltiplo por la izquierda de \(x - \sigma^{t_i}(\beta)\) para \(1 \leq i \leq m\), si y solo si las \(t_i\)-ésimas columnas de \(M_fN\) son cero para \(i = 1, \dots, m\).
-  Como \(M_fN\) tiene \(n - m\) filas, rango \(n - m\) y \(n - m\) columnas distintas de cero, el resultado se deduce fácilmente.
+  Teniendo esto en cuenta sabemos que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si cada múltiplo por la izquierda de \(f\) es también múltiplo por la izquierda de \(x - \sigma^{t_i}(\beta)\) para \(1 \leq i \leq m\).
+  Ahora bien, recordemos que el producto matricial \(M_fN\) representa en cada fila los restos por la izquierda obtenidos al dividir el polinomio correspondiente a los coeficientes de \(M_f\) en esa fila por los polinomios \(x - \sigma^i(\beta)\) para \(i = 0, \dots, n - 1\).
+  Es evidente entonces que \(f = \left[x - \sigma^{t_1}(\beta), \dots, x - \sigma^{t_m}(\beta)\right]_i\) si y solo si las \(t_i\)-ésimas columnas de \(M_fN\) son cero para \(i = 1, \dots, m\).
+  Como \(M_fN\) tiene \(n - m\) filas, rango \(n - m\) y \(n - m\) columnas distintas de cero, la forma escalonada por filas de la matriz \(M_jN\) será justamente la que hemos descrito.
 \end{proof}
 
 En otras palabras, la proposición \ref{lem:matriz-mf-base} nos dice que matriz \(M_f\) ahí definida es una matriz generadora del código \(\mathfrak v(\mathcal R f)\).
@@ -151,7 +153,7 @@ En otras palabras, la proposición \ref{lem:matriz-mf-base} nos dice que matriz 
   pero como \(\deg(f) + \deg(g) = \deg((f, g)_d) + \deg([f, g]_i)\) por el lema \ref{lem:pol-t-beta} se tiene la igualdad.
 \end{proof}
 
-Con todas estas herramientas ya podemos definir la clase de códigos que vamos a utilizar en el siguiente capítulob.
+Con todas estas herramientas ya podemos definir la clase de códigos que vamos a utilizar en el siguiente capítulo.
 
 \begin{definition}
   Bajo las condiciones y notación de este capítulo, un \emph{código RS (Reed-Solomon) sesgado} de distancia mínima prevista \(\delta\) es un código cíclico \(\mathcal C\) tal que \(\mathfrak v^{-1}(\mathcal C)\) está generado por 
