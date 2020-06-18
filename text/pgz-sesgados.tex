@@ -2,10 +2,9 @@
 
 En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, y es una exposición de los resultados descritos en \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
 
-En lo que sigue vamos a considerar que \(\mathcal C\) es un código RS sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
-% TODO: no acabo de entender todo esto de la notación \alpha' porque no vuelve a mencionarse
-También, con el objetivo de simplificar un poco la notación, escribiremos \(\alpha' = \sigma^r(\alpha)\) y \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta)]_i\) será un generador del código \(\mathcal C\).
-El ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta, x - \sigma(\beta), \dots, x - \sigma^{\delta - 2}(\beta')]_i\) para algún \(2 \leq \delta \leq n\).
+Podemos asumir sin pérdida de generalidad que  \(\mathcal C\) es un código RS sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
+De no ser así bastaría tomar \(\alpha' = \sigma^r(\alpha)\), que nos daría una base normal, y tendríamos \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) sería un generador del código \(\mathcal C\).
+Suponemos entonces que el ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta, x - \sigma(\beta), \dots, x - \sigma^{\delta - 2}(\beta)]_i\) para algún \(2 \leq \delta \leq n\).
 La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
 
 Nos encontramos en la misma situación que en casos anteriores.
@@ -272,13 +271,12 @@ Denotaremos por \(\mu\) a tal máximo.
   \]
   En particular, \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2}))\Sigma E^{\mu} = 0\) por lo que el desplazamiento cíclico \((\sigma(a_{n-1}), \sigma(a_0), \dots, \sigma(a_{n-2})) \in V\), como queríamos.
   Además, dado que cualquier ideal de \(\mathcal R\) es principal, \(\mathfrak v^{-1}(V)\) lo es y estará generado por un polinomio \(\rho \in \mathcal R\).
-  Como \(\mathfrak v(\mathcal R \lambda)\) es el núcleo por la izquierda de la matriz \(\Sigma\) se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\), y por tanto \(\rho\) divide por la derecha a \(\lambda\).
-  % TODO: explicar esto de encima mejor, no lo entiendo bien
-  Finalmente la dimensión de \(\mathcal \rho\) como un \(\mathbb F_q\) espacio vectorial es \(n - \deg(\rho)\).
+  Como \(\mathfrak v(\mathcal R \lambda)\) es el núcleo por la izquierda de la matriz \(\Sigma\) por la definición de \(\mathfrak v(\mathcal R \rho)\) como núcleo de \(\Sigma E^{\mu}\) se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\), y por tanto \(\rho\) divide por la derecha a \(\lambda\).
+  Finalmente la dimensión de \(\mathcal R\rho\) como un \(\mathbb F_q\) espacio vectorial es \(n - \deg(\rho)\).
   Por el lema \ref{lem:pgz-sesgados-rangos} se tiene que \(\rank(\Sigma E^{\mu}) = \mu\) y por tanto \(\deg(\rho) = \mu\).
 \end{proof}
 
-% Este teorema es el que nos da la forma de rho
+El lema siguiente es el que nos va a proporcionar la forma de encontrar el polinomio \(\rho\) que estamos buscando.
 
 \begin{lemma}
   \label{lem:pgz-sesgados-escalonada-st}
@@ -348,7 +346,18 @@ Denotaremos por \(\mu\) a tal máximo.
  \end{lemma}
 
 \begin{proof}
-  % TODO: añadir? referenciar?
+  Podemos deducir este resultado a partir del siguiente diagrama conmutativo de \(\mathbb F\)-espacios vectoriales.
+  \begin{center}
+    \begin{tikzcd}[column sep=large, row sep=large]
+      0 \arrow[r] & \mathcal R\rho \arrow[r] & \mathcal R \arrow[r, "\cdot H"] & \mathcal R/\mathcal R\rho \arrow[r] & 0\\
+      0 \arrow[r] & \mathcal R\lambda \arrow[u, hookrightarrow] \arrow[r] & \mathcal R \arrow[u, equal] \arrow[r, "\cdot \Sigma"] & \mathcal R/\mathcal R\lambda \arrow[u, dashrightarrow, "\cdot B"{right}] \arrow[r] & 0
+    \end{tikzcd}
+  \end{center}
+  Si \(\mathcal R\rho\) se corresponde con el núcleo por la izquierda de una matriz \(H\) entonces existe una aplicación lineal sobreyectiva \(\mathcal R/\mathcal R\lambda \to \mathcal R/\mathcal R\rho\) definida por la multiplicación por la izquierda por una matriz \(B\) de tamaño \(v \times \mu\) tal que \(\Sigma B = H\).
+  Como \(\mathcal\rho\) es también	 el núcleo por la izquierda de \(\Sigma E^{\mu}\) existe una matriz no singular \(P\) de tamaño \(\mu \times \mu\) tal que \(\Sigma E^{\mu}P = \Sigma B\).
+  Como \(\Sigma\) define una aplicación lineal sobreyectiva, \(E^{\mu}P = B\).
+  Finalmente, \(B\) se obtiene a partir de \(E^{\mu}\) realizando operaciones elementales sobre las columnas.
+  Como \(E^{\mu}\) no tiene filas nulas, \(B\) tampoco.
 \end{proof}
 
 La siguiente proposición nos ilustra sobre la relación existente entre el polinomio \(\rho\) que hemos obtenido y el polinomio localizador de errores \(\lambda\).
@@ -366,7 +375,7 @@ La siguiente proposición nos ilustra sobre la relación existente entre el poli
   Denotemos por \(\phi = (\lambda, \lambda')_{d}\).
   Vamos a demostrar que \(\phi = \lambda\), lo que implica el hecho que queremos demostrar.
 
-  Por definición, \(\mathcal R \lambda \subseteq \mathcal R\phi\), por lo que \(\mathcal R\phi\) se corresponde con el núcleo por la izquierda de una matriz \(\Sigma Q\), donde \(Q\) es una matriz de rango máximo.
+  Por definición \(\mathcal R \lambda \subseteq \mathcal R\phi\), por lo que \(\mathcal R\phi\) se corresponde con el núcleo por la izquierda de una matriz \(\Sigma Q\), donde \(Q\) es una matriz de rango máximo.
   De forma análoga se tiene que \(\mathcal R\phi \subseteq \mathcal R\rho\), por lo que existe otra matriz \(Q'\) tal que \(\mathcal R\rho\) es el núcleo por la izquierda de \(\Sigma QQ'\).
   Por el lema \ref{lem:pgz-sesgados-diagrama} se tiene que \(\Sigma QQ' = \Sigma B\), donde \(B\) es una matriz de rango máximo y sin ninguna fila nula.
   Por tanto \(QQ' = B\), porque \(\Sigma\) define una aplicación lineal sobreyectiva y \(Q\) no tiene filas nulas.
@@ -375,19 +384,17 @@ La siguiente proposición nos ilustra sobre la relación existente entre el poli
   Obsérvese que por (\ref{eq:equivalencias-divisor-sigma-b}) se tiene que \(\sigma^{k_j}(\beta)\) es una \(\beta\)-raíz de \(\phi\) si y solo si
   \[
     \rank\left( \begin{array}{@{}c|c@{}}
-      \multirow{4}{*}{\(\Sigma Q\)} & \sigma^{k_j}(\alpha)^{[\sigma]}\\
+      \multirow{4}{*}{\(\Sigma Q\)} & \sigma^{k_j}(\alpha)\\
        & \sigma^{k_j + 1}(\alpha)\\
        & \vdots \\
        & \sigma^{k_j + n - 1}(\alpha)
     \end{array}\right) = \rank(\Sigma Q).
   \]
-  % FIXME: qué es ese sigma entre corchetes?????????
   Por tanto, por el lema \parencite[Lema 2.3]{gomez-torrecillas_petersongorensteinzierler_2018} que \(\phi\) se pueda \(\beta\)-descomponer totalmente implica que \(\{\sigma^{k_1}(\beta), \dots, \sigma^{k_v}(\beta)\}\) es el conjunto de \(\beta\)-raíces de \(\phi\).
   Por tanto, \(\phi = \lambda\).
 \end{proof}
 
-Ya estamos en disposición de calcular el polinomio localizador de errores.
-Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, que puede verse en el algoritmo \ref{alg:pgz-sesgados}.
+Ya estamos en disposición de calcular el polinomio localizador de errores y por tanto hemos completado el diseño del algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, que puede consultarse en el algoritmo \ref{alg:pgz-sesgados}.
 
 \begin{Ualgorithm}[htbp]
   \small
@@ -454,8 +461,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   Como \(\rho \mid_d \lambda'\) por la proposición \ref{prop:pgz-sesgados-lambda-b-descompone-multiplo-rho} se tiene que \(\lambda \mid_d \lambda'\).
   Procederemos por reducción al absurdo.
   Supongamos entonces que \(\lambda \neq \lambda'\).
-  Entonces la matriz \(H_{\lambda} = \operatorname{mrpf}(M_{\lambda}N)\) contiene una fila adicional, un vector canónico \(\varepsilon_{d}\), que no está en \(H'\).
-  %TODO: añadir que hay que aplicar el lema 3.1 (dice Gabriel)
+  Entonces la matriz \(H_{\lambda} = \operatorname{mepf}(M_{\lambda}N)\) contiene al menos una fila adicional, que será un vector canónico \(\varepsilon_{d}\), que no está en \(H'\).
   Como \(\rho \mid_d \lambda\) por definición se tiene que \(\mathcal R\lambda \subseteq \mathcal R\rho\) y por tanto,
   \[
     \rank\left( \begin{array}{@{}c@{}}
@@ -470,7 +476,7 @@ Esto completa el diseño del algoritmo de Peterson-Gorenstein-Zierler para códi
   Con ellas ya podemos construir el polinomio de error en la línea \ref{algl:pgz-sesgados-error} y obtener el mensaje.
 \end{proof}
 
-Veamos a continuación algunos ejemplos.
+Veamos a continuación algunos ejemplos utilizando para ello la implementación en Sage comentada en el anexo \ref{annex:pgz-sage}.
 
 \begin{example}
   Sea \(\mathbb F = \mathbb F_2(a)\) un cuerpo con \(2^{12} = 1024\) elementos, donde se verifica la relación \(a^{12} + a^7 + a^{6} + a^{5} + a^{3} + a + 1 = 0\).
