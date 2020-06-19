@@ -30,30 +30,43 @@ En consecuencia, el estudio de los códigos cíclicos en \(\mathbb F_q^n\) es eq
 A la hora de factorizar \(x^n -1\) existen dos posibilidades, pues dicha factorización puede tener factores irreducibles repetidos o no.
 Vamos a asumir que \(q\) y \(n\) son primos relativos y por tanto \(x^n - 1\) no tiene factores repetidos; en caso contrario el anillo cociente sería semisimple, lo que no nos aportaría nada: los ideales generados por los polinomios con factores repetidos no aumentan la distancia, pues es la misma que la del subcódigo sin factores repetidos.
 
-Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) necesitamos considerar la extensión de cuerpos \(\mathbb F_{q^t}\) de \(\mathbb F_q\) que contenga todas sus raíces.
-El cuerpo \(\mathbb F_{q^t}\) debe contener una enésima raíz primitiva de la unidad, que por el teorema \ref{th:Fq-ast-cilcico} sabemos que ocurre cuando \(n \mid (q^t - 1)\).
-Definimos el \textit{orden} \(\operatorname{ord}_n(q)\) de \(q\) módulo \(n\) como el menor entero positivo \(a\) tal que \(q^{a} \equiv 1 \bmod n\).
-Si \(t = \operatorname{ord}_n(q)\) entonces \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\) pero no hay una extensión de cuerpos más pequeña de \(\mathbb F_q\) que la contenga.
-Como todos los \(\alpha^{i}\) son distintos dos a dos para \(0 \leq i < n\) y \((\alpha^{i})^n = 1\), entonces \(\mathbb F_{q^t}\) contiene todas las raíces de \(x^n - 1\).
-Por tanto, \(\mathbb F_{q^t}\) es lo que se conoce como \textit{cuerpo de descomposición} de \(x^n - 1\) sobre \(\mathbb F_q\).
+Para factorizar \(x^n - 1\) sobre \(\mathbb F_q\) necesitamos considerar una extensión de cuerpos que contenga todas sus raíces, es decir, que sea lo que se conoce como \emph{cuerpo de descomposición} del polinomio \(x^n - 1\).
+Sabemos por el teorema \ref{th:Fq-ast-cilcico} que una extensión \(\mathbb F_{q^t}/\mathbb F_q\) contiene a una raíz enésima primitiva de la unidad cuando \(n \mid (q^t - 1)\).
+
+\begin{definition}
+  El \textit{orden} \(\operatorname{ord}_n(q)\) de \(q\) módulo \(n\) como el menor entero positivo \(a\) tal que \(q^{a} \equiv 1 \bmod n\).
+\end{definition}
+
+Si llamamos \(t = \operatorname{ord}_n(q)\) entonces el cuerpo \(\mathbb F_{q^t}\) contiene una enésima raíz primitiva de la unidad \(\alpha\), pero va a existir una extensión de cuerpos más pequeña de \(\mathbb F_q\) que la contenga.
+Pero además, como todos los \(\alpha^{i}\) son distintos dos a dos para \(0 \leq i < n\) y \((\alpha^{i})^n = 1\), el cuerpo \(\mathbb F_{q^t}\) contiene de hecho a todas las raíces de \(x^n - 1\) y es el cuerpo de descomposición que buscamos.
 
 Los factores irreducibles de \(x^n - 1\) sobre \(\mathbb F_q\) deben ser el producto de los distintos polinomios minimales de las enésimas raíces de la unidad en \(\mathbb F_{q^t}\).
-Supongamos que \(\gamma\) es un elemento primitivo de \(\mathbb F_{q^t}\).
+Sea \(\gamma\) un elemento primitivo de \(\mathbb F_{q^t}\).
 Entonces \(\alpha = \gamma^d\) es una enésima raíz primitiva de la unidad, donde \(d = (q^t - 1)/n\).
-Las raíces del polinomio \(M_{a^s}(x)\) son \(\{\gamma^{ds}, \gamma^{dsq}, \gamma^{dsq^2}, \dots, \gamma^{dsq^{r-1}}\} = \{\alpha^s, \alpha^{sq}, \alpha^{sq^2}, \dots, \alpha^{sq^{r-1}}\}\), donde \(r\) es el menor entero positivo tal que \(dsq^r \equiv ds \bmod q^t - 1\) por el teorema \ref{th:pol-minimal-el-primitivo}.
-Pero \(dsq^r \equiv ds \bmod q^t - 1\) si y solo si \(sq^r \equiv s \bmod n\).
+Y por tanto las raíces enésimas de la unidad vendrán dadas por \(\alpha, \alpha^2, \dots, \alpha^n = 1\).
+En definitiva, tenemos que buscar los polinomios minimales correspondientes a las raíces enésimas de la unidad y tomar el producto de todos ellos, evitando repetir aquellos que coincidan.
 
-Todo esto nos lleva a extender la definición de clases \(q\)-ciclotómicas que hemos introducido en la sección \ref{subsec:clases-ciclotomicas}.
-Sea \(s\) un entero tal que \(0 \leq s < n\).
-La \textit{clase \(q\)-ciclotómica de \(s\) módulo \(n\)} es el conjunto
+Las raíces del polinomio \(M_{a^s}(x)\) son
 \[
-  C_s = \{s, sq, \dots, sq^{r-1}\} \bmod n, 
+  \{\gamma^{ds}, \gamma^{dsq}, \gamma^{dsq^2}, \dots, \gamma^{dsq^{r-1}}\} = \{\alpha^s, \alpha^{sq}, \alpha^{sq^2}, \dots, \alpha^{sq^{r-1}}\},
 \]
-donde \(r\) es el menor entero positivo tal que \(sq^r \equiv s \bmod n\).
+donde \(r\) es el menor entero positivo tal que \(dsq^r \equiv ds \bmod q^t - 1\) por el teorema \ref{th:pol-minimal-el-primitivo}.
+Pero \(dsq^r \equiv ds \bmod q^t - 1\) si y solo si \(sq^r \equiv s \bmod n\).
+Todo esto nos lleva a extender la definición de clases \(q\)-ciclotómicas que hemos introducido en la sección \ref{subsec:clases-ciclotomicas}.
+\begin{definition}
+  Sea \(s\) un entero tal que \(0 \leq s < n\).
+  La \textit{clase \(q\)-ciclotómica de \(s\) módulo \(n\)} es el conjunto
+  \[
+    C_s = \{s, sq, \dots, sq^{r-1}\} \bmod n, 
+  \]
+  donde \(r\) es el menor entero positivo tal que \(sq^r \equiv s \bmod n\).
+\end{definition}
 Se deduce entonces que \(C_s\) es la órbita de la permutación \(i \mapsto iq \bmod n\) que contiene a \(s\).
 Las distintas clases \(q\)-ciclotómicas módulo \(n\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, n - 1\}\).
-En la sección * estudiamos el caso particular en el que \(n = q^t - 1\).
+En la sección \ref{subsec:clases-ciclotomicas} estudiamos el caso particular en el que \(n = q^t - 1\).
 Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclotómica \(C_1\) módulo \(n\).
+
+Toda esta discusión nos conduce al siguiente teorema, cuya demostración ya hemos comentado parcialmente.
 
 \begin{theorem}
   \label{th:pol-minimal-raiz-primitiva}
@@ -77,13 +90,80 @@ Obsérvese que \(\operatorname{ord}_n(q)\) es el tamaño de la clase \(q\)-ciclo
 \end{theorem}
 
 \begin{proof}
-  % TODO (en el libro no viene)
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item Para la construcción de \(M_{\alpha}(x)\) que hemos dado tenemos que comprobar tres cosas:
+    \begin{itemize}
+      \item Que \(\alpha^{s}\) es raíz. Esto es trivial, pues \(s \in C_s\).
+      \item Que \(M_{\alpha}(x) \in \mathbb F_q[x]\).
+      Se tiene que
+      \[
+        (M_{\alpha}(x))^{q} = \prod_{i \in C_s}(x - \alpha^i)^q = \prod_{i \in C_s}(x^q - \alpha^{iq}) = \prod_{i \in C_s}(x^q - \alpha^i) = M_{\alpha}(x^q).
+      \]
+      Por tanto, si \(M_{\alpha}(x) = \sum_{i=0}^{r}a_ix^{i}\) entonces
+      \[
+        (M_{\alpha}(x))^{q} = \left(\sum_{i=0}^{r}a_ix^{i}\right)^{q} = \sum_{i=0}^{r}a_i^qx^{iq}
+      \] y 
+      \[
+        M_{\alpha}(x^q) = \sum_{i=0}^{r}a_ix^{iq}.
+      \]
+      Así que \(a_{i}^{q} = a_{i}\) para todo \(0 \leq i \leq r\) y por tanto los coeficientes \(a_i \in \mathbb F_q\), por lo que \(M_{\alpha}(x) \in \mathbb{F}_q\).
+      \item Que el \(M_{\alpha}(x)\) no tiene raíces múltiples y que todo polinomio \(f(x)\) que tenga a \(\alpha^{s}\) como raíz es divisible por él. 
+      Como \(\alpha\) es un elemento primitivo se tiene que \(\alpha^j \neq \alpha^k\) para \(j, k \in C_s\).
+      Por tanto, no tiene raíces múltiples.
+      Por otro lado, sea \(f(x) = f_0 + f_1x + \dots + f_n x^{n} \in \mathbb F_q[x]\) tal que \(f(\alpha^{s}) = 0\).
+      Entonces para cada \(j \in C_s\) existe un entero \(l\) tal que \(j \equiv sq^l \bmod n\).
+      Así,
+      \begin{align*}
+        f(\alpha^j) = f(\alpha^{sq^l}) &= f_0 + f_1\alpha^{sq^l} + \dots + f_n \alpha^{nsq^l}\\
+          &= f_{0}^{q^l} + f_{1}^{q^l}\alpha^{sq^l} + \dots + f_{n}^{q^l}\alpha^{nsq^l} \\
+          &= (f_0 + f_1\alpha^{i} + \dots + f_n\alpha^{ni})^{q^t}\\
+          &= f(\alpha^{s})^{q^t}\\
+          &= 0.
+      \end{align*}
+      Por tanto \(M_{\alpha}(x)\) así definido es un divisor de \(f(x)\).
+    \end{itemize}
+    \item Queda probado con la demostración de la factorización de \(M_{\alpha}(x)\) del apartado anterior.
+    \item Como ya hemos comentado antes, sabemos que en este caso \(x^n - 1\) no tiene factores repetidos.
+    Por tanto, su factorización en factores irreducibles ha de ser el producto de los distintos polinomios minimales correspondientes a las raíces enésimas de la unidad, pues, por definición, son irreducibles.\qedhere
+  \end{enumerate}
 \end{proof}
 
-\begin{theorem}
-  El tamaño de cada clase \(q\)-ciclotómica es un divisor de \(\operatorname{ord}_n(q)\).
-  Además, el tamaño de \(C_1\) es \(\operatorname{ord}_n(q)\).
-\end{theorem}
+\begin{example}
+  Sean \(q = 2\) y \(n = 15\). Consideremos entonces el polinomio \(x^{15} - 1\) sobre \(\mathbb F_2\).
+  Como \(\operatorname{ord}_{15}(2) = 4\) el cuerpo de descomposición de \(x^{15} - 1\) sobre \(\mathbb F_2\) es \(\mathbb F_{16}\).
+  Vamos a utilizar Sage para obtener la descomposición de \(x^{15} - 1\) en factores irreducibles.
+  Calculamos primero las clases \(2\)-ciclotómicas módulo \(n\).
+  \begin{lstlisting}[gobble=4]
+    sage: F = GF(2)
+    sage: x = polygen(F)
+    sage: Zmod(15).cyclotomic_cosets(2)
+    > [[0], [1, 2, 4, 8], [3, 6, 9, 12], [5, 10], [7, 11, 13, 14]]
+  \end{lstlisting}
+  Una vez conocidas podemos obtener todos los polinomios minimales.
+  \begin{lstlisting}[gobble=4]
+    sage: (x-a^0)
+    > x + 1
+    sage: (x-a)*(x-a^2)*(x-a^4)*(x-a^8)
+    > x^4 + x + 1
+    sage: (x-a^3)*(x-a^6)*(x-a^9)*(x-a^12)
+    > x^4 + x^3 + x^2 + x + 1
+    sage: (x-a^5)*(x-a^10)
+    > x^2 + x + 1
+    sage: (x-a^7)*(x-a^11)*(x-a^13)*(x-a^14)
+    > x^4 + x^3 + 1
+  \end{lstlisting}
+  Podemos comprobar que efectivamente estos polinomios nos dan una descomposición de \(x^{15} - 1\).
+  \begin{lstlisting}[gobble=4]
+    sage: (x-a^0)*(x-a)*(x-a^2)*(x-a^4)*(x-a^8)*(x-a^3)*(x-a^6)*(x-a^9)*(x-a^12)*(x-a^5)*(x-a^10)*(x-a^7)*(x-a^11)*(x-a^13)*(x-a^14)
+    > x^15 + 1
+  \end{lstlisting}
+\end{example}
+
+% \begin{theorem}
+%   El tamaño de cada clase \(q\)-ciclotómica es un divisor de \(\operatorname{ord}_n(q)\).
+%   Además, el tamaño de \(C_1\) es \(\operatorname{ord}_n(q)\).
+% \end{theorem}
 
 \section{Construcción de códigos cíclicos}
 
