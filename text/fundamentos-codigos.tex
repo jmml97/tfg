@@ -245,10 +245,24 @@ Si la distancia mínima \(d\) de un \([n,k]\) código es conocida, nos referirem
 Este valor es importante pues nos ayuda a determinar la capacidad de corrección de errores del código \(\mathcal C\), como ilustra el siguiente teorema.
 
 \begin{theorem}
-  Sea \(\mathcal C\) un \([n, k, d]\) código. Entonces \(\mathcal C\) tiene capacidad de corrección de errores \[
-    t = \left\lfloor \frac{d - 1}{2} \right\rfloor.
+  Sea \(\mathcal C\) un \([n, k, d]\) código. Entonces \(\mathcal C\) puede detectar hasta \(d - 1\) errores y puede corregir hasta \[
+    t = \left\lfloor \frac{d - 1}{2} \right\rfloor
   \]
+  errores.
 \end{theorem}
+
+\begin{proof}
+  Por definición de distancia mínima, al añadir menos de \(d\) errores no se obtiene una palabra código, y por tanto se pueden detectar hasta \(d - 1\) errores.
+  Sea ahora \(\mathbf{y}\) un mensaje recibido con, como mucho, \(t\) errores.
+  Entonces existe una palabra código \(\mathbf{c} \in \mathcal C\) tal que \(\operatorname{d}(\mathbf{y}, \mathbf{c}) \leq t\).
+  Supongamos que existe otra palabra \(\mathbf{c}' \in \mathcal C\) tal que \(\operatorname{d}(\mathbf{y}, \mathbf{c}') \leq t\).
+  Entonces, por la desigualdad triangular,
+  \[
+    \operatorname{d}(\mathbf{c}, \mathbf{c}') \leq \operatorname{d}(\mathbf{c}, \mathbf{y}) + \operatorname{d}(\mathbf{y}, \mathbf{c}') \leq 2t \leq d - 1,
+  \]
+  lo que es claramente imposible.
+  Por tanto \(\mathcal C\) puede corregir hasta \(t\) errores.
+\end{proof}
 
 Efectivamente, a mayor distancia mínima, mayor número de errores en el código se pueden corregir.
 Otra medida interesante es el \textit{peso de Hamming}.
