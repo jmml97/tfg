@@ -31,7 +31,41 @@ Fijamos en lo que sigue \(\beta = \alpha^{-1}\sigma(\alpha)\).
 \end{lemma}
 
 \begin{proof}
-  TODO: referenciar.
+  Vamos a proceder por reducción al absurdo, suponiendo que \(\deg(g) < m\), de forma que \(g = \sum_{i=0}^{m-1}g_1x^{i}\).
+  Como \(g\) es un múltiplo por la izquierda de \(x - \sigma^{t_1}(\beta )\) para todo \(1 \leq j \leq m\) por la proposición \ref{prop:norma-divisor} se tiene que
+  \[
+    \sum_{i=0}^{m-1}g_iN_i(\sigma^{t_j}(\beta)) = 0 \quad\text{para todo } 1 \leq j \leq m.
+  \]
+  Estas ecuaciones definen un sistema homogéneo, cuya matriz de coeficientes es la transpuesta de 
+  \[
+    M = \begin{pmatrix}
+      N_0(\sigma^{t_1}(\beta)) & N_0(\sigma^{t_2}(\beta)) & \dots & N_0(\sigma^{t_m}(\beta))\\
+      N_1(\sigma^{t_1}(\beta)) & N_1(\sigma^{t_2}(\beta)) & \dots & N_1(\sigma^{t_m}(\beta))\\
+      N_2(\sigma^{t_1}(\beta)) & N_2(\sigma^{t_2}(\beta)) & \dots & N_2(\sigma^{t_m}(\beta))\\
+      \vdots & \vdots & \ddots & \vdots \\
+      N_{m-1}(\sigma^{t_1}(\beta)) & N_{m-1}(\sigma^{t_2}(\beta)) & \dots & N_{m-1}(\sigma^{t_m}(\beta))\\
+    \end{pmatrix}
+  \]
+  Pero por (\ref{eq:norma-beta}) \(|M| = 0\) si y solo si el determinante de la matriz
+  \begin{align*}
+    M' &= \begin{pmatrix}
+      \sigma^{t_1}(\alpha) & \sigma^{t_2}(\alpha) & \dots & \sigma^{t_m}(\alpha)\\
+      \sigma^{t_1+1}(\alpha) & \sigma^{t_2+1}(\alpha) & \dots & \sigma^{t_m+1}(\alpha)\\
+      \sigma^{t_1+2}(\alpha) & \sigma^{t_2+2}(\alpha) & \dots & \sigma^{t_m+2}(\alpha)\\
+      \vdots & \vdots & \ddots & \vdots \\
+      \sigma^{t_1+m-1}(\alpha) & \sigma^{t_2+m-1}(\alpha) & \dots & \sigma^{t_m+m-1}(\alpha)\\
+    \end{pmatrix}\\
+      &= \begin{pmatrix}
+        \sigma^{t_1}(\alpha) & \sigma^{t_2}(\alpha) & \dots & \sigma^{t_m}(\alpha)\\
+        \sigma(\sigma^{t_1}(\alpha)) & \sigma(\sigma^{t_2}(\alpha)) & \dots &\sigma(\sigma^{t_m}(\alpha))\\
+        \sigma^2(\sigma^{t_1}(\alpha)) & \sigma^2(\sigma^{t_2}(\alpha)) & \dots &\sigma^2(\sigma^{t_m}(\alpha))\\
+        \vdots & \vdots & \ddots & \vdots \\
+        \sigma^{m-1}(\sigma^{t_1}(\alpha)) & \sigma^{m-1}(\sigma^{t_2}(\alpha)) & \dots &\sigma^{m-1}(\sigma^{t_m}(\alpha))\\
+      \end{pmatrix}
+  \end{align*}
+  es cero.
+  Pero por \parencite[Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018} \(|M'| \neq 0\), por lo que la única solución del sistema anterior es \(g_0 = \dots = g_{m-1} = 0\), lo que es una contradicción.
+  Por tanto, \(\deg(g) = m\).
 \end{proof}
 
 \begin{corollary}
