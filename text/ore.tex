@@ -214,30 +214,35 @@ A continuación vamos a introducir un concepto que es muy útil a la hora de cal
 
 Definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathbb F_q\) como
 \[
-  N_i(\gamma) = \sigma^{i-1}(\gamma)\dots \sigma(\gamma)\gamma \quad\text{para } i > 0 \quad\text{y } N_0(\gamma) = 1.
+  N_i(\gamma) = \sigma(N_{i-1}(\gamma))(\gamma) = \sigma^{i-1}(\gamma)\dots \sigma(\gamma)\gamma \quad\text{para } i > 0 \quad\text{y } N_0(\gamma) = 1.
 \]
 
 \begin{proposition}
   \label{prop:norma-divisor}
-  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x; \sigma]\) y \(\gamma \in \mathbb F_q\) entonces \((x - \gamma) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{n-i}(\gamma) = 0\).
+  Si \(f(x) = \sum_0^n a_ix^{n-i} \in \mathbb F_q[x; \sigma]\) y \(\gamma \in \mathbb F_q\) entonces \((x - \gamma) \mid_d f(x)\) si y solo si \(\sum_0^n a_iN_{i}(\gamma) = 0\).
 \end{proposition}
 
 \begin{proof}
-  Tenemos la identidad
+  Observamos primero lo siguiente, que es de hecho un caso especial de la proposición:
+  \begin{equation}
+    \label{eq:prop:norma-divisor-prueba-especial}
+    \text{Para todo } n \geq 0, \qquad x^n - N_n(\gamma) \in R(x - \gamma).
+  \end{equation}
+  Se demuestra por inducción.
+  El caso base \(n = 0\) es trivial, pues \(x ^0 - N_0(\gamma) = 0 \in R(x - \gamma)\).
+  Supuesto cierto para \(n\), para \(n + 1\) se tiene
   \begin{align*}
-    x^{i} &- \sigma^{i-1}(\gamma)\sigma^{i-2}(\gamma) \cdots \gamma\\
-      &= (x^{i-1} + \sigma^{i-1}(\gamma)x^{i-2} + \dots + \sigma^{i-1}(\gamma)\cdots\sigma(\gamma))(x - \gamma)
+    x^{n+1} - N_{n+1}(\gamma) &= x^{n+1} - \sigma(N_{n}(\gamma))(\gamma)\\
+      &= x^{n+1} - \sigma(N_{n}(\gamma))(\gamma) + \sigma(N_n(\gamma))x - \sigma(N_n(\gamma))x\\
+      &= x^{n+1} + \sigma(N_{n}(\gamma))(x - \gamma) - \sigma(N_n(\gamma))x\\
+      &= \sigma(N_{n}(\gamma))(x - \gamma) + xx^{n} - xN_n(\gamma)\\
+      &= \sigma(N_{n}(\gamma))(x - \gamma) + x(x^{n} - N_n(\gamma))\in R(x - \gamma).
   \end{align*}
-  para \(i = 1, 2, \dots\). 
-  Si multiplicamos por la izquierda por \(a_{n-i}\) y sumamos en \(i\) obtenemos que
+  Usando ahora (\ref{eq:prop:norma-divisor-prueba-especial}) tenemos que 
   \[
-    f(x) = q(x)(x - \gamma) + a_0N_n(\gamma) + a_1N_{n-1}(\gamma) + \dots + a_nN_0(\gamma),
+    f(x) - \sum a_iN_i(\gamma) = \sum a_i(x^{i} - N_i(\gamma)) \in R(x - \gamma)
   \]
-  por lo que el resto de dividir \(f(x)\) por \((x - \gamma)\) por la derecha es 
-  \[
-    a_0N_n(\gamma) + a_1N_{n-1}(\gamma) + \dots + a_nN_0(\gamma),
-  \]
-  de lo que deducimos lo que queremos demostrar.
+  y por tanto \(r = \sum a_iN_i(\gamma)\).
 \end{proof}
 
 También se dan las siguientes identidades, que nos serán útiles cuando estudiemos los códigos cíclicos sesgados en el capítulo siguiente.
