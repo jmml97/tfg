@@ -175,6 +175,12 @@ Todas las nociones que hemos definido para anillos —como la característica—
 Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_p\), donde \(p\) denota el orden del cuerpo.
 Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utilizar de forma prominente cuando trabajemos con códigos.
 
+\begin{proposition}
+  \label{prop:freshmans-dream}
+  Sea \(\mathbb F_q\) un cuerpo de característica \(p\).
+  Entonces \((a + b)^{p} = a^{p} + b^{p}\) para todo \(a, b \in \mathbb F_q\).
+\end{proposition}
+
 \begin{theorem}
   % Cohn Vol 2, 63 [74]
   \label{th:cuerpo-subcuerpo-primo-caracteristica}
@@ -351,6 +357,12 @@ Puede probarse que existen polinomios irreducibles de cualquier grado, lo que no
 \begin{theorem}
   Para cualquier primo \(p\) y cualquier entero positivo \(m\), existe un cuerpo finito, único salvo isomorfismos, con \(q = p^m\) elementos.
 \end{theorem}
+
+\begin{proposition}
+  \label{prop:subcuerpo-divisor-m}
+  Sea \(\mathbb F_{q}\) un cuerpo finito, con \(q = p^m\).
+  Entonces, para cada \(r | m\) existe un único subcuerpo \(\mathbb F_{p^r}\) de \(\mathbb F_q\).
+\end{proposition}
 
 A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
 \[
@@ -544,7 +556,7 @@ De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x
     Consideramos ahora la extensión \(\mathbb F_{q}(\alpha, \beta)\), la extensión de \(\mathbb F_{q}(\alpha)\) generada por \(\beta\).
     Dentro de \(\mathbb F_{q}(\alpha, \beta)\) hay un subcuerpo \(\mathbb F_{q}(\beta)\), que es la extensión de \(\mathbb F_q\) generada por \(\beta\).
     Además, \(\mathbb F_{q}(\beta)\) ha de tener \(q^r\) elementos, pues \(f(x)\) es un irreducible de grado \(r\) sobre \(\mathbb F_q\).
-    Como tanto \(\mathbb F_{q}(\alpha)\) como \(\mathbb F_{q}(\beta)\) son subcuerpos del mismo tamaño, han de ser iguales (cita). % TODO: mencionar el teorema (no incluido) de que dos subcuerpos de F_p del mismo tamaño son iguales
+    Como tanto \(\mathbb F_{q}(\alpha)\) como \(\mathbb F_{q}(\beta)\) son subcuerpos del mismo tamaño, han de ser iguales por la proposición \ref{prop:subcuerpo-divisor-m}.
     Por tanto, todas las raíces de \(f(x)\) están en \(\mathbb F_{q^r}\).
     Finalmente, todo cuerpo conteniendo a \(\mathbb F_q\) y una raíz de \(f(x)\) contiene a \(\mathbb F_{q^r}\).
     \item Se deduce de lo anterior y de la proposición \ref{prop:raices-factores-pol-Fp}.
@@ -553,6 +565,13 @@ De hecho, el siguiente teorema afirma que en ese caso todas las raíces de \(f(x
 \end{proof}
 
 En particular este teorema se verifica para los polinomios minimales \(M_{\alpha}(x)\) sobre \(\mathbb F_q\), pues son mónicos irreducibles.
+Para la demostración del siguiente teorema necesitamos el lema que enunciamos a continuación.
+
+\begin{lemma}
+  \label{lem:pol-s-q-div}
+  Sea \(s = p^r\) y \(q = p^m\).
+  Entonces \((x^s - x) | (x^q - x)\) si y solo si \(r | m\).
+\end{lemma}
 
 \begin{theorem}
   \label{th:prop-pol-minimal}
@@ -574,13 +593,12 @@ En particular este teorema se verifica para los polinomios minimales \(M_{\alpha
     \item Se deduce del teorema \ref{th:pol-minimal}(\ref{thi:pol-minimal-div}), pues por el teorema \ref{th:el-Fq-raices-pol}, \(\alpha^{q^t} - \alpha = 0\).
     \item Las raíces del polinomio \(x^{q^t} - x\) son los \(q^t\) elementos de \(\mathbb F_{q^t}\), luego este polinomio tiene raíces distintas dos a dos en \(\mathbb F_{q^t}\) por el teorema \ref{th:pol-irr}(\ref{thi:pol-irr-raices}).
     Ahora, como por \ref{thi:prop-pol-minimal-div} \(M_{\alpha}(x)\) divide a \(x^{q^t} - x\), todas sus raíces también son distintas dos a dos y están en \(\mathbb F_{q^t}\).
-    \item Si el grado de \(M_{\alpha}(x)\) es \(r\), la extensión \(\mathbb F_{q}(\alpha)\) genera el subcuerpo \(\mathbb F_{q^r} = \mathbb F_{p^{mr}}\) de \(\mathbb F_{q^t} = \mathbb F_{p^{mt}}\), de forma que \(mr | mt\) por el teorema (cita) y por tanto el grado de \(M_{\alpha}(x)\) divide a \(t\). % TODO: mencionar el teorema (no incluido) de que dos subcuerpos de F_p del mismo tamaño son iguales
+    \item Si el grado de \(M_{\alpha}(x)\) es \(r\), la extensión \(\mathbb F_{q}(\alpha)\) genera el subcuerpo \(\mathbb F_{q^r} = \mathbb F_{p^{mr}}\) de \(\mathbb F_{q^t} = \mathbb F_{p^{mt}}\), de forma que \(mr | mt\) por el teorema \ref{prop:subcuerpo-divisor-m} y por tanto el grado de \(M_{\alpha}(x)\) divide a \(t\).
     \item Como \(x^{q^t} - x\) tiene raíces distintas dos a dos, sus factores \(p_i\)(x) también lo son, y puesto que es mónico, podemos asumir que también lo son.
     Por tanto, \(p_{i}(x) = M_{\alpha}(x)\) para cualquier \(\alpha \in \mathbb F_{q^t}\) tal que \(p_i(\alpha) = 0\), obteniendo así los factores del producto que buscamos.
     \item Este apartado se deduce del anterior, si demostramos que todo polinomio mónico irreducible de grado \(r | t\) sobre \(\mathbb F_q\) es un factor de \(x^{q^t} - x\).
     Pero \(f(x) | (x^{q^r} - x)\) por el teorema \ref{th:pol-irr}(\ref{thi:pol-irr-factor}).
-    Como \(mr | mt\), \((x^{q^r} - x) | (x^{q^t} - x)\) por el lema (cita).\qedhere
-    % TODO: citar lema 3.5.2 del libro (no incluido)
+    Como \(mr | mt\), \((x^{q^r} - x) | (x^{q^t} - x)\) por el lema \ref{lem:pol-s-q-div}.\qedhere
   \end{enumerate}
 \end{proof}
 
@@ -599,7 +617,13 @@ Podemos encontrar estas raíces con ayuda del siguiente teorema.
 \end{theorem}
 
 \begin{proof}
-  % TODO (ECC teorema 3.7.4, p114 [133])
+  Veamos la demostración por apartados.
+  \begin{enumerate}
+    \item Sea \(f(x) = \sum_{i=0}^{n}a_ix^{i}\).
+    Como \(q = p^{m}\), donde \(p\) es la característica de \(\mathbb F_q\), el polinomio \(f(x)^{q} = \sum_{i=0}^{n}a_{i}^{q}x^{iq}\) aplicando la proposición \ref{prop:freshmans-dream} repetidamente.
+    Sin embargo, \(a_{i}^{q} = a_i\), porque \(a_i \in \mathbb F_q\) y los elementos de \(\mathbb F_q\) son la raíces de \(x^{q} - x\) por el teorema \ref{th:el-Fq-raices-pol}.
+    \item Se deduce del apartado anterior, pues \(f(\alpha^q) = f(\alpha)^q = 0\).\qedhere
+  \end{enumerate}
 \end{proof}
 
 Si aplicamos este teorema de forma consecutiva podremos obtener todas las raíces de \(M_{\alpha}(x)\), que serán de la forma \(\alpha, \alpha^q, \alpha^{q^2},\)\,etc.; secuencia que terminará tras \(r\) términos, cuando \(\alpha^{q^r} = \alpha\).
