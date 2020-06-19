@@ -1,7 +1,7 @@
 \chapter{Códigos cíclicos sesgados}
 
 En este capítulo definiremos los códigos cíclicos sesgados sobre un cuerpo finito \(\mathbb F_q\).
-Las principales fuentes de este capítulo son \parencite{gomez-torrecillas_new_2016}, \parencite{gomez-torrecillas_petersongorensteinzierler_2018} y \parencite{shi_codes_2017}.
+Las principales fuentes de este capítulo son \parencite{gomez-torrecillas_new_2016}, \parencite{gomez-torrecillas_petersongorensteinzierler_2018}, \parencite{shi_codes_2017} y \parencite{lam_vandermonde_1988}.
 Consideremos el anillo de polinomios de Ore \(R = \mathbb F_q[x; \sigma]\).
 Supondremos que el orden del automorfismo \(\sigma\) es \(n\).
 Entonces por el teorema \ref{th:anillos-ore-centro} el polinomio \(x^n - 1\) es central en \(R\) y por tanto el ideal \((x^n - 1)\) es bilátero, por lo que podemos definir el anillo cociente \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\).
@@ -199,9 +199,55 @@ Con todas estas herramientas ya podemos definir la clase de códigos que vamos a
 
 \begin{theorem}
   \label{th:distancia-skew-rs}
-  Un código RS sesgado de distancia mínima prevista \(\delta\) tiene distancia \(\delta\).
+  Un código RS sesgado de distancia mínima prevista \(\delta\) tiene distancia mínima \(\delta\).
 \end{theorem}
 
 \begin{proof}
-  (TODO: citar)
+  Vamos a denotar por
+  \[
+    g = \left[x - \sigma^r(\beta), x - \sigma^{r+1}(\beta), \dots, x - \sigma^{r+\delta-2}(\beta)\right]_i
+  \]
+  al generador de \(\mathcal C\).
+  Una matriz de paridad de este código es
+  \[
+    H = \begin{pmatrix}
+      N_0(\sigma^{r}(\beta)) & N_0(\sigma^{r+1}(\beta)) & \dots & N_0(\sigma^{r+\delta-2}(\beta))\\
+      N_1(\sigma^{r}(\beta)) & N_1(\sigma^{r+1}(\beta)) & \dots & N_1(\sigma^{r+\delta-2}(\beta))\\
+      N_2(\sigma^{r}(\beta)) & N_2(\sigma^{r+1}(\beta)) & \dots & N_2(\sigma^{r+\delta-2}(\beta))\\
+      \vdots & \vdots & \ddots & \vdots \\
+      N_{n-1}(\sigma^{r}(\beta)) & N_{n-1}(\sigma^{r+1}(\beta)) & \dots & N_{n-1}(\sigma^{r+\delta-2}(\beta))\\
+    \end{pmatrix}
+  \]
+  puesto que las columnas son la evaluaciones por la izquierda en las raíces.
+  Por el corolario \ref{cor:peso-minimo-columnas-dependientes} tenemos que comprobar que todo menor de \(H\) de tamaño \(\delta - 1\) es distinto de cero.
+  Recordemos que \(N_i(\sigma^{k}(\beta)) = \sigma^k(N_i(\beta)) = \sigma^{k}(\alpha^{-1})\sigma^{i+k}(\alpha)\) para enteros \(i\) y \(k\).
+  Por tanto, dada una submatriz de orden \(\delta - 1\),
+  \[
+    M = \begin{pmatrix}
+      N_{k_1}(\sigma^{r}(\beta)) & N_{k_1}(\sigma^{r+1}(\beta)) & \dots & N_{k_1}(\sigma^{r+\delta-2}(\beta))\\
+      N_{k_2}(\sigma^{r}(\beta)) & N_{k_2}(\sigma^{r+1}(\beta)) & \dots & N_{k_2}(\sigma^{r+\delta-2}(\beta))\\
+      N_{k_3}(\sigma^{r}(\beta)) & N_{k_3}(\sigma^{r+1}(\beta)) & \dots & N_{k_3}(\sigma^{r+\delta-2}(\beta))\\
+      \vdots & \vdots & \ddots & \vdots \\
+      N_{k_{\delta - 1}}(\sigma^{r}(\beta)) & N_{k_{\delta - 1}}(\sigma^{r+1}(\beta)) & \dots & N_{k_{\delta - 1}}(\sigma^{r+\delta-2}(\beta))\\
+    \end{pmatrix}
+  \]
+  con \(\{k_1 < k_2 < \dots < k_{\delta - 1}\} \subset \{0, 1, \dots, n - 1\}\),
+  el determinante \(|M| = 0\) si y solo si \(|M'| = 0\), siendo \(M'\) la matriz 
+  \begin{align*}
+    &\phantom{={}} \begin{pmatrix}
+      \sigma^{k_1 + r}(\alpha) & \sigma^{k_1 + r + 1}(\alpha) & \dots & \sigma^{k_1 + r + \delta - 2}(\alpha)\\ 
+      \sigma^{k_2 + r}(\alpha) & \sigma^{k_2 + r + 1}(\alpha) & \dots & \sigma^{k_2 + r + \delta - 2}(\alpha)\\ 
+      \sigma^{k_3 + r}(\alpha) & \sigma^{k_3 + r + 1}(\alpha) & \dots & \sigma^{k_3 + r + \delta - 2}(\alpha)\\ 
+      \vdots & \vdots & \ddots & \vdots\\ 
+      \sigma^{k_{\delta - 1} + r}(\alpha) & \sigma^{k_{\delta - 1} + r + 1}(\alpha) & \dots & \sigma^{k_{\delta - 1} + r + \delta - 2}(\alpha)\\ 
+     \end{pmatrix}\\
+     &= \begin{pmatrix}
+      \sigma^{k_1 + r}(\alpha) & \sigma(\sigma^{k_1 + r}(\alpha)) & \dots & \sigma^{\delta - 2}(\sigma^{k_1 + r}(\alpha))\\ 
+      \sigma^{k_2 + r}(\alpha) & \sigma(\sigma^{k_2 + r}(\alpha)) & \dots & \sigma^{\delta - 2}(\sigma^{k_2 + r}(\alpha))\\ 
+      \sigma^{k_3 + r}(\alpha) & \sigma(\sigma^{k_3 + r}(\alpha)) & \dots & \sigma^{\delta - 2}(\sigma^{k_3 + r}(\alpha))\\ 
+      \vdots & \vdots & \ddots & \vdots\\ 
+      \sigma^{k_v + r}(\alpha) & \sigma(\sigma^{k_v + r}(\alpha)) & \dots & \sigma^{\delta - 2}(\sigma^{k_v + r}(\alpha))\\ 
+     \end{pmatrix}.
+  \end{align*}
+  Como \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) es una base de \(\mathbb F_q\) como espacio vectorial del subcuerpo fijo \(\mathbb F^{\sigma}\), por \parencite[Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018} \(|M'| \neq 0\).
 \end{proof}
