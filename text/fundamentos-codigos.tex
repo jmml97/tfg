@@ -234,7 +234,10 @@ En este apartado vamos a estudiar dos propiedades de los códigos muy relacionad
 \end{theorem}
 
 \begin{proof}
-  
+  Las tres primeras propiedades son evidentes.
+  La cuarta se comprueba fácilmente.
+  Si \(\mathbf{x} = \mathbf{z}\) la desigualdad se da de forma trivial, pues \(\operatorname{d}(\mathbf{x}, \mathbf{z}) = 0\).
+  En caso de que \(\mathbf{x} \neq \mathbf{z}\) se tiene que \(\mathbf{x} \neq \mathbf{y}\) o \(\mathbf{y} \neq \mathbf{z}\) y en consecuencia, por la no negatividad, la desigualdad se verifica.
 \end{proof}
 
 La \textit{distancia} (\textit{mínima}) de un código \(\mathcal C\) es la menor distancia posible entre dos palabras código distintas. 
@@ -264,7 +267,12 @@ El siguiente teorema nos ilustra la relación existente entre los conceptos de p
 \end{theorem}
 
 \begin{proof}
-  
+  Se tiene que \(\operatorname{d}(\mathbf{x}, \mathbf{y}) = \operatorname{d}(\mathbf{0}, \mathbf{y} - \mathbf{x}) = \operatorname{wt}(\mathbf{y} - \mathbf{x})\).
+  Tenemos entonces que \(\operatorname{wt}(\mathbf{x}) = \operatorname{d}(\mathbf{0}, \mathbf{x})\) y que \(\operatorname{d}(\mathbf{x}, \mathbf{y}) = \operatorname{wt}(\mathbf{x} - \mathbf{y})\).
+  Sea \(\mathbf{c}\) una palabra código de peso mínimo.
+  Entonces \(\operatorname{wt}(\mathbf{c}) = \operatorname{d}(\mathbf{0}, \mathbf{c})\) y por tanto tenemos que \(d_{min} \leq w_{min}\).
+  Por otro lado, si \(\mathbf{c_1}\) y \(\mathbf{c_2}\) son palabras entre las que hay distancia mínima, \(\operatorname{d}(\mathbf{c_1}, \mathbf{c_2}) = \operatorname{wt}(\mathbf{c_1} - \mathbf{c_2})\) y como \(\mathbf{c_1} - \mathbf{c_2}\) es también una palabra código, \(w_{min} \leq d_{min}\).
+  En consecuencia, \(w_{min} = d_{min}\).
 \end{proof}
 
 Como consecuencia de este teorema —para códigos lineales— la distancia mínima también se llama \textit{peso mínimo} del código.
@@ -304,27 +312,35 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
   Usualmente solo se listan los \(A_i\) que son distintos de cero.
 \end{example}
 
-\begin{theorem}
+\begin{proposition}
   Sea \(\mathcal C\) un \([n,k,d]\) código sobre \(\mathbb F_q\).
   Entonces, \begin{enumerate}
     \item \(A_0(\mathcal C) + A_1(\mathcal C) + \cdots + A_n(\mathcal C) = q^k\).
     \item \(A_0(\mathcal C) = 1\) y \(A_1(\mathcal C) = A_2(\mathcal C) = \cdots = A_{d-1}(\mathcal C) = 0\).
   \end{enumerate}
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
-  TODO
+  La primera afirmación es trivial, pues estamos sumando todas las palabras del código, que sabemos que son \(q^k\) en total.
+  La segunda afirmación también lo es.
+  Es evidente que solo hay una palabra código con peso 0, la \(\mathbf{0}\).
+  Por otro lado, si la distancia mínima del código es \(d\) toda palabra código se diferenciará de \(\mathbf{0}\) en al menos \(d\) coordenadas, y en consecuencia, \(A_1(\mathcal C) = A_2(\mathcal C) = \cdots = A_{d-1}(\mathcal C) = 0\).
 \end{proof}
 
 % Theorem 1.4.13, Corollary 1.4.14 (Huffman-Pless), p.12-13
 
 \begin{theorem}
-  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\mathbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\mathbf{c}\) son linealmente independientes.
+  Sea \(\mathcal C\) un código lineal con matriz de paridad \(H\). Si \(\mathbf{c} \in \mathcal C\), las columnas de \(H\) que se corresponden con coordenadas no nulas de \(\mathbf{c}\) son linealmente dependientes.
   Recíprocamente, si entre \(w\) columnas de \(H\) existe una relación de dependencia lineal con coeficientes no nulos, entonces hay una palabra código en \(\mathcal C\) de peso \(w\) cuyas coordenadas no nulas se corresponden con dichas columnas.
 \end{theorem}
 
 \begin{proof}
-  TODO
+  \label{th:peso-columnas-dependientes}
+  Si \(\mathbf{c} \in \mathcal C\) por la definición de matriz de paridad tenemos que \(\mathbf{c}^TH = \mathbf{0}\).
+  Si \(\mathbf{c} = (c_1, \dots, c_n)\) podemos expresar esta relación como \(\sum_{i=0}^n c_i \mathbf{h}_i = \mathbf{0}\), donde \(\mathbf{h}_1, \dots, \mathbf{h}_n\) son las columnas de \(H\).
+  Por tanto, si \(\mathbf{c} \neq \mathbf{0}\) se define una relación de dependencia lineal entre las columnas correspondientes a las coordenadas no nulas de \(\mathbf{c}\).
+  Por otro lado, supongamos ahora que existe una relación de dependencia lineal entre \(w\) columnas de \(H\).
+  Tendremos entonces que \(\sum_{i=1}^w a_i \mathbf{h}_i = \mathbf{0}\), pero sabemos que esto supone que los coeficientes \(a_i\) forman una palabra código de \(\mathcal C\), que efectivamente tendrá peso \(w\).
 \end{proof}
 
 \begin{corollary}
@@ -333,7 +349,11 @@ Como consecuencia de este teorema —para códigos lineales— la distancia mín
 \end{corollary}
 
 \begin{proof}
-  TODO
+  Comencemos suponiendo que un código lineal \(\mathcal C\) tiene peso mínimo \(d\).
+  Así, habrá alguna palabra código \(\mathbf{c}\) tal que \(\operatorname{wt}(\mathbf{c}) = d\).
+  En ese caso, por el teorema \ref{th:peso-columnas-dependientes} la matriz de paridad de \(\mathcal C\) tendrá \(d\) columnas linealmente dependientes.
+  Si tuviese algún conjunto de \(d-1\) columnas linealmente dependientes el mismo teorema nos asegura que existiría una palabra con peso \(d-1\), lo que es imposible pues el peso mínimo es \(d\).
+  Recíprocamente, si la matriz de paridad tiene un conjunto de \(d\) columnas linealmente dependientes pero no tiene un conjunto de \(d-1\) columnas linealmente dependientes toda palabra código tendrá entonces peso al menos \(d\), y en consecuencia, \(d\) es el peso mínimo del código.
 \end{proof}
 
 \section{Ejemplos de códigos}
