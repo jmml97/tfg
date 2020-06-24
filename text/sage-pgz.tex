@@ -27,7 +27,68 @@ El decodificador \texttt{BCHPGZDecoder} debe utilizarse sobre un código BCH de 
   > Peterson-Gorenstein-Zierler algorithm based decoder for [15, 7] BCH Code over GF(2) with designed distance 5
 \end{lstlisting}
 
+\section{Clase para códigos cíclicos sesgados}
+
+Esta clase apenas tiene implementación y sirve meramente como modelo para la implementación de los códigos RS sesgados.
+
+\texttt{class SkewCyclicCode(self, generator\_pol=None)}
+
+Hereda de: \texttt{AbstractLinearCode}
+
+Representación de un código cíclico sesgado como un código lineal.
+
+\textsc{Argumentos}
+
+\begin{description}
+  \item[\texttt{generator\_pol}] Polinomio generador utilizado para construir el código
+\end{description}
+
+\textsc{Ejemplos}
+
+\begin{lstlisting}[gobble=2]
+  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+  sage: C = SkewCyclicCode(g); C
+  > [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+\end{lstlisting}
 
 
+\section{Codificador para códigos cíclicos sesgados}
 
-%\lstinputlisting[language=Python, caption=Implementación del algoritmo de Peterson-Gorenstein-Zierler en Sage]{../code/pgz.sage}
+Esta clase permite codificar como vectores utilizando una matriz generadora del código cíclico sesgado.
+
+Como está indicada como clase codificadora por defecto, puede utilizarse directamente con el método \texttt{encode()} del código.
+
+\begin{lstlisting}[gobble=2]
+  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+  sage: C = SkewCyclicCode(g); C
+  > [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  sage: C.encode(vector(F, [a, 1]))
+  > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+\end{lstlisting}
+
+
+\section{Clase para códigos RS sesgados}
+
+Un código RS sesgado con esta clase puede construirse de dos formas equivalentes, o bien mediante un polinomio generador o bien mediante las raíces del mismo.
+
+\begin{lstlisting}[gobble=2]
+  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+  sage: C = SkewRSCode(generator_pol=g); C
+  > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  sage: C = SkewRSCode(b_roots=[x - a^1023, x - a^3327, x - a^3903, x - a^4047]); C
+  > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+\end{lstlisting}
+
+\section{Decodificador basado en el algoritmo PGZ para códigos RS sesgados}
+
+El decodificador \texttt{SkewRSPGZDecoder} debe utilizarse sobre un código RS sesgado, de la clase \texttt{SkewRSCode} que acabamos de describir.
+
+\begin{lstlisting}[gobble=2]
+  sage: D = SkewRSPGZDecoder(C); D
+  > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  sage: y = x^5 + a^3953*x^4 + a^671*x^3 + a^2604*x^2 + a^1596*x + a^3699
+  sage: D.decode_to_code(y)
+  > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
+  > True
+\end{lstlisting}
