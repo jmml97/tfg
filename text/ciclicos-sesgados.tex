@@ -2,6 +2,7 @@
 
 En este capítulo definiremos los códigos cíclicos sesgados sobre un cuerpo finito \(\mathbb F_q\).
 Las principales fuentes de este capítulo son \parencite{gomez-torrecillas_new_2016}, \parencite{gomez-torrecillas_petersongorensteinzierler_2018}, \parencite{shi_codes_2017} y \parencite{lam_vandermonde_1988}.
+
 Consideremos el anillo de polinomios de Ore \(R = \mathbb F_q[x; \sigma]\).
 Supondremos que el orden del automorfismo \(\sigma\) es \(n\).
 Entonces por el teorema \ref{th:anillos-ore-centro} el polinomio \(x^n - 1\) es central en \(R\) y por tanto el ideal \((x^n - 1)\) es bilátero, por lo que podemos definir el anillo cociente \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\).
@@ -31,7 +32,7 @@ Fijamos en lo que sigue \(\beta = \alpha^{-1}\sigma(\alpha)\).
 \end{lemma}
 
 \begin{proof}
-  Vamos a proceder por reducción al absurdo, suponiendo que \(\deg(g) < m\), de forma que \(g = \sum_{i=0}^{m-1}g_1x^{i}\).
+  Vamos a proceder por reducción al absurdo, suponiendo que \(\deg(g) < m\), de forma que \(g = \sum_{i=0}^{m-1}g_ix^{i}\).
   Como \(g\) es un múltiplo por la izquierda de \(x - \sigma^{t_1}(\beta )\) para todo \(1 \leq j \leq m\) por la proposición \ref{prop:norma-divisor} se tiene que
   \[
     \sum_{i=0}^{m-1}g_iN_i(\sigma^{t_j}(\beta)) = 0 \quad\text{para todo } 1 \leq j \leq m.
