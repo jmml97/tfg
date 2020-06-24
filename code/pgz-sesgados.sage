@@ -123,9 +123,6 @@ class SkewCyclicCode(AbstractLinearCode):
     
     def ring_automorphism(self):
         return self._polynomial_ring.twist_map()
-    
-    #def correction_capability(self):
-    #    return self._correction
 
 class SkewRSCode(SkewCyclicCode):
     
