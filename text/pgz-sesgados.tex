@@ -476,7 +476,7 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
   Con ellas ya podemos construir el polinomio de error en la línea \ref{algl:pgz-sesgados-error} y obtener el mensaje.
 \end{proof}
 
-Veamos a continuación algunos ejemplos utilizando para ello la implementación en Sage comentada en el anexo \ref{annex:pgz-sage}.
+Veamos a continuación algunos ejemplos utilizando para ello la implementación en SageMath comentada en el anexo \ref{annex:pgz-sage}.
 
 \begin{example}
   Sea \(\mathbb F = \mathbb F_2(a)\) un cuerpo con \(2^{12} = 1024\) elementos, donde se verifica la relación \(a^{12} + a^7 + a^{6} + a^{5} + a^{3} + a + 1 = 0\).
@@ -489,7 +489,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
     g &= \left[x - a^{1023}, x - a^{3327}, x - a^{3903}, x - a^{4047}\right]_i \\
       &= x^4 + a^{2103}x^3 + a^{687}x^2 + a^{1848} + a^{759}.
   \end{align*}
-  Vamos a seguir este ejemplo utilizando Sage.
+  Vamos a seguir este ejemplo utilizando SageMath.
   \begin{lstlisting}[gobble=4]
     sage: F.<a> = GF(2^12)
     sage: a^12

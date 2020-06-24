@@ -1,15 +1,15 @@
-\chapter[Implementación en Sage del algoritmo PGZ]{Implementación en Sage del algoritmo de Peterson-Gorenstein-Zierler}
+\chapter[Implementación en SageMath del algoritmo PGZ]{Implementación en SageMath del algoritmo de Peterson-Gorenstein-Zierler}
 \label{annex:pgz-sage}
 
 Se han desarrollado implementaciones en sage del algoritmo de Peterson-Gorenstein-Zierler, tanto en su versión para códigos BCH como para códigos RS sesgados.
 
-Dichas implementaciones aprovechan la estructura de códigos que ya tiene implementada Sage.
-Así, para la versión de códigos BCH se ha implementado un decodificador para códigos BCH, \texttt{BCHPGZDecoder}, que hereda de la clase \texttt{Decoder} de Sage.
-Por otro lado, para la versión de códigos cíclicos ha sido necesario implementar primero la clase \texttt{SkewCyclicCode}, que hereda de la clase \texttt{AbstractLinearCode} de Sage, y que implementa de forma sencilla los aspectos básicos de códigos cíclicos sesgados, utilizando para ello la implementación existente de anillos de polinomios de Ore de Sage.
+Dichas implementaciones aprovechan la estructura de códigos que ya tiene implementada SageMath.
+Así, para la versión de códigos BCH se ha implementado un decodificador para códigos BCH, \texttt{BCHPGZDecoder}, que hereda de la clase \texttt{Decoder} de SageMath.
+Por otro lado, para la versión de códigos cíclicos ha sido necesario implementar primero la clase \texttt{SkewCyclicCode}, que hereda de la clase \texttt{AbstractLinearCode} de SageMath, y que implementa de forma sencilla los aspectos básicos de códigos cíclicos sesgados, utilizando para ello la implementación existente de anillos de polinomios de Ore de SageMath.
 Una vez diseñada esta clase que permite trabajar con códigos cíclicos sesgados se ha implementado una clase \texttt{SkewRSCode} para manejar códigos RS sesgados y un decodificador para este tipo de códigos, \texttt{SkewRSPGZDecoder}.
 
 Su uso es muy sencillo.
-Con la orden \texttt{load()} de Sage pueden cargarse los archivos proporcionados, que incluyen todas las clases descritas antes.
+Con la orden \texttt{load()} de SageMath pueden cargarse los archivos proporcionados, que incluyen todas las clases descritas antes.
 
 \begin{lstlisting}[gobble=2]
   sage: load(pgz.sage)
@@ -18,7 +18,7 @@ Con la orden \texttt{load()} de Sage pueden cargarse los archivos proporcionados
 
 \section{Decodificador basado en el algoritmo PGZ para códigos BCH}
 
-El decodificador \texttt{BCHPGZDecoder} debe utilizarse sobre un código BCH de Sage, de la clase \texttt{BCHCode}.
+El decodificador \texttt{BCHPGZDecoder} debe utilizarse sobre un código BCH de SageMath, de la clase \texttt{BCHCode}.
 
 \begin{lstlisting}[gobble=2]
   sage: C = codes.BCHCode(GF(2), 15, 5, offset=1); C

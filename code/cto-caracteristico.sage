@@ -1,7 +1,7 @@
 """ Requiere como argumento un polinomio de la forma x^n - 1
     Devuelve una lista de polinomios generadores de códigos cíclicos
     de longitud n junto a sus conjuntos característicos, indicando la
-    raíz primitiva escogida por Sage
+    raíz primitiva escogida por SageMath
 """
 def ctos_caracteristicos(pol):
     n = pol.degree()

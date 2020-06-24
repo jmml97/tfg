@@ -22,4 +22,4 @@ Se necesitan además las fuentes *EBGaramond*, *Garamond Math*, *Go Mono* y *Ope
 ## Código
 
 El código se ha desarrollado con SageMath 9.0.
-Para usar las clases desarrolladas simplemente es necesario cargar los archivos *.sage* de la carpeta *code* mediante la orden `load()` de Sage.
+Para usar las clases desarrolladas simplemente es necesario cargar los archivos *.sage* de la carpeta *code* mediante la orden `load()` de SageMath.
