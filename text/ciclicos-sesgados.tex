@@ -121,11 +121,11 @@ Por tanto, tenemos que el diagrama es conmutativo
 \begin{center}
   \begin{tikzcd}[column sep=large, row sep=large]
     \mathcal R \arrow[d, "\mathfrak v"] \arrow[rd, bend left, "ev"] & \\
-    L^n \arrow[r, "\cdot N"] & L^n
+    \mathbb F_q^n \arrow[r, "\cdot N"] & \mathbb F_q^n
   \end{tikzcd}
 \end{center}
 en el que \(ev\) representa una aplicación que lleva cada polinomio \(f\) en la \(n\)-tupla formada por los restos por la izquierda de dividir \(f\) por \(x - \sigma^i(\beta)\), para \(i = 0, \dots, n - 1\).
-Es posible probar que la matriz \(N\) es no singular \parencite[ver][Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018}, por lo que es un cambio de base de \(L^n\).
+Es posible probar que la matriz \(N\) es no singular \parencite[ver][Lema 2.1]{gomez-torrecillas_petersongorensteinzierler_2018}, por lo que es un cambio de base de \(\mathbb F_q^n\).
 
 Dado un polinomio \(f\) llamamos \emph{conjunto de}\(\beta\)\emph{-raíces} del polinomio \(f\) al conjunto formado por las \(\beta\)-raíces \(\gamma\) que cumplen \(x - \gamma \mid_d f\), es decir, a aquellas correspondientes a las coordenadas nulas de \((a_0, \dots, a_{n-1})N\).
 Decimos que un divisor por la derecha no constante \(f \mid_d x^n - 1\) \(\beta\)\emph{-descompone totalmente} si existen \(\{t_1, \dots, t_m\} \subseteq \{0, 1, \dots, n-1\}\) tales que
