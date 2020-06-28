@@ -465,6 +465,7 @@ class SkewRSPGZDecoder(Decoder):
 
         rho_ = _to_complete_list(R(rho), n)
         rho_N = vector(rho_)*N
+        logger("rho_N: ", rho_N)
 
         # Compute the error locations
         k = [i for i, e in enumerate(rho_N) if e == 0]
