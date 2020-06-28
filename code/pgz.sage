@@ -6,9 +6,9 @@ DEBUG = false
 
 # General functions
 
-def logger(s):
+def logger(*s):
     if DEBUG:
-        print(s)
+        print(*s, sep = '')
 
 def _to_complete_list(poly, length):
     r"""
@@ -35,9 +35,9 @@ class BCHPGZDecoder(Decoder):
     r"""
     Constructs a decoder for BCH Codes based on the PGZ algorithm.
     The decoding algorithm works as follows:
-    - First, 
-    - Then, 
-    - Finally, 
+    - First, syndromes are computed
+    - Then, the error locator polynomial is computed
+    - Finally, the roots of the error locator polynomial are used to determine the error, which then is used to decode the message
     INPUT:
     - ``code`` -- A code associated to this decoder
     """
@@ -78,18 +78,19 @@ class BCHPGZDecoder(Decoder):
         g = self.code().generator_polynomial()
         a = self.code().primitive_root()
         
-        logger('polinomio generador: ' + str(g))
-        logger('raíz primitiva: ' + str(a))
+        logger('generator polynomial: ', str(g))
+        logger('primitive root: ', str(a))
         
-        # Paso 1: calcular los síndromes
+        # Step 1: compute syndromes
         s = []
         for i in range(0, 2*t):
             s.append(y(a^(i+1)))
         
-        logger('síndromes: ' + str(s))
-            
-        # Paso 2: probar mu partiendo de t hasta encontrar matriz m_mu
-        # que sea no singular. Resolver el sistema para encontrar sigma(x)
+        logger('syndromes: ', str(s))
+        
+        # Step 2: begin trial and error process to find m_mu, beginning with
+        # mu = t, until m_mu is non-singular.
+        # Then solve, the system to find sigma(x)
         mu = t
         
         m_mu = matrix(mu, lambda i, j: xentries_m_mu(i, j, s))
@@ -98,11 +99,11 @@ class BCHPGZDecoder(Decoder):
             mu = mu - 1
             m_mu = matrix(mu, lambda i, j: xentries_m_mu(i, j, s))
         
-        logger('tamaño de m_mu: ' + str(mu))
-        logger('matriz m_mu: \n' + str(m_mu))
+        logger('m_mu size: ', str(mu))
+        logger('matrix m_mu: \n', str(m_mu))
         
         if m_mu == matrix():
-            print("Se produjeron más de ", t, " errores: no podemos decodificar")
+            print("More than ", t, "errors have occured in transmission: it's not possible to decode")
             return
         
         b_mu = []
@@ -112,45 +113,43 @@ class BCHPGZDecoder(Decoder):
             
         b_mu = vector(b_mu)
         
-        logger('vector b_mu: ' + str(b_mu))
+        logger('vector b_mu: ', str(b_mu))
         
         sol_mu = m_mu.solve_right(b_mu)
         
-        logger('matriz de soluciones de m_mu*S = b_mu: ' + str(sol_mu))
+        logger('solutions of m_mu*S = b_mu: ', str(sol_mu))
         
         sigma = 1
         l = len(sol_mu) - 1
         for i in [0..l]:
             sigma = sigma + sol_mu[len(sol_mu)-1-i]*R.gen()^(i+1)
             
-        logger('polinomio localizador sigma(x): ' + str(sigma))
+        logger('error locator polynomial sigma(x): ', str(sigma))
         
-        # Paso 3: encontrar las raíces de sigma(x) e invertirlas para
-        # encontrar los números de posición de error X_j
-        # Obtenemos también los k_j
+        # Step 3: find the roots of sigma(x) and invert them to find the
+        # error location numbers X_j
+        # Calculate the error locations k_j
         r = sigma.roots()
         
-        logger('raíces de sigma(x): ' + str(r))
+        logger('sigma(x) roots: ' + str(r))
         
         if r == []:
-            print('sigma(x) no tiene raíces, no podemos seguir')
-            return
+            return('sigma(x) has no roots: unable to continue')
         
         l = len(r) - 1
         X = []
         for i in [0..l]:
             X.append(r[i][0]^-1)
             
-        logger('X_j: ' + str(X))
+        logger('X_j: ', str(X))
             
         k = []
         for i in [0..l]:
             k.append(log(X[i], a))
         
-        logger('k_j: ' + str(k))
-            
-        # Paso 4: Resolvemos las primeras mu ecuaciones del sistema de los
-        # síndromes para hallar las magnitudes de error E_j
+        logger('k_j: ', str(k))
+        
+        # Step 4: solve the first mu equations of the syndromes' system to find error magnitudes E_j
         
         m_syn = matrix(mu, lambda i, j: xentries_m_syn(i, j, X))
         
@@ -160,9 +159,9 @@ class BCHPGZDecoder(Decoder):
         b_syn = vector(b_syn)
         
         E = m_syn.solve_right(b_syn)
-        logger('magnitudes de error E: ' + str(E))
+        logger('error magnitudes E: ', str(E))
         
-        # Paso final: hallamos el error y se lo restamos al mensaje recibido
+        # Final step: error is calculated and substracted from the received message to find the codeword
         
         e = R(0)
         for i in [0..mu-1]:
@@ -175,6 +174,9 @@ class BCHPGZDecoder(Decoder):
         return vector(F, _to_complete_list(c, self.code().length()))
     
     def correction_capability(self):
+        r"""
+        Returns the correction capability of the algorithm for the code associated to `self`.
+        """
         return self._correction_capability
 
 BCHCode._registered_decoders["BCHPGZDecoder"] = BCHPGZDecoder
