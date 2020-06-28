@@ -107,17 +107,17 @@ En la sección siguiente vamos a estudiar un algoritmo de decodificación que pe
 
 \section{Códigos Reed-Solomon}
 
-Vamos a describir brevemente los códigos Reed-Solomon, que abreviaremos como códigos RS, pues aludiremos a ellos cuando hablemos de códigos cíclicos sesgados.
-Son una subfamilia de los códigos BCH que acabamos de definir.
+Vamos a describir brevemente los códigos Reed-Solomon, que abreviaremos como códigos \textacr{RS}, pues aludiremos a ellos cuando hablemos de códigos cíclicos sesgados.
+Son una subfamilia de los códigos \textacr{BCH} que acabamos de definir.
 
 \begin{definition}
-  Un código RS sobre \(\mathbb F_q\) es un código BCH de longitud \(n = q - 1\).
+  Un código \textacr{RS} sobre \(\mathbb F_q\) es un código \textacr{BCH} de longitud \(n = q - 1\).
 \end{definition}
 
-El siguiente teorema nos presenta un par de propiedades importantes de los códigos RS.
+El siguiente teorema nos presenta un par de propiedades importantes de los códigos \textacr{RS}.
 
 \begin{theorem}
-  Sea \(\mathcal C\) un código RS sobre \(\mathbb F_q\) de longitud \(n = q - 1\) y distancia mínima prevista \(\delta\).
+  Sea \(\mathcal C\) un código \textacr{RS} sobre \(\mathbb F_q\) de longitud \(n = q - 1\) y distancia mínima prevista \(\delta\).
   Entonces:
   \begin{enumerate}
     \item El código \(\mathcal C\) tiene conjunto característico \(T = \{b, b + 1, \dots, b + \delta - 2\}\) para algún entero \(b\).
@@ -129,8 +129,8 @@ El siguiente teorema nos presenta un par de propiedades importantes de los códi
   %Comenzamos observando que \(\operatorname{ord}_n(q) = 1\), por lo que todos los factores irreducibles de \(x^n - 1\) tienen grado \(1\) y las clases \(q\)-ciclotómicas módulo \(n\) tienen tamaño \(1\).
   Veamos la demostración por apartados.
   \begin{enumerate}
-    \item Como es un código BCH de distancia mínima prevista \(\delta\) su conjutno característico \(T\) tiene que tener tamaño \(\delta - 1\) y en consecuencia es \(T = \{b, b + 1, \dots, b + \delta - 2\}\).
-    \item La distancia es obvia, pues es un código BCH y la dimensión proviene del teorema \ref{th:cicl-cto-caracteristico}, pues \(n - |T| = n - \delta + 1\).
+    \item Como es un código \textacr{BCH} de distancia mínima prevista \(\delta\) su conjutno característico \(T\) tiene que tener tamaño \(\delta - 1\) y en consecuencia es \(T = \{b, b + 1, \dots, b + \delta - 2\}\).
+    \item La distancia es obvia, pues es un código \textacr{BCH} y la dimensión proviene del teorema \ref{th:cicl-cto-caracteristico}, pues \(n - |T| = n - \delta + 1\).
   \end{enumerate}
 \end{proof}
 
@@ -273,12 +273,12 @@ En resumen, el algoritmo consiste en: \begin{enumerate}
   \item Hallar el vector de error \(e(x)\) y restárselo al mensaje \(y(x)\).
 \end{enumerate}
 
-Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo PGZ en pseudocódigo siguiendo este esquema.
+Hemos expresado en el algoritmo \ref{alg:pgz-cc} el algoritmo \textacr{PGZ} en pseudocódigo siguiendo este esquema.
 A partir de él se ha realizado una implementación en el sistema SageMath que puede consultarse en los archivos enlazadas en el anexo \ref{annex:pgz-sage}.
 Veamos un par de ejemplos que utilizan esta implementación.
 
 \begin{example}
-  Sea \(\mathcal C\) un \([15, 7]\) código BCH en sentido estricto de distancia designada \(\delta = 5\).
+  Sea \(\mathcal C\) un \([15, 7]\) código \textacr{BCH} en sentido estricto de distancia designada \(\delta = 5\).
   Supongamos que recibimos el mensaje \(y(x) = x^{10} + x^9 + x^6 + x^5 + x + 1\).
   Vamos a corregir los errores que puedan haberse producido en la transmisión.
   \begin{lstlisting}[gobble=4]
@@ -310,7 +310,7 @@ Veamos un par de ejemplos que utilizan esta implementación.
 \end{example}
 
 \begin{example}
-  Sea \(\mathcal C\) un \([15, 5]\) código BCH en sentido estricto de distancia designada \(\delta = 7\).
+  Sea \(\mathcal C\) un \([15, 5]\) código \textacr{BCH} en sentido estricto de distancia designada \(\delta = 7\).
   Supongamos que recibimos el mensaje \(y(x) = x^{12} + x^9 + x^7 + x^5 + x^4 + x + 1\).
   Vamos a corregir los errores que puedan haberse producido en la transmisión.
   \begin{lstlisting}[gobble=4, breaklines=false, basicstyle=\small\ttfamily]

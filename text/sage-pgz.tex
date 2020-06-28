@@ -1,12 +1,12 @@
 \chapter[Implementación en SageMath del algoritmo PGZ]{Implementación en SageMath del algoritmo de Peterson-Gorenstein-Zierler}
 \label{annex:pgz-sage}
 
-Se han desarrollado implementaciones en SageMath del algoritmo de Peterson-Gorenstein-Zierler, tanto en su versión para códigos BCH como para códigos RS sesgados.
+Se han desarrollado implementaciones en SageMath del algoritmo de Peterson-Gorenstein-Zierler, tanto en su versión para códigos \textacr{BCH} como para códigos \textacr{RS} sesgados.
 
 Dichas implementaciones aprovechan la estructura de códigos que ya tiene implementada SageMath.
-Así, para la versión de códigos BCH se ha implementado un decodificador para códigos BCH, \texttt{BCHPGZDecoder}, que hereda de la clase \texttt{Decoder} de SageMath.
+Así, para la versión de códigos \textacr{BCH} se ha implementado un decodificador para códigos \textacr{BCH}, \texttt{BCHPGZDecoder}, que hereda de la clase \texttt{Decoder} de SageMath.
 Por otro lado, para la versión de códigos cíclicos ha sido necesario implementar primero la clase \texttt{SkewCyclicCode}, que hereda de la clase \texttt{AbstractLinearCode} de SageMath, y que implementa de forma sencilla los aspectos básicos de códigos cíclicos sesgados, utilizando para ello la implementación existente de anillos de polinomios de Ore de SageMath.
-Una vez diseñada esta clase que permite trabajar con códigos cíclicos sesgados se ha implementado una clase \texttt{SkewRSCode} para manejar códigos RS sesgados y un decodificador para este tipo de códigos, \texttt{SkewRSPGZDecoder}.
+Una vez diseñada esta clase que permite trabajar con códigos cíclicos sesgados se ha implementado una clase \texttt{SkewRSCode} para manejar códigos \textacr{RS} sesgados y un decodificador para este tipo de códigos, \texttt{SkewRSPGZDecoder}.
 
 Su uso es muy sencillo.
 Con la orden \texttt{load()} de SageMath pueden cargarse los archivos proporcionados, que incluyen todas las clases descritas antes.
@@ -29,7 +29,7 @@ El código puede encontrarse en
   
   \emph{Hereda de:} \texttt{Decoder}
 
-  Construye un decodificador para códigos BCH basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos BCH.
+  Construye un decodificador para códigos \textacr{BCH} basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos \textacr{BCH}.
 
   \textsc{Argumentos}
   \begin{description}[font=\normalfont\ttfamily]
@@ -83,7 +83,7 @@ El código puede encontrarse en
 
 \section{Clase para códigos cíclicos sesgados}
 
-Esta clase \emph{esqueleto} sirve como modelo para la implementación de los códigos RS sesgados.
+Esta clase \emph{esqueleto} sirve como modelo para la implementación de los códigos \textacr{RS} sesgados.
 
 \begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
   \item[class SkewCyclicCode(self, generator\_pol=None)]
@@ -326,7 +326,7 @@ La clase \texttt{SkewCyclicVectorEncoder} está indicada como clase codificadora
   
   \emph{Hereda de:} \texttt{SkewCyclicCode}
 
-  Representación de un código RS sesgado.
+  Representación de un código \textacr{RS} sesgado.
   Puede construirse de dos formas equivalentes, o bien mediante un polinomio generador o bien mediante las raíces del mismo.
   En cualquier caso el polinomio generador ha de ser un divisor de \(x^n - 1\), donde \(n\) es el orden del automorfismo del anillo de polinomios de Ore subyacente.
 
@@ -374,7 +374,7 @@ La clase \texttt{SkewCyclicVectorEncoder} está indicada como clase codificadora
   
   \emph{Hereda de:} \texttt{Decoder}
 
-  Construye un decodificador para códigos RS sesgados basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos RS sesgados.
+  Construye un decodificador para códigos \textacr{RS} sesgados basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos \textacr{RS} sesgados.
 
   \textsc{Argumentos}
   \begin{description}[font=\normalfont\ttfamily]

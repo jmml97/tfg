@@ -29,16 +29,16 @@ El título de este trabajo es «Algoritmo de Peterson-Gorenstein-Zierler para c�
 En consecuencia, dirigiremos nuestra atención a los conceptos y herramientas necesarios para ello.
 En cuanto a los fundamentos matemáticos necesarios, hablaremos de cuerpos finitos, anillos de polinomios sobre cuerpos finitos y anillos de polinomios de Ore sobre cuerpos finitos.
 La teoría de códigos explicada se centrará en la exposición de los códigos lineales y de los códigos cíclicos, así como de las familias de códigos concretas sobre las que trabajarán los algoritmos que vamos a describir.
-Para comprender mejor el citado algoritmo estudiaremos también la versión original, de mitad del siglo pasado, para los conocidos como códigos BCH.
+Para comprender mejor el citado algoritmo estudiaremos también la versión original, de mitad del siglo pasado, para los conocidos como códigos \textacr{BCH}.
 A lo largo del trabajo ilustraremos algunos ejemplos con el sistema algebraico computacional SageMath \parencite{the_sage_developers_sagemath_2020}.
 
 \section*{Motivación}
 
 Los códigos cíclicos son muy utilizados porque son muy sencillos de implementar en sistemas digitales utilizando lo que se conoce como registros de desplazamiento, que permiten realizar desplazamientos de bits fácilmente.
-El algoritmo Peterson-Gorenstein-Zierler para códigos BCH es interesante porque es uno de los primeros algoritmos eficientes que se desarrollaron para códigos cíclicos.
+El algoritmo Peterson-Gorenstein-Zierler para códigos \textacr{BCH} es interesante porque es uno de los primeros algoritmos eficientes que se desarrollaron para códigos cíclicos.
 El uso de anillos de polinomios de Ore nos permite obtener una mayor cantidad de códigos cíclicos sesgados, simplemente variando el automorfismo utilizado.
 Esta gran variedad permite encontrar códigos que tengan propiedades interesantes que mejoren a las familias de códigos cíclicos conocidas.
-Finalmente, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados que se expone permite decodificarlos con una eficiencia igual o superior a la que presenta el algoritmo clásico para códigos BCH.
+Finalmente, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados que se expone permite decodificarlos con una eficiencia igual o superior a la que presenta el algoritmo clásico para códigos \textacr{BCH}.
 
 \section*{Objetivos}
 
@@ -52,7 +52,7 @@ Los objetivos de este trabajo son los siguientes. \begin{itemize}
 \section*{Esquema}
 
 En los tres primeros capítulos introduciremos todos los fundamentos matemáticos necesarios, así como las definiciones y propiedades fundamentales de los códigos lineales y de los códigos cíclicos.
-El capítulo cuarto ahondaremos en la familia de los códigos BCH y presentaremos el algoritmo original de Peterson-Gorenstein-Zierler para esta familia de códigos.
+El capítulo cuarto ahondaremos en la familia de los códigos \textacr{BCH} y presentaremos el algoritmo original de Peterson-Gorenstein-Zierler para esta familia de códigos.
 En el capítulo quinto explicamos las estructuras matemáticas que constituyen la base de los códigos cíclicos sesgados, los anillos de polinomios de Ore, para ya introducirlos propiamente en el capítulo sexto.
 Finalmente, en el capítulo séptimo describimos el funcionamiento del algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados.
 

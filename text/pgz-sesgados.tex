@@ -2,7 +2,7 @@
 
 En este capítulo nos adentramos finalmente en el algoritmo que es el objeto de nuestro estudio, el algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados, y es una exposición de los resultados descritos en \parencite{gomez-torrecillas_petersongorensteinzierler_2018}.
 
-Podemos asumir sin pérdida de generalidad que  \(\mathcal C\) es un código RS sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
+Podemos asumir sin pérdida de generalidad que  \(\mathcal C\) es un código \textacr{RS} sesgado en sentido estricto, es decir, que bajo la definición que dimos en el capítulo anterior, el valor \(r = 0\).
 De no ser así bastaría tomar \(\alpha' = \sigma^r(\alpha)\), que nos daría una base normal, y tendríamos \(\sigma^r(\beta) = \beta' = (\alpha')^{-1}\sigma(\alpha')\) por lo que el polinomio \([x - \beta', \dots, x - \sigma^{\delta - 2}(\beta')]_i\) sería un generador del código \(\mathcal C\).
 Suponemos entonces que el ideal por la izquierda \(\mathfrak v^{-1}(\mathcal C)\) está generado por \([x - \beta, x - \sigma(\beta), \dots, x - \sigma^{\delta - 2}(\beta)]_i\) para algún \(2 \leq \delta \leq n\).
 La distancia del código \(\mathcal C\) es \(\delta\) por el teorema \ref{th:distancia-skew-rs} y demostraremos más adelante que el algoritmo que vamos a describir permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
@@ -14,7 +14,7 @@ Codificamos el mensaje realizando el producto por el generador, \(c = mg\).
 Suponemos que recibimos el mensaje \(y = c + e\) donde \(e = e_1x^{k_1} + \dots + e_vx^{k_v}\) con \(v \leq t\) es el error que se ha producido durante la transmisión.
 Para determinarlo es necesario por tanto conocer tanto las magnitudes de error \((e_{1}, \dots, e_{v})\) como las coordenadas de error \((k_1, \dots, k_v)\).
 
-Vamos a describir un algoritmo para decodificar códigos cíclicos sesgados similar al ya descrito para códigos BCH.
+Vamos a describir un algoritmo para decodificar códigos cíclicos sesgados similar al ya descrito para códigos \textacr{BCH}.
 Los pasos que dimos entonces fueron: \begin{enumerate}
   \item Determinar los síndromes del mensaje recibido.
   \item Encontrar el polinomio localizador.
@@ -31,7 +31,7 @@ Como \(c\) es divisible por la derecha por cada \(x - \sigma^{i}(\beta)\) para \
    \label{eq:sindromes-sesgados}
 \end{align}
 
-La siguiente proposición nos proporciona una forma de obtener las magnitudes de error a partir de las coordenadas de error y los síndromes, tal y como ocurría en el caso de códigos BCH.
+La siguiente proposición nos proporciona una forma de obtener las magnitudes de error a partir de las coordenadas de error y los síndromes, tal y como ocurría en el caso de códigos \textacr{BCH}.
 
 \begin{proposition}
   \label{prop:pgz-sesgados-magnitudes-error}
@@ -81,7 +81,7 @@ La siguiente proposición nos proporciona una forma de obtener las magnitudes de
 \end{proof}
 
 Como consecuencia de la proposición \ref{prop:pgz-sesgados-magnitudes-error} el proceso de decodificación se reduce a encontrar las coordenadas de error \(\{k_1, \dots, k_v\}\).
-Para ello al igual que hicimos en el caso del algoritmo para códigos BCH vamos a definir un polinomio localizador de errores, que en este caso será el que verifique que 
+Para ello al igual que hicimos en el caso del algoritmo para códigos \textacr{BCH} vamos a definir un polinomio localizador de errores, que en este caso será el que verifique que 
 \[
   \lambda = \left[x - \sigma^{k_1}(\beta), x - \sigma^{k_2}(\beta), \dots, x - \sigma^{k_v}(\beta)\right]_{i}.
 \]
@@ -151,7 +151,7 @@ donde \(S_0\) viene dada por
   \end{pmatrix}_{(v + 1) \times v}
 \]
 y cuyos coeficientes pueden calcularse directamente a partir del polinomio \(y\), pues ya no aparecen los \(e_j\).
-Para calcular el parámetro \(v\), que es el número de coordenadas de error, utilizaremos un procedimiento análogo al usado en el algoritmo PGZ para códigos BCH cuando buscábamos una matriz de síndromes no singular (de rango máximo).
+Para calcular el parámetro \(v\), que es el número de coordenadas de error, utilizaremos un procedimiento análogo al usado en el algoritmo \textacr{PGZ} para códigos \textacr{BCH} cuando buscábamos una matriz de síndromes no singular (de rango máximo).
 Para cualquier \(1 \leq r \leq t\) denotaremos por \(S^r\) a la matriz
 \[
   S^r = \begin{pmatrix}
@@ -441,7 +441,7 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
 \begin{theorem}
   Sea \(\mathbb F_q\) un cuerpo finito, \(\sigma \in \operatorname{Aut}(\mathbb F_q)\) de orden \(n\) y \(\mathbb F_q^{\sigma}\) el subcuerpo invariante del generado por \(\sigma\).
   Sea \(\{\alpha, \sigma(\alpha), \dots, \sigma^{n-1}(\alpha)\}\) una base normal de \(\mathbb F_q\) sobre \(\mathbb F_{q}\) y \(\beta = \alpha^{-1}\sigma(\alpha)\).
-  Sean \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código RS sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
+  Sean \(\mathcal R = \mathbb F_q[x; \sigma]/(x^n - 1)\), \(g = \left[x - \beta, \dots, x - \sigma^{\delta - 2}(\beta)\right]_{i}\) y \(\mathcal C\) el código \textacr{RS} sesgado tal que \(\mathfrak v^{-1}(\mathcal C) = \mathcal Rg\).
   Entonces el algoritmo descrito en el algoritmo \ref{alg:pgz-sesgados} encuentra correctamente el error \(e = (e_0, \dots, e_{n-1})\) de cualquier vector recibido si el número de coordenadas distintas de cero de \(e\) es \(v \leq t = \lfloor (\delta - 1)/2 \rfloor\).
 \end{theorem}
 
@@ -484,7 +484,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
   El orden de \(\sigma\) es \(6\) por lo que un código cíclico sobre \(\mathbb F\) es un ideal por la izquierda del cociente \(\mathcal R = \mathbb F[x; \sigma]/(x^{6} - 1)\).
   Tomaremos \(\alpha = a\), lo que nos proporciona una base normal de \(\mathbb F\), y \(\beta = \sigma(a)a^{-1} = a^{1023}\).
   Las imágenes de \(\beta\) por las potencias de \(\sigma\) nos da el conjunto \(\{a^{1023}, a^{3327}, a^{3903}, a^{4047}, a^{4083}, a^{4092}\}\).
-  Consideremos el código RS sesgado generado por
+  Consideremos el código \textacr{RS} sesgado generado por
   \begin{align*}
     g &= \left[x - a^{1023}, x - a^{3327}, x - a^{3903}, x - a^{4047}\right]_i \\
       &= x^4 + a^{2103}x^3 + a^{687}x^2 + a^{1848} + a^{759}.
@@ -503,7 +503,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
     sage: C = SkewRSCode(generator_pol=g); C
     > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
   \end{lstlisting}
-  Definimos el decodificador basado en el algoritmo PGZ.
+  Definimos el decodificador basado en el algoritmo \textacr{PGZ}.
   \begin{lstlisting}[gobble=4]
     sage: D = SkewRSPGZDecoder(C); D
     > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
