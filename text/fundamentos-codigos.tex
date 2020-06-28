@@ -2,8 +2,8 @@
 
 En la introducción ya hemos visto cuáles son los objetivos de la teoría de códigos, así como el medio principal del que se sirve: el álgebra.
 Esta sección vamos a comentar algunos de los conceptos y resultados fundamentales de la teoría de códigos.
-Daremos la definición más sencilla de código para posteriormente estudiar otras estructuras más complejas, los códigos lineales y los códigos cíclicos, así como resultados básicos asociados a ellos.
-Finalmente, estudiaremos la versión original del algoritmo de Peterson-Gorenstein-Zierler, diseñado para un tipo de códigos, los \textacr{BCH}.
+Comenzaremos viendo la definición más sencilla de código, para posteriormente introducir la clase de códigos lineales, de la que estudiaremos los principales conceptos y cómo codificar y decodificar.
+Finalmente veremos algunas familias de códigos lineales importantes.
 
 Las definiciones y los resultados comentados en esta sección seguirán lo descrito en \parencite[cap. 1, 3-5]{huffman_fundamentals_2003} y \parencite{podesta_introduccion_2006}.
 
@@ -16,7 +16,7 @@ A los elementos \((a_1, \dots, a_n)\) de \(\mathbb F_q^n\) los notaremos usualme
 \begin{definition}
   Un \((n, M)\) \textit{código} \(\mathcal C\) sobre el cuerpo \(\mathbb F_q\) es un subconjunto de \(\mathbb F_q^n\) de tamaño \(M\). 
   Si no hay riesgo de confusión lo denotaremos simplemente por \(\mathcal C\). 
-  A los elementos de \(\mathcal C\) los llamaremos \textit{palabras codificadas}, \textit{palabras código} o \textit{codewords} en inglés.
+  A los elementos de \(\mathcal C\) los llamaremos \textit{palabras código}.
   A \(n\) se le llama \(longitud\) del código.
 \end{definition}
 
@@ -68,7 +68,7 @@ A partir de cualquier matriz generadora siempre es posible obtener una matriz en
 Como un código lineal \(\mathcal C\) es un subespacio de un espacio vectorial, podemos calcular el ortogonal a dicho subespacio, obteniendo lo que llamaremos el \textit{código dual} (\textit{euclídeo}, si usamos el producto escalar usual) y que denotaremos por \(\mathcal C^{\perp}\).
 
 \begin{definition}
-  El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \forall c \in \mathcal C\right\},\]
+  El \textit{código dual} \(\mathcal C^{\perp}\) de un código \(\mathcal C\) viene dado por \[\mathcal C^{\perp} = \left\{x \in \mathbb F_q^n : x \cdot c = 0 \quad \text{para todo } c \in \mathcal C\right\},\]
   donde \((\cdot)\) representa el producto escalar usual.
 \end{definition}
 
@@ -117,7 +117,7 @@ Vamos a verlo mejor con un ejemplo.
 \end{example}
 
 Observamos que una matriz generador \(G\) define una aplicación lineal de \(\mathbb F_q^k\) en \(\mathbb F_q^n\), de forma que el código obtenido es la imagen de dicha aplicación.
-Podemos comprobar también que es posible codificar en los mismos códigos lineales utilizando distintas matrices generadores, lo que resultará en distintas palabras código para el mismo mensaje.
+Podemos comprobar también que es posible codificar en los mismos códigos lineales utilizando distintas matrices generadoras, lo que resultará en distintas palabras código para el mismo mensaje.
 Veamos un ejemplo con el mismo código binario lineal que en el ejemplo anterior pero con distinta matriz generadora.
 
 \begin{example}
@@ -237,7 +237,7 @@ En este apartado vamos a estudiar dos propiedades de los códigos muy relacionad
   Las tres primeras propiedades son evidentes.
   La cuarta se comprueba fácilmente.
   Si \(\mathbf{x} = \mathbf{z}\) la desigualdad se da de forma trivial, pues \(\operatorname{d}(\mathbf{x}, \mathbf{z}) = 0\).
-  En caso de que \(\mathbf{x} \neq \mathbf{z}\) se tiene que \(\mathbf{x} \neq \mathbf{y}\) o \(\mathbf{y} \neq \mathbf{z}\) y en consecuencia, por la no negatividad, la desigualdad se verifica.
+  En caso de que \(\mathbf{x} \neq \mathbf{z}\) se tiene que \(\mathbf{x} \neq \mathbf{y}\) o \(\mathbf{y} \neq \mathbf{z}\), y en consecuencia, por la no negatividad, la desigualdad se verifica.
 \end{proof}
 
 La \textit{distancia} (\textit{mínima}) de un código \(\mathcal C\) es la menor distancia posible entre dos palabras código distintas. 
