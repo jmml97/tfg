@@ -73,8 +73,6 @@ class BCHPGZDecoder(Decoder):
         """
         R = self._polynomial_ring
         F = self.code().base_ring()
-        logger(R)
-        logger(R.gen())
         y = R(word.list())
         t = self.correction_capability()
         g = self.code().generator_polynomial()
