@@ -279,7 +279,7 @@ Vamos a ver un ejemplo exhaustivo para entender cómo podemos obtener los polino
     sage: x = polygen(F)
     sage: (x^7 - 1).factor()
     > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
-    sage: print(generadores(x^7 - 1))
+    sage: print(generators(x^7 - 1))
     > [1, x + 1, x^3 + x + 1, x^3 + x^2 + 1, x^4 + x^3 + x^2 + 1, x^4 + x^2 + x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x + 1, x^7 + 1]
   \end{lstlisting}
   Así sobre \(\mathbb F_2\) podemos descomponer \(x^7 - 1\) como \[
@@ -560,7 +560,7 @@ Pero vamos a ver además esta relación a la inversa, es decir, que podemos obte
     sage: x = polygen(F)
     sage: (x^7 - 1).factor()
     > (x + 1) * (x^3 + x + 1) * (x^3 + x^2 + 1)
-    sage: print(generadores_idempotentes(x^7 - 1))
+    sage: print(generator_and_idempotents(x^7 - 1))
     > [(1, 1),
        (x + 1, x^6 + x^5 + x^4 + x^3 + x^2 + x),
        (x^3 + x + 1, x^4 + x^2 + x),
@@ -819,7 +819,7 @@ Es importante observar que \(T\), y por ello tanto el conjunto de ceros como el 
   \begin{lstlisting}[gobble=4]
     sage: F = GF(2)
     sage: x = polygen(F)
-    sage: ctos_caracteristicos(x^7 - 1)
+    sage: defining_sets(x^7 - 1)
     > [(1, [], z3),
        (x + 1, [0], z3),
        (x^3 + x + 1, [1, 2, 4], z3),

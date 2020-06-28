@@ -1,12 +1,77 @@
-\chapter{Implementación en SageMath de algunas funciones sobre códigos}
+\chapter{Funciones en SageMath usadas en los ejemplos}
 \label{annex:sage-gen-idemp}
 
 En este anexo se describen algunas de las funciones utilizadas durante los ejemplos a lo largo del trabajo.
+De nuevo, el código puede encontrarse en
+\begin{center}
+  \url{https://github.com/jmml97/tfg/tree/master/code}.
+\end{center}
 
-En el listado siguiente se describe una implementación del cálculo de polinomios generadores y elementos idempotentes.
+\begin{description}[font=\ttfamily, style=nextline]
+  \item[generators(poly)] Devuelve una lista de polinomios generadores de códigos cíclicos de longitud el grado de \texttt{poly}.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[poly] Un polinomio de la forma \(x^n - 1\)
+  \end{description}
+  
+  \textsc{Salida}
+  \begin{itemize}
+    \item La lista de tupla polinomio generador e idempotente generador
+  \end{itemize}
 
-\lstinputlisting[language=Python, caption=Implementación en SageMath del cálculo de generadores e idempotentes]{../code/gen-idemp.sage}
+  \item[defining\_sets(poly)] Devuelve una lista de tuplas consistentes en un polinomio generador de un código cíclico de longitud el grado de \texttt{poly}, un conjunto característico y una raíz primitiva.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[poly] Un polinomio de la forma \(x^n - 1\)
+  \end{description}
 
-En el listado siguiente se describe una función que utilizando las funciones incluidas por SageMath nos proporciona los conjuntos característicos correspondientes a los códigos de longitud \(n\) junto a la raíz primitiva utilizada.
+  \textsc{Salida}
+  \begin{itemize}
+    \item La lista de polinomios generadores
+  \end{itemize}
 
-\lstinputlisting[language=Python, caption=Cálculo en SageMath de conjuntos característicos]{../code/cto-caracteristico.sage}
+  \item[generator\_and\_idempotents(poly)] Devuelve una lista de tuplas consistentes en un polinomio generador de un código cíclico de longitud el grado de \texttt{poly} y el idempotente generador correspondiente.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[poly] Un polinomio de la forma \(x^n - 1\)
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item La lista de tupla polinomio generador e idempotente generador
+  \end{itemize}
+
+  \item[mult(iterable)] Devuelve el producto de todos los elementos de \texttt{iterable}.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[iterable] Un objeto iterable
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item El producto de todos los elementos de \texttt{iterable}
+  \end{itemize}
+
+  \item[powerset(iterable)] Devuelve todas las posibles combinaciones de elementos de \texttt{iterable}.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[iterable] Un objeto iterable
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item Todas las posibles combinaciones de elementos de \texttt{iterable}
+  \end{itemize}
+
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: powerset([1,2,3])
+    > () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)
+  \end{lstlisting}
+
+\end{description}
