@@ -4,11 +4,11 @@
 
 % 4.5 Mininum distance of cyclic codes (intro cota BCH)
 
-En esta sección vamos a estudiar los códigos \textacr{BCH}, un tipo de códigos cíclicos que permiten ser diseñados con una capacidad de corrección concreta.
+En este capítulo vamos a estudiar los códigos \textacr{BCH}, un tipo de códigos cíclicos que permiten ser diseñados con una capacidad de corrección concreta.
 Como ya sabemos, para cualquier tipo de código es importante determinar la distancia mínima si queremos determinar su capacidad de corrección de errores.
 A este respecto es útil disponer de cotas en la distancia mínima, especialmente cotas inferiores, pues son las que maximizan la capacidad de corrección.
 Existen varias cotas conocidas para la distancia mínima de un código cíclico, pero nos vamos a centrar en la llamada \textit{cota de Bose-Ray-Chaudhuri-Hocquenghem}, usualmente abreviada como \textit{cota \textacr{BCH}}.
-Esta cota es esencial para comprender la definición de los códigos \textacr{BCH} que estudiamos en esta sección.
+Esta cota es esencial para comprender la definición de los códigos \textacr{BCH} que estudiamos en este capítulo.
 La cota \textacr{BCH} va a depender de los ceros del código, concretamente en la posibilidad de encontrar cadenas de ceros «consecutivos».
 La fuente principal de este capítulo ha sido \parencite{huffman_fundamentals_2003}.
 
@@ -77,7 +77,7 @@ Estamos ya en condiciones de presentar y demostrar el teorema de la cota \textac
 \end{proof}
 
 Los códigos \textacr{BCH} son códigos cíclicos diseñados para aprovechar la cota \textacr{BCH}.
-Nos gustaría poder construir un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) que tenga a la vez un peso mínimo grande y una dimensión grande.
+Idealmente, a la hora de diseñar un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) nos gustaría poder construirlo teniendo a la vez un peso mínimo grande y una dimensión grande.
 Tener un peso mínimo grande, basándonos en la cota \textacr{BCH}, se puede conseguir escogiendo un conjunto característico para \(\mathcal C\) que tenga un gran número de elementos consecutivos.
 
 Como la dimensión de \(\mathcal C\) es \(n - |T|\) por el teorema \ref{th:cicl-cto-caracteristico}, nos gustaría que \(|T|\) fuese tan pequeño como sea posible.
@@ -114,7 +114,7 @@ Son una subfamilia de los códigos BCH que acabamos de definir.
   Un código RS sobre \(\mathbb F_q\) es un código BCH de longitud \(n = q - 1\).
 \end{definition}
 
-Veamos un par de propiedades importantes.
+El siguiente teorema nos presenta un par de propiedades importantes de los códigos RS.
 
 \begin{theorem}
   Sea \(\mathcal C\) un código RS sobre \(\mathbb F_q\) de longitud \(n = q - 1\) y distancia mínima prevista \(\delta\).
@@ -138,7 +138,7 @@ Veamos un par de propiedades importantes.
 \section{Algoritmo de Peterson-Gorenstein-Zierler}
 
 El algoritmo de Peterson-Gorenstein-Zierler —de ahora en adelante, algoritmo \textacr{PGZ}— es un algoritmo de decodificación de códigos \textacr{BCH} que permite corregir hasta \(t = \lfloor (\delta - 1)/2 \rfloor\) errores.
-Fue desarrollado originalmente en 1960 por Peterson \parencite{peterson_encoding_1960} para decodificar códigos \textacr{BCH} binarios, pero fue generalizado poco después por Gorenstein y Zierler para códigos no binarios \parencite{gorenstein_class_1961}.
+Fue desarrollado originalmente en 1960 por Peterson \parencite{peterson_encoding_1960} para decodificar códigos \textacr{BCH} binarios, y generalizado poco después por Gorenstein y Zierler para códigos no binarios \parencite{gorenstein_class_1961}.
 
 Como en cualquier otro método de decodificación el objetivo es obtener el mensaje original \(c(x)\) a partir de un mensaje recibido \(y(x)\), para lo que hay que hallar primero los errores \(e(x)\) que se han producido en la transmisión, de forma que \(c(x) = y(x) - e(x)\).
 El vector de errores ha de tener peso \(v \leq t\), ya que no podemos corregir más errores de los que el código permite.
