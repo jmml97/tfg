@@ -1,8 +1,9 @@
 \chapter{Anillos de polinomios de Ore}
 
 En este capítulo vamos a hablar sobre los anillos de polinomios de Ore, que serán la base de los códigos cíclicos sesgados.
-Fueron descritos simultáneamente por Oystein Ore \parencite{ore_theory_1933} y  por Joseph Wedderburn.
-Básicamente se trata de anillos de polinomios no conmutativos en los que el producto no está definido de la forma usual sino que sigue una regla concreta que vamos a describir a continuación. 
+%Fueron descritos simultáneamente por Oystein Ore \parencite{ore_theory_1933} y  por Joseph Wedderburn.
+Fueron descritos por Oystein Ore en 1933 \parencite{ore_theory_1933}, de ahí el nombre.
+En esencia, se trata de anillos de polinomios no conmutativos en los que el producto no está definido de la forma usual sino que sigue una regla concreta que vamos a describir a continuación. 
 Primero daremos la definición general, sin detenernos a justificar su construcción, pues acto seguido vamos a centrarnos en el caso que nos va a ocupar cuando trabajemos con códigos cíclicos sesgados.
 Las definiciones y el desarrollo teórico seguido en este capítulo proceden de \parencite{jacobson_finite-dimensional_1996}, \parencite{ore_theory_1933} y \parencite{gomez-torrecillas_factoring_2020}.
 
@@ -24,7 +25,7 @@ Las definiciones y el desarrollo teórico seguido en este capítulo proceden de 
 
 Para comprobar que \(R[t; \sigma, \delta]\) es un anillo tendríamos que ver que efectivamente con las operaciones que hemos dado se verifican todas las propiedades de los anillos.
 Puesto que hemos usado la suma usual de los polinomios, bastaría probar que se verifica la propiedad asociativa para la multiplicación que hemos definido.
-No vamos a entrar en detalle, pues no es el objetivo de este trabajo el estudio de los anillos de polinomios de Ore en general.
+No vamos a entrar en detalle pues, como ya hemos comentado, no es el objetivo de este trabajo el estudio de los anillos de polinomios de Ore en general.
 En cualquier caso, si se desea consultar una demostración, puede encontrarse en \parencite[p. 2-3]{jacobson_finite-dimensional_1996} una que utiliza cierta representación matricial de los elementos.
 
 \section{Anillos de polinomios de Ore sobre cuerpos finitos}
@@ -177,7 +178,7 @@ Puede definirse una versión del algoritmo extendido de Euclides en este context
 \section{Descomposición en factores irreducibles}
 
 Como \(R\) es un dominio de ideales principales es posible descomponer cada polinomio \(f \in R\) en un producto de factores irreducibles.
-Pero esta factorización no será única.
+Pero vamos a ver que esta factorización no es única.
 
 Decimos que dos polinomios \(f, g \in R\) distintos de cero son \emph{similares por la izquierda}, que notamos \(f \sim_i g\) si existe un polinomio \(h \in R\) tal que 
 \[
