@@ -76,6 +76,8 @@
 
 \usepackage{multirow}
 
+\usepackage{setspace}
+
 \DeclareRobustCommand{\textacr}[1]{\textls{\small #1}}
 
 % Código
@@ -94,7 +96,8 @@
   showstringspaces=false,
   keywordstyle=\bfseries,
   commentstyle=\itshape,
-  numberstyle=\scriptsize\bfseries
+  numberstyle=\scriptsize\bfseries,
+  morekeywords={sage},
 }
 \renewcommand{\lstlistingname}{Listado}
 
@@ -232,7 +235,7 @@ SmallCapsFeatures={LetterSpace=1}]%
 			\centering
       % Indicar la imagen de fondo en el siguiente comando
 			\includegraphics[width=\paperwidth,height=\paperheight,%
-			keepaspectratio]{assets/portada-ugr-color}%
+			keepaspectratio]{assets/portada-tfg}%
 			\vfill
     }
   }
@@ -256,41 +259,37 @@ SmallCapsFeatures={LetterSpace=1}]%
   % Para que el título esté centrado en la página.
   % Los valores numéricos deberán elegirse de acuerdo con el diseño de
   % página (sobre todo si se cambia la opción BCOR o DIV).
-  \begin{addmargin}[2.05cm]{0cm}
+  \begin{addmargin}[2.56cm]{0cm}
   \begin{flushleft}
     \Large
     \hfill\vfil
 
     \vfill\vfill
 
-    \textsf{Facultad de Ciencias}\\[.5em]
-    \textsf{E.T.S. de Ingenierías Informática y de Telecomunicación} \\
-    \vfill\vfill
+    \vspace{4cm}
 
-    \textsf{\Large Doble Grado en Ingeniería Informática y Matemáticas} \vfill
+    {\setstretch{0.5}\spacedlowsmallcaps{Doble Grado en Ingeniería Informática y Matemáticas}}\\[2cm]\vfill
 
 
     %\textsc{trabajo de fin de grado}
     \spacedlowsmallcaps{Trabajo de Fin de Grado}
 
     \begingroup
-    \Huge{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados} \\ \bigskip
+    \LARGE{\bfseries Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados} \\ \bigskip
     \endgroup
-
-    [\,\today\ a las \thistime\ -- \myVersion\,]
 
     \vfill\vfill\vfill\vfill
 
-    \textsf{\normalsize{Presentado por}}\\[6pt]
-    {\LARGE\textrm{José María Martín Luque}}
+    \large{Presentado por:}\\
+    \large{José María Martín Luque}
 
-    \vspace*{0.7cm}
+    \vspace*{0.4cm}
 
-    \textsf{\normalsize{Tutorizado por}}\\[6pt]
-    {\LARGE\textrm{Gabriel Navarro Garulo}}
+    \large{Tutor:}\\
+    \large{Gabriel Navarro Garulo}
 
     \vfill
-    \textsf{Curso académico 2019--2020}
+    Curso académico 2019--2020
   \end{flushleft}
   \end{addmargin}
 
