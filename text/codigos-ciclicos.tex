@@ -1,7 +1,7 @@
 
 \chapter{Códigos cíclicos}
 
-En este capítulo vamos a estudiar los aspectos fundamentales de la familia de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
+En este capítulo vamos a estudiar los aspectos fundamentales de la clase de los códigos cíclicos, que representan la base del objeto de estudio de este trabajo.
 Los códigos cíclicos binarios fueron introducidos por primera vez en 1957 por Eugene Prange \parencite{prange_cyclic_1957}.
 Su importancia radica en la facilidad con la que pueden ser implementados en los circuitos digitales utilizando registros de desplazamiento.
 Las fuentes de este capítulo han sido \parencite{huffman_fundamentals_2003}, \parencite{kelbert_information_2013} y \parencite{macwilliams_theory_1977}.
@@ -13,7 +13,7 @@ Las fuentes de este capítulo han sido \parencite{huffman_fundamentals_2003}, \p
 Al trabajar con códigos cíclicos pensamos en la posición de las coordenadas de forma cíclica, pues al llegar a \(n -1\) se comienza de nuevo en \(0\).
 Al hablar de «coordenadas consecutivas» siempre tendremos en cuenta esta ciclicidad.
 Representaremos las palabras código de los códigos cíclicos como polinomios, pues podemos definir de forma natural una biyección entre el vector \(\mathbf c = c_0c_1\dots c_{n-1}\) en \(\mathbb F_q\) y los polinomios de la forma \(c(x) = c_0 + c_1x + \dots c_{n-1}x^{n-1}\) en \(\mathbb F_q[x]\) de grado al menos \(n-1\).
-Denotaremos a esta biyección por \(\mathfrak v\).
+Denotaremos a esta biyección por \(\mathfrak v\), de forma análoga a como hicimos en el capítulo \ref{ch:preliminares}.
 Obtenemos así un isomorfismo entre \(\mathbb F_q\)-espacios vectoriales.
 Obsérvese que dado un polinomio \(c(x)\) descrito como antes, el polinomio \(xc(x) = c_{n-1}x^n + c_0x + c_1x^2 + \dots + c_{n-2}x^{n-1}\) equivale a representar la palabra código \(\mathbf c\) desplazada una posición a la derecha, siempre que \(x^n\) fuese igual a \(1\).
 
@@ -428,7 +428,7 @@ Finalmente, el siguiente resultado nos muestra la relación entre dos polinomios
 \section{Codificación de códigos cíclicos}
 
 %Los códigos cíclicos son más sencillos de decodificar que otros tipos de códigos debido a su estructura adicional.
-Vamos a ver a continuación tres tipos de codificación de códigos cíclicos.
+Vamos a ver a continuación dos tipos de codificación de códigos cíclicos.
 Consideraremos un código cíclico \(\mathcal C\) de longitud \(n\) sobre \(\mathbb F_q\) con polinomio generador \(g(x)\) de grado \(n - k\), por lo que \(\mathcal C\) tiene dimensión \(k\).
 
 \paragraph{Codificación no-sistemática}
@@ -479,7 +479,7 @@ Por tanto, \(c(x)\) contiene el mensaje \(\mathbf m\) en los coeficientes de los
 En esta sección vamos a estudiar otra forma alternativa de generar los códigos cíclicos en \(\mathcal R_n\).
 Se basará en encontrar unos elementos concretos de \(\mathcal R_n\) que además podremos relacionar con los polinomios generadores que hemos definido hasta ahora.
 
-Como ya vimos en la sección (cita) un elemento \(e\) de un anillo es idempotente si \(e^2 = e\).
+Como ya vimos en la sección \ref{sec:anillos} un elemento \(e\) de un anillo es idempotente si \(e^2 = e\).
 Partiendo de la suposición de que \(\operatorname{mcd}(n, q) = 1\) afirmamos que el anillo \(\mathcal R_n\) es semisimple.
 Esto implica, además de lo que ya comentamos, que cada ideal de \(\mathcal R_n\) tiene un único elemento idempotente que lo genera.
 Este elemento se denomina \textit{idempotente generador} del código cíclico.
@@ -617,7 +617,7 @@ El siguiente teorema nos dice que sí, y además de la misma forma: a partir de 
   Si \(a(x)e(x) = 0\), entonces \(0 = a(x)e(x)g(x) = a(x)g(x)\), tal que \(e(x)\) es la unidad de \(\mathcal C\) según el teorema \ref{th:idempotente-unico-unidad}, y por tanto, si \(a(x)\) no es cero estaríamos contradiciendo el teorema \ref{th:corr-cod-div}.
 \end{proof}
 
-El siguiente resultado, que nos informa sobre los polinomios generadores e idempotentes generadores de sumas e intersecciones de códigos cíclicos de la misma longitud, nos será útil un poco más adelante, pues veremos que .
+El siguiente resultado nos informa sobre los polinomios generadores e idempotentes generadores de sumas e intersecciones de códigos cíclicos de la misma longitud.
 Dados dos códigos cíclicos \(\mathcal C_1\) y \(\mathcal C_2\) de longitud \(n\) sobre \(\mathbb F_q\) definimos su suma como
 \[
   \mathcal C_1 + \mathcal C_2 = \{\mathbf{c}_1 + c_2(x) : \mathbf{c}_1 \in \mathcal C_1 \text{ y } \mathbf{c}_2\}.
