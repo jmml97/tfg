@@ -1,7 +1,7 @@
 \chapter[Implementación en SageMath del algoritmo PGZ]{Implementación en SageMath del algoritmo de Peterson-Gorenstein-Zierler}
 \label{annex:pgz-sage}
 
-Se han desarrollado implementaciones en sage del algoritmo de Peterson-Gorenstein-Zierler, tanto en su versión para códigos BCH como para códigos RS sesgados.
+Se han desarrollado implementaciones en SageMath del algoritmo de Peterson-Gorenstein-Zierler, tanto en su versión para códigos BCH como para códigos RS sesgados.
 
 Dichas implementaciones aprovechan la estructura de códigos que ya tiene implementada SageMath.
 Así, para la versión de códigos BCH se ha implementado un decodificador para códigos BCH, \texttt{BCHPGZDecoder}, que hereda de la clase \texttt{Decoder} de SageMath.
@@ -16,79 +16,473 @@ Con la orden \texttt{load()} de SageMath pueden cargarse los archivos proporcion
   sage: load(pgz-sesgados.sage)
 \end{lstlisting}
 
+En este anexo describimos la documentación de las clases y funciones desarrolladas.
+El código puede encontrarse en
+\begin{center}
+  \url{https://github.com/jmml97/tfg/tree/master/code}
+\end{center}
+
 \section{Decodificador basado en el algoritmo PGZ para códigos BCH}
 
-El decodificador \texttt{BCHPGZDecoder} debe utilizarse sobre un código BCH de SageMath, de la clase \texttt{BCHCode}.
+\begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
+  \item[class BCHPGZDecoder(self, code)]
+  
+  \emph{Hereda de:} \texttt{Decoder}
 
-\begin{lstlisting}[gobble=2]
-  sage: C = codes.BCHCode(GF(2), 15, 5, offset=1); C
-  > [15, 7] BCH Code over GF(2) with designed distance 5
-  sage: D = BCHPGZDecoder(C); D
-  > Peterson-Gorenstein-Zierler algorithm based decoder for [15, 7] BCH Code over GF(2) with designed distance 5
-\end{lstlisting}
+  Construye un decodificador para códigos BCH basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos BCH.
+
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[code] Código asociado a este decodificador
+  \end{description}
+
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F = GF(2)
+    sage: C = codes.BCHCode(F, 15, 5, offset=1); C
+    > [15, 7] BCH Code over GF(2) with designed distance 5
+    sage: D = BCHPGZDecoder(C); D
+    > Peterson-Gorenstein-Zierler algorithm based decoder for [15, 7] BCH Code over GF(2) with designed distance 5
+  \end{lstlisting}
+
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[decode\_to\_code(self, word)] Corrige los errores de \texttt{word} y devuelve una palabra código del código asociado a \texttt{self}.
+    
+    \textsc{Argumentos}
+    \begin{description}[font=\normalfont\ttfamily]
+      \item[word] Mensaje recibido que se quiere decodificar. 
+      Puede representarse en forma vectorial o polinómica.
+    \end{description}
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F = GF(2)
+      sage: C = codes.BCHCode(F, 15, 5, offset=1)
+      sage: D = BCHPGZDecoder(C)
+      sage: x = polygen(F)
+      sage: y = 1 + x +x^5 + x^6 + x^9 + x^10
+      sage: D.decode_to_code(y)
+      > (1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0)
+      sage: y = vector(F, (1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0))
+      sage: D.decode_to_code(y)
+      > (1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0)
+    \end{lstlisting}
+
+    \item[correction\_capability(self)] Devuelve la capacidad de corrección de errores del decodificador \texttt{self}.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F = GF(2)
+      sage: C = codes.BCHCode(F, 15, 5, offset=1)
+      sage: D = BCHPGZDecoder(C)
+      sage: D.correction_capability()
+      > 2
+    \end{lstlisting}
+  \end{description}
+\end{description}
 
 \section{Clase para códigos cíclicos sesgados}
 
-Esta clase apenas tiene implementación y sirve meramente como modelo para la implementación de los códigos RS sesgados.
+Esta clase \emph{esqueleto} sirve como modelo para la implementación de los códigos RS sesgados.
 
-\texttt{class SkewCyclicCode(self, generator\_pol=None)}
+\begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
+  \item[class SkewCyclicCode(self, generator\_pol=None)]
+  
+  \emph{Hereda de:} \texttt{AbstractLinearCode}
 
-Hereda de: \texttt{AbstractLinearCode}
+  Representación de un código cíclico sesgado como un código lineal.
 
-Representación de un código cíclico sesgado como un código lineal.
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[generator\_pol] Polinomio generador utilizado para construir el código
+  \end{description}
 
-\textsc{Argumentos}
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewCyclicCode(g); C
+    > [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  \end{lstlisting}
 
-\begin{description}
-  \item[\texttt{generator\_pol}] Polinomio generador utilizado para construir el código
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[generator\_polynomial()] Devuelve un polinomio generador del código.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: C.generator_polynomial()
+      > x^4 + (a^11 + a^10 + a^9 + a^8 + a^7 + a^5 + a^4 + a^2)*x^3 + (a^4 + a^2 + a)*x^2 + (a^11 + a^10 + a^9 + a^8 + a^6 + a^3)*x + a^11 + a^8 + a^7 + a^6 + a^2 + a
+    \end{lstlisting}
+    \item[polynomial\_ring()] Devuelve el anillo de polinomios sobre el que está definido el código.
+     
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: C.polynomial_ring()
+      > Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    \end{lstlisting} 
+    \item[primitive\_root()] Devuelve una raíz primitiva del cuerpo sobre el que está definido el código.
+     
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: C.primitive_root()
+      > a
+    \end{lstlisting}
+    \item[ring\_automorphism()] Devuelve el automorfismo usado en el anillo de polinomios de Ore sobre el que está definido el código.
+     
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: C.ring_automorphism()
+      > Frobenius endomorphism a |--> a^(2^10) on Finite Field in a of size 2^12
+    \end{lstlisting} 
+  \end{description}
 \end{description}
 
-\textsc{Ejemplos}
+\section{Codificadores para códigos cíclicos sesgados}
 
-\begin{lstlisting}[gobble=2]
-  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
-  sage: C = SkewCyclicCode(g); C
-  > [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
-\end{lstlisting}
+Las siguientes clases son codificadores para los códigos cíclicos sesgados.
+Uno de ellos codifica vetores en palabras código y el otro, polinomios en palabras código.
+La clase \texttt{SkewCyclicVectorEncoder} está indicada como clase codificadora por defecto y por tanto puede utilizarse directamente con el método \texttt{encode()} del código.
 
+\begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
+  \item[class SkewCyclicVectorEncoder(self, code)]
+  
+  \emph{Hereda de:} \texttt{Encoder}
 
-\section{Codificador para códigos cíclicos sesgados}
+  Codificador que codifica vectores en palabras código.
+  Sea \(\mathcal C\) un código cíclico sesgado sobre un cuerpo finito \(\mathbb F\) y \(g\) un polinomio generador suyo.
+  Sea \(m = (m_1, m_2, \dots, m_k)\) un vector en \(\mathbb F^k\).
+  Para codificar \(m\) este codificador realiza el producto \(mM(g)\), donde \(M(g)\) es una matriz generadora de \(g\).  
 
-Esta clase permite codificar como vectores utilizando una matriz generadora del código cíclico sesgado.
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[code] Código asociado a este codificador
+  \end{description}
 
-Como está indicada como clase codificadora por defecto, puede utilizarse directamente con el método \texttt{encode()} del código.
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewCyclicCode(g)
+    sage: E = SkewCyclicVectorEncoder(C); E
+    > Vector-style encoder for [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    sage: E.encode(vector(F, [a, 1]))
+    > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  \end{lstlisting}
 
-\begin{lstlisting}[gobble=2]
-  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
-  sage: C = SkewCyclicCode(g); C
-  > [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
-  sage: C.encode(vector(F, [a, 1]))
-  > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
-\end{lstlisting}
+  El siguiente ejemplo usa el codificador directamente desde el código, ya que está fijado como codificador por defecto.
+
+  \begin{lstlisting}[gobble=4]
+    sage: C.encode(vector(F, [a, 1]))
+    > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  \end{lstlisting}
+
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[generator\_matrix()] Devuelve una matriz generadora del código sobre el que está construido el codificador.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: E = SkewCyclicVectorEncoder(C); E
+      sage: E.generator_matrix()
+      > [               a^11 + a^8 + a^7 + a^6 + a^2 + a             a^11 + a^10 + a^9 + a^8 + a^6 + a^3                                   a^4 + a^2 + a a^11 + a^10 + a^9 + a^8 + a^7 + a^5 + a^4 + a^2                                               1                                               0]
+      [                                              0                                 a^11 + a^10 + a            a^11 + a^9 + a^8 + a^5 + a^3 + a + 1           a^9 + a^7 + a^6 + a^4 + a^3 + a^2 + a  a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2                                               1]
+    \end{lstlisting}
+  \end{description}
+
+  \item[class SkewCyclicPolynomialEncoder(self, code)]
+
+  \emph{Hereda de:} \texttt{Encoder}
+
+  Codificador que codifica polinomios en palabras código.
+  Sea \(\mathcal C\) un código cíclico sesgado sobre un cuerpo finito \(\mathbb F\) y \(g\) un polinomio generador suyo.
+  Dado cualquier polinomio \(p \in \mathbb F[x]\) calculando el producto \(c = p \cdot g\) y devolviendo el vector de coeficientes correspondiente.
+
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[code] Código asociado a este codificador
+  \end{description}
+
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewCyclicCode(g)
+    sage: E = SkewCyclicPolynomialEncoder(C); E
+    > Polynomial-style encoder for [6, 2] Skew Cyclic Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  \end{lstlisting}
+
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[message\_space(self)] Devuelve el espacio de mensajes del codificador, que es el anillo de polinomios sobre el que está definido el código asociado.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: E = SkewCyclicPolynomialEncoder(C)
+      sage: E.message_space()
+      > Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    \end{lstlisting}
+
+    \item[encode(self, p)] Transforma \texttt{p} en un elemento del código asociado a \texttt{self}.
+    
+    \textsc{Argumentos}
+    \begin{description}[font=\normalfont\ttfamily]
+      \item[p] Un polinomio del espacio de mensajes de \texttt{self}.
+    \end{description}
+
+    \textsc{Salida}
+    \begin{itemize}
+      \item Una palabra código del código asociado a \texttt{self}
+    \end{itemize}
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: E = SkewCyclicPolynomialEncoder(C)
+      sage: E.encode(x + a)
+      > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+    \end{lstlisting}
+
+    \item[unencode\_nocheck(self, c)] Devuelve el mensaje correspondiente a \texttt{c}.
+    No comprueba si \texttt{c} pertenece al código asociado a \texttt{self}.
+    
+    \textsc{Argumentos}
+    \begin{description}[font=\normalfont\ttfamily]
+      \item[c] Un vector de la misma longitud que el código asociado a \texttt{self}.
+    \end{description}
+
+    \textsc{Salida}
+    \begin{itemize}
+      \item Un polinomio del espacio de mensajes de \texttt{self}.
+    \end{itemize}
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewCyclicCode(g)
+      sage: E = SkewCyclicPolynomialEncoder(C)
+      sage: E.unencode_nocheck(vector(F, (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)))
+      > x + a
+    \end{lstlisting}
+  \end{description}
+\end{description}
 
 
 \section{Clase para códigos RS sesgados}
 
-Un código RS sesgado con esta clase puede construirse de dos formas equivalentes, o bien mediante un polinomio generador o bien mediante las raíces del mismo.
+\begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
+  \item[class SkewRSCode(self, generator\_pol=None, b\_roots=None)]
+  
+  \emph{Hereda de:} \texttt{SkewCyclicCode}
 
-\begin{lstlisting}[gobble=2]
-  sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
-  sage: C = SkewRSCode(generator_pol=g); C
-  > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
-  sage: C = SkewRSCode(b_roots=[x - a^1023, x - a^3327, x - a^3903, x - a^4047]); C
-  > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
-\end{lstlisting}
+  Representación de un código RS sesgado.
+  Puede construirse de dos formas equivalentes, o bien mediante un polinomio generador o bien mediante las raíces del mismo.
+  En cualquier caso el polinomio generador ha de ser un divisor de \(x^n - 1\), donde \(n\) es el orden del automorfismo del anillo de polinomios de Ore subyacente.
+
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[generator\_pol] Polinomio generador utilizado para construir el código
+    \item[b\_roots] \(\beta\)-raíces utilizadas para construir un polinomio generador del código 
+  \end{description}
+
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewRSCode(generator_pol=g); C
+    > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+    sage: C = SkewRSCode(b_roots=[x - a^1023, x - a^3327, x - a^3903, x - a^4047]); C
+    > [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  \end{lstlisting}
+
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[designed\_distance(self)] Devuelve la distancia mínima prevista del código.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: F.<a> = GF(2^12)
+      sage: Frob = F.frobenius_endomorphism()
+      sage: sigma = Frob^10
+      sage: S.<x> = SkewPolynomialRing(F, sigma)
+      sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+      sage: C = SkewRSCode(generator_pol=g)
+      sage: C.designed_distance()
+      > 5
+    \end{lstlisting}
+  \end{description}
+\end{description}
+
 
 \section{Decodificador basado en el algoritmo PGZ para códigos RS sesgados}
 
-El decodificador \texttt{SkewRSPGZDecoder} debe utilizarse sobre un código RS sesgado, de la clase \texttt{SkewRSCode} que acabamos de describir.
+\begin{description}[leftmargin=1em, font=\normalfont\ttfamily, style=nextline]
+  \item[class SkewRSPGZDecoder(self, code)]
+  
+  \emph{Hereda de:} \texttt{Decoder}
 
-\begin{lstlisting}[gobble=2]
-  sage: D = SkewRSPGZDecoder(C); D
-  > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
-  sage: y = x^5 + a^3953*x^4 + a^671*x^3 + a^2604*x^2 + a^1596*x + a^3699
-  sage: D.decode_to_code(y)
-  > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
-  sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
-  > True
-\end{lstlisting}
+  Construye un decodificador para códigos RS sesgados basado en el algoritmo de Peterson-Gorenstein-Zierler para códigos RS sesgados.
+
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[code] Código asociado a este decodificador
+  \end{description}
+
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    sage: C = SkewRSCode(generator_pol=g)
+    sage: D = SkewRSPGZDecoder(C); D
+    > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
+  \end{lstlisting}
+
+  \begin{description}[font=\ttfamily, style=nextline]
+    \item[decode\_to\_code(self, word)] Corrige los errores de \texttt{word} y devuelve una palabra código del código asociado a \texttt{self}.
+    
+    \textsc{Ejemplos}
+    \begin{lstlisting}[gobble=6]
+      sage: y = x^5 + a^3953*x^4 + a^671*x^3 + a^2604*x^2 + a^1596*x + a^3699
+      sage: D.decode_to_code(y)
+      > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+      sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
+      > True
+    \end{lstlisting}
+  
+  \end{description}
+\end{description}
+
+\section{Funciones auxiliares}
+
+Para el desarrollo de las clases anteriores fueron necesarias varias funciones auxiliares que realizan tareas que se repiten a lo largo de todo el código.
+Las describimos a continuación.
+
+\begin{description}[font=\ttfamily, style=nextline]
+  \item[\_to\_complete\_list(poly, length)] Devuelve una lista de longitud exactamente \texttt{length} correspondiente a los coeficientes del polinomio \texttt{poly}.
+  Si es necesario, se completa con ceros. 
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[poly] Un polinomio
+    \item[length] Un entero 
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item La lista de los coeficientes
+  \end{itemize}
+  
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: _to_complete_list(x + a, 15)
+    > [a, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  \end{lstlisting}
+
+  \item[left\_lcm(pols)] Calcula el mínimo común múltiplo por la izquierda de todos los polinomios de la lista \texttt{pols}.
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[pols] Lista de polinomios
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item El mínimo común múltiplo de todos los polinomios en \texttt{pols}
+  \end{itemize}
+  
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: g = left_lcm([x - a^1023, x - a^3327, x - a^3903, x - a^4047])
+    > x^4 + (a^11 + a^10 + a^9 + a^8 + a^7 + a^5 + a^4 + a^2)*x^3 + (a^4 + a^2 + a)*x^2 + (a^11 + a^10 + a^9 + a^8 + a^6 + a^3)*x + a^11 + a^8 + a^7 + a^6 + a^2 + a
+  \end{lstlisting}
+
+  \item[norm(i, gamma, sigma)] Calcula la \texttt{i}-ésima norma de \texttt{gamma} con el automorfismo \texttt{sigma}.
+  
+  Recordemos que definimos la \emph{norma} \(i\)\emph{-ésima} de un elemento \(\gamma \in \mathbb F_q\) como \(N_i(\gamma) = \sigma(N_{i-1}(\gamma))(\gamma) = \sigma^{i-1}(\gamma)\dots \sigma(\gamma)\gamma\) para \(i > 0\) y \(N_0(\gamma) = 1\).
+  
+  \textsc{Argumentos}
+  \begin{description}[font=\normalfont\ttfamily]
+    \item[i] El orden de la norma
+    \item[gamma] El elemento al que se le quiere calcular la norma
+    \item[sigma] El automorfismo usado para calcular la norma  
+  \end{description}
+
+  \textsc{Salida}
+  \begin{itemize}
+    \item La \texttt{i}-ésima norma de \texttt{gamma} con el automorfismo \texttt{sigma}
+  \end{itemize}
+  
+  \textsc{Ejemplos}
+  \begin{lstlisting}[gobble=4]
+    sage: F.<a> = GF(2^12)
+    sage: Frob = F.frobenius_endomorphism()
+    sage: sigma = Frob^10
+    sage: S.<x> = SkewPolynomialRing(F, sigma)
+    sage: norm(3, F(1 + a), sigma)
+    > a^11 + a^10 + a^8 + a^3 + a^2 + a
+  \end{lstlisting}
+\end{description}
