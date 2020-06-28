@@ -282,11 +282,13 @@ Veamos un par de ejemplos que utilizan esta implementación.
   Supongamos que recibimos el mensaje \(y(x) = x^{10} + x^9 + x^6 + x^5 + x + 1\).
   Vamos a corregir los errores que puedan haberse producido en la transmisión.
   \begin{lstlisting}[gobble=4]
-    sage: C = codes.BCHCode(GF(2), 15, 5, offset=1)
-    sage: x = polygen(GF(2))
+    sage: F = GF(2)
+    sage: C = codes.BCHCode(F, 15, 5, offset=1)
+    sage: x = polygen(F)
     sage: y = 1 + x +x^5 + x^6 + x^9 + x^10
+    sage: D = BCHPGZDecoder(C)
     sage: DEBUG = true
-    sage: PGZ(C, y)
+    sage: D.decode_to_code(y)
     > polinomio generador: x^8 + x^7 + x^6 + x^4 + 1
       raíz primitiva: z4
       síndromes: [z4^2, z4 + 1, z4^3 + z4^2 + z4, z4^2 + 1]
@@ -300,25 +302,29 @@ Veamos un par de ejemplos que utilizan esta implementación.
       raíces de sigma(x): [(z4^2 + z4, 1), (z4^3 + z4^2 + z4, 1)]
       X_j: [z4^2 + z4 + 1, z4 + 1]
       k_j: [10, 4]
+      magnitudes de error E: (1, 1)
       error e: x^10 + x^4
-    > x^9 + x^6 + x^5 + x^4 + x + 1
+    > (1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0)
   \end{lstlisting}
   El mensaje corregido es por tanto \(m(x) = x^9 + x^6 + x^5 + x^4 + x + 1\).
 \end{example}
 
 \begin{example}
-  Sea \(\mathcal C\) un \([15, 5]\) código BCH en sentido estricto de distancia designada \(\delta = 5\).
+  Sea \(\mathcal C\) un \([15, 5]\) código BCH en sentido estricto de distancia designada \(\delta = 7\).
   Supongamos que recibimos el mensaje \(y(x) = x^{12} + x^9 + x^7 + x^5 + x^4 + x + 1\).
   Vamos a corregir los errores que puedan haberse producido en la transmisión.
   \begin{lstlisting}[gobble=4, breaklines=false, basicstyle=\small\ttfamily]
-    sage: C = codes.BCHCode(GF(2), 15, 7, offset=1)
-    sage: x = polygen(GF(2))
+    sage: F = GF(2)
+    sage: C = codes.BCHCode(F, 15, 7, offset=1)
+    sage: x = polygen(F)
     sage: y = 1 + x +x^4 + x^5 + x^7 + x^9 + x^12
+    sage: D = BCHPGZDecoder(C)
     sage: DEBUG = true
-    sage: PGZ(C, y)
+    sage: D.decode_to_code(y)
     > polinomio generador: x^10 + x^8 + x^5 + x^4 + x^2 + x + 1
       raíz primitiva: z4
-      síndromes: [z4^3, z4^3 + z4^2, z4^3, z4^3 + z4^2 + z4 + 1, 0, z4^3 + z4^2]
+      síndromes: [z4^3, z4^3 + z4^2, z4^3, z4^3 + z4^2 + z4 + 1, 0, z4^3
+        + z4^2]
       tamaño de m_mu: 3
       matriz m_mu: 
       [                z4^3          z4^3 + z4^2                 z4^3]
@@ -326,12 +332,14 @@ Veamos un par de ejemplos que utilizan esta implementación.
       [                z4^3 z4^3 + z4^2 + z4 + 1                    0]
       vector b_mu: (z4^3 + z4^2 + z4 + 1, 0, z4^3 + z4^2)
       matriz de soluciones de m_mu*S = b_mu: (z4^3 + z4^2, z4^2 + 1, z4^3)
-      polinomio localizador sigma(x): (z4^3 + z4^2)*x^3 + (z4^2 + 1)*x^2 + z4^3*x + 1
+      polinomio localizador sigma(x): (z4^3 + z4^2)*x^3 + (z4^2 + 1)*x^2 
+        + z4^3*x + 1
       raíces de sigma(x): [(1, 1), (z4 + 1, 1), (z4^2 + z4, 1)]
       X_j: [1, z4^3 + z4^2 + z4, z4^2 + z4 + 1]
       k_j: [0, 11, 10]
+      magnitudes de error E: (1, 1, 1)
       error e: x^11 + x^10 + 1
-    > x^12 + x^11 + x^10 + x^9 + x^7 + x^5 + x^4 + x
+    > (0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0)
   \end{lstlisting}
   El mensaje corregido es por tanto \(m(x) = x^{12} + x^{11} + x^{10} + x^9 + x^7 + x^5 + x^4 + x\).
 \end{example}
