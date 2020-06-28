@@ -415,10 +415,10 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
       a_0 \cdots a_{\mu -1 } & \\\cline{1-1}
       H' &
     \end{array}\right)
-  \]\vspace*{-1.5em}\;% Reducimos un poco el espacio vertical
+  \]\label{algl:pgz-sesgados-mpec-St}\vspace*{-1.5em}\;% Reducimos un poco el espacio vertical
   \(\rho = (\rho_0, \dots, \rho_{\mu}) \longleftarrow (-a_0, \dots, -a_{\mu-1}, 1)\) y \(\rho N \longleftarrow (\rho_0, \dots, \rho_{\mu}, 0, \dots, 0)N\)\;\label{algl:pgz-sesgados-rho}
   \(\{k_1, \dots, k_v\} \longleftarrow \) coordenadas igual a cero de \(\rho N\)\;\label{algl:pgz-sesgados-pos-error}
-  \If{\(\mu \neq v\)}{
+  \If{\(\mu \neq v\)}{\label{algl:pgz-sesgados-if}
     Calcular \[M_{\rho} \longleftarrow \begin{pmatrix}
       \rho_0 & \rho_1 & \dots & \rho_{\mu} & 0 & \dots & 0\\
       0 & \sigma(\rho_0) & \dots & \sigma(\rho_{\mu - 1}) & \sigma(\rho_{\mu}) & \dots & 0\\
@@ -426,7 +426,7 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
       0 & \dots & 0 & \sigma^{n - \mu - 1}(\rho_0) & \dots & \dots & \sigma^{n - \mu - 1}(\rho_{\mu})
     \end{pmatrix}_{(n - \mu) \times n}\]\vspace*{-1.5em}\;% Reducimos un poco el espacio vertical
     \(N_{\rho} \longleftarrow M_{\rho}N\)\;
-    \(H_{\rho} \longleftarrow \operatorname{mepf}(N_{\rho})\)\;
+    \(H_{\rho} \longleftarrow \operatorname{mepf}(N_{\rho})\)\;\label{algl:pgz-sesgados-mpec-Nrho}
     \(H' \longleftarrow\) la matriz obtenida al eliminar las filas de \(H_{\rho}\) distintas de \(\varepsilon_i\) para algún \(i\)\;\label{algl:pgz-sesgados-h-prima}
     \(\{k_1, \dots, k_v\} \longleftarrow\) las coordenadas de las columnas igual a cero de \(H'\)\;
   }
@@ -446,7 +446,7 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
 \end{theorem}
 
 \begin{proof}
-  Tras los ajustes iniciales la línea \ref{algl:pgz-sesgados-rho} calcula un polinomio \(\rho = \sum_{i = 0}^{\mu}\rho_ix^{i}\) como describe el lema \ref{lem:pgz-sesgados-escalonada-st} y que por la proposición \ref{prop:pgz-sesgados-kernel-sesgado} es divisor por la izquierda del polinomio localizador de errores \(\lambda\).
+  Tras los ajustes iniciales la línea \ref{algl:pgz-sesgados-rho} calcula un polinomio \(\rho = \sum_{i = 0}^{\mu}\rho_ix^{i}\) como describe el lema \ref{lem:pgz-sesgados-escalonada-st} y que, por la proposición \ref{prop:pgz-sesgados-kernel-sesgado}, es divisor por la izquierda del polinomio localizador de errores \(\lambda\).
   
   Por (\ref{eq:equivalencias-divisor-sigma-b}) la línea \ref{algl:pgz-sesgados-pos-error} calcula todas las \(\beta\)-raíces de \(\rho\).
   Sabemos por el lema \ref{lem:pol-t-beta} que el número de \(\beta\)-raíces es \(v = \mu\) si y solo si \(\rho\) —de grado \(\mu\)— puede \(\beta\)-descomponerse totalmente.
@@ -475,6 +475,11 @@ Ya estamos en disposición de calcular el polinomio localizador de errores y por
   Finalmente, por la proposición \ref{prop:pgz-sesgados-magnitudes-error}, la línea \ref{algl:pgz-sesgados-solucion-sistema} calcula las magnitudes de error.
   Con ellas ya podemos construir el polinomio de error en la línea \ref{algl:pgz-sesgados-error} y obtener el mensaje.
 \end{proof}
+
+En cuanto a lo que a la eficiencia del algoritmo respecta, la complejidad del mismo está dominada por el cálculo de las formas reducidas por filas de las líneas \ref{algl:pgz-sesgados-mpec-St} y \ref{algl:pgz-sesgados-mpec-Nrho}.
+Dichas operaciones tienen un orden de complejidad de \(\mathcal{O}(t^3)\) y \(\mathcal{O}(n^3)\), respectivamente.
+Como en el peor de los casos \(t \approx n/2\), el orden de complejidad de este algoritmo es \(\mathcal{O}(n^3)\).
+Sin embargo, la mayoría de veces la condición de la línea \ref{algl:pgz-sesgados-if} no se verifica, y por tanto solo se realiza uno de los dos cálculos de matrices escalonadas \parencite[ver][Remark 1]{gomez-torrecillas_petersongorensteinzierler_2018}.
 
 Veamos a continuación algunos ejemplos utilizando para ello la implementación en SageMath comentada en el anexo \ref{annex:pgz-sage}.
 
@@ -512,7 +517,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
   \end{lstlisting}
   Supongamos que queremos enviar el mensaje \(m = x + a\), por lo que el polinomio codificado se obtiene como \(c = mg\).
   \begin{lstlisting}[gobble=4]
-    sage: C.encode(x + a, "SkewCyclicPolynomialEncoder")
+    sage: c = C.encode(x + a, "SkewCyclicPolynomialEncoder"); c
     > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
   \end{lstlisting}
   Este vector equivale a la expresión polinómica \(c = x^5 + a^{3953}x^4 + a^{1333}x^3 + a^{2604}x^2 + a^{1596}x + a^{760}\).
@@ -521,7 +526,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
     sage: y = x^5 + a^3953*x^4 + a^671*x^3 + a^2604*x^2 + a^1596*x + a^3699; y
     > x^5 + (a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a)*x^4 + (a^11 + a^10 + a^8 + a^6 + a^4 + a^2 + 1)*x^3 + (a^11 + a^9 + a^8 + a^2 + a + 1)*x^2 + (a^9 + a^6 + a^5 + a^4 + a^3 + 1)*x + a^9 + a^8 + a^6 + a^5 + a + 1
   \end{lstlisting}
-  Vamos a utilizar el decodificador.
+  Vamos a utilizar el decodificador definido antes.
   \begin{lstlisting}[gobble=4, basicstyle=\small\ttfamily]
     sage: D.decode_to_code(y)
     > Peterson-Gorenstein-Zierler algorithm based decoder for [6, 2] Skew RS Code on Skew Polynomial Ring in x over Finite Field in a of size 2^12 twisted by a |--> a^(2^10)
@@ -538,6 +543,7 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
       [                                              0                                               1]
       [a^11 + a^10 + a^9 + a^8 + a^7 + a^6 + a^5 + a^4                      a^10 + a^8 + a^7 + a^2 + 1]
       rho: [a^11 + a^10 + a^9 + a^8 + a^7 + a^6 + a^5 + a^4, a^10 + a^8 + a^7 + a^2 + 1, 1]
+      rho_N: (0, a^11 + a^8 + a^7 + a^6 + a^4 + a^3 + a^2 + a, a^10 + a^9 + a^8 + a^7 + a^5 + a^3 + a^2 + 1, 0, a^9 + a^8 + a^6 + a^3 + a^2 + a + 1, a^10 + a^8 + a^7 + a^4 + a^3 + a + 1)
       k: [0, 3]
       v: 2
       Note: solve for E, where E*Sigma.transpose() = b_syn
@@ -553,6 +559,33 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
   Y efectivamente podemos comparar ambos valores para comprobar que son el mismo.
   \begin{lstlisting}[gobble=4]
     sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
+    > True
+  \end{lstlisting}
+
+  Supongamos ahora que al mensaje \(x + a\) codificado se le suma un error \(e = a^2 + a^{1367}*x^3\), de forma que \(y = c + e\).
+
+  \begin{lstlisting}[gobble=4]
+    sage: y_ = S(c.list()) + a^2 + a^1367*x^3; y_
+    > x^5 + (a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a)*x^4 + (a^11 + a^7 + a^6 + a^5 + a^3 + a^2)*x^3 + (a^11 + a^9 + a^8 + a^2 + a + 1)*x^2 + (a^9 + a^6 + a^5 + a^4 + a^3 + 1)*x + a^9 + a^8 + a^6 + a^5 + a + 1
+  \end{lstlisting}
+
+  Al decodificar este mensaje nos encontraremos en el caso en el que \(\mu \neq v\).
+
+  \begin{lstlisting}[gobble=4, basicstyle=\small\ttfamily]
+    sage: D.decode_to_code(y_)
+    > (...)
+      rho: [a^10 + a^8 + a^7 + a^5 + a^3 + a^2, 1]
+      rho_N: (a^5 + a^4 + a^2 + a, a^10 + a^9 + a^6 + a^5 + a^3 + a^2 + 1, a^7 + a^4 + a, a^9, a^11 + a^10 + a^9 + a^8 + a^5 + a^4 + a^2 + a, a^11 + a^9 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a)
+      Case mu != v
+      (...)
+      error: (a^10 + a^8 + a^7 + a^5 + a^4 + 1)*x^3 + a^2
+    > (a^9 + a^8 + a^6 + a^5 + a^2 + a + 1, a^9 + a^6 + a^5 + a^4 + a^3 + 1, a^11 + a^9 + a^8 + a^2 + a + 1, a^11 + a^10 + a^8 + a^6 + a^4 + a^3 + a^2 + 1, a^11 + a^8 + a^7 + a^6 + a^5 + a^4 + a^3 + a^2 + a, 1)
+  \end{lstlisting}
+
+  De nuevo, podemos comprobar que efectivamente el mensaje decodificado es igual al mensaje original.
+
+  \begin{lstlisting}[gobble=4]
+    sage: C.encode(a + x, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y_)
     > True
   \end{lstlisting}
 
