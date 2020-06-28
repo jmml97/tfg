@@ -180,7 +180,7 @@
 %-------------------------------------------------------------------------------
 
 \usepackage[
-  drafting=true,
+  drafting=false,
   %tocaligned=true,
   dottedtoc=true,
   parts,
@@ -219,7 +219,7 @@ SmallCapsFeatures={LetterSpace=1}]%
 %-------------------------------------------------------------------------------
 
 \title{Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados}
-\renewcommand{\myVersion}{0.9} 
+\renewcommand{\myVersion}{1.0} 
 
 \author{José María Martín Luque}
 
@@ -251,53 +251,9 @@ SmallCapsFeatures={LetterSpace=1}]%
 
 %\maketitle
 
-\begin{titlepage}
-  \AddToShipoutPicture*{\BackgroundPic}
-  \phantomsection
-  \pdfbookmark[1]{Portada}{title}
+\include{portada}
+\include{licencia}
 
-  % Para que el título esté centrado en la página.
-  % Los valores numéricos deberán elegirse de acuerdo con el diseño de
-  % página (sobre todo si se cambia la opción BCOR o DIV).
-  \begin{addmargin}[2.56cm]{0cm}
-  \begin{flushleft}
-    \Large
-    \hfill\vfil
-
-    \vfill\vfill
-
-    \vspace{4cm}
-
-    {\setstretch{0.5}\spacedlowsmallcaps{Doble Grado en Ingeniería Informática y Matemáticas}}\\[2cm]\vfill
-
-
-    %\textsc{trabajo de fin de grado}
-    \spacedlowsmallcaps{Trabajo de Fin de Grado}
-
-    \begingroup
-    \LARGE{\bfseries Algoritmo de Peterson-Gorenstein-Zierler para códigos cíclicos sesgados} \\ \bigskip
-    \endgroup
-
-    \vfill\vfill\vfill\vfill
-
-    \large{Presentado por:}\\
-    \large{José María Martín Luque}
-
-    \vspace*{0.4cm}
-
-    \large{Tutor:}\\
-    \large{Gabriel Navarro Garulo}
-
-    \vfill
-    Curso académico 2019--2020
-  \end{flushleft}
-  \end{addmargin}
-
-\end{titlepage}
-
-\newpage
-
-%\include{declaration}
 \include{dedicatoria}
 
 \include{abstract}
