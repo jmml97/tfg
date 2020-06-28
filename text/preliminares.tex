@@ -1,7 +1,8 @@
 \chapter{Preliminares}
+\label{ch:preliminares}
 
-El objetivo de este capítulo es el de presentar todas las herramientas matemáticas que vamos a necesitar para el desarrollo de la teoría de códigos objeto de este trabajo.
-Dicha teoría se sustenta fundamentalmente en la teoría de espacios vectoriales, cuerpos finitos, de anillos y de polinomios.
+El objetivo de este capítulo es el de presentar todas las herramientas matemáticas que vamos a necesitar para el desarrollo de la teoría de códigos que requerimis en este trabajo.
+Dicha teoría se sustenta fundamentalmente en la teoría de cuerpos finitos, de anillos y de polinomios.
 Los resultados presentados son ampliamente conocidos por lo que en general no se aportarán demostraciones de los mismos, que pueden encontrarse con facilidad en libros especializados.
 Las fuentes principales de este capítulo son \parencite[cap. 3 y 6]{cohn_algebra_1982}, \parencite[cap. 3]{cohn_algebra_1989} y \parencite[cap. 2]{lidl_introduction_1986}.
 
@@ -29,6 +30,7 @@ Las fuentes principales de este capítulo son \parencite[cap. 3 y 6]{cohn_algebr
 % \end{definition}
 
 \section{Anillos}
+\label{sec:anillos}
 
 Por anillo entendemos un conjunto \(R\) junto a dos operaciones binarias: \(x + y\), llamada \textit{suma}, y \(xy\), llamada \textit{producto}, tales que:
 \begin{enumerate}
@@ -168,12 +170,11 @@ Estudiaremos además los anillos de polinomios que podemos definir sobre ellos y
 \end{definition}
 
 Sea \(F\) un cuerpo. Un subconjunto \(K\) de \(F\) que es por sí mismo un cuerpo bajo las operaciones de \(F\) se denomina \textit{subcuerpo} de \(F\).
-También podemos referirnos a ello al revés, diciendo que \(F\) es una \textit{extensión} de \(K\), lo que notaremos como \(F/K\).
+También podemos referirnos a ello en sentido inverso, diciendo que \(F\) es una \textit{extensión} de \(K\), lo que notaremos como \(F/K\).
 Observamos que \(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
 Todas las nociones que hemos definido para anillos —como la característica— son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
 
 Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_p\), donde \(p\) denota el orden del cuerpo.
-Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utilizar de forma prominente cuando trabajemos con códigos.
 
 \begin{proposition}
   \label{prop:freshmans-dream}
@@ -187,10 +188,6 @@ Trabajaremos habitualmente con cuerpos finitos, pues son los que vamos a utiliza
   Todo cuerpo \(F\) tiene al menos un subcuerpo \(P\), el subcuerpo primo de \(F\), que está contenido en cada subcuerpo de \(F\).
   O bien \(F\) tiene característica \(0\) y \(P \cong \mathbb Q\), o bien \(F\) tiene característica \(p\), un número primo, y entonces \(P \cong \mathbb F_p\).
 \end{theorem}
-
-
-% CITEME ? Cohn Algebra Vol 2
-
 
 \begin{lemma}
   Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\) tiene \(p^n\) elementos.
@@ -364,9 +361,9 @@ Puede probarse que existen polinomios irreducibles de cualquier grado, lo que no
   Entonces, para cada \(r | m\) existe un único subcuerpo \(\mathbb F_{p^r}\) de \(\mathbb F_q\).
 \end{proposition}
 
-A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\) siguiendo la correspondencia:
+A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\), siguiendo la correspondencia \(\mathfrak v : \mathbb F_p[x]/(f(x)) \to \mathbb F_p^m\),
 \[
-  g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \iff g_{m-1}g_{m-2}\dots g_1g_0.
+  g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \mapsto (g_{m-1},g_{m-2}, \dots, g_1, g_0).
 \]
 Esta notación vectorial nos permite realizar la suma en el cuerpo utilizando la suma habitual de los vectores.
 Multiplicar es una tarea a priori más complicada.
@@ -384,7 +381,7 @@ Notamos rápidamente que esta notación es engorrosa, por lo que vamos a tratar 
 Para ello vamos a tomar una raíz \(\alpha\) de \(f(x)\), es decir, un elemento tal que \(f(\alpha) = 0\) y operaremos en \(\alpha\) vez de en \(x\).
 Así, \(g_1(\alpha)g_2(\alpha) = r(\alpha)\) y podemos extender la correspondencia vectorial a
 \[
-  g_{m-1}g_{m-2}\dots g_1g_0 \iff g_{m-1}\alpha^{m-1} + g_{m-2}\alpha^{m-2}+ \dots + g_1\alpha + g_0.
+  (g_{m-1}, g_{m-2}, \dots, g_1, g_0) \iff g_{m-1}\alpha^{m-1} + g_{m-2}\alpha^{m-2}+ \dots + g_1\alpha + g_0.
 \]
 En consecuencia, multiplicamos los polinomios en \(\alpha\) de la forma habitual y utilizamos la ecuación \(f(\alpha) = 0\) para reducir las potencias de \(\alpha\) de grado mayor a \(m-1\) a polinomios en \(\alpha\) de grado menor que \(m\).
 Veamos un ejemplo.
@@ -413,7 +410,6 @@ Veamos un ejemplo.
       \bottomrule
     \end{tabular}
   \end{table}
-
   Veamos un par de ejemplos de operaciones: \begin{itemize}
     \item Sumemos \((x + 2 + (f(x))) + (2x + 1 + (f(x)))\). Lo haremos con la notación vectorial, sumando \(12 + 21 = 00 = 0\).
     \item Multipliquemos \((2x + 1 + (f(x)))(2x + 2 + (f(x)))\). Lo haremos con la expresión del polinomio en \(\alpha\):
@@ -453,7 +449,7 @@ Comenzamos viendo que el conjunto \(\mathbb F_q^*\) —de los elementos de \(\ma
 \end{theorem}
 
 Cada generador \(\gamma\) de \(\mathbb F_q^*\) se llama \textit{elemento primitivo} de \(\mathbb F_q\).
-Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\) e \(i + j \equiv s \bmod q - 1\).
+Cuando los elementos distintos de cero de un cuerpo finito se expresan como potencias de \(\gamma\) podemos multiplicar de forma sencilla teniendo en cuenta que \(\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s\), donde \(0 \leq s \leq q-2\), e \(i + j \equiv s \bmod q - 1\).
 
 \begin{theorem}
   \label{th:el-Fq-raices-pol}
@@ -478,7 +474,7 @@ Se deduce del teorema \ref{th:Fq-ast-cilcico} que el cuerpo \(\mathbb F_q\) cont
 
 
 Un polinomio irreducible sobre \(\mathbb F_p\) de grado \(m\) es \textit{primitivo} si tiene una raíz que es un elemento primitivo de \(\mathbb F_q = \mathbb F_{p^m}\).
-Cuando construimos un cuerpo finito con un polinomio \emph{primitivo}, podemos expresar sus elementos como potencias de la raíz primitiva correspondiente, lo que simplificará las operaciones de multiplicación.
+Cuando construimos un cuerpo finito con un polinomio primitivo, podemos expresar sus elementos como potencias de la raíz primitiva correspondiente, lo que simplificará las operaciones de multiplicación.
 Veamos un ejemplo.
 
 \begin{example}
@@ -515,7 +511,7 @@ Veamos un ejemplo.
 \label{subsec:clases-ciclotomicas}
 
 Si consideramos la extensión de cuerpos \(\mathbb F_{q^t}/\mathbb F_q\) sabemos por el teorema \ref{th:el-Fq-raices-pol} que cada elemento de \(\mathbb F_{q^t}\) es raíz del polinomio \(\cramped{x^{q^t}} - x\).
-Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F-q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
+Existe por tanto un polinomio mónico \(M_{\alpha}\) en \(\mathbb F_q[x]\) de grado mínimo que tiene a \(\alpha\) como raíz.
 Este polinomio se conoce como \emph{polinomio minimal} de \(\alpha\) sobre \(\mathbb F_q\).
 El siguiente teorema nos detalla algunas de las propiedades de los polinomios minimales.
 
@@ -653,7 +649,7 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
 
 En esta sección vamos a describir someramente los automorfismos de cuerpos finitos, que nos serán necesarios cuando trabajemos con anillos de polinomios de Ore.
 
-Dado un cuerpo finito \(\mathbb F_p\) un automorfismo \(\sigma\) de \(\mathbb F_q\) es una aplicación biyectiva \(\sigma: \mathbb F_p \to \mathbb F_p\) tal que \(\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)\) y \(\sigma(\alpha \beta) = \sigma(\alpha)\sigma(\beta)\) para todo \(\alpha, \beta \in \mathbb F_p\).
+Dado un cuerpo finito \(\mathbb F_p\) un automorfismo \(\sigma\) de \(\mathbb F_p\) es una aplicación biyectiva \(\sigma: \mathbb F_p \to \mathbb F_p\) tal que \(\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)\) y \(\sigma(\alpha \beta) = \sigma(\alpha)\sigma(\beta)\) para todo \(\alpha, \beta \in \mathbb F_p\).
 Vamos a describir en el siguiente ejemplo un automorfismo al que nos referiremos en el futuro.
 
 \begin{example}
@@ -674,7 +670,7 @@ Lo denotamos por \(\mathbb F_p^{\sigma}\).
 
 \begin{definition}
   \label{def:base-normal}
-  Sea \(\mathbb F_{p^m}/\mathbb F_p\) una extensión de cuerpos finitos y sea \(G\) el grupo de Galois de \(\mathbb F_{p^m}\). Una \emph{base normal} de \(\mathbb F_{p^m}\) sobre \(\mathbb F_p\) es una base de la forma \(\{\alpha, \alpha^p, \dots, \alpha^{p^m - 1}\}\) para algún \(\alpha \in \mathbb F_{p^m}\).
+  Sea \(\mathbb F_{q}/\mathbb F_p\), con \(q = p^m\), una extensión de cuerpos finitos. Una \emph{base normal} de \(\mathbb F_{q}\) sobre \(\mathbb F_p\) es una base de la forma \(\{\alpha, \alpha^p, \dots, \alpha^{q - 1}\}\) para algún \(\alpha \in \mathbb F_{q}\).
 \end{definition}
 
 En general las bases normales de los cuerpos finitos están formadas por las imágenes de un elemento por los distintos automorfismos de su grupo de Galois.
