@@ -174,7 +174,7 @@ También podemos referirnos a ello en sentido inverso, diciendo que \(F\) es una
 Observamos que \(F\) es un espacio vectorial sobre \(K\), esto es, los elementos de \(F\) pueden ser vistos como vectores sobre el cuerpo de escalares \(K\), con las operaciones de suma \(\alpha + \beta\), para \(\alpha, \beta \in F\) y multiplicación por escalares \(a\alpha\), para \(a \in K\) y \(\alpha \in F\), dadas por las propias operaciones de suma y multiplicación en \(K\).
 Todas las nociones que hemos definido para anillos —como la característica— son válidas para los cuerpos, pues un cuerpo no deja de ser un anillo.
 
-Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_p\), donde \(p\) denota el orden del cuerpo.
+Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_q\), donde \(q\) denota el orden del cuerpo.
 
 \begin{proposition}
   \label{prop:freshmans-dream}
@@ -190,12 +190,12 @@ Habitualmente notaremos a los cuerpos finitos por \(\mathbb F_p\), donde \(p\) d
 \end{theorem}
 
 \begin{lemma}
-  Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\) tiene \(p^n\) elementos.
+  Un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_q\) tiene \(p^n\) elementos.
 \end{lemma}
 
 \begin{proof}
-  Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_p\).
-  Si los elementos \(u_1, \dots, u_n\) forman una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_p\).
+  Sea \(V\) un espacio vectorial \(n\)-dimensional sobre \(\mathbb F_q\).
+  Si los elementos \(u_1, \dots, u_n\) forman una base de \(V\), entonces cada elemento de \(V\) se escribe de forma única en la forma \(\sum \alpha_iu_i\), donde \(\alpha_i \in \mathbb F_q\).
   Como cada coeficiente puede tener hasta \(p\) valores distintos, obtenemos un total de \(p^n\) elementos.
 \end{proof}
 
@@ -231,24 +231,24 @@ El polinomio \(f(x)\) se llama \textit{divisor} o \textit{factor} de \(g(x)\).
 %Un polinomio \(f(x)\) se dice que es \emph{irreducible} cuando no es posible expresarlo como producto de dos polinomios no constantes y distintos entre sí.
 
 Como ya hemos anticipado vamos a centrarnos en el estudio de los anillos de polinomios en cuerpos finitos pues son los que necesitaremos para la teoría de códigos.
-Siguiendo la notación que hemos establecido, denotaremos el anillo de le los polinomios con coeficientes en \(\mathbb F_p\) por \(\mathbb F_p[x]\).
+Siguiendo la notación que hemos establecido, denotaremos el anillo de le los polinomios con coeficientes en \(\mathbb F_q\) por \(\mathbb F_q[x]\).
 Es un anillo conmutativo con las operaciones habituales de suma y multiplicación de polinomios que acabamos de describir.
 Es, de hecho, un dominio de integridad.
 
-Un polinomio en \(\mathbb F_p[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_p\).
-Dados \(f(x), g(x) \in \mathbb F_p[x]\) el \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_p[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
+Un polinomio en \(\mathbb F_q[x]\) viene dado por \(f(x) = \sum_{i=0}^n a_ix^i\), donde \(a_i\) son los coeficientes del término de grado \(i\) y pertenecen a \(\mathbb F_q\).
+Dados \(f(x), g(x) \in \mathbb F_q[x]\) el \textit{máximo común divisor} de \(f(x)\) y \(g(x)\), siendo al menos uno de ellos distinto de cero, es el polinomio mónico de \(\mathbb F_q[x]\) de mayor grado que divida tanto a \(f(x)\) como a \(g(x)\).
 Lo denotamos por \(\operatorname{mcd}(f(x), g(x))\).
 Decimos que dos polinomios son \textit{primos relativos} si su máximo común divisor es 1.
 
-El siguiente resultado nos proporciona la existencia y unicidad de divisores de un polinomio en \(\mathbb F_p[x]\).
+El siguiente resultado nos proporciona la existencia y unicidad de divisores de un polinomio en \(\mathbb F_q[x]\).
 
 % Algoritmo de división (cambiado nombre del teorema para quitar algoritmo de división por sugerencia de Gabriel)
 
 \begin{theorem}
   \label{th:algoritmo-division}
-  Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_p[x]\), siendo \(g(x)\) distinto de cero.
+  Sean \(f(x)\) y \(g(x)\) polinomios de \(\mathbb F_q[x]\), siendo \(g(x)\) distinto de cero.
   \begin{enumerate}
-    \item \label{thi:algoritmo-division-division} Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_p[x]\) tales que \[
+    \item \label{thi:algoritmo-division-division} Existen polinomios únicos, \(h(x)\), \(r(x) \in \mathbb F_q[x]\) tales que \[
       f(x) = g(x)h(x) + r(x), \quad \text{donde } \operatorname{gr} r(x) < \operatorname{gr} g(x) \text{ o } r(x) = 0. 
     \]
     \item \label{thi:algoritmo-division-mcd} Si \(f(x) = g(x)h(x) + r(x)\), entonces \[\operatorname{mcd}(f(x), g(x)) = \operatorname{mcd}(g(x), r(x)).\]
@@ -259,7 +259,7 @@ Podemos utilizar este resultado para hallar el máximo común divisor de dos pol
 Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy parecido a su homólogo para números enteros.
 
 \begin{theorem}[Algoritmo de Euclides]
-  Sean \(f(x)\) y \(g(x)\) dos polinomios en \(\mathbb F_p[x]\) con \(g(x)\) distinto de cero.
+  Sean \(f(x)\) y \(g(x)\) dos polinomios en \(\mathbb F_q[x]\) con \(g(x)\) distinto de cero.
   \begin{enumerate}
     \item Realiza los siguientes pasos hasta que \(r_n(x) = 0\) para algún \(n\):
     \begin{align*}
@@ -270,8 +270,8 @@ Este procedimiento se conoce como \textit{algoritmo de Euclides} y es muy pareci
       r_{n-3}(x) &= r_{n-2}(x)h_{n-1}(x) + r_{n-1}(x), \ \text{donde } \operatorname{gr} r_{n-1}(x) < \operatorname{gr} r_{n-2}(x),\\
       r_{n-2}(x) &= r_{n-1}(x)h_n(x) + r_n(x), \qquad \text{donde } r_n(x) = 0.
     \end{align*} 
-    Entonces, \(\operatorname{mcd}(f(x), g(x)) = cr_{n-1}(x)\), donde \(c \in \mathbb F_p\) se escoge para que \(cr_{n-1}(x)\) sea mónico.
-    \item Existen polinomios \(a(x), b(x) \in \mathbb F_p[x]\) tales que 
+    Entonces, \(\operatorname{mcd}(f(x), g(x)) = cr_{n-1}(x)\), donde \(c \in \mathbb F_q\) se escoge para que \(cr_{n-1}(x)\) sea mónico.
+    \item Existen polinomios \(a(x), b(x) \in \mathbb F_q[x]\) tales que 
     \[
       a(x)f(x) + b(x)g(x) = \operatorname{mcd}(f(x), g(x)).
     \]
@@ -284,24 +284,24 @@ A continuación vamos a comentar un par de resultados que nos serán útiles en 
 
 \begin{proposition}
   \label{prop:k-divisor-f-g}
-  Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_p[x]\).
+  Sean \(f(x)\) y \(g(x)\) polinomios en \(\mathbb F_q[x]\).
   \begin{enumerate}
-    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_p[x]\).
+    \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\), entonces \(k(x)\) es divisor del polinomio \(a(x)f(x) + b(x)g(x)\) para todo \(a(x), b(x) \in \mathbb F_q[x]\).
     \item Si \(k(x)\) es un divisor de \(f(x)\) y de \(g(x)\) entonces \(k(x)\) es divisor del polinomio \(\operatorname{mcd}(f(x), g(x))\).
   \end{enumerate}
 \end{proposition}
 
 \begin{proposition}
   \label{prop:raices-factores-pol-Fp}
-  Sea \(f(x)\) un polinomio en \(\mathbb F_p[x]\) de grado \(n\). 
+  Sea \(f(x)\) un polinomio en \(\mathbb F_q[x]\) de grado \(n\). 
   Entonces: 
   \begin{enumerate}
-    \item Si \(\alpha \in \mathbb F_p\) es una raíz de \(f(x)\) entonces \(x - \alpha\) es un factor de \(f(x)\).
-    \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_p\).
+    \item Si \(\alpha \in \mathbb F_q\) es una raíz de \(f(x)\) entonces \(x - \alpha\) es un factor de \(f(x)\).
+    \item El polinomio \(f(x)\) tiene al menos \(n\) raíces en cualquier cuerpo que contenga a \(\mathbb F_q\).
   \end{enumerate}
 \end{proposition}
 
-Un polinomio no constante \(f(x) \in \mathbb F_p[x]\) es \textit{irreducible sobre} \(\mathbb F_p\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_p[x]\) de grado menor.
+Un polinomio no constante \(f(x) \in \mathbb F_q[x]\) es \textit{irreducible sobre} \(\mathbb F_q\) si no es posible factorizarlo como producto de dos polinomios de \(\mathbb F_q[x]\) de grado menor.
 \begin{theorem}
   Sea \(f(x)\) un polinomio no constante. Entonces, 
   \[
@@ -309,7 +309,7 @@ Un polinomio no constante \(f(x) \in \mathbb F_p[x]\) es \textit{irreducible sob
   \]
   donde cada \(p_i(x)\) es irreducible, los polinomios \(p_i(x)\) son únicos salvo el orden en el que aparecen y producto por unidades, y los elementos \(a_i\) son únicos.
 \end{theorem}
-Este resultado nos dice que \(\mathbb F_p[x]\) es lo que se conoce como \textit{dominio de factorización única}.
+Este resultado nos dice que \(\mathbb F_q[x]\) es lo que se conoce como \textit{dominio de factorización única}.
 Se puede comprobar que es, además, un dominio de ideales principales.
 
 % 3.3 Primitive elements
@@ -361,7 +361,7 @@ Puede probarse que existen polinomios irreducibles de cualquier grado, lo que no
   Entonces, para cada \(r | m\) existe un único subcuerpo \(\mathbb F_{p^r}\) de \(\mathbb F_q\).
 \end{proposition}
 
-A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\), siguiendo la correspondencia \(\mathfrak v : \mathbb F_p[x]/(f(x)) \to \mathbb F_p^m\),
+A la hora de trabajar con el cuerpo \(\mathbb F_p[x]/(f(x))\) escribiremos cada clase lateral \(g(x) + (f(x))\) como un vector en \(\mathbb F_p^m\), siguiendo la correspondencia \(\mathfrak v : \mathbb F_p[x]/(f(x)) \to \mathbb F_q\),
 \[
   g_{m-1}x^{m-1} + g_{m-2}x^{m-2}+ \dots + g_1x + g_0 + (f(x)) \mapsto (g_{m-1},g_{m-2}, \dots, g_1, g_0).
 \]
@@ -649,7 +649,7 @@ Los conjuntos \(C_s\) dividen el conjunto de enteros \(\{0, 1, 2, \dots, q^t - 2
 
 En esta sección vamos a describir someramente los automorfismos de cuerpos finitos, que nos serán necesarios cuando trabajemos con anillos de polinomios de Ore.
 
-Dado un cuerpo finito \(\mathbb F_p\) un automorfismo \(\sigma\) de \(\mathbb F_p\) es una aplicación biyectiva \(\sigma: \mathbb F_p \to \mathbb F_p\) tal que \(\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)\) y \(\sigma(\alpha \beta) = \sigma(\alpha)\sigma(\beta)\) para todo \(\alpha, \beta \in \mathbb F_p\).
+Dado un cuerpo finito \(\mathbb F_q\) un automorfismo \(\sigma\) de \(\mathbb F_q\) es una aplicación biyectiva \(\sigma: \mathbb F_q \to \mathbb F_q\) tal que \(\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)\) y \(\sigma(\alpha \beta) = \sigma(\alpha)\sigma(\beta)\) para todo \(\alpha, \beta \in \mathbb F_q\).
 Vamos a describir en el siguiente ejemplo un automorfismo al que nos referiremos en el futuro.
 
 \begin{example}
@@ -657,16 +657,16 @@ Vamos a describir en el siguiente ejemplo un automorfismo al que nos referiremos
   La aplicación biyectiva dada por \(\sigma_p : \mathbb F_q \to \mathbb F_q\) tal que \(\sigma_p(\alpha) = \alpha^p\) para todo \(\alpha \in \mathbb F_q\) es un automorfismo, conocido como \emph{automorfismo de Frobenius}.
 \end{example}
 
-Al grupo \(G\) que forman los automorfismos de un cuerpo finito \(\mathbb F_p\) lo llamamos \emph{grupo de Galois} de \(\mathbb F_p\).
-Así, definimos el \emph{orden} de un automorfismo como el menor \(n\) tal que \(\sigma^n(\alpha) = \alpha\) para todo \(\alpha \in \mathbb F_p\).
+Al grupo \(G\) que forman los automorfismos de un cuerpo finito \(\mathbb F_q\) lo llamamos \emph{grupo de Galois} de \(\mathbb F_q\).
+Así, definimos el \emph{orden} de un automorfismo como el menor \(n\) tal que \(\sigma^n(\alpha) = \alpha\) para todo \(\alpha \in \mathbb F_q\).
 
 \begin{theorem}
   El grupo de Galois de un cuerpo finito \(\mathbb F_q\), con \(q = p^m\) y \(p\) primo es cíclico de orden \(m\) y está generado por el automorfismo de Frobenius \(\sigma_p\).
 \end{theorem}
 
-Decimos que un elemento \(\alpha \in \mathbb F_p\) queda \emph{fijo} por un automorfismo \(\sigma\) si \(\sigma(\alpha) = \alpha\).
-El conjunto de los elementos de \(\mathbb F_p\) que quedan fijos por un automorfismo \(\sigma\) forma un subcuerpo de \(\mathbb F_p\) y se denomina \emph{subcuerpo fijo de} \(\mathbb F_p\) por \(\sigma\).
-Lo denotamos por \(\mathbb F_p^{\sigma}\).
+Decimos que un elemento \(\alpha \in \mathbb F_q\) queda \emph{fijo} por un automorfismo \(\sigma\) si \(\sigma(\alpha) = \alpha\).
+El conjunto de los elementos de \(\mathbb F_q\) que quedan fijos por un automorfismo \(\sigma\) forma un subcuerpo de \(\mathbb F_q\) y se denomina \emph{subcuerpo fijo de} \(\mathbb F_q\) por \(\sigma\).
+Lo denotamos por \(\mathbb F_q^{\sigma}\).
 
 \begin{definition}
   \label{def:base-normal}
@@ -681,6 +681,6 @@ El siguiente resultado se conoce como \emph{teorema de la base normal}.
   Existe una base normal para toda extensión de cuerpos.
 \end{theorem}
 
-Así, podremos obtener una base normal de un cuerpo \(\mathbb F_p\) como espacio vectorial de un subcuerpo fijo \(\mathbb F_p^{\sigma}\).
+Así, podremos obtener una base normal de un cuerpo \(\mathbb F_q\) como espacio vectorial de un subcuerpo fijo \(\mathbb F_q^{\sigma}\).
 
 %\section{Espacios vectoriales}
