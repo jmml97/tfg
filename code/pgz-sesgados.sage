@@ -80,6 +80,12 @@ def xentries_M_g(i, j, g, sigma):
     return (sigma^i)(l[j-i])
 
 class SkewCyclicCode(AbstractLinearCode):
+    r"""
+    Representation of a SkewCyclicCode as a linear code.
+
+    INPUT:
+    - ``generator_pol`` -- A generator polynomial of the code
+    """
     
     _registered_encoders = {}
     _registered_decoders = {}
@@ -114,19 +120,47 @@ class SkewCyclicCode(AbstractLinearCode):
     
     def polynomial_ring(self):
         r"""
-        Returns the generator polynomial of ``self``.
+        Returns the underlying polynomial ring of ``self``.
         """
         return self._polynomial_ring
     
     def primitive_root(self):
+        r"""
+        Returns a primitive root of the underlying field of ``self``.
+        """
         return self._primitive_root
     
     def ring_automorphism(self):
+        r"""
+        Returns the ring automorphism of the underlying skew field of ``self``.
+        """
         return self._polynomial_ring.twist_map()
 
 class SkewRSCode(SkewCyclicCode):
+    r"""
+    Representation of a skew RS code.
+
+    We propose two different ways to create a new CyclicCode, either by
+    providing:
+    - the generator polynomial in a skew polynomial ring
+    - a list of b-roots of the underlying field, whose left least common multiple will be the generator polynomial used
+
+    INPUT:
+    - ``generator_pol`` -- (default: ``None``) the generator polynomial
+      of ``self``. That is, the highest-degree monic polynomial which divides
+      every polynomial representation of a codeword in ``self``.
+    - ``b_roots`` -- (default: ``None``) a list of b-roots of the underlying field, whose left least common multiple will be the generator polynomial used.
+    """
     
     def __init__(self, generator_pol=None, b_roots=None):
+        r"""
+        TESTS:
+
+        Either if one privides a generator polynomial or we compute it using
+        the b-roots, we check that that the generator polynomial divides 
+        `x^{n} - 1`, where `n` is the order of the skew polynomial ring's
+        automorphism.
+        """
         
         if (b_roots is not None and generator_pol is None):
             F = b_roots[0].base_ring()
@@ -152,8 +186,8 @@ class SkewRSCode(SkewCyclicCode):
             self._generator_polynomial = generator_pol
 
         else:
-            raise ValueError("You must provide either a list of factors or a"
-                                 "genrator polynomial.")
+            raise AttributeError("You must provide either a list of factors or a"
+                                 "generator polynomial.")
         
         self._polynomial_ring = R
         self._primitive_root = F.primitive_element()
@@ -172,6 +206,9 @@ class SkewRSCode(SkewCyclicCode):
                    self.polynomial_ring()))
     
     def designed_distance(self):
+        r"""
+        Returns the designed distance of ``self``.
+        """
         return self._designed_distance
     
 class SkewCyclicVectorEncoder(Encoder):
@@ -187,6 +224,12 @@ class SkewCyclicVectorEncoder(Encoder):
     """
     
     def __init__(self, code):
+        r"""
+        TESTS:
+
+        We check that the provided code is a SkewCyclicCode
+        """
+
         if not isinstance(code, SkewCyclicCode):
             raise ValueError("code has to be a SkewCyclicCode")
         self._polynomial_ring = code._polynomial_ring
@@ -227,6 +270,12 @@ class SkewCyclicPolynomialEncoder(Encoder):
     """
     
     def __init__(self, code):
+        r"""
+        TESTS:
+
+        We check that the provided code is a SkewCyclicCode
+        """
+
         if not isinstance(code, SkewCyclicCode):
             raise ValueError("code has to be a SkewCyclicCode")
         self._polynomial_ring = code._polynomial_ring
@@ -246,6 +295,9 @@ class SkewCyclicPolynomialEncoder(Encoder):
         return "Polynomial-style encoder for %s" % self.code()
     
     def message_space(self):
+        r"""
+        Returns the message space of ``self``.
+        """
         return self._polynomial_ring
     
     def encode(self, p):
@@ -281,12 +333,18 @@ class SkewCyclicPolynomialEncoder(Encoder):
 class SkewCyclicDecoder(Decoder):
     r"""
     Constructs a decoder for Skew Cyclic Codes.
-    The decoding algorithm IS NOT IMPLEMENTED
+    The decoding algorithm IS NOT IMPLEMENTED.
     INPUT:
     - ``code`` -- A code associated to this decoder
     """
     
     def __init__(self, code):
+        r"""
+        TESTS:
+
+        We check that the provided code is a SkewCyclicCode
+        """
+
         if not isinstance(code, SkewCyclicCode):
             raise ValueError("code has to be a SkewCyclicCode")
         self._polynomial_ring = code._polynomial_ring
@@ -322,9 +380,11 @@ class SkewRSPGZDecoder(Decoder):
     r"""
     Constructs a decoder for Skew RS Codes based on the PGZ algorithm for Skew Cyclic codes.
     The decoding algorithm works as follows:
-    - First, 
-    - Then, 
-    - Finally, 
+    - First, the syndromes are computed
+    - Then, the error locator polynomial is computed using the syndromes, 
+      obtaining the error locations
+    - Finally, the syndrome's equation system is solved, obtaining the error 
+      and the decoded codeword
     INPUT:
     - ``code`` -- A code associated to this decoder
     """
@@ -369,7 +429,7 @@ class SkewRSPGZDecoder(Decoder):
 
         N = matrix(n, lambda i, j: xentries_N(i, j, sigma, b))
 
-        # Paso 1: calculamos los síndromes
+        # Step 1: compute all the syndromes
         s = []
         i = 0
         for i in (0..2*t - 1):
@@ -379,11 +439,12 @@ class SkewRSPGZDecoder(Decoder):
             s.append(s_i)
         logger("s, syndromes vector: ", s)
 
-        # Comprobamos si los síndromes son todos nulos
+        # Check if syndromes are all zero
         if all(s_i == 0 for s_i in s):
             return 0
 
-        # Paso 2: calcular la matriz S_t
+        # Step 2: compute the error locator polynomial and the error locations
+        # Compute the matrix S_t
         S_t = matrix(t+1, t, lambda i, j: xentries_s_t(i, j, s, sigma, a))
         logger("S_t:\n", S_t)
 
@@ -396,19 +457,20 @@ class SkewRSPGZDecoder(Decoder):
             if sub == matrix.identity(F, i):
                 mu = i
 
-        # Obtenemos rho a partir de los a_i de la matriz rcef_S_t
+        # Obtain the possible error locator polynomial from the a_i
+        # coefficients from the matrix rcef_S_t
         rho = [-a_i for a_i in rcef_S_t[[mu], list(range(0, mu))].list()]
         rho.append(1)
         logger("rho: ", rho)
 
-        #rho_ = completar_hasta(rho, n)
         rho_ = _to_complete_list(R(rho), n)
         rho_N = vector(rho_)*N
 
-        # Obtenemos las coordenadas de error
+        # Compute the error locations
         k = [i for i, e in enumerate(rho_N) if e == 0]
         v = len(k)
 
+        # If we didn't find all the error locations
         if mu != v:
             logger("Case mu != v")
             M_rho = matrix(n - mu, n, lambda i, j: xentries_M_rho(i, j, rho, sigma))
@@ -420,7 +482,8 @@ class SkewRSPGZDecoder(Decoder):
 
             H_ = H_rho
 
-            # Eliminamos las filas de H_rho que no son del tipo epsilon_i
+            # Rows from H_rho that are not a canonical vector epsilon_i are 
+            # deleted
             for i in range(H_rho.nrows()):
                 sub = H_rho.row(i)
                 epsilon = matrix.identity(F, H_rho.ncols()).rows()
@@ -428,7 +491,7 @@ class SkewRSPGZDecoder(Decoder):
                     H_ = H_.delete_rows([i])
             logger("H_:\n", H_)
 
-            # Obtenemos las posiciones de error
+            # New error locations are computed
             k = [i for i, e in enumerate(H_.columns()) if e == vector([0] * H_.nrows())]
             v = len(k)
 
@@ -444,11 +507,12 @@ class SkewRSPGZDecoder(Decoder):
 
         logger("b_syn: ", b_syn)
 
-        # Paso 3: resolvemos el sistema de los síndromes
+        # Step 3: solve the syndrome's system
         E = Sigma.transpose().solve_left(vector(b_syn))
         logger("E: ", E)
 
-        # Paso 4: construimos el error y se lo restamos al mensaje
+        # Step 4: we compute the error and substract it from the received 
+        # message, obtaining the decoded codeword
         e = R(0)
         for i in range(len(k)):
             e = e + E[i]*R.gen()^(k[i])
@@ -458,6 +522,9 @@ class SkewRSPGZDecoder(Decoder):
         return vector(_to_complete_list(y - e, self.code().length()))
     
     def correction_capability(self):
+        r"""
+        Returns the correction capability of ``self``.
+        """
         return self._correction_capability
     
 SkewCyclicCode._registered_encoders["SkewCyclicVectorEncoder"] = SkewCyclicVectorEncoder
