@@ -13,3 +13,4 @@
 *.run.xml
 *.ilg
 .DS_Store
+.vscode
