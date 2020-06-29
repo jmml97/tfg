@@ -560,8 +560,10 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
     sage: C.encode(x + a, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y)
     > True
   \end{lstlisting}
+\end{example}
 
-  Supongamos ahora que al mensaje \(x + a\) codificado se le suma un error \(e = a^2 + a^{1367}*x^3\), de forma que \(y = c + e\).
+\begin{example}
+  Supongamos que nos encontramos en la misma situación que en el ejemplo anterior, pero ahora que al mensaje \(x + a\) codificado se le suma un error \(e = a^2 + a^{1367}x^3\), de forma que \(y = c + e\).
 
   \begin{lstlisting}[gobble=4]
     sage: y_ = S(c.list()) + a^2 + a^1367*x^3; y_
@@ -587,5 +589,4 @@ Veamos a continuación algunos ejemplos utilizando para ello la implementación 
     sage: C.encode(a + x, "SkewCyclicPolynomialEncoder") == D.decode_to_code(y_)
     > True
   \end{lstlisting}
-
 \end{example}
