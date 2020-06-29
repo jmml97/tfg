@@ -1,5 +1,5 @@
 The text of this project is licensed under Creative Commons 4.0 BY-SA
-License
+License.
 
 The software of this project is licensed under the terms 
 of the GNU Affero General Public License as published by the Free 
