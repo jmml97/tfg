@@ -1,5 +1,4 @@
-The text of this project is licensed under Creative Commons 4.0 BY-SA
-License.
+The text of this project is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
 
 The software of this project is licensed under the terms 
 of the GNU Affero General Public License as published by the Free 
