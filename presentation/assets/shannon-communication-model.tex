@@ -1,0 +1,62 @@
+\documentclass[crop]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Inter}
+\setsansfont{Inter}
+\setmonofont{Roboto Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Fira Math}
+\setmathfont[range=up/{num}]{Inter}
+\setmathfont[range=it]{Inter Italic}
+\setmathfont[range={cal, bb, frak, "22EE}, StylisticSet={3}, Scale=1.2]{Garamond Math}
+
+\definecolor{background}{HTML}{F5F5F4}
+\definecolor{foreground}{HTML}{3F3F3F}
+
+\begin{document}
+
+\sffamily
+
+\tikzstyle{block} = [draw=foreground, rectangle, very thick,
+    minimum height=6em, minimum width=6em, text width=6em, align=center, text=foreground]
+
+
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % We start by placing the blocks
+    
+    %\node [input, name=input] {};
+    %\node [sum, right of=input] (sum) {};
+    \node [block] (fuente) {Fuente de la información};
+    \node [block, right of=fuente, node distance=9em] (transmisor) {Transmisor};
+    \node [block, right of=transmisor, node distance=12em] (canal) {Canal};
+    \node [block, right of=canal, node distance=12em] (receptor) {Receptor};
+    \node [block, right of=receptor, node distance=9em] (destino) {Destino};
+    \node [block, below of=canal, node distance=9em] (ruido) {Fuente de ruido};
+
+    %\node [block, right of=controller, pin={[pinstyle]above:Disturbances}, node distance=3cm] (system) {System};
+
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [->, very thick] (fuente) -- node[below, yshift=-4em, name=mensaje, text=foreground] {Mensaje} (transmisor);
+    \draw [->, very thick] (transmisor) -- node[below, name=señal, text=foreground] {Señal} (canal);
+    \draw [->, very thick] (canal) -- node[below, name=señalr, text width=4em, align=center, text=foreground] {Señal recibida} (receptor);
+    \draw [->, very thick] (receptor) -- node[below, yshift=-4em, name=mensajer, text=foreground] {Mensaje} (destino);
+    \draw [->, very thick] (ruido) -- (canal);
+    
+    %\node [output, right of=system] (output) {};
+    %\node [block, below of=u] (measurements) {Measurements};
+
+    % Once the nodes are placed, connecting them is easy. 
+    %\draw [draw,->] (input) -- node {$r$} (sum);
+    %\draw [->] (sum) -- node {$e$} (controller);
+    %\draw [->] (system) -- node [name=y] {$y$}(output);
+    %\draw [->] (y) |- (measurements);
+    %\draw [->] (measurements) -| node[pos=0.99] {$-$} node [near end] {$y_m$} (sum);
+\end{tikzpicture}
+
+\end{document}

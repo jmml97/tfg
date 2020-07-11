@@ -1,0 +1,140 @@
+\documentclass[crop]{standalone}
+
+\usepackage{scrextend}
+% \changefontsizes[11pt]{8pt}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{filecontents}
+\usepackage{multirow}
+\usepackage{eurosym}
+\usepackage{amsfonts, amssymb, amsxtra, amsmath, amsbsy} % Não usar empheq.
+% \usepackage{siunitx} % Tem conflito com o pgfcalendar e o calendar.
+% \usepackage{textcomp}
+% \usepackage{chemmacros} % Macros para fórmulas químicas
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{ifthen}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+% \usepackage{3dplot}
+\usepackage{pgfcalendar}
+\usepackage{pgfgantt}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{
+arrows,
+positioning,
+matrix,
+calc,
+decorations.pathreplacing,
+decorations.pathmorphing,
+decorations.markings,
+decorations.text,
+shapes,
+backgrounds,
+shadows,
+trees,
+fit,
+snakes,
+patterns,
+mindmap,
+intersections,
+calendar,
+plotmarks,
+spy}
+
+\pagestyle{empty}
+
+% Deve vir depois de pagestyle{}.
+\definecolor{darkgreen}{rgb}{0.13,0.53,0.53}
+\definecolor{background}{HTML}{F5F5F4}
+\definecolor{foreground}{HTML}{3F3F3F}
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Inter}
+\setsansfont{Inter}
+\setmonofont{Roboto Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Fira Math}
+\setmathfont[range=up/{num}]{Inter}
+\setmathfont[range=it]{Inter Italic}
+\setmathfont[range={cal, bb, frak, "22EE}, StylisticSet={3}, Scale=1.2]{Garamond Math}
+
+\begin{document}
+
+\sffamily
+
+\tikzstyle{block} = [draw, rectangle, very thick,
+minimum height=6em, minimum width=6em, text width=6em, align=center]
+
+\newenvironment{cminipage}[1][5cm]{%
+\begin{minipage}{#1}
+  \begin{center}
+    }{%
+  \end{center}
+\end{minipage}
+}
+
+\tikzset{
+% ->, >=stealth,
+% line width=2.75pt,
+every path/.style={>=stealth, very thick, rounded corners},
+state/.style={
+rectangle, rounded corners,
+draw=black, fill=gray!10, thick,
+minimum height=2em, inner sep=10pt, text centered
+},
+blank/.style={draw=none,fill=none,text opacity=0},
+}
+
+\begin{tikzpicture}[
+  node distance=5mm,
+  title/.style={font=\fontsize{6}{6}\color{foreground!80}\footnotesize},
+  typetag/.style={rectangle, draw=black!50, font=\footnotesize\ttfamily, anchor=west, text=foreground},
+  nobordertypetag/.style={rectangle, draw=background, font=\footnotesize\ttfamily, anchor=west, text=foreground}
+  ]
+
+  \node (mensaje) [title, anchor=west] { Mensaje };
+  \node (m) [below=of mensaje.west, nobordertypetag] {01};
+
+  \node (mensajecaja) [draw=black!50, rectangle, fit={(mensaje) (m)}] {};
+
+  \node (c) [right=1.5cm of mensajecaja, nobordertypetag] { 111 000 };
+  \node (b) [above=of c.west, typetag] { 000 111 };
+  \node (a) [draw, above=of b.west, nobordertypetag] { 000 000 };
+  \node (d) [below=of c.west, nobordertypetag] { 111 111 };
+  %\node (e) [below=of d.west, nobordertypetag] { E };
+
+  \node (codigo) [above=of a, title] { Código };
+  
+  \node [draw=black!50, ellipse, minimum width=2cm, fit={(codigo) (a) (b) (c) (d)}] {};
+
+  \node (z) [right=2.5cm of c, draw=black!50, typetag, blank] { 010 101 };
+
+  \node (c2) [right=2.5cm of z, nobordertypetag, blank] { 111 000 };
+  \node (b2) [above=of c2.west, typetag, blank] { 000 111 };
+  \node (a2) [draw, above=of b2.west, nobordertypetag, blank] { 000 000 };
+  \node (d2) [below=of c2.west, nobordertypetag, blank] { 111 111 };
+  %\node (e2) [below=of d2.west, nobordertypetag] { E };
+
+  \node (codigo2) [above=of a2, title, blank] { Código };
+  
+  \node [draw=black!50, ellipse, minimum width=2cm, fit={(codigo2) (a2) (b2) (c2) (d2)}, blank] {};
+
+  \node (mensaje2) [right= 1.5cm of c2, title, anchor=west, blank] { Mensaje };
+  \node (m2) [below=of mensaje2.west, nobordertypetag, blank] {01};
+
+  \node (mensajecaja2) [draw=black!50, rectangle, fit={(mensaje2) (m2)}, blank] {};
+
+  \draw [<->, very thick] (mensaje) -- (b);
+  \draw [dotted, blank] (b) -- node[below, font=\scriptsize, blank] { transmisión } (z);
+  \draw [->, blank] (z) -- node[below, font=\scriptsize, blank] { corrección } (b2);
+  \draw [<->, blank] (b2) -- (mensaje2);
+\end{tikzpicture}
+
+\end{document}
