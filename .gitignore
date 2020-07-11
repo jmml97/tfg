@@ -12,5 +12,8 @@
 *.bcf
 *.run.xml
 *.ilg
+*.nav
+*.snm
+*.vrb
 .DS_Store
 .vscode
